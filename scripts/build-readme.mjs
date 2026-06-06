@@ -26,7 +26,8 @@ function galleryRows(images) {
     const links = rowImages
       .map((image) => {
         const thumb = `thumbnails/color-card-${image.id}.jpg`;
-        const alt = `Traditional Color ${image.id}`;
+        const title = image.file.replace(/\.[^.]+$/, "");
+        const alt = `中国传统色 ${title}`;
         return `  <a href="${image.path}"><img src="${thumb}" width="180" alt="${alt}"></a>`;
       })
       .join("\n");
@@ -42,20 +43,32 @@ function renderReadme(project, images) {
 
   return `# 中国传统配色
 
-一个用于展示、学习和复用中华传统色的开放图片项目。当前仓库收录 ${project.count} 张传统色色卡图片，每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词；README 使用轻量缩略图完整展示，点击任意缩略图可打开高清 PNG 原图。
+一个面向设计、内容创作和前端开发的中华传统色图片库。仓库目前收录 ${project.count} 张高清色卡，已按原始 742 色清单完整覆盖，每张色卡都包含色名、HEX、RGB、CMYK、配色推荐和气质关键词。
+
+README 下方完整展示全部缩略图，点击任意色卡可以打开高清 PNG 原图。需要一次性下载时，可以直接使用 Release 里的 ZIP 图片包。
 
 ## 快速入口
 
-- [下载全部高清图片 ZIP](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/${project.archiveName})
 - [在线浏览色卡](https://nevertoday.github.io/zhongguo-traditional-colors/)
+- [下载全部高清图片 ZIP](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/${project.archiveName})
 - [完整图片包 Release 下载](https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0)
 - [原始 742 色清单](docs/chinese-color-master-list.md)
 - [缺失颜色报告](docs/missing-colors.md)
 - [作者 X 主页](https://x.com/xiaoxiaodong01)
 
-> 原图约 ${totalMb}MB，ZIP 文件作为 GitHub Release 附件提供，不直接提交进仓库。单张高清图可点击下方任意缩略图打开。
+## 当前状态
 
-## 预览
+| 项目 | 数量 |
+| --- | ---: |
+| 原始颜色清单 | 742 |
+| 已展示高清色卡 | ${project.count} |
+| README 缩略图 | ${project.count} |
+| 缺失颜色 | 0 |
+| 重复覆盖 | 0 |
+
+原图约 ${totalMb} MB。ZIP 文件作为 GitHub Release 附件提供，不直接提交进仓库。
+
+## 全部色卡
 
 <!-- gallery:start -->
 ${galleryRows(images)}
@@ -64,14 +77,18 @@ ${galleryRows(images)}
 
 ## 项目定位
 
-中国传统色不只是一组漂亮色值，也连接着器物、织染、矿物颜料、诗词意象、节气物候和审美秩序。本项目希望把这些资料整理成一个可以直接浏览、下载、引用和二次开发的公共色彩资料馆。
+中国传统色不只是一组漂亮色值，也连接着器物、织染、矿物颜料、诗词意象、节气物候和审美秩序。这个仓库把这些颜色整理成可浏览、可下载、可引用的开放素材，方便直接用于设计参考、教学演示、内容配图和前端项目。
 
 适合用于：
 
-- 设计灵感、品牌配色、界面主题和视觉实验。
-- 传统文化、色彩教育、美术教学和内容创作。
-- 前端项目、素材站、颜色工具和开放数据整理。
-- 色名、色值、配色关系和视觉语气的持续校勘。
+- 设计灵感、品牌配色、界面主题和视觉实验
+- 传统文化、色彩教育、美术教学和内容创作
+- 前端项目、素材站、颜色工具和开放数据整理
+- 色名、色值、配色关系和视觉语气校勘
+
+## 数据说明
+
+图片文件统一按 \`NNN-颜色名.png\` 命名，编号与 [原始 742 色清单](docs/chinese-color-master-list.md) 保持一致。当前审计结果为 742 张图片、742 个唯一颜色、0 个缺失、0 个重复，详细记录见 [缺失颜色报告](docs/missing-colors.md)。
 
 ## 项目结构
 
@@ -85,6 +102,8 @@ downloads/    本地生成的下载压缩包，不建议提交到 Git
 \`\`\`
 
 ## 快速开始
+
+本项目是静态站点，克隆后可以直接启动本地服务器：
 
 \`\`\`bash
 npm run manifest
@@ -109,11 +128,11 @@ npm run manifest
 npm run readme
 \`\`\`
 
-这会重新生成 \`assets/data/images.js\` 和 README 预览图廊。新增图片时请同时补充对应 \`thumbnails/\` 缩略图。
+这会重新生成 \`assets/data/images.js\` 和 README 图廊。新增图片时请同时补充对应 \`thumbnails/\` 缩略图，并保持 \`NNN-颜色名.png\` 的命名格式。
 
 ## 支持作者
 
-这个传统色图片合集会继续保持免费开源。如果它帮你节省了整理、参考和使用传统色卡的时间，也愿意支持后续维护，可以扫描下面的 Buy Me a Coffee 二维码请作者喝杯咖啡。完全自愿；反馈、Star 和 issue 同样有帮助。
+这个传统色图片合集会继续保持免费开源。如果它帮你节省了整理、参考和使用传统色卡的时间，也愿意支持后续维护，可以扫描下面的 Buy Me a Coffee 二维码请作者喝杯咖啡。反馈、Star 和 issue 同样有帮助。
 
 <img src="docs/images/buy-me-a-coffee-qr.png" alt="Buy Me a Coffee 支持二维码" width="220">
 
