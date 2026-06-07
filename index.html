@@ -38,9 +38,10 @@
       </a>
       <nav class="site-nav" aria-label="主导航">
         <a href="#gallery">色卡</a>
-        <a href="#audit">审计</a>
+        <a href="#audit">覆盖</a>
         <a href="#knowledge">知识</a>
         <a href="#download">下载</a>
+        <a href="#author">作者</a>
         <a href="#open-source">开源</a>
       </nav>
     </header>
@@ -48,10 +49,10 @@
     <main id="top">
       <section class="hero-section" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">Open color archive</p>
-          <h1 id="hero-title">中国传统配色</h1>
+          <p class="eyebrow">Curated by 小小东</p>
+          <h1 id="hero-title">中华传统色资料馆</h1>
           <p class="hero-lede">
-            收集、展示和持续校勘中华传统色色卡，让设计师、开发者、教师与文化爱好者都能直接取用这份开放的颜色资料。
+            742 张高清色卡，按原始色彩清单完整整理。给设计、内容创作、课件、网页主题和传统文化研究一个可以直接取用的中国色素材库。
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#gallery">
@@ -62,6 +63,11 @@
               <svg><use href="#icon-download"></use></svg>
               下载 ZIP
             </a>
+          </div>
+          <div class="hero-proof" aria-label="项目维护信息">
+            <span>作者：小小东</span>
+            <span>MIT 开源</span>
+            <span>README 全量预览</span>
           </div>
           <dl class="hero-stats">
             <div>
@@ -90,19 +96,19 @@
         <div class="intro-grid">
           <div>
             <span class="section-kicker">Purpose</span>
-            <h2>把传统色从灵感图，变成可复用的公共资料。</h2>
+            <h2>把传统色从零散灵感，整理成可复用的公共资料。</h2>
           </div>
           <p>
-            每张色卡保留色名、HEX、RGB、CMYK、配色推荐和气质关键词。项目将图片资产、展示页面、下载工具和贡献流程放在同一个仓库，便于教学引用、设计试验和二次开发。
+            每张色卡保留色名、HEX、RGB、CMYK、配色推荐和气质关键词。你可以直接浏览、下载、引用，也可以基于这个仓库继续做色彩工具、教学资料和视觉实验。
           </p>
         </div>
       </section>
 
       <section class="section-shell" id="gallery" aria-labelledby="gallery-title">
         <div class="section-heading">
-          <span class="section-kicker">Color cards</span>
+          <span class="section-kicker">742 cards</span>
           <h2 id="gallery-title">色卡资料库</h2>
-          <p>按批次加载真实图片，单张可下载，未来新增色卡只需更新 images 文件夹并重建清单。</p>
+          <p>全部使用真实高清 PNG。可以按编号或文件名检索，单张预览、单张下载，也可以把完整图片包一次性打包带走。</p>
         </div>
 
         <div class="toolbar" aria-label="色卡工具">
@@ -132,9 +138,9 @@
 
       <section class="audit-section" id="audit" aria-labelledby="audit-title">
         <div class="section-heading">
-          <span class="section-kicker">Audit</span>
+          <span class="section-kicker">Coverage</span>
           <h2 id="audit-title">清单完整覆盖</h2>
-          <p>原始清单包含 742 个颜色。当前图片已补齐到 742 张，文件命名与清单顺序一一对应。</p>
+          <p>色卡文件与原始 742 色清单一一对应，统一使用 <code>NNN-颜色名.png</code> 命名，方便引用、校对和二次开发。</p>
         </div>
 
         <div class="audit-grid" aria-label="颜色清单审计摘要">
@@ -197,7 +203,7 @@
           <span class="section-kicker">Download</span>
           <h2 id="download-title">所有图片打包下载</h2>
           <p>
-            页面可以直接把 images 文件夹中的全部图片打成 ZIP。仓库还提供本地脚本，适合维护者生成 GitHub Release 附件。
+            页面可以直接把 images 文件夹中的全部图片打成 ZIP。适合建立本地素材库、课件资料包、项目参考库或离线浏览备份。
           </p>
         </div>
         <div class="download-panel">
@@ -216,6 +222,34 @@
           </div>
           <p class="download-status" data-download-status>浏览器会按清单读取图片并生成 zhongguo-traditional-colors-images.zip。</p>
         </div>
+      </section>
+
+      <section class="author-section" id="author" aria-labelledby="author-title">
+        <div class="author-copy">
+          <span class="section-kicker">Author</span>
+          <h2 id="author-title">由小小东整理维护</h2>
+          <p>
+            这个项目会长期保持免费开源。希望它能帮你少花一点时间找图、抄色值、整理素材，把更多精力放回设计、教学、写作和创作本身。
+          </p>
+          <div class="author-actions">
+            <a class="button button-primary" href="https://x.com/xiaoxiaodong01">
+              <svg><use href="#icon-arrow"></use></svg>
+              访问小小东的 X 主页
+            </a>
+            <a class="button button-secondary" href="https://github.com/nevertoday/zhongguo-traditional-colors">
+              <svg><use href="#icon-github"></use></svg>
+              GitHub 项目
+            </a>
+          </div>
+        </div>
+        <aside class="support-panel" aria-label="赞赏小小东">
+          <div>
+            <span class="section-kicker">Support</span>
+            <h3>支持小小东</h3>
+            <p>如果这些色卡帮你节省了整理时间，欢迎 Star、分享给需要的人，也可以扫码赞赏支持后续维护。</p>
+          </div>
+          <img src="docs/images/buy-me-a-coffee-qr.png" alt="赞赏小小东的 Buy Me a Coffee 二维码" width="220" height="220">
+        </aside>
       </section>
 
       <section class="open-section" id="open-source" aria-labelledby="open-title">
