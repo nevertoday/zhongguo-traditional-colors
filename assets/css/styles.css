@@ -45,8 +45,8 @@
   --header-bg: rgba(17, 16, 14, 0.86);
   --hero-fade-start: rgba(17, 16, 14, 0.9);
   --hero-fade-end: rgba(17, 16, 14, 0.96);
-  --hover-bg: #f2f0ea;
-  --hover-text: #11100e;
+  --hover-bg: #050505;
+  --hover-text: #f2f0ea;
   --feature-bg: #0b0a09;
   --feature-text: #f2f0ea;
   --footer-text: #d3cfc6;
@@ -1249,12 +1249,12 @@ select:focus-visible,
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
-  gap: 30px;
-  width: min(100%, 760px);
+  gap: 14px;
+  width: min(100%, 400px);
   min-width: 0;
   min-height: 0;
   margin: 0 auto;
-  padding: clamp(34px, 6vw, 56px);
+  padding: clamp(20px, 3vw, 26px);
   overflow: hidden;
   text-align: center;
   color: var(--feature-text);
@@ -1265,8 +1265,8 @@ select:focus-visible,
 .support-panel::before {
   position: absolute;
   top: 0;
-  right: clamp(26px, 6vw, 64px);
-  left: clamp(26px, 6vw, 64px);
+  right: clamp(22px, 5vw, 44px);
+  left: clamp(22px, 5vw, 44px);
   height: 1px;
   background: color-mix(in srgb, var(--feature-text) 22%, transparent);
   border: 0;
@@ -1282,42 +1282,35 @@ select:focus-visible,
 .support-copy {
   position: relative;
   z-index: 1;
-  max-width: 520px;
+  max-width: 280px;
   margin: 0 auto;
 }
 
 .support-panel h3 {
-  max-width: 520px;
-  margin-bottom: 16px;
-  font-size: clamp(1.75rem, 3vw, 2.55rem);
-  line-height: 1.2;
-  text-wrap: balance;
-}
-
-.support-panel p {
-  max-width: 480px;
-  margin-right: auto;
+  max-width: 280px;
   margin-bottom: 0;
-  margin-left: auto;
+  font-size: clamp(1.08rem, 1.6vw, 1.35rem);
+  line-height: 1.25;
+  text-wrap: balance;
 }
 
 .support-qr {
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 12px;
+  gap: 8px;
   justify-items: center;
   margin: 0 auto;
   padding-top: 0;
-  width: min(100%, 260px);
+  width: min(100%, 150px);
   border-top: 0;
 }
 
 .support-panel img {
-  width: 176px;
-  max-width: min(48vw, 210px);
+  width: 112px;
+  max-width: min(38vw, 132px);
   height: auto;
-  padding: 10px;
+  padding: 7px;
   background: #ffffff;
 }
 
@@ -1724,7 +1717,7 @@ select:focus-visible,
   }
 
   .support-panel {
-    min-height: 320px;
+    min-height: 0;
   }
 }
 
@@ -1853,7 +1846,7 @@ select:focus-visible,
 
   .support-panel {
     min-height: 0;
-    padding: 26px 22px;
+    padding: 24px 20px;
   }
 
   .support-qr {
@@ -1861,7 +1854,7 @@ select:focus-visible,
   }
 
   .support-panel img {
-    max-width: 220px;
+    max-width: 150px;
   }
 }
 
