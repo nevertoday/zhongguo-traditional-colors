@@ -166,10 +166,10 @@ code {
   position: sticky;
   top: 0;
   z-index: 20;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  gap: 28px;
   min-height: 68px;
   padding: 16px max(24px, calc((100vw - var(--content)) / 2));
   background: var(--header-bg);
@@ -203,7 +203,9 @@ code {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
 }
 
 .site-nav a {
@@ -224,14 +226,38 @@ code {
   outline: none;
 }
 
-.site-nav svg {
+.site-nav svg,
+.header-tools svg {
   width: 18px;
   height: 18px;
 }
 
+.header-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .nav-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 36px;
+  min-height: 36px;
   padding: 0;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.nav-icon-link:hover,
+.nav-icon-link:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border-color: var(--hover-bg);
+  outline: none;
 }
 
 .theme-toggle {
@@ -452,6 +478,20 @@ input:focus-visible,
   gap: 8px;
   max-height: 64vh;
   overflow: hidden;
+  mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+}
+
+.film-strip {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  animation: film-drift 18s ease-in-out infinite alternate;
+  animation-delay: calc(var(--strip-index) * -2.8s);
+  will-change: transform;
+}
+
+.film-strip:nth-child(even) {
+  animation-name: film-drift-reverse;
 }
 
 .mosaic img {
@@ -463,12 +503,32 @@ input:focus-visible,
   box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 8%, transparent);
 }
 
-.mosaic img:nth-child(2n) {
+.film-strip:nth-child(2n) {
   transform: translateY(18px);
 }
 
-.mosaic img:nth-child(5n) {
+.film-strip:nth-child(3n) {
   transform: translateY(-10px);
+}
+
+@keyframes film-drift {
+  from {
+    transform: translateY(-18px);
+  }
+
+  to {
+    transform: translateY(22px);
+  }
+}
+
+@keyframes film-drift-reverse {
+  from {
+    transform: translateY(20px);
+  }
+
+  to {
+    transform: translateY(-16px);
+  }
 }
 
 .intro-band,
@@ -1121,11 +1181,17 @@ input:focus-visible,
   .site-header {
     position: static;
     align-items: flex-start;
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .site-nav {
+    justify-content: flex-start;
     flex-wrap: wrap;
+  }
+
+  .header-tools {
+    justify-content: flex-start;
   }
 
   .hero-section,

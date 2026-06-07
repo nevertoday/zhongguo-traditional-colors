@@ -104,8 +104,15 @@ function buildHero() {
     return images[sourceIndex];
   }).filter(Boolean);
 
-  heroMosaic.innerHTML = featured.map((image) => (
-    `<img src="${encodedPath(thumbnailPath(image))}" alt="中国传统色色卡 ${colorTitle(image)}" loading="eager">`
+  const columns = Array.from({ length: 4 }, () => []);
+  featured.forEach((image, index) => {
+    columns[index % columns.length].push(image);
+  });
+
+  heroMosaic.innerHTML = columns.map((column, columnIndex) => (
+    `<div class="film-strip" style="--strip-index: ${columnIndex}">${column.map((image) => (
+      `<img src="${encodedPath(thumbnailPath(image))}" alt="中国传统色色卡 ${colorTitle(image)}" loading="eager">`
+    )).join('')}</div>`
   )).join('');
 }
 
