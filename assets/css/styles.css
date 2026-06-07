@@ -199,7 +199,6 @@ code {
   color: var(--muted);
   font-size: 0.78rem;
   font-weight: 600;
-  text-transform: uppercase;
 }
 
 .hero-lede {
@@ -426,27 +425,20 @@ input:focus-visible,
 }
 
 .section-heading {
-  display: grid;
-  grid-template-columns: minmax(260px, 0.72fr) minmax(320px, 1fr);
-  gap: 20px 64px;
-  align-items: start;
+  display: block;
+  max-width: 760px;
   margin-bottom: 42px;
 }
 
 .section-heading .section-kicker {
-  grid-column: 1;
-  margin-bottom: 0;
+  margin-bottom: 14px;
 }
 
 .section-heading h2 {
-  grid-column: 1;
-  margin-bottom: 0;
+  margin-bottom: 16px;
 }
 
 .section-heading p {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  align-self: end;
   max-width: 720px;
   margin-bottom: 0;
 }
@@ -969,21 +961,9 @@ input:focus-visible,
 @media (max-width: 1040px) {
   .hero-section,
   .intro-grid,
-  .section-heading,
   .download-section,
   .author-section {
     grid-template-columns: 1fr;
-  }
-
-  .section-heading .section-kicker,
-  .section-heading h2,
-  .section-heading p {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  .section-heading p {
-    align-self: start;
   }
 
   .hero-section {
