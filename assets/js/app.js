@@ -119,7 +119,7 @@ function setTheme(theme) {
     themeToggleLabel.textContent = nextTheme === 'dark' ? '亮色' : '暗色';
   }
   if (themeToggleIcon) {
-    themeToggleIcon.setAttribute('href', nextTheme === 'dark' ? '#icon-sun' : '#icon-moon');
+    themeToggleIcon.setAttribute('icon', nextTheme === 'dark' ? 'lucide:sun' : 'lucide:moon');
   }
 
   if (themeColorMeta) {
@@ -149,10 +149,17 @@ function buildHero() {
     columns[index % columns.length].push(image);
   });
 
+  const imageMarkup = (image) => (
+    `<img src="${encodedPath(thumbnailPath(image))}" alt="中国传统色色卡 ${colorTitle(image)}" loading="eager">`
+  );
+
   heroMosaic.innerHTML = columns.map((column, columnIndex) => (
-    `<div class="film-strip" style="--strip-index: ${columnIndex}">${column.map((image) => (
-      `<img src="${encodedPath(thumbnailPath(image))}" alt="中国传统色色卡 ${colorTitle(image)}" loading="eager">`
-    )).join('')}</div>`
+    `<div class="film-strip" style="--strip-index: ${columnIndex}">
+      <div class="film-track">
+        ${column.map(imageMarkup).join('')}
+        ${column.map(imageMarkup).join('')}
+      </div>
+    </div>`
   )).join('');
 }
 
@@ -166,7 +173,7 @@ function cardMarkup(image) {
   return `
     <article class="color-card">
       <button class="card-button" type="button" data-preview="${image.id}" aria-label="预览 ${title}">
-        <svg aria-hidden="true"><use href="#icon-eye"></use></svg>
+        <iconify-icon icon="lucide:eye" aria-hidden="true"></iconify-icon>
       </button>
       <img src="${previewUrl}" alt="中国传统色色卡 ${title}" loading="lazy">
       ${hex ? `<button class="copy-hex" type="button" data-copy-hex="${hex}" aria-label="复制 ${colorName(image)} 色值 ${hex}">复制 ${hex}</button>` : ''}
@@ -176,7 +183,7 @@ function cardMarkup(image) {
           <small>原图 ${formatBytes(image.size)}</small>
         </span>
         <a class="card-button" href="${url}" download aria-label="下载 ${title}">
-          <svg aria-hidden="true"><use href="#icon-download"></use></svg>
+          <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
         </a>
       </div>
     </article>
@@ -445,7 +452,7 @@ async function downloadZip() {
     }
   } finally {
     zipButton.disabled = false;
-    zipButton.innerHTML = '<svg><use href="#icon-download"></use></svg>生成 ZIP';
+    zipButton.innerHTML = '<iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>生成 ZIP';
   }
 }
 

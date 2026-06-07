@@ -22,53 +22,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#gallery">跳到色卡列表</a>
-    <svg class="svg-sprite" aria-hidden="true">
-      <symbol id="icon-download" viewBox="0 0 24 24">
-        <path d="M12 3v11m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </symbol>
-      <symbol id="icon-gallery" viewBox="0 0 24 24">
-        <path d="M5 5h6v6H5zM13 5h6v6h-6zM5 13h6v6H5zM13 13h6v6h-6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-      </symbol>
-      <symbol id="icon-random" viewBox="0 0 24 24">
-        <path d="M4 7h3c3 0 5 10 8 10h5m-4-4 4 4-4 4M4 17h3c1.3 0 2.4-.9 3.4-2.2M15 7h5m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </symbol>
-      <symbol id="icon-search" viewBox="0 0 24 24">
-        <circle cx="10.8" cy="10.8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
-        <path d="m15.4 15.4 5.1 5.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-      </symbol>
-      <symbol id="icon-book" viewBox="0 0 24 24">
-        <path d="M5 4h7a3 3 0 0 1 3 3v17a3 3 0 0 0-3-3H5zM15 7a3 3 0 0 1 3-3h1v17h-1a3 3 0 0 0-3 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-      </symbol>
-      <symbol id="icon-github" viewBox="0 0 24 24">
-        <path d="M12 2.6a9.7 9.7 0 0 0-3.1 18.9c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 0 1.6 1.1 1.6 1.1.9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.1-4.5-4.8 0-1.1.4-1.9 1-2.6-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.2 9.2 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.5 1 2.6 0 3.7-2.3 4.5-4.5 4.8.4.3.8 1 .8 2v3c0 .3.2.6.8.5A9.7 9.7 0 0 0 12 2.6Z" fill="currentColor"/>
-      </symbol>
-      <symbol id="icon-chevron-down" viewBox="0 0 24 24">
-        <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </symbol>
-      <symbol id="icon-eye" viewBox="0 0 24 24">
-        <path d="M2.8 12s3.4-6 9.2-6 9.2 6 9.2 6-3.4 6-9.2 6-9.2-6-9.2-6Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-        <circle cx="12" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      </symbol>
-      <symbol id="icon-list" viewBox="0 0 24 24">
-        <path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
-      </symbol>
-      <symbol id="icon-external" viewBox="0 0 24 24">
-        <path d="M14 5h5v5M19 5l-8 8M19 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </symbol>
-      <symbol id="icon-file" viewBox="0 0 24 24">
-        <path d="M7 3h7l4 4v14H7zM14 3v5h5M9.5 13h5M9.5 17h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </symbol>
-      <symbol id="icon-moon" viewBox="0 0 24 24">
-        <path d="M20 14.7A7.8 7.8 0 0 1 9.3 4a8.2 8.2 0 1 0 10.7 10.7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-      </symbol>
-      <symbol id="icon-sun" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
-        <path d="M12 2.5v2M12 19.5v2M4.8 4.8l1.4 1.4M17.8 17.8l1.4 1.4M2.5 12h2M19.5 12h2M4.8 19.2l1.4-1.4M17.8 6.2l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-      </symbol>
-    </svg>
 
     <header class="site-header">
       <a class="brand-mark" href="#top" aria-label="中国传统配色首页">
@@ -85,10 +42,10 @@
       </nav>
       <div class="header-tools" aria-label="站点工具">
         <a class="nav-icon-link" href="https://github.com/nevertoday/zhongguo-traditional-colors" aria-label="打开 GitHub 仓库">
-          <svg aria-hidden="true"><use href="#icon-github"></use></svg>
+          <iconify-icon icon="simple-icons:github" aria-hidden="true"></iconify-icon>
         </a>
         <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
-          <svg aria-hidden="true"><use data-theme-icon href="#icon-moon"></use></svg>
+          <iconify-icon icon="lucide:moon" data-theme-icon aria-hidden="true"></iconify-icon>
           <span class="sr-only" data-theme-label>暗色</span>
         </button>
       </div>
@@ -104,11 +61,11 @@
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#gallery">
-              <svg><use href="#icon-gallery"></use></svg>
+              <iconify-icon icon="lucide:images" aria-hidden="true"></iconify-icon>
               浏览色卡
             </a>
             <a class="button button-secondary" href="https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip">
-              <svg><use href="#icon-download"></use></svg>
+              <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
               下载 ZIP
             </a>
           </div>
@@ -163,11 +120,11 @@
         <div class="toolbar" aria-label="色卡工具">
           <label class="search-box">
             <span class="sr-only">检索</span>
-            <svg aria-hidden="true"><use href="#icon-search"></use></svg>
+            <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
             <input type="search" data-search placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
           </label>
           <button class="tool-button" type="button" data-shuffle>
-            <svg><use href="#icon-random"></use></svg>
+            <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
             换一组
           </button>
           <label class="hue-filter">
@@ -190,7 +147,7 @@
         <div class="gallery-footer">
           <p data-gallery-status></p>
           <button class="button button-secondary" type="button" data-load-more>
-            <svg><use href="#icon-chevron-down"></use></svg>
+            <iconify-icon icon="lucide:chevron-down" aria-hidden="true"></iconify-icon>
             加载更多
           </button>
         </div>
@@ -274,7 +231,7 @@
             <span>原始图片</span>
           </div>
           <button class="button button-primary button-large" type="button" data-download-zip>
-            <svg><use href="#icon-download"></use></svg>
+            <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
             生成 ZIP
           </button>
           <a class="download-direct" href="https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip">
@@ -297,11 +254,11 @@
           <p class="author-handle">@xiaoxiaodong01</p>
           <div class="author-actions">
             <a class="button button-primary" href="https://x.com/xiaoxiaodong01">
-              <svg><use href="#icon-external"></use></svg>
+              <iconify-icon icon="lucide:external-link" aria-hidden="true"></iconify-icon>
               访问小小东的 X 主页
             </a>
             <a class="button button-secondary" href="https://github.com/nevertoday/zhongguo-traditional-colors">
-              <svg><use href="#icon-github"></use></svg>
+              <iconify-icon icon="simple-icons:github" aria-hidden="true"></iconify-icon>
               GitHub 项目
             </a>
           </div>
@@ -324,28 +281,28 @@
         </div>
         <div class="open-grid">
           <a class="open-link" href="README.md">
-            <svg><use href="#icon-book"></use></svg>
+            <iconify-icon icon="lucide:book-open" aria-hidden="true"></iconify-icon>
             <span>
               <strong>项目介绍</strong>
               <small>定位、使用方式、目录结构和路线图</small>
             </span>
           </a>
           <a class="open-link" href="CONTRIBUTING.md">
-            <svg><use href="#icon-github"></use></svg>
+            <iconify-icon icon="simple-icons:github" aria-hidden="true"></iconify-icon>
             <span>
               <strong>贡献指南</strong>
               <small>新增色卡、命名规范和提交检查</small>
             </span>
           </a>
           <a class="open-link" href="docs/chinese-color-master-list.md">
-            <svg><use href="#icon-file"></use></svg>
+            <iconify-icon icon="lucide:file-text" aria-hidden="true"></iconify-icon>
             <span>
               <strong>原始色彩清单</strong>
               <small>发布 742 个中国色 AI 主色名和 HEX</small>
             </span>
           </a>
           <a class="open-link" href="docs/image-packaging.md">
-            <svg><use href="#icon-download"></use></svg>
+            <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
             <span>
               <strong>下载包说明</strong>
               <small>浏览器打包和 Release 附件生成流程</small>
@@ -361,12 +318,14 @@
     </footer>
 
     <dialog class="preview-dialog" data-preview-dialog>
-      <button class="dialog-close" type="button" data-close-preview aria-label="关闭预览">×</button>
+      <button class="dialog-close" type="button" data-close-preview aria-label="关闭预览">
+        <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
+      </button>
       <img alt="" data-preview-image>
       <div class="dialog-meta">
         <strong data-preview-title></strong>
         <a class="button button-secondary" data-preview-download download>
-          <svg><use href="#icon-download"></use></svg>
+          <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
           下载单张
         </a>
       </div>

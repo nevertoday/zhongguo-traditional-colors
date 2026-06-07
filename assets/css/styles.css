@@ -94,6 +94,13 @@ button {
   color: inherit;
 }
 
+iconify-icon {
+  display: inline-block;
+  color: currentColor;
+  line-height: 1;
+  vertical-align: -0.125em;
+}
+
 h1,
 h2,
 h3,
@@ -142,13 +149,6 @@ code {
   border-radius: 4px;
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.92em;
-}
-
-.svg-sprite {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
 }
 
 .skip-link {
@@ -241,8 +241,8 @@ code {
   outline: none;
 }
 
-.site-nav svg,
-.header-tools svg {
+.site-nav iconify-icon,
+.header-tools iconify-icon {
   width: 18px;
   height: 18px;
 }
@@ -390,25 +390,25 @@ select:focus-visible,
   outline-offset: 3px;
 }
 
-.button svg,
-.tool-button svg,
-.open-link svg,
-.card-button svg,
-.theme-toggle svg {
+.button iconify-icon,
+.tool-button iconify-icon,
+.open-link iconify-icon,
+.card-button iconify-icon,
+.theme-toggle iconify-icon {
   width: 18px;
   height: 18px;
   flex: 0 0 auto;
   transition: transform 180ms var(--ease-out-quart);
 }
 
-.button:hover svg,
-.tool-button:hover svg,
-.card-button:hover svg,
-.theme-toggle:hover svg {
+.button:hover iconify-icon,
+.tool-button:hover iconify-icon,
+.card-button:hover iconify-icon,
+.theme-toggle:hover iconify-icon {
   transform: translateY(-1px);
 }
 
-.theme-toggle:active svg {
+.theme-toggle:active iconify-icon {
   transform: rotate(18deg) scale(0.95);
 }
 
@@ -480,11 +480,7 @@ select:focus-visible,
 }
 
 .ink-panel {
-  padding: 14px;
-  background: var(--solid);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  box-shadow: var(--shadow-soft);
+  padding: 0;
 }
 
 .mosaic {
@@ -493,20 +489,26 @@ select:focus-visible,
   gap: 8px;
   max-height: 64vh;
   overflow: hidden;
-  mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+  border-radius: 8px;
+  mask-image: linear-gradient(180deg, transparent 0, #000 12%, #000 88%, transparent 100%);
 }
 
 .film-strip {
+  min-width: 0;
+  max-height: 64vh;
+  overflow: hidden;
+}
+
+.film-track {
   display: grid;
   gap: 8px;
-  min-width: 0;
-  animation: film-drift 18s ease-in-out infinite alternate;
-  animation-delay: calc(var(--strip-index) * -2.8s);
+  animation: film-roll-up calc(30s + var(--strip-index) * 3s) linear infinite;
+  animation-delay: calc(var(--strip-index) * -4s);
   will-change: transform;
 }
 
-.film-strip:nth-child(even) {
-  animation-name: film-drift-reverse;
+.film-strip:nth-child(even) .film-track {
+  animation-name: film-roll-down;
 }
 
 .mosaic img {
@@ -515,34 +517,26 @@ select:focus-visible,
   object-fit: cover;
   border-radius: 5px;
   background: var(--panel-soft);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 8%, transparent);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--ink) 6%, transparent);
 }
 
-.film-strip:nth-child(2n) {
-  transform: translateY(18px);
-}
-
-.film-strip:nth-child(3n) {
-  transform: translateY(-10px);
-}
-
-@keyframes film-drift {
+@keyframes film-roll-up {
   from {
-    transform: translateY(-18px);
+    transform: translateY(0);
   }
 
   to {
-    transform: translateY(22px);
+    transform: translateY(calc(-50% - 4px));
   }
 }
 
-@keyframes film-drift-reverse {
+@keyframes film-roll-down {
   from {
-    transform: translateY(20px);
+    transform: translateY(calc(-50% - 4px));
   }
 
   to {
-    transform: translateY(-16px);
+    transform: translateY(0);
   }
 }
 
@@ -647,7 +641,7 @@ select:focus-visible,
   background: transparent;
 }
 
-.search-box svg {
+.search-box iconify-icon {
   width: 17px;
   height: 17px;
   flex: 0 0 auto;
@@ -655,7 +649,7 @@ select:focus-visible,
   transition: color 180ms ease, transform 180ms var(--ease-out-quart);
 }
 
-.search-box:focus-within svg {
+.search-box:focus-within iconify-icon {
   color: var(--ink);
   transform: scale(1.06);
 }
@@ -1230,16 +1224,16 @@ select:focus-visible,
   transform: translateY(-1px);
 }
 
-.open-link:hover svg,
+.open-link:hover iconify-icon,
 .open-link:hover small {
   color: color-mix(in srgb, var(--hover-text) 74%, transparent);
 }
 
-.open-link:hover svg {
+.open-link:hover iconify-icon {
   transform: translateX(2px);
 }
 
-.open-link svg {
+.open-link iconify-icon {
   width: 24px;
   height: 24px;
   color: var(--ink);
