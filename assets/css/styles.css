@@ -464,6 +464,11 @@ input:focus-visible,
   font-weight: 600;
 }
 
+.search-box span {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
 .search-box input {
   width: 100%;
   min-width: 0;
