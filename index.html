@@ -332,8 +332,32 @@
     </main>
 
     <footer class="site-footer">
-      <p>中国传统配色是开放色彩资料项目。使用时请结合实际媒介校验色差</p>
-      <p>Version 2026 · © 2026 xiaoxiaodong.ai</p>
+      <div class="footer-main">
+        <a class="footer-mark" href="#top" aria-label="回到页面顶部">
+          <span>色</span>
+          <strong>中国传统配色</strong>
+        </a>
+        <p>开放色彩资料项目。屏幕、印刷、材质之间，请保留一次色差校验。</p>
+      </div>
+      <div class="footer-spectrum" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="footer-meta" aria-label="站点版本信息">
+        <span>742 色入库</span>
+        <span>Version 2026</span>
+        <span>© 2026 xiaoxiaodong.ai</span>
+      </div>
     </footer>
 
     <dialog class="preview-dialog" data-preview-dialog>
@@ -355,16 +379,21 @@
         <div>
           <span class="section-kicker">原始清单</span>
           <h2>742 色预览</h2>
-          <p>预览每个色名和 HEX。可以复制单个颜色，也可以一次复制完整清单。</p>
+          <p>按编号、色名或 HEX 检索。点击任意颜色复制单行，或一次复制完整清单。</p>
         </div>
         <button class="dialog-close master-close" type="button" data-close-master-list aria-label="关闭颜色清单">
           <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
         </button>
       </div>
       <div class="master-list-actions">
-        <button class="button button-primary" type="button" data-copy-master-list>
+        <label class="master-search">
+          <span class="sr-only">检索 742 色清单</span>
+          <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
+          <input type="search" data-master-search placeholder="检索编号 / 色名 / HEX" autocomplete="off">
+        </label>
+        <button class="master-copy-button" type="button" data-copy-master-list>
           <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
-          复制完整清单
+          复制 742 色
         </button>
         <span data-master-list-status>742 个颜色</span>
       </div>

@@ -26,6 +26,7 @@ const openMasterListButton = document.querySelector('[data-open-master-list]');
 const closeMasterListButton = document.querySelector('[data-close-master-list]');
 const copyMasterListButton = document.querySelector('[data-copy-master-list]');
 const masterListStatus = document.querySelector('[data-master-list-status]');
+const masterSearchInput = document.querySelector('[data-master-search]');
 const themeToggle = document.querySelector('[data-theme-toggle]');
 const themeToggleIcon = document.querySelector('[data-theme-icon]');
 const themeToggleLabel = document.querySelector('[data-theme-label]');
@@ -436,34 +437,48 @@ function masterListText() {
   return images.map((image) => `${colorName(image)} ${image.hex || ''}`.trim()).join('\n');
 }
 
-function buildMasterList() {
-  if (!masterColorList || masterColorList.children.length) return;
+function masterListItems() {
+  const query = normalize(masterSearchInput?.value || '');
+  if (!query) return images;
 
-  masterColorList.innerHTML = images.map((image) => {
+  return images.filter((image) => {
+    const searchable = `${image.id} ${colorName(image)} ${image.file} ${image.hex || ''}`.toLowerCase();
+    return searchable.includes(query);
+  });
+}
+
+function renderMasterList() {
+  if (!masterColorList) return;
+
+  const items = masterListItems();
+  masterColorList.innerHTML = items.length ? items.map((image) => {
     const name = colorName(image);
     const hex = image.hex || '';
     const copyText = `${name} ${hex}`.trim();
 
     return `
       <button class="master-color-row" type="button" data-copy-color="${copyText}" aria-label="复制 ${copyText}">
+        <span class="master-id">${image.id}</span>
         <span class="master-swatch" style="--swatch: ${hex || '#999999'}"></span>
         <span class="master-name">${name}</span>
         <span class="master-hex">${hex}</span>
       </button>
     `;
-  }).join('');
+  }).join('') : '<div class="master-empty"><strong>没有找到颜色</strong><span>换一个编号、色名或 HEX 试试。</span></div>';
+
+  if (masterListStatus) {
+    masterListStatus.textContent = `${items.length.toLocaleString('zh-CN')} / ${images.length.toLocaleString('zh-CN')} 个颜色`;
+  }
 }
 
 function openMasterList() {
   if (!masterListDialog) return;
 
-  buildMasterList();
-  if (masterListStatus) {
-    masterListStatus.textContent = `${images.length.toLocaleString('zh-CN')} 个颜色`;
-  }
+  renderMasterList();
 
   if (typeof masterListDialog.showModal === 'function') {
     masterListDialog.showModal();
+    window.setTimeout(() => masterSearchInput?.focus(), 60);
   }
 }
 
@@ -686,6 +701,7 @@ previewDialog?.addEventListener('click', (event) => {
 });
 openMasterListButton?.addEventListener('click', openMasterList);
 closeMasterListButton?.addEventListener('click', () => masterListDialog?.close());
+masterSearchInput?.addEventListener('input', renderMasterList);
 masterListDialog?.addEventListener('click', async (event) => {
   if (event.target === masterListDialog) {
     masterListDialog.close();
