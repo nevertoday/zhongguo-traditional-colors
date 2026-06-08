@@ -20,7 +20,7 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;800;900&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
@@ -160,33 +160,48 @@
           <p>色卡文件与原始 742 色清单一一对应，统一使用 <code>NNN-颜色名.png</code> 命名，方便引用、校对和二次开发</p>
         </div>
 
-        <div class="audit-grid" aria-label="颜色清单审计摘要">
-          <article>
-            <strong>742</strong>
-            <span>原始颜色</span>
-          </article>
-          <article>
-            <strong>742</strong>
-            <span>当前图片</span>
-          </article>
-          <article>
-            <strong>742</strong>
-            <span>唯一覆盖</span>
-          </article>
-          <article>
-            <strong>完整</strong>
-            <span>覆盖状态</span>
-          </article>
-        </div>
-
-        <div class="audit-actions">
+        <div class="audit-workspace">
+          <div class="audit-grid" aria-label="颜色清单审计摘要">
+            <article>
+              <strong>742</strong>
+              <span>原始颜色</span>
+            </article>
+            <article>
+              <strong>742</strong>
+              <span>当前图片</span>
+            </article>
+            <article>
+              <strong>742</strong>
+              <span>唯一覆盖</span>
+            </article>
+            <article>
+              <strong>完整</strong>
+              <span>覆盖状态</span>
+            </article>
+          </div>
           <button class="archive-trigger" type="button" data-open-master-list>
-            <span class="archive-trigger-count">742</span>
-            <span class="archive-trigger-copy">
-              <strong>预览色值清单</strong>
-              <small>编号 / 色名 / HEX，可逐项复制</small>
+            <span class="archive-trigger-top">
+              <span>完整索引</span>
+              <iconify-icon icon="lucide:list-filter" aria-hidden="true"></iconify-icon>
             </span>
-            <iconify-icon icon="lucide:panel-top-open" aria-hidden="true"></iconify-icon>
+            <span class="archive-trigger-body">
+              <span class="archive-trigger-count">742</span>
+              <span class="archive-trigger-copy">
+                <strong>打开色值索引</strong>
+                <small>按编号、色名或 HEX 检索，复制单色，也可复制整份清单</small>
+              </span>
+            </span>
+            <span class="archive-trigger-rail" aria-hidden="true">
+              <i style="--chip: #f9f4dc"></i>
+              <i style="--chip: #a7535a"></i>
+              <i style="--chip: #41555d"></i>
+              <i style="--chip: #fed71a"></i>
+              <i style="--chip: #1ba784"></i>
+            </span>
+            <span class="archive-trigger-action">
+              进入完整清单
+              <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
+            </span>
           </button>
         </div>
       </section>
@@ -370,20 +385,6 @@
         <span>© 2026 xiaoxiaodong.ai</span>
       </div>
     </footer>
-
-    <dialog class="preview-dialog" data-preview-dialog>
-      <button class="dialog-close" type="button" data-close-preview aria-label="关闭预览">
-        <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
-      </button>
-      <img alt="" data-preview-image>
-      <div class="dialog-meta">
-        <strong data-preview-title></strong>
-        <a class="button button-secondary" data-preview-download download>
-          <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
-          下载单张
-        </a>
-      </div>
-    </dialog>
 
     <dialog class="master-list-dialog" data-master-list-dialog>
       <div class="master-list-head">

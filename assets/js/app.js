@@ -15,11 +15,6 @@ const galleryStatus = document.querySelector('[data-gallery-status]');
 const zipButton = document.querySelector('[data-download-zip]');
 const zipStatus = document.querySelector('[data-download-status]');
 const progressBar = document.querySelector('[data-progress-bar]');
-const previewDialog = document.querySelector('[data-preview-dialog]');
-const previewImage = document.querySelector('[data-preview-image]');
-const previewTitle = document.querySelector('[data-preview-title]');
-const previewDownload = document.querySelector('[data-preview-download]');
-const closePreview = document.querySelector('[data-close-preview]');
 const masterListDialog = document.querySelector('[data-master-list-dialog]');
 const masterColorList = document.querySelector('[data-master-color-list]');
 const openMasterListButton = document.querySelector('[data-open-master-list]');
@@ -275,7 +270,7 @@ function buildHero() {
 
 function cardMarkup(image) {
   const url = encodedPath(image.path);
-  const previewUrl = encodedPath(thumbnailPath(image));
+  const thumbnailUrl = encodedPath(thumbnailPath(image));
   const title = colorTitle(image);
   const hex = image.hex || '';
   const displayTitle = hex ? `${title} · ${hex}` : title;
@@ -286,10 +281,9 @@ function cardMarkup(image) {
 
   return `
     <article class="color-card">
-      <button class="card-button" type="button" data-preview="${image.id}" aria-label="预览 ${title}">
-        <iconify-icon icon="lucide:eye" aria-hidden="true"></iconify-icon>
-      </button>
-      <img src="${previewUrl}" alt="中国传统色色卡 ${title}" loading="lazy">
+      <a class="card-image-link" href="${url}" target="_blank" rel="noopener" aria-label="打开 ${title} 原图">
+        <img src="${thumbnailUrl}" alt="中国传统色色卡 ${title}" loading="lazy">
+      </a>
       ${hex ? `<div class="copy-color-control">
         <button class="copy-color-button" type="button" data-copy-color="${image.id}" aria-label="复制 ${colorName(image)} ${colorValueLabel()} 色值 ${copyValue}">复制 <span data-copy-value>${copyValue}</span></button>
         <label class="copy-format">
@@ -312,6 +306,16 @@ function cardMarkup(image) {
   `;
 }
 
+function syncGalleryFooter(visibleLength) {
+  if (galleryStatus) {
+    galleryStatus.textContent = `已显示 ${visibleLength.toLocaleString('zh-CN')} / ${currentItems.length.toLocaleString('zh-CN')} 张`;
+  }
+
+  if (loadMoreButton) {
+    loadMoreButton.hidden = visibleLength >= currentItems.length;
+  }
+}
+
 function renderGallery() {
   if (!gallery) return;
 
@@ -320,13 +324,23 @@ function renderGallery() {
     ? visible.map(cardMarkup).join('')
     : '<div class="empty-state"><strong>没有找到对应色卡</strong><span>换一个色名、编号、色值或色相试试，例如「黛」「001」「#F9F4DC」</span></div>';
 
-  if (galleryStatus) {
-    galleryStatus.textContent = `已显示 ${visible.length.toLocaleString('zh-CN')} / ${currentItems.length.toLocaleString('zh-CN')} 张`;
+  syncGalleryFooter(visible.length);
+}
+
+function appendGalleryItems(count) {
+  if (!gallery) return;
+
+  const currentVisible = Math.min(visibleCount, currentItems.length);
+  const nextVisible = Math.min(currentVisible + count, currentItems.length);
+  if (nextVisible <= currentVisible) {
+    syncGalleryFooter(currentVisible);
+    return;
   }
 
-  if (loadMoreButton) {
-    loadMoreButton.hidden = visible.length >= currentItems.length;
-  }
+  const nextItems = currentItems.slice(currentVisible, nextVisible);
+  visibleCount = nextVisible;
+  gallery.insertAdjacentHTML('beforeend', nextItems.map(cardMarkup).join(''));
+  syncGalleryFooter(nextVisible);
 }
 
 function applySearch() {
@@ -357,22 +371,6 @@ function shuffleItems() {
   visibleCount = 24;
   shuffled = true;
   renderGallery();
-}
-
-function openPreview(id) {
-  const image = images.find((item) => item.id === id);
-  if (!image || !previewDialog) return;
-
-  const url = encodedPath(image.path);
-  previewImage.src = url;
-  previewImage.alt = `中国传统色色卡 ${colorTitle(image)}`;
-  previewTitle.textContent = `${colorTitle(image)} · ${formatBytes(image.size)}`;
-  previewDownload.href = url;
-  previewDownload.setAttribute('download', image.file);
-
-  if (typeof previewDialog.showModal === 'function') {
-    previewDialog.showModal();
-  }
 }
 
 async function writeClipboard(text) {
@@ -673,19 +671,14 @@ searchInput?.addEventListener('input', applySearch);
 hueFilter?.addEventListener('change', applyFilters);
 shuffleButton?.addEventListener('click', shuffleItems);
 loadMoreButton?.addEventListener('click', () => {
-  visibleCount += shuffled ? 24 : 32;
-  renderGallery();
+  appendGalleryItems(shuffled ? 24 : 32);
 });
 
 gallery?.addEventListener('click', (event) => {
   const copyButton = event.target.closest('[data-copy-color]');
   if (copyButton) {
     copyHex(copyButton);
-    return;
   }
-
-  const button = event.target.closest('[data-preview]');
-  if (button) openPreview(button.dataset.preview);
 });
 gallery?.addEventListener('change', (event) => {
   const select = event.target.closest('[data-copy-format]');
@@ -695,10 +688,6 @@ gallery?.addEventListener('change', (event) => {
   updateCopyControls();
 });
 
-closePreview?.addEventListener('click', () => previewDialog?.close());
-previewDialog?.addEventListener('click', (event) => {
-  if (event.target === previewDialog) previewDialog.close();
-});
 openMasterListButton?.addEventListener('click', openMasterList);
 closeMasterListButton?.addEventListener('click', () => masterListDialog?.close());
 masterSearchInput?.addEventListener('input', renderMasterList);
