@@ -220,26 +220,41 @@
         </div>
 
         <div class="knowledge-layout">
-          <article class="knowledge-note note-wide" data-step="01">
-            <span>01</span>
-            <h3>五色观与秩序感</h3>
-            <p>青、赤、黄、白、黑承载了方位、礼制和自然观。现代设计取用传统色时，可以把它理解为一种建立层级、节奏和情绪的系统，而不只是复古装饰</p>
+          <article class="knowledge-principle">
+            <span class="knowledge-label">判断框架</span>
+            <h3>先判断颜色在承担什么，再判断它是否好看</h3>
+            <p>传统色不是给界面贴一层古风滤镜，而是把文化语气、信息层级、材质联想和媒介限制放到同一个判断系统里。</p>
+            <div class="knowledge-axis" aria-label="五色线索">
+              <span>青</span>
+              <span>赤</span>
+              <span>黄</span>
+              <span>白</span>
+              <span>黑</span>
+            </div>
           </article>
-          <article class="knowledge-note" data-step="02">
-            <span>02</span>
-            <h3>材料决定质感</h3>
-            <p>矿物颜料偏沉稳，植物染色更柔和，釉色和织物会带来不同光泽。色卡中的气质词适合帮助判断使用场景</p>
-          </article>
-          <article class="knowledge-note" data-step="03">
-            <span>03</span>
-            <h3>屏幕色需要校验</h3>
-            <p>HEX、RGB 和 CMYK 是跨媒介沟通的起点。落到印刷、织物或界面主题时，仍应结合实际设备和材质打样</p>
-          </article>
-          <article class="knowledge-note note-tall" data-step="04">
-            <span>04</span>
-            <h3>配色要服务信息</h3>
-            <p>传统色适合建立文化语气，也要尊重可读性和无障碍对比。项目鼓励把色彩用于教育、公共知识整理、产品界面和开放素材建设</p>
-          </article>
+
+          <div class="knowledge-threads">
+            <article class="knowledge-note">
+              <span>秩序</span>
+              <h3>五色观不是装饰词</h3>
+              <p>青、赤、黄、白、黑承载方位、礼制和自然观。现代设计取用传统色时，可以借它建立层级、节奏和情绪。</p>
+            </article>
+            <article class="knowledge-note">
+              <span>材料</span>
+              <h3>质感来自来源</h3>
+              <p>矿物颜料偏沉稳，植物染色更柔和，釉色和织物会带来不同光泽。色卡中的气质词适合帮助判断使用场景。</p>
+            </article>
+            <article class="knowledge-note">
+              <span>媒介</span>
+              <h3>屏幕色需要复核</h3>
+              <p>HEX、RGB 和 CMYK 是沟通起点。落到印刷、织物或界面主题时，仍应结合设备、光线和材质打样。</p>
+            </article>
+            <article class="knowledge-note">
+              <span>用途</span>
+              <h3>配色最终服务信息</h3>
+              <p>传统色适合建立文化语气，也要尊重可读性和无障碍对比。好看的颜色如果削弱信息，就需要重新调整。</p>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -420,6 +435,10 @@
             <dd data-hero-preview-hex></dd>
           </div>
           <div>
+            <dt>属性</dt>
+            <dd data-hero-preview-hue></dd>
+          </div>
+          <div>
             <dt>文件</dt>
             <dd data-hero-preview-file></dd>
           </div>
@@ -428,6 +447,18 @@
             <dd data-hero-preview-size></dd>
           </div>
         </dl>
+        <section class="hero-preview-harmony" data-hero-preview-harmony aria-label="传统色配色关系">
+          <div class="harmony-summary">
+            <div>
+              <span class="section-kicker">配色关系</span>
+              <h3>从当前色出发，找到更稳的组合</h3>
+            </div>
+            <p data-hero-preview-harmony-note></p>
+          </div>
+          <div class="harmony-role-strip" data-hero-preview-role-map></div>
+          <div class="harmony-tabs" role="tablist" aria-label="切换配色关系" data-harmony-tabs></div>
+          <div class="harmony-panel" data-harmony-panel></div>
+        </section>
         <div class="hero-preview-actions">
           <label class="hero-preview-format">
             <span class="sr-only">选择复制色值类型</span>
@@ -478,6 +509,7 @@
     </dialog>
 
     <script src="assets/data/images.js"></script>
+    <script src="assets/data/harmonies.js"></script>
     <script src="assets/js/app.js"></script>
   </body>
 </html>

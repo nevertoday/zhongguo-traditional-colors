@@ -1,9 +1,11 @@
 const images = window.TRADITIONAL_COLOR_IMAGES || [];
+const colorHarmonies = window.TRADITIONAL_COLOR_HARMONIES || {};
 const project = window.TRADITIONAL_COLOR_PROJECT || {
   count: images.length,
   totalBytes: images.reduce((total, image) => total + image.size, 0),
   archiveName: 'zhongguo-traditional-colors-images.zip',
 };
+const imagesById = new Map(images.map((image) => [image.id, image]));
 
 const gallery = document.querySelector('[data-gallery]');
 const heroMosaic = document.querySelector('[data-hero-mosaic]');
@@ -36,8 +38,10 @@ const scrollDownButton = document.querySelector('[data-scroll-down]');
 const titleHoverElements = document.querySelectorAll('h1, h2, h3');
 const heroPreviewDialog = document.querySelector('[data-hero-preview-dialog]');
 const heroPreviewImage = document.querySelector('[data-hero-preview-image]');
+const heroPreviewContent = document.querySelector('.hero-preview-content');
 const heroPreviewTitle = document.querySelector('[data-hero-preview-title]');
 const heroPreviewHex = document.querySelector('[data-hero-preview-hex]');
+const heroPreviewHue = document.querySelector('[data-hero-preview-hue]');
 const heroPreviewFile = document.querySelector('[data-hero-preview-file]');
 const heroPreviewSize = document.querySelector('[data-hero-preview-size]');
 const heroPreviewDownload = document.querySelector('[data-hero-preview-download]');
@@ -45,6 +49,11 @@ const heroPreviewStatus = document.querySelector('[data-hero-preview-status]');
 const closeHeroPreviewButton = document.querySelector('[data-close-hero-preview]');
 const copyHeroPreviewButton = document.querySelector('[data-copy-hero-preview]');
 const heroPreviewFormat = document.querySelector('[data-hero-preview-format]');
+const heroPreviewHarmony = document.querySelector('[data-hero-preview-harmony]');
+const heroPreviewHarmonyNote = document.querySelector('[data-hero-preview-harmony-note]');
+const heroPreviewRoleMap = document.querySelector('[data-hero-preview-role-map]');
+const harmonyTabs = document.querySelector('[data-harmony-tabs]');
+const harmonyPanel = document.querySelector('[data-harmony-panel]');
 
 let visibleCount = 24;
 let currentItems = [...images];
@@ -54,6 +63,7 @@ let selectedColorValueType = getSavedColorValueType();
 let footerCopyTimer;
 let scrollControlFrame;
 let currentHeroPreviewImage;
+let currentHarmonyKey = 'same';
 let navResizeFrame;
 
 const TITLE_TONE_MAP = [
@@ -71,6 +81,20 @@ const COLOR_VALUE_TYPES = [
   { value: 'rgb', label: 'RGB' },
   { value: 'hsl', label: 'HSL' },
   { value: 'cmyk', label: 'CMYK' },
+];
+
+const HARMONY_RELATION_TYPES = [
+  { key: 'same', label: '同类', note: '保留相近色相和明度，适合做安静、统一的底色系统。' },
+  { key: 'analogous', label: '邻近', note: '向左右相邻色相展开，适合做柔和渐变、插画和分区。' },
+  { key: 'complementary', label: '互补', note: '拉开色相距离，适合用作强调、按钮、标题或视觉焦点。' },
+  { key: 'splitComplementary', label: '分裂互补', note: '比直接互补更稳，适合需要对比但不想刺眼的界面。' },
+  { key: 'triadic', label: '三角', note: '三方向建立节奏，适合主题扩展、图表和系列视觉。' },
+  { key: 'tetradic', label: '四角', note: '给出更完整的冷暖和明暗跨度，适合复杂页面配色。' },
+  { key: 'temperatureContrast', label: '冷暖', note: '用冷暖差建立情绪变化，适合前景与背景的气质对照。' },
+  { key: 'lighter', label: '明色', note: '同一语气里更轻的颜色，适合背景、留白和轻提示。' },
+  { key: 'darker', label: '暗色', note: '同一语气里更沉的颜色，适合文字、边界和压重点。' },
+  { key: 'grayTone', label: '灰调', note: '降低饱和度后更耐看，适合大面积和长时间阅读场景。' },
+  { key: 'neutral', label: '中性', note: '作为结构和呼吸空间，帮助主色保持克制。' },
 ];
 
 function formatBytes(bytes) {
@@ -100,6 +124,16 @@ function colorTitle(image) {
 
 function colorName(image) {
   return colorTitle(image).replace(/^\d{3}-/, '');
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  })[character]);
 }
 
 function normalize(value) {
@@ -375,6 +409,166 @@ function contrastRatio(first, second) {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
+function swatchTextColor(hex) {
+  const rgb = rgbFromHex(hex);
+  if (!rgb) return '#111111';
+  return relativeLuminance(rgb) > 0.58 ? '#111111' : '#f7f7f4';
+}
+
+function lookupDisplayColor(color) {
+  if (typeof color === 'string') {
+    const image = imagesById.get(color);
+    return {
+      id: color,
+      name: image ? colorName(image) : '',
+      hex: image?.hex || '',
+    };
+  }
+
+  const image = imagesById.get(color?.id);
+  return {
+    id: color?.id || image?.id || '',
+    name: color?.name || (image ? colorName(image) : ''),
+    hex: color?.hex || image?.hex || '',
+  };
+}
+
+function harmonyForImage(image) {
+  return image ? colorHarmonies[image.id] : null;
+}
+
+function harmonyRelationType(key) {
+  return HARMONY_RELATION_TYPES.find((type) => type.key === key) || HARMONY_RELATION_TYPES[0];
+}
+
+function harmonyColorMarkup(color, role = '') {
+  const item = lookupDisplayColor(color);
+  const label = `${item.id}-${item.name}`;
+  const value = colorValue(item);
+  const textColor = swatchTextColor(item.hex);
+
+  return `
+    <button class="harmony-color" type="button" data-harmony-color="${escapeHtml(item.id)}" data-harmony-name="${escapeHtml(item.name)}" data-harmony-hex="${escapeHtml(item.hex)}" style="--swatch: ${item.hex}; --swatch-text: ${textColor}" aria-label="复制 ${escapeHtml(label)} ${colorValueLabel()} 色值 ${escapeHtml(value)}">
+      <span class="harmony-color-swatch" aria-hidden="true"></span>
+      <span class="harmony-color-copy">
+        ${role ? `<em>${escapeHtml(role)}</em>` : ''}
+        <strong>${escapeHtml(label)}</strong>
+        <small data-harmony-value>${escapeHtml(value)}</small>
+      </span>
+    </button>
+  `;
+}
+
+function renderHarmonyRoles(image, harmony) {
+  if (!heroPreviewRoleMap || !harmony) return;
+
+  const main = {
+    id: image.id,
+    name: colorName(image),
+    hex: image.hex,
+  };
+  const roles = [
+    { label: '主色', colors: [main] },
+    { label: '辅色', colors: harmony.secondary || [] },
+    { label: '点缀', colors: harmony.accent || [] },
+  ];
+
+  heroPreviewRoleMap.innerHTML = roles.map((role) => `
+    <section class="harmony-role">
+      <span>${role.label}</span>
+      <div>
+        ${role.colors.map((color) => harmonyColorMarkup(color)).join('')}
+      </div>
+    </section>
+  `).join('');
+}
+
+function renderHarmonyTabs(harmony) {
+  if (!harmonyTabs || !harmony) return;
+
+  const availableTypes = HARMONY_RELATION_TYPES.filter((type) => harmony[type.key]?.length);
+  if (!availableTypes.some((type) => type.key === currentHarmonyKey)) {
+    currentHarmonyKey = availableTypes[0]?.key || 'same';
+  }
+
+  harmonyTabs.innerHTML = availableTypes.map((type) => `
+    <button class="harmony-tab" type="button" role="tab" data-harmony-key="${type.key}" aria-selected="${type.key === currentHarmonyKey ? 'true' : 'false'}">
+      ${type.label}
+    </button>
+  `).join('');
+}
+
+function renderHarmonyPanel(harmony) {
+  if (!harmonyPanel || !harmony) return;
+
+  const relation = harmonyRelationType(currentHarmonyKey);
+  const colors = harmony[currentHarmonyKey] || [];
+  harmonyPanel.innerHTML = `
+    <div class="harmony-panel-copy">
+      <strong>${relation.label}</strong>
+      <p>${relation.note}</p>
+    </div>
+    <div class="harmony-color-grid">
+      ${colors.map((color) => harmonyColorMarkup(color)).join('')}
+    </div>
+  `;
+}
+
+function renderHeroPreviewHarmony(image) {
+  const harmony = harmonyForImage(image);
+  if (!harmony) {
+    if (heroPreviewHue) heroPreviewHue.textContent = '未记录';
+    if (heroPreviewHarmony) heroPreviewHarmony.hidden = true;
+    return;
+  }
+
+  if (heroPreviewHue) {
+    heroPreviewHue.textContent = `${harmony.hueFamily} · ${harmony.temperature} · H${harmony.hsl.h} S${harmony.hsl.s} L${harmony.hsl.l}`;
+  }
+  if (heroPreviewHarmony) heroPreviewHarmony.hidden = false;
+  if (heroPreviewHarmonyNote) heroPreviewHarmonyNote.textContent = harmony.note;
+
+  renderHarmonyRoles(image, harmony);
+  renderHarmonyTabs(harmony);
+  renderHarmonyPanel(harmony);
+}
+
+function harmonyColorFromButton(button) {
+  return lookupDisplayColor({
+    id: button.dataset.harmonyColor,
+    name: button.dataset.harmonyName,
+    hex: button.dataset.harmonyHex,
+  });
+}
+
+function updateHarmonyValues() {
+  document.querySelectorAll('[data-harmony-color]').forEach((button) => {
+    const color = harmonyColorFromButton(button);
+    const value = colorValue(color);
+    const label = `${color.id}-${color.name}`;
+    const valueNode = button.querySelector('[data-harmony-value]');
+    if (valueNode && !button.dataset.copied) valueNode.textContent = value;
+    button.setAttribute('aria-label', `复制 ${label} ${colorValueLabel()} 色值 ${value}`);
+  });
+}
+
+async function copyHarmonyColor(button) {
+  const color = harmonyColorFromButton(button);
+  const value = colorValue(color);
+  const copyText = `${color.name} ${value}`;
+
+  await writeClipboard(copyText);
+  button.dataset.copied = 'true';
+  setTemporaryLabel(button.querySelector('[data-harmony-value]'), '已复制');
+  if (heroPreviewStatus) {
+    heroPreviewStatus.textContent = `已复制 ${colorValueLabel()}：${copyText}`;
+  }
+  window.setTimeout(() => {
+    delete button.dataset.copied;
+    updateHarmonyValues();
+  }, 1200);
+}
+
 function hashString(value) {
   let hash = 0;
   for (let index = 0; index < value.length; index += 1) {
@@ -484,7 +678,9 @@ function clearTitleColor(title) {
 
 function bindTitleColorHover() {
   titleHoverElements.forEach((title) => {
-    title.dataset.titleText = title.textContent.trim();
+    const titleText = title.textContent.trim();
+    title.dataset.titleText = titleText;
+    title.setAttribute('aria-label', titleText);
     title.addEventListener('pointerenter', () => activateTitleColor(title));
     title.addEventListener('pointerleave', () => clearTitleColor(title));
     title.addEventListener('focus', () => activateTitleColor(title));
@@ -606,11 +802,14 @@ function openHeroPreview(id) {
   if (heroPreviewFile) heroPreviewFile.textContent = image.file;
   if (heroPreviewSize) heroPreviewSize.textContent = formatBytes(image.size);
   if (heroPreviewFormat) heroPreviewFormat.value = selectedColorValueType;
+  renderHeroPreviewHarmony(image);
   if (heroPreviewDownload) {
     heroPreviewDownload.href = url;
     heroPreviewDownload.setAttribute('download', image.file);
   }
   if (heroPreviewStatus) heroPreviewStatus.textContent = `当前复制格式：${colorValueLabel()}`;
+  if (heroPreviewContent) heroPreviewContent.scrollTop = 0;
+  heroPreviewDialog.scrollTop = 0;
 
   if (typeof heroPreviewDialog.showModal === 'function') {
     heroPreviewDialog.showModal();
@@ -649,9 +848,14 @@ function cardMarkup(image) {
           <strong>${displayTitle}</strong>
           <small>原图 ${formatBytes(image.size)}</small>
         </span>
-        <a class="card-button" href="${url}" download aria-label="下载 ${title}">
-          <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
-        </a>
+        <span class="card-actions">
+          <button class="card-button" type="button" data-open-color-preview="${image.id}" aria-label="查看 ${title} 配色关系">
+            <iconify-icon icon="lucide:palette" aria-hidden="true"></iconify-icon>
+          </button>
+          <a class="card-button" href="${url}" download aria-label="下载 ${title}">
+            <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
+          </a>
+        </span>
       </div>
     </article>
   `;
@@ -782,6 +986,8 @@ function updateCopyControls() {
       button.innerHTML = `复制 <span data-copy-value>${value}</span>`;
     }
   });
+
+  updateHarmonyValues();
 }
 
 function masterListText() {
@@ -1038,6 +1244,12 @@ loadMoreButton?.addEventListener('click', () => {
 });
 
 gallery?.addEventListener('click', (event) => {
+  const previewButton = event.target.closest('[data-open-color-preview]');
+  if (previewButton) {
+    openHeroPreview(previewButton.dataset.openColorPreview);
+    return;
+  }
+
   const copyButton = event.target.closest('[data-copy-color]');
   if (copyButton) {
     copyHex(copyButton);
@@ -1060,6 +1272,21 @@ closeMasterListButton?.addEventListener('click', () => masterListDialog?.close()
 closeHeroPreviewButton?.addEventListener('click', () => heroPreviewDialog?.close());
 heroPreviewDialog?.addEventListener('click', (event) => {
   if (event.target === heroPreviewDialog) heroPreviewDialog.close();
+});
+heroPreviewHarmony?.addEventListener('click', (event) => {
+  const tab = event.target.closest('[data-harmony-key]');
+  if (tab) {
+    currentHarmonyKey = tab.dataset.harmonyKey;
+    const harmony = harmonyForImage(currentHeroPreviewImage);
+    renderHarmonyTabs(harmony);
+    renderHarmonyPanel(harmony);
+    return;
+  }
+
+  const harmonyButton = event.target.closest('[data-harmony-color]');
+  if (harmonyButton) {
+    copyHarmonyColor(harmonyButton);
+  }
 });
 copyHeroPreviewButton?.addEventListener('click', async () => {
   if (!currentHeroPreviewImage?.hex) return;
