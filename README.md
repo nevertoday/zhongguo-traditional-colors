@@ -12,6 +12,7 @@
 - [直接下载完整 ZIP](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip)
 - [查看 Release](https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0)
 - [原始 742 色清单](docs/chinese-color-master-list.md)
+- [742 色配色关系 CSV](docs/chinese-color-harmony.csv)
 - [作者 X 主页](https://x.com/xiaoxiaodong01)
 
 ## 这个项目能帮你什么
@@ -1393,9 +1394,9 @@ npm run readme
 
 ## 支持作者
 
-这个传统色图片合集会继续保持免费开源。如果它帮你省了整理素材的时间，欢迎 Star、分享给需要的人，或者扫描下面的 Buy Me a Coffee 二维码请作者喝杯咖啡。反馈和 issue 同样有帮助。
+这个传统色图片合集会继续保持免费开源。如果它帮你省了整理素材的时间，欢迎 Star、分享给需要的人，或者扫描下面的二维码打赏小小东一点算力，让他继续优化这份开放色库。反馈和 issue 同样有帮助。
 
-<img src="docs/images/buy-me-a-coffee-qr.png" alt="Buy Me a Coffee 支持二维码" width="220">
+<img src="docs/images/buy-me-a-coffee-qr.png" alt="赞赏小小东的二维码" width="220">
 
 ## 联系作者
 

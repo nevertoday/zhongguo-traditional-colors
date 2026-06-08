@@ -146,22 +146,12 @@ h1,
 h2,
 h3 {
   position: relative;
-  background:
-    linear-gradient(
-      90deg,
-      var(--title-hover-color, currentColor) 0 50%,
-      var(--title-base-color, currentColor) 50% 100%
-    );
-  background-repeat: no-repeat;
-  background-position: 100% 0;
-  background-size: 200% 100%;
   font-family: var(--font-title);
-  transition: background-position 520ms var(--ease-out-expo), text-shadow 220ms ease;
+  transition: color 280ms var(--ease-out-quart), text-shadow 220ms ease;
 }
 
 .title-color-active {
   color: var(--title-hover-color);
-  background-position: 0 0;
 }
 
 :root[data-theme="dark"] .title-color-active {
@@ -169,11 +159,27 @@ h3 {
 }
 
 @supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  h1,
+  h2,
+  h3 {
+    background:
+      linear-gradient(
+        90deg,
+        var(--title-hover-color, currentColor) 0 50%,
+        var(--title-base-color, currentColor) 50% 100%
+      );
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    transition: background-position 520ms var(--ease-out-expo), text-shadow 220ms ease;
+  }
+
   .title-color-active {
     color: transparent;
     -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
+    background-position: 0 0;
   }
 }
 

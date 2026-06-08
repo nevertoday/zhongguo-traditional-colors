@@ -12,6 +12,7 @@ It contains 742 high-resolution Chinese traditional color cards, aligned with th
 - [Download the complete ZIP](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip)
 - [View the Release](https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0)
 - [Original 742-color list](docs/chinese-color-master-list.md)
+- [742-color harmony CSV](docs/chinese-color-harmony.csv)
 - [Author on X](https://x.com/xiaoxiaodong01)
 
 ## What This Project Gives You
@@ -1361,9 +1362,9 @@ The complete ZIP is provided through GitHub Releases. Browser-side ZIP generatio
 
 ## Support
 
-This archive remains free and open source. If it saves you time, a Star, a share, a useful issue, or a small coffee for the author all help the project continue.
+This archive remains free and open source. If it saves you time, a Star, a share, a useful issue, or a small contribution toward compute for 小小东 all help the project keep improving.
 
-<img src="docs/images/buy-me-a-coffee-qr.png" alt="Buy Me a Coffee QR code" width="220">
+<img src="docs/images/buy-me-a-coffee-qr.png" alt="Support 小小东 QR code" width="220">
 
 ## License
 

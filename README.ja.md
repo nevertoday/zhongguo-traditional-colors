@@ -12,6 +12,7 @@
 - [完全 ZIP をダウンロード](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip)
 - [Release を見る](https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0)
 - [元の 742 色リスト](docs/chinese-color-master-list.md)
+- [742 色配色 CSV](docs/chinese-color-harmony.csv)
 - [作者の X](https://x.com/xiaoxiaodong01)
 
 ## このプロジェクトでできること
@@ -1361,9 +1362,9 @@ http://localhost:5173
 
 ## サポート
 
-このアーカイブは無料かつオープンソースで公開し続けます。役に立った場合は Star、共有、Issue、または作者へのコーヒー支援が励みになります。
+このアーカイブは無料かつオープンソースで公開し続けます。役に立った場合は Star、共有、Issue、または小小東の継続的な改善に向けた算力支援が励みになります。
 
-<img src="docs/images/buy-me-a-coffee-qr.png" alt="Buy Me a Coffee QR code" width="220">
+<img src="docs/images/buy-me-a-coffee-qr.png" alt="小小東を支援する QR コード" width="220">
 
 ## ライセンス
 

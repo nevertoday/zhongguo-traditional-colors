@@ -8,8 +8,9 @@
     "start": "python3 -m http.server 5173",
     "manifest": "node scripts/build-manifest.mjs",
     "readme": "node scripts/build-readme.mjs",
+    "harmonies": "node scripts/build-color-harmonies.mjs",
     "package:images": "node scripts/package-images.mjs",
-    "prepare:release": "npm run manifest && npm run readme && npm run package:images"
+    "prepare:release": "npm run manifest && npm run harmonies && npm run readme && npm run package:images"
   },
   "keywords": [
     "traditional-colors",
