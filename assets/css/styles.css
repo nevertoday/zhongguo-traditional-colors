@@ -136,6 +136,15 @@ h1,
 h2,
 h3 {
   font-family: var(--font-title);
+  transition: color 220ms var(--ease-out-quart), text-shadow 220ms ease;
+}
+
+.title-color-active {
+  color: var(--title-hover-color);
+}
+
+:root[data-theme="dark"] .title-color-active {
+  text-shadow: 0 0 18px color-mix(in srgb, var(--title-hover-color) 28%, transparent);
 }
 
 p {
@@ -388,7 +397,8 @@ select:focus-visible,
 .copy-format select:focus-visible,
 .text-link:focus-visible,
 .nav-icon-link:focus-visible,
-.theme-toggle:focus-visible {
+.theme-toggle:focus-visible,
+.scroll-control:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
 }
@@ -398,7 +408,8 @@ select:focus-visible,
 .open-link iconify-icon,
 .archive-trigger iconify-icon,
 .card-button iconify-icon,
-.theme-toggle iconify-icon {
+.theme-toggle iconify-icon,
+.scroll-control iconify-icon {
   width: 18px;
   height: 18px;
   flex: 0 0 auto;
@@ -409,7 +420,8 @@ select:focus-visible,
 .tool-button:hover iconify-icon,
 .archive-trigger:hover iconify-icon,
 .card-button:hover iconify-icon,
-.theme-toggle:hover iconify-icon {
+.theme-toggle:hover iconify-icon,
+.scroll-control:hover iconify-icon {
   transform: translateY(-1px);
 }
 
@@ -1820,6 +1832,47 @@ select:focus-visible,
   font-size: 0.82rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
+}
+
+.scroll-rail {
+  position: fixed;
+  right: max(16px, calc((100vw - var(--content)) / 2 + 18px));
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  z-index: 24;
+  display: grid;
+  gap: 8px;
+}
+
+.scroll-control {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--solid) 88%, transparent);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--ink) 10%, transparent);
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  transition: opacity 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms var(--ease-out-quart);
+}
+
+.scroll-control:hover {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border-color: var(--hover-bg);
+  transform: translateY(-1px);
+}
+
+.scroll-control:disabled {
+  cursor: default;
+  opacity: 0.34;
+  transform: none;
+}
+
+.scroll-control:disabled iconify-icon {
+  transform: none;
 }
 
 .master-list-dialog[open] {

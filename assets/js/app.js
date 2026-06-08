@@ -28,6 +28,9 @@ const themeToggleLabel = document.querySelector('[data-theme-label]');
 const themeColorMeta = document.querySelector('[data-theme-color]');
 const footerColorButtons = document.querySelectorAll('[data-footer-color]');
 const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
+const scrollUpButton = document.querySelector('[data-scroll-up]');
+const scrollDownButton = document.querySelector('[data-scroll-down]');
+const titleHoverElements = document.querySelectorAll('h1, h2, h3');
 
 let visibleCount = 24;
 let currentItems = [...images];
@@ -35,6 +38,7 @@ let shuffled = false;
 let currentHue = 'all';
 let selectedColorValueType = getSavedColorValueType();
 let footerCopyTimer;
+let scrollControlFrame;
 
 const COLOR_VALUE_TYPES = [
   { value: 'hex', label: 'HEX' },
@@ -266,6 +270,97 @@ function randomColorItems(count) {
   return pool.slice(0, count);
 }
 
+function parseRgbColor(value) {
+  const match = value?.match(/rgba?\(([^)]+)\)/i);
+  if (!match) return null;
+
+  const numbers = match[1].match(/[\d.]+/g)?.map(Number) || [];
+  if (numbers.length < 3) return null;
+
+  return {
+    r: numbers[0],
+    g: numbers[1],
+    b: numbers[2],
+    a: numbers[3] ?? 1,
+  };
+}
+
+function nearestBackgroundRgb(node) {
+  let current = node;
+  while (current && current !== document.documentElement) {
+    const background = parseRgbColor(window.getComputedStyle(current).backgroundColor);
+    if (background && background.a > 0) return background;
+    current = current.parentElement;
+  }
+
+  return currentTheme() === 'dark'
+    ? { r: 17, g: 16, b: 14, a: 1 }
+    : { r: 247, g: 247, b: 244, a: 1 };
+}
+
+function luminanceChannel(value) {
+  const channel = value / 255;
+  return channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+}
+
+function relativeLuminance({ r, g, b }) {
+  return (0.2126 * luminanceChannel(r)) + (0.7152 * luminanceChannel(g)) + (0.0722 * luminanceChannel(b));
+}
+
+function contrastRatio(first, second) {
+  const lighter = Math.max(relativeLuminance(first), relativeLuminance(second));
+  const darker = Math.min(relativeLuminance(first), relativeLuminance(second));
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function readableColorForTitle(title) {
+  const background = nearestBackgroundRgb(title);
+  const scored = images
+    .filter((image) => image.hex)
+    .map((image) => {
+      const rgb = rgbFromHex(image.hex);
+      return rgb ? { image, ratio: contrastRatio(rgb, background) } : null;
+    })
+    .filter(Boolean)
+    .filter((item) => item.ratio >= 4.5);
+
+  const pool = scored.length
+    ? scored
+    : images
+      .filter((image) => image.hex)
+      .map((image) => {
+        const rgb = rgbFromHex(image.hex);
+        return rgb ? { image, ratio: contrastRatio(rgb, background) } : null;
+      })
+      .filter(Boolean)
+      .sort((first, second) => second.ratio - first.ratio)
+      .slice(0, 64);
+
+  return pool[randomInt(pool.length)]?.image;
+}
+
+function activateTitleColor(title) {
+  const color = readableColorForTitle(title);
+  if (!color) return;
+
+  title.style.setProperty('--title-hover-color', color.hex);
+  title.dataset.titleHoverColor = `${colorName(color)} ${color.hex}`;
+  title.classList.add('title-color-active');
+}
+
+function clearTitleColor(title) {
+  title.classList.remove('title-color-active');
+}
+
+function bindTitleColorHover() {
+  titleHoverElements.forEach((title) => {
+    title.addEventListener('pointerenter', () => activateTitleColor(title));
+    title.addEventListener('pointerleave', () => clearTitleColor(title));
+    title.addEventListener('focus', () => activateTitleColor(title));
+    title.addEventListener('blur', () => clearTitleColor(title));
+  });
+}
+
 function buildFooterSpectrum() {
   if (!footerColorButtons.length) return;
 
@@ -282,6 +377,57 @@ function buildFooterSpectrum() {
     button.dataset.footerCopyValue = copyText;
     button.title = `复制 ${copyText}`;
     button.setAttribute('aria-label', `复制 ${name} 色值 ${hex}`);
+  });
+}
+
+function headerOffset() {
+  return (document.querySelector('.site-header')?.getBoundingClientRect().height || 0) + 12;
+}
+
+function maxScrollY() {
+  return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+}
+
+function scrollPositions() {
+  const offset = headerOffset();
+  const positions = [0];
+  document.querySelectorAll('main > section, .site-footer').forEach((section) => {
+    const top = Math.max(0, Math.round(section.getBoundingClientRect().top + window.scrollY - offset));
+    positions.push(top);
+  });
+
+  positions.push(maxScrollY());
+  return [...new Set(positions)].sort((a, b) => a - b);
+}
+
+function scrollBySection(direction) {
+  const current = window.scrollY;
+  const threshold = 48;
+  const positions = scrollPositions();
+  const next = direction === 'up'
+    ? [...positions].reverse().find((position) => position < current - threshold)
+    : positions.find((position) => position > current + threshold);
+  const target = next ?? (direction === 'up' ? 0 : maxScrollY());
+
+  window.scrollTo({
+    top: Math.min(target, maxScrollY()),
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+  });
+}
+
+function updateScrollControls() {
+  const current = window.scrollY;
+  const max = maxScrollY();
+  if (scrollUpButton) scrollUpButton.disabled = current <= 8;
+  if (scrollDownButton) scrollDownButton.disabled = current >= max - 8;
+}
+
+function queueScrollControlsUpdate() {
+  if (scrollControlFrame) return;
+
+  scrollControlFrame = window.requestAnimationFrame(() => {
+    scrollControlFrame = 0;
+    updateScrollControls();
   });
 }
 
@@ -358,6 +504,8 @@ function syncGalleryFooter(visibleLength) {
   if (loadMoreButton) {
     loadMoreButton.hidden = visibleLength >= currentItems.length;
   }
+
+  queueScrollControlsUpdate();
 }
 
 function renderGallery() {
@@ -708,6 +856,8 @@ setTheme(currentTheme());
 buildHero();
 buildFooterSpectrum();
 renderGallery();
+updateScrollControls();
+bindTitleColorHover();
 
 themeToggle?.addEventListener('click', () => {
   setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
@@ -774,4 +924,8 @@ footerColorButtons.forEach((button) => {
     }, 1000);
   });
 });
+scrollUpButton?.addEventListener('click', () => scrollBySection('up'));
+scrollDownButton?.addEventListener('click', () => scrollBySection('down'));
+window.addEventListener('scroll', queueScrollControlsUpdate, { passive: true });
+window.addEventListener('resize', queueScrollControlsUpdate);
 zipButton?.addEventListener('click', downloadZip);
