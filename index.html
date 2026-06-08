@@ -163,21 +163,21 @@
 
         <div class="audit-workspace">
           <div class="audit-grid" aria-label="颜色清单审计摘要">
-            <article>
-              <strong>742</strong>
-              <span>原始颜色</span>
+            <article data-metric-mark="名">
+              <strong data-count>742</strong>
+              <span>完整色名</span>
             </article>
-            <article>
-              <strong>742</strong>
-              <span>当前图片</span>
+            <article data-metric-mark="图">
+              <strong data-total-size>998 MB</strong>
+              <span>高清图片</span>
             </article>
-            <article>
-              <strong>742</strong>
-              <span>唯一覆盖</span>
+            <article data-metric-mark="值">
+              <strong>4</strong>
+              <span>复制格式</span>
             </article>
-            <article>
-              <strong>完整</strong>
-              <span>覆盖状态</span>
+            <article data-metric-mark="包">
+              <strong>ZIP</strong>
+              <span>整包下载</span>
             </article>
           </div>
           <button class="archive-trigger" type="button" data-open-master-list>
@@ -424,6 +424,15 @@
           </div>
         </dl>
         <div class="hero-preview-actions">
+          <label class="hero-preview-format">
+            <span class="sr-only">选择复制色值类型</span>
+            <select data-hero-preview-format aria-label="复制色值类型">
+              <option value="hex">HEX</option>
+              <option value="rgb">RGB</option>
+              <option value="hsl">HSL</option>
+              <option value="cmyk">CMYK</option>
+            </select>
+          </label>
           <button class="button button-primary" type="button" data-copy-hero-preview>
             <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
             复制色值

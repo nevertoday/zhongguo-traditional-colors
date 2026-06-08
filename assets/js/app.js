@@ -41,6 +41,7 @@ const heroPreviewDownload = document.querySelector('[data-hero-preview-download]
 const heroPreviewStatus = document.querySelector('[data-hero-preview-status]');
 const closeHeroPreviewButton = document.querySelector('[data-close-hero-preview]');
 const copyHeroPreviewButton = document.querySelector('[data-copy-hero-preview]');
+const heroPreviewFormat = document.querySelector('[data-hero-preview-format]');
 
 let visibleCount = 24;
 let currentItems = [...images];
@@ -509,11 +510,12 @@ function openHeroPreview(id) {
   if (heroPreviewHex) heroPreviewHex.textContent = image.hex || '未记录';
   if (heroPreviewFile) heroPreviewFile.textContent = image.file;
   if (heroPreviewSize) heroPreviewSize.textContent = formatBytes(image.size);
+  if (heroPreviewFormat) heroPreviewFormat.value = selectedColorValueType;
   if (heroPreviewDownload) {
     heroPreviewDownload.href = url;
     heroPreviewDownload.setAttribute('download', image.file);
   }
-  if (heroPreviewStatus) heroPreviewStatus.textContent = '';
+  if (heroPreviewStatus) heroPreviewStatus.textContent = `当前复制格式：${colorValueLabel()}`;
 
   if (typeof heroPreviewDialog.showModal === 'function') {
     heroPreviewDialog.showModal();
@@ -958,10 +960,17 @@ heroPreviewDialog?.addEventListener('click', (event) => {
 copyHeroPreviewButton?.addEventListener('click', async () => {
   if (!currentHeroPreviewImage?.hex) return;
 
-  const copyText = `${colorName(currentHeroPreviewImage)} ${currentHeroPreviewImage.hex}`;
+  const copyText = `${colorName(currentHeroPreviewImage)} ${colorValue(currentHeroPreviewImage)}`;
   await writeClipboard(copyText);
   if (heroPreviewStatus) {
-    heroPreviewStatus.textContent = `已复制：${copyText}`;
+    heroPreviewStatus.textContent = `已复制 ${colorValueLabel()}：${copyText}`;
+  }
+});
+heroPreviewFormat?.addEventListener('change', () => {
+  saveColorValueType(heroPreviewFormat.value);
+  updateCopyControls();
+  if (currentHeroPreviewImage && heroPreviewStatus) {
+    heroPreviewStatus.textContent = `已切换为 ${colorValueLabel()}，下一次复制会沿用该格式`;
   }
 });
 masterSearchInput?.addEventListener('input', renderMasterList);
