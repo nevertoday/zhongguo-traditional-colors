@@ -34,6 +34,8 @@
 
 これらの skill は、742 色リストと配色 CSV を、デザイン実務で使えるワークフローに変換します。それぞれが別々の実務上の詰まりを扱います。方向性が曖昧、色板が多すぎる、配置できない、token 連携、可読性、ブランドのぶれ、図表の色分け、既存稿の修正、連載疲れ、印刷の不確実性です。
 
+各 `xxd-*` skill フォルダには、完全な `references/chinese-color-master-list.md`、`references/chinese-color-harmony.md`、`references/chinese-color-harmony.csv` を同梱しています。単独で skill を使う場合でも、742 色リストと各色の配色関係を参照できます。
+
 | Skill | 用途 |
 | --- | --- |
 | [`xxd-color-brief`](skills/xxd-color-brief/SKILL.md) | 高級、東洋的、若い、抑制的などの曖昧な語を、寒暖、明度、彩度、対比、リスク条件に翻訳 |

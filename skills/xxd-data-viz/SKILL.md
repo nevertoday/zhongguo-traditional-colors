@@ -17,7 +17,10 @@ Use this skill when colors must encode data. It should not turn a poster palette
 
 ## Data Contract
 
-- Use only colors from `docs/chinese-color-master-list.md` and `docs/chinese-color-harmony.csv`.
+- Use the bundled references inside this skill:
+  - `references/chinese-color-master-list.md`: full 742-color Markdown source list.
+  - `references/chinese-color-harmony.csv`: complete machine-readable harmony table for all 742 colors.
+  - `references/chinese-color-harmony.md`: Markdown version of the same harmony relationships.
 - Do not treat all harmony colors as chart-ready; validate distinctness or ordering for the chart mode.
 - Do not rely on hue alone. Add label, order, pattern, stroke, marker shape, direct labeling, or interaction guidance when needed.
 

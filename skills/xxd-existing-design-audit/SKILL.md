@@ -17,7 +17,10 @@ Use this skill when the user is not starting from zero. It should preserve what 
 
 ## Data Contract
 
-- Use only project colors from `docs/chinese-color-master-list.md` and `docs/chinese-color-harmony.csv` for replacements.
+- Use the bundled references inside this skill for replacements:
+  - `references/chinese-color-master-list.md`: full 742-color Markdown source list.
+  - `references/chinese-color-harmony.csv`: complete machine-readable harmony table for all 742 colors.
+  - `references/chinese-color-harmony.md`: Markdown version of the same harmony relationships.
 - Separate user input colors from nearest traditional matches.
 - Preserve brand recognition unless the user asks for a full redesign.
 - For screenshots, only give exact matches when actual sampled HEX values are available; otherwise describe likely issues and request sampling for precision.

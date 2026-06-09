@@ -17,7 +17,10 @@ Use this skill when color beauty has to survive real reading, interaction, statu
 
 ## Data Contract
 
-- Use `docs/chinese-color-master-list.md` and `docs/chinese-color-harmony.csv` for replacements.
+- Use the bundled references inside this skill for replacements:
+  - `references/chinese-color-master-list.md`: full 742-color Markdown source list.
+  - `references/chinese-color-harmony.csv`: complete machine-readable harmony table for all 742 colors.
+  - `references/chinese-color-harmony.md`: Markdown version of the same harmony relationships.
 - Use WCAG contrast ratios for text and UI pair evaluation.
 - Do not claim compliance without a ratio or a clear "needs verification" note.
 - For charts, status, and selections, check whether color is the only cue and add labels, shape, stroke, underline, icon, or pattern when needed.

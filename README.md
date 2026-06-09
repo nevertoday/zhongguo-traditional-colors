@@ -34,6 +34,8 @@
 
 这些 skill 不是继续解释色彩理论，而是把 742 色清单和配色关系 CSV 转成设计师能直接使用的工作流。每个 skill 都对应一个真实工作阻塞点：方向太虚、色板太多、落位困难、Token 交付、可读性、品牌治理、图表编码、旧稿迁移、系列内容和印刷生产。
 
+每个 `xxd-*` skill 目录都随包包含完整 `references/chinese-color-master-list.md`、`references/chinese-color-harmony.md` 和 `references/chinese-color-harmony.csv`，单独取用某个 skill 时也能访问完整 742 色清单和每个颜色的配色关系。
+
 | Skill | 适合解决的问题 |
 | --- | --- |
 | [`xxd-color-brief`](skills/xxd-color-brief/SKILL.md) | 把“高级、东方、年轻、克制”这类模糊方向翻译成冷暖、明度、饱和度、对比和避坑约束 |

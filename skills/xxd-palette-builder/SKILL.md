@@ -17,7 +17,9 @@ Use this skill when the problem is choice. The user may like one color, a mood, 
 
 ## Data Contract
 
-- Load `docs/chinese-color-harmony.csv` before recommending combinations.
+- Load the bundled `references/chinese-color-harmony.csv` before recommending combinations.
+- Use `references/chinese-color-master-list.md` as the complete 742-color Markdown source list.
+- Use `references/chinese-color-harmony.md` when a Markdown preview of the same harmony relationships is easier to inspect.
 - Use the harmony columns selectively: `同类色`, `邻近色`, `互补色`, `分裂互补`, `三角色`, `四角色`, `冷暖对照`, `明色搭配`, `暗色搭配`, `灰调搭配`, `中性色搭配`, `主色`, `辅色`, and `点缀色`.
 - Every recommended HEX must exist in the current 742-color data.
 - If the user gives an outside HEX, map it to the nearest project color and say it is a match, not a source color.

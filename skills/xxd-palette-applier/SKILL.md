@@ -17,7 +17,10 @@ Use this skill after a palette exists. Its job is to decide where each color goe
 
 ## Data Contract
 
-- Use project colors from `docs/chinese-color-master-list.md` and `docs/chinese-color-harmony.csv`.
+- Use the bundled references inside this skill:
+  - `references/chinese-color-master-list.md`: full 742-color Markdown source list.
+  - `references/chinese-color-harmony.csv`: complete machine-readable harmony table for all 742 colors.
+  - `references/chinese-color-harmony.md`: Markdown version of the same harmony relationships.
 - If a palette came from outside the project, map its HEX values to nearest traditional colors before final placement.
 - Do not add colors unless repairing a real failure; explain every replacement.
 - If the user provides a screenshot or layout description, diagnose the current hierarchy before suggesting placement.

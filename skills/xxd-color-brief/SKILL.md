@@ -17,7 +17,10 @@ Use this skill before picking colors. Its job is to turn soft language like "高
 
 ## Data Contract
 
-- Use only colors traceable to `docs/chinese-color-master-list.md` and `docs/chinese-color-harmony.csv`.
+- Use the bundled references inside this skill:
+  - `references/chinese-color-master-list.md`: full 742-color Markdown source list.
+  - `references/chinese-color-harmony.csv`: complete machine-readable harmony table for all 742 colors.
+  - `references/chinese-color-harmony.md`: Markdown version of the same harmony relationships.
 - Starting colors must include color name, HEX, and the reason they fit the brief.
 - If the user provides an outside HEX, map it to the nearest project color and label it as a mapping.
 - Do not produce a full palette unless the user explicitly asks; route to the next skill instead.

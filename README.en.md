@@ -34,6 +34,8 @@ The original image set is about 998 MB. The ZIP is distributed as a GitHub Relea
 
 These skills turn the 742-color list and harmony CSV into practical design workflows. Each skill targets a distinct design blocker: fuzzy direction, too many palette choices, unclear placement, token handoff, readability, brand drift, chart encoding, legacy palette repair, content-series fatigue, and print uncertainty.
 
+Every `xxd-*` skill folder bundles the full `references/chinese-color-master-list.md`, `references/chinese-color-harmony.md`, and `references/chinese-color-harmony.csv`, so a single skill can still access the complete 742-color list and per-color harmony relationships on its own.
+
 | Skill | Use it for |
 | --- | --- |
 | [`xxd-color-brief`](skills/xxd-color-brief/SKILL.md) | Translate vague terms like premium, Eastern, young, or restrained into temperature, lightness, saturation, contrast, and risk constraints |

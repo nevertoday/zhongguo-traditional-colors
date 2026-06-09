@@ -17,7 +17,10 @@ Use this skill when traditional colors need to enter a product interface or desi
 
 ## Data Contract
 
-- Use only project colors from `docs/chinese-color-master-list.md` and `docs/chinese-color-harmony.csv`.
+- Use the bundled references inside this skill:
+  - `references/chinese-color-master-list.md`: full 742-color Markdown source list.
+  - `references/chinese-color-harmony.csv`: complete machine-readable harmony table for all 742 colors.
+  - `references/chinese-color-harmony.md`: Markdown version of the same harmony relationships.
 - Do not synthesize tints or alpha variants as standalone source colors unless the user explicitly asks for derived states.
 - When contrast is uncertain, calculate it or route to `xxd-accessible-color` before claiming safety.
 - Keep traditional color names as metadata; token names should be semantic.

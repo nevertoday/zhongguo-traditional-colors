@@ -17,7 +17,10 @@ Use this skill when color must become brand behavior, not just a campaign palett
 
 ## Data Contract
 
-- Use only colors from `docs/chinese-color-master-list.md` and `docs/chinese-color-harmony.csv`.
+- Use the bundled references inside this skill:
+  - `references/chinese-color-master-list.md`: full 742-color Markdown source list.
+  - `references/chinese-color-harmony.csv`: complete machine-readable harmony table for all 742 colors.
+  - `references/chinese-color-harmony.md`: Markdown version of the same harmony relationships.
 - Include color name and HEX for every color.
 - If the user has existing brand colors, map them to nearest project colors and preserve recognition unless a full redesign is requested.
 - If the brand becomes an interface, hand off token work to `xxd-ui-token`.

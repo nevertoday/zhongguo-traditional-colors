@@ -17,7 +17,10 @@ Use this skill when traditional colors must leave the screen. It should plan col
 
 ## Data Contract
 
-- Use only colors from `docs/chinese-color-master-list.md` and `docs/chinese-color-harmony.csv`.
+- Use the bundled references inside this skill:
+  - `references/chinese-color-master-list.md`: full 742-color Markdown source list.
+  - `references/chinese-color-harmony.csv`: complete machine-readable harmony table for all 742 colors.
+  - `references/chinese-color-harmony.md`: Markdown version of the same harmony relationships.
 - Include HEX for digital reference.
 - Include CMYK only when available from the project data or user-provided production specs.
 - If CMYK or spot specifications are unavailable, say the color must be proofed with printer profiles or physical proofs.

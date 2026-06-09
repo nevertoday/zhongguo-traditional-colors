@@ -17,7 +17,10 @@ Use this skill when a creator needs repeated content to feel like one series whi
 
 ## Data Contract
 
-- Use only colors from `docs/chinese-color-master-list.md` and `docs/chinese-color-harmony.csv`.
+- Use the bundled references inside this skill:
+  - `references/chinese-color-master-list.md`: full 742-color Markdown source list.
+  - `references/chinese-color-harmony.csv`: complete machine-readable harmony table for all 742 colors.
+  - `references/chinese-color-harmony.md`: Markdown version of the same harmony relationships.
 - Give recurring colors stable roles.
 - Avoid assigning too many equally strong colors to columns; recognition usually comes from stable structure plus controlled variation.
 
