@@ -1412,7 +1412,7 @@ heroPreviewFormat?.addEventListener('change', () => {
     heroPreviewStatus.textContent = `已切换为 ${colorValueLabel()}，下一次复制会沿用该格式`;
   }
 });
-masterSearchInput?.addEventListener('input', renderMasterList);
+masterSearchInput?.addEventListener('input', debounce(renderMasterList, 200));
 masterListDialog?.addEventListener('click', async (event) => {
   if (event.target === masterListDialog) {
     masterListDialog.close();
