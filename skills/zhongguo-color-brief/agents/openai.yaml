@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo Color Brief"
-  short_description: "Translate fuzzy art direction into color constraints"
-  default_prompt: "Use $zhongguo-color-brief to turn this visual direction into a Chinese traditional color brief."

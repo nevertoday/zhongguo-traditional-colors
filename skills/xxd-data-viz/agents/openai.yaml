@@ -1,0 +1,4 @@
+interface:
+  display_name: "xxd-data-viz"
+  short_description: "Create chart palettes with traditional color identity"
+  default_prompt: "Use /xxd-data-viz to create a chart palette from Chinese traditional colors."

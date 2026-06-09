@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo Data Viz"
-  short_description: "Create chart palettes with traditional color identity"
-  default_prompt: "Use $zhongguo-data-viz to create a chart palette from Chinese traditional colors."

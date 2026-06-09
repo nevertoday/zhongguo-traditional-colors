@@ -1,0 +1,4 @@
+interface:
+  display_name: "xxd-print-packaging"
+  short_description: "Plan packaging and print colors with production cautions"
+  default_prompt: "Use /xxd-print-packaging to plan packaging colors from Chinese traditional colors."

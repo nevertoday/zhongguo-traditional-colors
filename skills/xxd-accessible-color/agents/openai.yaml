@@ -1,0 +1,4 @@
+interface:
+  display_name: "xxd-accessible-color"
+  short_description: "Check readability and repair weak color pairs"
+  default_prompt: "Use /xxd-accessible-color to check this palette and repair weak text/background pairs."

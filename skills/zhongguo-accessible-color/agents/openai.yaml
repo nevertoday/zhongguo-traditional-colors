@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo Accessible Color"
-  short_description: "Check readability and repair weak color pairs"
-  default_prompt: "Use $zhongguo-accessible-color to check this palette and repair weak text/background pairs."

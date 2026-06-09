@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo UI Token"
-  short_description: "Convert Chinese traditional colors into UI tokens"
-  default_prompt: "Use $zhongguo-ui-token to create light and dark UI tokens from Chinese traditional colors."

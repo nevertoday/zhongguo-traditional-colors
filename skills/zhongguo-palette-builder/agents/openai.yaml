@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo Palette Builder"
-  short_description: "Build complete palettes from Chinese traditional colors"
-  default_prompt: "Use $zhongguo-palette-builder to create a practical Chinese traditional color palette."

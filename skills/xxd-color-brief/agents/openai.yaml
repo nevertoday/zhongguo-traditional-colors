@@ -1,0 +1,4 @@
+interface:
+  display_name: "xxd-color-brief"
+  short_description: "Translate fuzzy art direction into color constraints"
+  default_prompt: "Use /xxd-color-brief to turn this visual direction into a Chinese traditional color brief."

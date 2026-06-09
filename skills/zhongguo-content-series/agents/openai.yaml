@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo Content Series"
-  short_description: "Design repeatable color systems for content series"
-  default_prompt: "Use $zhongguo-content-series to design a reusable color system for this content series."

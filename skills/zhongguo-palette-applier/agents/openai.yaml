@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo Palette Applier"
-  short_description: "Apply palettes to real design surfaces and roles"
-  default_prompt: "Use $zhongguo-palette-applier to decide where each color should be used in this design."

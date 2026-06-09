@@ -1,0 +1,4 @@
+interface:
+  display_name: "xxd-existing-design-audit"
+  short_description: "Audit existing palettes and map them to Chinese colors"
+  default_prompt: "Use /xxd-existing-design-audit to audit this palette and translate it into Chinese traditional colors."

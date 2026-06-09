@@ -1,0 +1,4 @@
+interface:
+  display_name: "xxd-ui-token"
+  short_description: "Convert Chinese traditional colors into UI tokens"
+  default_prompt: "Use /xxd-ui-token to create light and dark UI tokens from Chinese traditional colors."

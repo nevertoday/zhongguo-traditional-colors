@@ -36,16 +36,16 @@
 
 | Skill | 适合解决的问题 |
 | --- | --- |
-| [`zhongguo-color-brief`](skills/zhongguo-color-brief/SKILL.md) | 把“高级、东方、年轻、克制”这类模糊方向翻译成配色简报 |
-| [`zhongguo-palette-builder`](skills/zhongguo-palette-builder/SKILL.md) | 从色名、HEX、情绪或项目场景生成完整可用的主辅点缀色板 |
-| [`zhongguo-palette-applier`](skills/zhongguo-palette-applier/SKILL.md) | 告诉设计师每个颜色应该放在背景、标题、按钮、装饰还是信息层 |
-| [`zhongguo-ui-token`](skills/zhongguo-ui-token/SKILL.md) | 输出 CSS variables、Tailwind/Figma token、浅色和深色模式映射 |
-| [`zhongguo-accessible-color`](skills/zhongguo-accessible-color/SKILL.md) | 检查文字、按钮、图表和 UI 状态的对比度，并给出替换色 |
-| [`zhongguo-brand-system`](skills/zhongguo-brand-system/SKILL.md) | 建立可长期复用的品牌色彩规范、比例和禁用组合 |
-| [`zhongguo-data-viz`](skills/zhongguo-data-viz/SKILL.md) | 为分类图、连续色带、发散图和仪表盘生成传统色图表方案 |
-| [`zhongguo-existing-design-audit`](skills/zhongguo-existing-design-audit/SKILL.md) | 诊断已有设计稿或 HEX 清单，并映射到最接近的中国传统色 |
-| [`zhongguo-content-series`](skills/zhongguo-content-series/SKILL.md) | 为小红书、公众号、课程、视频封面等系列内容建立统一色彩系统 |
-| [`zhongguo-print-packaging`](skills/zhongguo-print-packaging/SKILL.md) | 面向包装、文创、印刷和实体材料规划传统色使用方式 |
+| [`xxd-color-brief`](skills/xxd-color-brief/SKILL.md) | 把“高级、东方、年轻、克制”这类模糊方向翻译成配色简报 |
+| [`xxd-palette-builder`](skills/xxd-palette-builder/SKILL.md) | 从色名、HEX、情绪或项目场景生成完整可用的主辅点缀色板 |
+| [`xxd-palette-applier`](skills/xxd-palette-applier/SKILL.md) | 告诉设计师每个颜色应该放在背景、标题、按钮、装饰还是信息层 |
+| [`xxd-ui-token`](skills/xxd-ui-token/SKILL.md) | 输出 CSS variables、Tailwind/Figma token、浅色和深色模式映射 |
+| [`xxd-accessible-color`](skills/xxd-accessible-color/SKILL.md) | 检查文字、按钮、图表和 UI 状态的对比度，并给出替换色 |
+| [`xxd-brand-system`](skills/xxd-brand-system/SKILL.md) | 建立可长期复用的品牌色彩规范、比例和禁用组合 |
+| [`xxd-data-viz`](skills/xxd-data-viz/SKILL.md) | 为分类图、连续色带、发散图和仪表盘生成传统色图表方案 |
+| [`xxd-existing-design-audit`](skills/xxd-existing-design-audit/SKILL.md) | 诊断已有设计稿或 HEX 清单，并映射到最接近的中国传统色 |
+| [`xxd-content-series`](skills/xxd-content-series/SKILL.md) | 为小红书、公众号、课程、视频封面等系列内容建立统一色彩系统 |
+| [`xxd-print-packaging`](skills/xxd-print-packaging/SKILL.md) | 面向包装、文创、印刷和实体材料规划传统色使用方式 |
 
 ## 全部色卡
 

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo Design Audit"
-  short_description: "Audit existing palettes and map them to Chinese colors"
-  default_prompt: "Use $zhongguo-existing-design-audit to audit this palette and translate it into Chinese traditional colors."

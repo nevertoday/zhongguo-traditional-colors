@@ -36,16 +36,16 @@ These skills turn the 742-color list and harmony CSV into design workflows: brie
 
 | Skill | Use it for |
 | --- | --- |
-| [`zhongguo-color-brief`](skills/zhongguo-color-brief/SKILL.md) | Translate fuzzy visual direction into usable color constraints |
-| [`zhongguo-palette-builder`](skills/zhongguo-palette-builder/SKILL.md) | Build complete main/support/accent palettes from color names, HEX, mood, or project context |
-| [`zhongguo-palette-applier`](skills/zhongguo-palette-applier/SKILL.md) | Decide where each color belongs in a real layout |
-| [`zhongguo-ui-token`](skills/zhongguo-ui-token/SKILL.md) | Produce CSS variables, Tailwind/Figma tokens, and light/dark mappings |
-| [`zhongguo-accessible-color`](skills/zhongguo-accessible-color/SKILL.md) | Check contrast and repair weak text, button, chart, and UI state pairs |
-| [`zhongguo-brand-system`](skills/zhongguo-brand-system/SKILL.md) | Build reusable brand color rules, proportions, and forbidden combinations |
-| [`zhongguo-data-viz`](skills/zhongguo-data-viz/SKILL.md) | Create categorical, sequential, diverging, and dashboard chart palettes |
-| [`zhongguo-existing-design-audit`](skills/zhongguo-existing-design-audit/SKILL.md) | Audit existing HEX values or design screenshots and map them to Chinese traditional colors |
-| [`zhongguo-content-series`](skills/zhongguo-content-series/SKILL.md) | Create repeatable color systems for social, editorial, course, and video series |
-| [`zhongguo-print-packaging`](skills/zhongguo-print-packaging/SKILL.md) | Plan traditional color use for packaging, cultural products, and print materials |
+| [`xxd-color-brief`](skills/xxd-color-brief/SKILL.md) | Translate fuzzy visual direction into usable color constraints |
+| [`xxd-palette-builder`](skills/xxd-palette-builder/SKILL.md) | Build complete main/support/accent palettes from color names, HEX, mood, or project context |
+| [`xxd-palette-applier`](skills/xxd-palette-applier/SKILL.md) | Decide where each color belongs in a real layout |
+| [`xxd-ui-token`](skills/xxd-ui-token/SKILL.md) | Produce CSS variables, Tailwind/Figma tokens, and light/dark mappings |
+| [`xxd-accessible-color`](skills/xxd-accessible-color/SKILL.md) | Check contrast and repair weak text, button, chart, and UI state pairs |
+| [`xxd-brand-system`](skills/xxd-brand-system/SKILL.md) | Build reusable brand color rules, proportions, and forbidden combinations |
+| [`xxd-data-viz`](skills/xxd-data-viz/SKILL.md) | Create categorical, sequential, diverging, and dashboard chart palettes |
+| [`xxd-existing-design-audit`](skills/xxd-existing-design-audit/SKILL.md) | Audit existing HEX values or design screenshots and map them to Chinese traditional colors |
+| [`xxd-content-series`](skills/xxd-content-series/SKILL.md) | Create repeatable color systems for social, editorial, course, and video series |
+| [`xxd-print-packaging`](skills/xxd-print-packaging/SKILL.md) | Plan traditional color use for packaging, cultural products, and print materials |
 
 ## Full Gallery
 

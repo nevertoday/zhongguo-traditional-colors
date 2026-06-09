@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo Brand System"
-  short_description: "Build reusable brand color systems and rules"
-  default_prompt: "Use $zhongguo-brand-system to build a reusable brand color system from Chinese traditional colors."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "xxd-content-series"
+  short_description: "Design repeatable color systems for content series"
+  default_prompt: "Use /xxd-content-series to design a reusable color system for this content series."

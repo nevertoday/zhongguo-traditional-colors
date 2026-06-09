@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zhongguo Print Packaging"
-  short_description: "Plan packaging and print colors with production cautions"
-  default_prompt: "Use $zhongguo-print-packaging to plan packaging colors from Chinese traditional colors."

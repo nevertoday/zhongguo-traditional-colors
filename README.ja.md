@@ -36,16 +36,16 @@
 
 | Skill | 用途 |
 | --- | --- |
-| [`zhongguo-color-brief`](skills/zhongguo-color-brief/SKILL.md) | 抽象的な方向性を配色条件に翻訳 |
-| [`zhongguo-palette-builder`](skills/zhongguo-palette-builder/SKILL.md) | 色名、HEX、ムード、用途から主色・補助色・アクセント色を作成 |
-| [`zhongguo-palette-applier`](skills/zhongguo-palette-applier/SKILL.md) | 各色を背景、見出し、ボタン、装飾、情報階層に割り当て |
-| [`zhongguo-ui-token`](skills/zhongguo-ui-token/SKILL.md) | CSS variables、Tailwind/Figma token、ライト/ダーク対応を出力 |
-| [`zhongguo-accessible-color`](skills/zhongguo-accessible-color/SKILL.md) | 文字、ボタン、図表、UI 状態のコントラストを確認して修正 |
-| [`zhongguo-brand-system`](skills/zhongguo-brand-system/SKILL.md) | ブランド色の規則、比率、禁止組み合わせを設計 |
-| [`zhongguo-data-viz`](skills/zhongguo-data-viz/SKILL.md) | 分類色、連続色、発散色、ダッシュボード色を作成 |
-| [`zhongguo-existing-design-audit`](skills/zhongguo-existing-design-audit/SKILL.md) | 既存の HEX やデザインを診断し、中国伝統色に対応付け |
-| [`zhongguo-content-series`](skills/zhongguo-content-series/SKILL.md) | SNS、記事、講座、動画シリーズの継続的な色彩システムを作成 |
-| [`zhongguo-print-packaging`](skills/zhongguo-print-packaging/SKILL.md) | 包装、文創、印刷、物理素材向けの伝統色運用を計画 |
+| [`xxd-color-brief`](skills/xxd-color-brief/SKILL.md) | 抽象的な方向性を配色条件に翻訳 |
+| [`xxd-palette-builder`](skills/xxd-palette-builder/SKILL.md) | 色名、HEX、ムード、用途から主色・補助色・アクセント色を作成 |
+| [`xxd-palette-applier`](skills/xxd-palette-applier/SKILL.md) | 各色を背景、見出し、ボタン、装飾、情報階層に割り当て |
+| [`xxd-ui-token`](skills/xxd-ui-token/SKILL.md) | CSS variables、Tailwind/Figma token、ライト/ダーク対応を出力 |
+| [`xxd-accessible-color`](skills/xxd-accessible-color/SKILL.md) | 文字、ボタン、図表、UI 状態のコントラストを確認して修正 |
+| [`xxd-brand-system`](skills/xxd-brand-system/SKILL.md) | ブランド色の規則、比率、禁止組み合わせを設計 |
+| [`xxd-data-viz`](skills/xxd-data-viz/SKILL.md) | 分類色、連続色、発散色、ダッシュボード色を作成 |
+| [`xxd-existing-design-audit`](skills/xxd-existing-design-audit/SKILL.md) | 既存の HEX やデザインを診断し、中国伝統色に対応付け |
+| [`xxd-content-series`](skills/xxd-content-series/SKILL.md) | SNS、記事、講座、動画シリーズの継続的な色彩システムを作成 |
+| [`xxd-print-packaging`](skills/xxd-print-packaging/SKILL.md) | 包装、文創、印刷、物理素材向けの伝統色運用を計画 |
 
 ## 全カラーギャラリー
 
