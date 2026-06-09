@@ -65,7 +65,13 @@ let scrollControlFrame;
 let currentHeroPreviewImage;
 let currentHarmonyKey = 'same';
 let navResizeFrame;
-let searchTimer;
+function debounce(fn, delay) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
 
 const TITLE_TONE_MAP = [
   { match: ['hero', 'top'], hues: ['red', 'orange', 'yellow'] },
@@ -1336,10 +1342,7 @@ navToggle?.addEventListener('click', () => {
 siteNav?.addEventListener('click', (event) => {
   if (event.target.closest('a, button')) closeMobileNav();
 });
-searchInput?.addEventListener('input', () => {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(applySearch, 200);
-});
+searchInput?.addEventListener('input', debounce(applySearch, 200));
 hueFilter?.addEventListener('change', applyFilters);
 shuffleButton?.addEventListener('click', shuffleItems);
 loadMoreButton?.addEventListener('click', () => {
