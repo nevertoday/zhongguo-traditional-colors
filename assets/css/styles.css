@@ -1533,6 +1533,35 @@ select:focus-visible,
   line-height: 1.8;
 }
 
+.skills-decision {
+  display: grid;
+  gap: 0;
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.skills-decision div {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.skills-decision b {
+  color: var(--muted);
+  font-family: var(--font-rounded);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.skills-decision p {
+  max-width: none;
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
 .skills-list {
   position: relative;
   display: grid;
@@ -1695,6 +1724,30 @@ select:focus-visible,
   line-height: 1.65;
 }
 
+.skill-snapshot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 14px;
+}
+
+.skill-snapshot span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.skill-snapshot span::before {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  background: var(--muted);
+  content: "";
+  transform: translateY(-1px);
+}
+
 .skill-toggle {
   display: inline-flex;
   gap: 10px;
@@ -1741,18 +1794,30 @@ select:focus-visible,
 
 .skill-detail > div {
   display: grid;
-  grid-template-columns: minmax(96px, 0.22fr) minmax(0, 1fr);
-  gap: 10px 22px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 30px;
   border-top: 1px solid transparent;
 }
 
+.skill-detail section {
+  padding: 18px 0 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.skill-detail section:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
 .skill-detail strong {
+  display: block;
+  margin-bottom: 8px;
   color: var(--ink);
   font-size: 0.82rem;
   line-height: 1.7;
 }
 
 .skill-detail p {
+  max-width: 34em;
   margin: 0;
   color: var(--ink-soft);
   font-size: 0.9rem;
@@ -1760,7 +1825,7 @@ select:focus-visible,
 }
 
 .skill-item[data-open="true"] .skill-detail {
-  max-height: 360px;
+  max-height: 760px;
   opacity: 1;
 }
 
@@ -3337,6 +3402,11 @@ select:focus-visible,
     max-width: 42em;
   }
 
+  .skills-decision {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+  }
+
   .knowledge-principle {
     min-height: 0;
   }
@@ -3744,6 +3814,19 @@ select:focus-visible,
   .skill-detail > div {
     grid-template-columns: 1fr;
     gap: 6px;
+  }
+
+  .skill-item[data-open="true"] .skill-detail {
+    max-height: 1080px;
+  }
+
+  .skill-detail section,
+  .skill-detail section:nth-last-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .skill-detail section:last-child {
+    border-bottom: 0;
   }
 
   .knowledge-note {

@@ -275,14 +275,28 @@
         <div class="section-heading">
           <span class="section-kicker">10 个实战 Skills</span>
           <h2 id="skills-title">把 742 个传统色变成可执行的设计工作流</h2>
-          <p>每个 skill 对应一个真实设计阻塞点：方向太虚、色板太散、落位困难、交付断层、读不清、品牌漂移、图表难分、旧稿难改、系列疲劳和印刷不确定。</p>
+          <p>不要求你懂配色理论。先看自己卡在哪一步，再选择对应的 skill：它会读取完整 742 色清单和每个颜色的配色关系，把传统色变成能交付、能复用、能解释的方案。</p>
         </div>
 
         <div class="skills-stage">
           <div class="skills-brief" aria-label="Skills 使用方式">
-            <span>Slash 触发</span>
+            <span>先判断你卡在哪里</span>
             <strong>/xxd-*</strong>
             <p>输入对应命令，再补充项目场景、目标人群、已有色值、截图或生产限制。每个 skill 目录都自带完整 Markdown 清单和配色关系 CSV，推荐色可追溯到当前 742 色库。</p>
+            <div class="skills-decision" aria-label="选择 skill 的判断路径">
+              <div>
+                <b>01</b>
+                <p>方向说不清，先把形容词翻译成颜色约束。</p>
+              </div>
+              <div>
+                <b>02</b>
+                <p>颜色选好了，再决定它们分别放在哪些界面和版面位置。</p>
+              </div>
+              <div>
+                <b>03</b>
+                <p>要交付给团队时，再变成 token、品牌规范、图表色或印刷规则。</p>
+              </div>
+            </div>
           </div>
 
           <div class="skills-list" aria-label="中国传统色实战 skills">
@@ -294,6 +308,10 @@
                   <div>
                     <h3>xxd-color-brief</h3>
                     <p>把模糊审美词变成可执行约束。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：客户只说感觉</span>
+                      <span>产出：配色简报</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-brief">
@@ -301,11 +319,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-brief">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当需求只有“高级、东方、年轻、克制、不要俗”这类词时，先把它们转成冷暖、明度、饱和度、对比和风险边界。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-color-brief`，补充载体、受众、参考图和想避开的气质。输出会给起始色、禁用方向、冲突提醒和下一步 skill。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>需求只有“高级、东方、年轻、克制、不要俗”，每个人理解都不一样，讨论容易停在感觉上。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>项目刚开始、客户反馈很虚、只有参考图或 moodboard，还不适合直接选具体色板。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-color-brief` 加上载体、受众、参考图、想避开的气质和必须保留的品牌印象。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>冷暖、明度、饱和度、对比、风险边界、3 到 5 个起始色，以及下一步该用哪个 skill。</p>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -319,6 +349,10 @@
                   <div>
                     <h3>xxd-palette-builder</h3>
                     <p>从太多选择里筛出能用的色板。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：色板好看但难选</span>
+                      <span>产出：主辅点缀方案</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-builder">
@@ -326,11 +360,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-builder">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当你有一个锚点色、HEX、情绪或场景，但不知道该配哪些颜色、谁做主色、谁只能点缀时。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-palette-builder`，给出锚点和用途。输出会按可靠、识别、对比策略给主辅点缀、比例、取舍和风险。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>颜色很多、关系也很多，但最后不知道该选哪一组，选完也不知道谁做主色、辅色和点缀。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>你已经有锚点色、HEX、情绪词、品牌方向、海报或 UI 场景，需要一组可直接开始设计的色板。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-palette-builder` 加上锚点色、项目用途、希望稳妥还是更有记忆点。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>可靠、识别、对比等策略下的主色、辅色、背景色、强调色、使用比例和风险提示。</p>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -344,6 +390,10 @@
                   <div>
                     <h3>xxd-palette-applier</h3>
                     <p>把漂亮色板真正落到版面里。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：不知道放哪里</span>
+                      <span>产出：版面用色地图</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-applier">
@@ -351,11 +401,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-applier">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当 swatches 看着不错，一放进海报、网页、PPT、包装或 UI 就开始互相抢时。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-palette-applier`，提供色板和载体。输出会给阅读路径、区域角色、面积比例和误用清单。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>色板单独看很好，一放到页面里就抢主次：标题、按钮、背景、装饰都想出风头。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>海报、网页、PPT、包装、卡片、封面或 UI 已经有一组颜色，但缺少具体落位规则。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-palette-applier` 加上色板、载体、主要信息层级和你最想让用户先看到的内容。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>阅读路径、背景/内容/行动/结构/细节五类角色、面积比例，以及哪些用法会破坏层级。</p>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -369,6 +431,10 @@
                   <div>
                     <h3>xxd-ui-token</h3>
                     <p>把传统色变成开发能接的 UI token。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：HEX 难交付</span>
+                      <span>产出：UI token</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-token">
@@ -376,11 +442,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-token">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当传统色要进入网站、App、后台、工具或设计系统，不能只交一串 HEX 给开发时。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-ui-token`，说明产品类型和输出格式。默认生成 primitive、semantic、component、mode 四层 CSS variables。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>只交 HEX 会让开发硬编码，深色模式、按钮状态、边框和焦点样式后面都难维护。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>网站、App、后台、工具、设计系统、Figma variables 或 Tailwind 主题要接入中国传统色。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-ui-token` 加上产品类型、浅色/深色要求、输出格式和已有品牌色或色板。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>primitive、semantic、component、mode 四层 token，默认给 CSS variables，也能改成 Tailwind 或 Figma 结构。</p>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -394,6 +472,10 @@
                   <div>
                     <h3>xxd-accessible-color</h3>
                     <p>让好看的传统色也能读得清。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：漂亮但不清楚</span>
+                      <span>产出：可读性修复</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-accessible">
@@ -401,11 +483,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-accessible">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当某个传统色很好看，但要拿来做正文、按钮、状态、焦点、图表或深色模式时。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-accessible-color`，给出前景/背景或色板。输出会给 WCAG ratio、通过状态、同库修复色和非颜色线索。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>传统色看起来雅致，但做正文、按钮、状态提示或图表时可能读不清，也可能只靠颜色传递信息。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>正文/背景、按钮文字、焦点环、状态色、图表系列、浅色和深色模式都需要确认可读性。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-accessible-color` 加上前景色、背景色、用途和是否属于正文、按钮、状态或图表。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>WCAG contrast ratio、通过/条件可用/失败判断、同库替代色，以及文字、图标、线条或标签等非颜色线索。</p>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -419,6 +513,10 @@
                   <div>
                     <h3>xxd-brand-system</h3>
                     <p>把一次配色沉淀成长期品牌规则。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：品牌色会漂移</span>
+                      <span>产出：品牌用色规范</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-brand">
@@ -426,11 +524,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-brand">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当颜色要支撑官网、社媒、产品、包装、PPT 和长期识别，不能每次活动都重新发明时。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-brand-system`，说明行业、价格带、竞品差异和渠道。输出会给锚点色、支撑色、比例、禁用和治理规则。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>每次活动、海报、PPT 都重新配色，品牌识别会变弱，团队也不知道哪些组合不能用。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>品牌升级、官网改版、社媒矩阵、包装系列、产品 UI 或长期内容都要共用一套色彩语言。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-brand-system` 加上行业、价格带、竞品差异、品牌气质和主要使用渠道。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>品牌锚点色、支撑色、强调色、默认比例、渠道规则、禁用组合和后续交付到 token 的建议。</p>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -444,6 +554,10 @@
                   <div>
                     <h3>xxd-data-viz</h3>
                     <p>按数据含义生成传统色图表方案。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：图表颜色难分</span>
+                      <span>产出：图表色数组</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-data">
@@ -451,11 +565,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-data">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当你要做分类图、连续色带、发散图、地图、仪表盘或数据故事，不能把海报配色直接搬进图表时。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-data-viz`，给出图表类型、系列数量、背景和数据含义。输出会给分类、顺序、发散、高亮或语义色方案。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>海报配色直接放进图表，经常分类分不清、连续数值没顺序、正负发散没有清晰中点。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>柱状图、折线图、地图、热力图、仪表盘、数据故事和需要中国传统色气质的数据可视化。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-data-viz` 加上图表类型、系列数量、背景、数据是分类/顺序/发散/高亮中的哪一种。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>分类色、顺序色带、发散色带、高亮色或语义状态色，可按需输出 ECharts、D3、Chart.js 数组。</p>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -469,6 +595,10 @@
                   <div>
                     <h3>xxd-existing-design-audit</h3>
                     <p>把旧稿和散乱 HEX 修成传统色系统。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：旧稿颜色混乱</span>
+                      <span>产出：保留替换清单</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-audit">
@@ -476,11 +606,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-audit">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当你不是从零开始，而是已有截图、CSS、Figma styles、品牌色或一堆近似 HEX 要整理。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-existing-design-audit`，贴出现有色值或截图描述。输出会给盘点、根因诊断、保留/合并/替换/移除建议。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>旧稿里有很多相近色、重复色、临时色，没人知道哪些是品牌色、哪些只是历史遗留。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>已有截图、CSS variables、Figma styles、品牌色、海报或 UI 主题，想迁移到中国传统色体系。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-existing-design-audit` 加上 HEX 清单、截图描述、当前角色和哪些颜色不能轻易动。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>颜色盘点、相近传统色映射、根因诊断，以及保留、合并、替换、移除或仅作点缀的建议。</p>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -494,6 +636,10 @@
                   <div>
                     <h3>xxd-content-series</h3>
                     <p>让系列内容既统一又不疲劳。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：系列不成体系</span>
+                      <span>产出：轮换规则</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-content">
@@ -501,11 +647,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-content">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当你要做小红书、公众号、视频封面、课程或栏目，既要每期可识别，又不能每张都长一样时。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-content-series`，说明平台、栏目、节奏和模板类型。输出会给固定层、变量层、模板层和轮换规则。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>每期都重新配色会失去识别度，完全固定又容易看腻，内容团队很难长期稳定执行。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>小红书封面、公众号头图、视频封面、课程课件、栏目海报、newsletter 或长期内容矩阵。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-content-series` 加上平台、栏目数量、更新节奏、模板类型和哪些元素必须长期固定。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>固定层、变量层、模板层、栏目色、特殊期色和轮换规则，让系列既统一又有变化。</p>
+                    </section>
                   </div>
                 </div>
               </div>
@@ -519,6 +677,10 @@
                   <div>
                     <h3>xxd-print-packaging</h3>
                     <p>把屏幕色推进到包装和印刷生产。</p>
+                    <div class="skill-snapshot">
+                      <span>痛点：屏幕色不等于印刷</span>
+                      <span>产出：打样检查清单</span>
+                    </div>
                   </div>
                 </div>
                 <button class="skill-toggle" type="button" data-skill-toggle aria-expanded="false" aria-controls="skill-detail-print">
@@ -526,11 +688,23 @@
                   <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
                 </button>
                 <div class="skill-detail" id="skill-detail-print">
-                  <div>
-                    <strong>适合什么时候用</strong>
-                    <p>当传统色要进入茶、香、书籍、礼盒、文创、标签、材质和印刷生产，不能只看屏幕 HEX 时。</p>
-                    <strong>怎么用</strong>
-                    <p>输入 `/xxd-print-packaging`，说明品类、材质、工艺、价格带和系列数量。输出会给面板用色、变体规则和打样检查清单。</p>
+                  <div class="skill-detail-grid">
+                    <section>
+                      <strong>解决的痛点</strong>
+                      <p>屏幕 HEX 不能保证印刷效果，材质、油墨、CMYK、专色、覆膜和光线都会改变颜色感受。</p>
+                    </section>
+                    <section>
+                      <strong>适合情境</strong>
+                      <p>茶、香、书籍、礼盒、文创、标签、包装系列、实体材料和需要给印刷方沟通的项目。</p>
+                    </section>
+                    <section>
+                      <strong>输入什么</strong>
+                      <p>`/xxd-print-packaging` 加上品类、材质、工艺、价格带、系列数量和使用场景。</p>
+                    </section>
+                    <section>
+                      <strong>得到什么</strong>
+                      <p>正背侧面板用色、系列变体规则、小字和条码风险、材质提示，以及交付前的打样检查清单。</p>
+                    </section>
                   </div>
                 </div>
               </div>
