@@ -65,6 +65,13 @@ let scrollControlFrame;
 let currentHeroPreviewImage;
 let currentHarmonyKey = 'same';
 let navResizeFrame;
+function debounce(fn, delay) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
 
 const TITLE_TONE_MAP = [
   { match: ['hero', 'top'], hues: ['red', 'orange', 'yellow'] },
@@ -1335,7 +1342,7 @@ navToggle?.addEventListener('click', () => {
 siteNav?.addEventListener('click', (event) => {
   if (event.target.closest('a, button')) closeMobileNav();
 });
-searchInput?.addEventListener('input', applySearch);
+searchInput?.addEventListener('input', debounce(applySearch, 200));
 hueFilter?.addEventListener('change', applyFilters);
 shuffleButton?.addEventListener('click', shuffleItems);
 loadMoreButton?.addEventListener('click', () => {
@@ -1405,7 +1412,7 @@ heroPreviewFormat?.addEventListener('change', () => {
     heroPreviewStatus.textContent = `已切换为 ${colorValueLabel()}，下一次复制会沿用该格式`;
   }
 });
-masterSearchInput?.addEventListener('input', renderMasterList);
+masterSearchInput?.addEventListener('input', debounce(renderMasterList, 200));
 masterListDialog?.addEventListener('click', async (event) => {
   if (event.target === masterListDialog) {
     masterListDialog.close();
