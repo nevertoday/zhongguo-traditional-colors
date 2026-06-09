@@ -173,6 +173,41 @@ const HARMONY_RELATION_TYPES = [
   },
 ];
 
+const SEARCH_KEYWORD_RULES = [
+  { match: /红|朱|绛|茜|胭|丹|殷|猩/, words: ['热情', '喜庆', '节日', '婚庆', '春节', '国潮', '醒目'] },
+  { match: /黄|金|琥珀/, words: ['温暖', '明亮', '活泼', '丰收', '活力', '阳光'] },
+  { match: /蓝|靛|群青|景泰蓝/, words: ['冷静', '沉稳', '天空', '海洋', '科技感', '商务', '专业'] },
+  { match: /绿|翠|葱|碧|苔/, words: ['自然', '清新', '春天', '植物', '环保', '文艺', '生机'] },
+  { match: /紫|堇|槿/, words: ['高贵', '神秘', '优雅', '浪漫', '奢华', '梦幻'] },
+  { match: /白|银|雪|霜|云|乳|玉|象牙/, words: ['干净', '纯洁', '简约', '留白', '背景', '淡雅', '高级'] },
+  { match: /灰|铅|鼠/, words: ['中性', '高级灰', '稳重', '低调', '背景', '质感', '大气'] },
+  { match: /黑|墨|玄|皂/, words: ['经典', '庄重', '高端', '水墨', '文字', '沉稳', '神秘'] },
+  { match: /粉|绯|桃红|藕|樱/, words: ['温柔', '浪漫', '甜美', '少女', '柔和', '可爱'] },
+  { match: /橙|橘/, words: ['活力', '温暖', '秋天', '柑橘', '食欲', '亲切', '阳光'] },
+  { match: /棕|褐|驼|赭|咖啡|栗|茶/, words: ['大地', '复古', '木质', '质朴', '怀旧', '做旧', '古典'] },
+  { match: /牡丹/, words: ['富贵', '国花', '雍容华贵', '传统', '国潮'] },
+  { match: /玫瑰/, words: ['爱情', '浪漫', '花', '女性', '温柔'] },
+  { match: /竹/, words: ['气节', '文人', '清新', '君子', '文艺'] },
+  { match: /松/, words: ['常青', '坚韧', '长寿', '古典'] },
+  { match: /梅/, words: ['冬天', '坚韧', '高洁', '傲骨', '古典'] },
+  { match: /莲|荷/, words: ['夏天', '清净', '佛教', '出淤泥而不染', '古典'] },
+  { match: /菊/, words: ['秋天', '高洁', '隐逸', '古典'] },
+  { match: /兰/, words: ['高雅', '君子', '文人', '幽静', '文艺'] },
+  { match: /桂/, words: ['秋天', '芳香', '月亮'] },
+  { match: /茉莉/, words: ['花香', '清新', '茶'] },
+  { match: /枫/, words: ['秋天', '诗意', '红叶', '文艺'] },
+  { match: /海棠/, words: ['春天', '美人', '诗词'] },
+  { match: /石榴/, words: ['秋天', '果实', '多子多福'] },
+  { match: /荔枝/, words: ['夏天', '水果', '甜蜜'] },
+  { match: /丝|绢|绫|锦|缎|罗/, words: ['丝绸', '织物', '传统', '华贵', '国潮'] },
+  { match: /铜|铁/, words: ['金属', '复古', '工业', '质感'] },
+  { match: /石|岩|矿|翡翠|玛瑙|珊瑚|玉/, words: ['宝石', '大地', '珍贵', '收藏', '质感'] },
+  { match: /鼠|鹅|蟹|鱼|虾|鹤|燕|鹦鹉|孔雀/, words: ['动物', '自然'] },
+  { match: /月|星|云|风|雨|雪|霜|雾|霞|虹/, words: ['天气', '自然', '诗意', '文艺'] },
+  { match: /糖|蜜|奶|乳|酪|果/, words: ['食物', '甜品', '食欲', '可爱'] },
+  { match: /烟|黛|砚|墨/, words: ['文房', '书画', '水墨', '传统文化', '古典'] },
+];
+
 function formatBytes(bytes) {
   const units = ['B', 'KB', 'MB', 'GB'];
   let value = bytes;
@@ -200,6 +235,18 @@ function colorTitle(image) {
 
 function colorName(image) {
   return colorTitle(image).replace(/^\d{3}-/, '');
+}
+
+function searchableKeywords(image) {
+  if (image.keywords) return image.keywords;
+  const name = colorName(image);
+  const words = [name];
+  for (const rule of SEARCH_KEYWORD_RULES) {
+    if (rule.match.test(name)) {
+      words.push(...rule.words);
+    }
+  }
+  return words.join(' ');
 }
 
 function escapeHtml(value) {
@@ -1028,7 +1075,7 @@ function applyFilters() {
   const query = normalize(searchInput?.value || '');
   currentHue = hueFilter?.value || 'all';
   currentItems = images.filter((image) => {
-    const searchable = `${image.id} ${image.file} ${image.path} ${image.hex || ''}`.toLowerCase();
+    const searchable = `${image.id} ${image.file} ${image.path} ${image.hex || ''} ${searchableKeywords(image)}`.toLowerCase();
     const matchesQuery = query ? searchable.includes(query) : true;
     const matchesHue = currentHue === 'all' ? true : hueFromHex(image.hex) === currentHue;
     return matchesQuery && matchesHue;
@@ -1119,7 +1166,7 @@ function masterListItems() {
   if (!query) return images;
 
   return images.filter((image) => {
-    const searchable = `${image.id} ${colorName(image)} ${image.file} ${image.hex || ''}`.toLowerCase();
+    const searchable = `${image.id} ${colorName(image)} ${image.file} ${image.hex || ''} ${searchableKeywords(image)}`.toLowerCase();
     return searchable.includes(query);
   });
 }
