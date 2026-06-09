@@ -461,7 +461,7 @@ function nearestBackgroundRgb(node) {
 }
 
 function hoverBackgroundRgb(title) {
-  const hoverSurface = title.closest('.knowledge-note, .open-link');
+  const hoverSurface = title.closest('.knowledge-note, .open-primary, .open-step');
   if (!hoverSurface) return null;
 
   const hoverColor = window.getComputedStyle(hoverSurface).getPropertyValue('--hover-bg');
@@ -923,9 +923,9 @@ function cardMarkup(image) {
   return `
     <article class="color-card">
       <div class="card-media">
-        <a class="card-image-link" href="${url}" target="_blank" rel="noopener" aria-label="打开 ${title} 原图">
+        <button class="card-image-link" type="button" data-open-color-preview="${image.id}" aria-label="查看 ${title} 色卡详情">
           <img src="${thumbnailUrl}" alt="中国传统色色卡 ${title}" loading="lazy">
-        </a>
+        </button>
         ${hex ? `<div class="copy-color-control">
           <button class="copy-color-button" type="button" data-copy-color="${image.id}" aria-label="复制 ${colorName(image)} ${colorValueLabel()} 色值 ${copyValue}">复制 <span data-copy-value>${copyValue}</span></button>
           <label class="copy-format">
