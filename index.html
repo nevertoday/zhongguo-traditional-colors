@@ -6,7 +6,7 @@
     <meta name="description" content="中华传统色演示、色卡浏览与颜色知识科普开源项目。">
     <meta name="theme-color" content="#f7f7f4" data-theme-color>
     <title>中国传统配色 - 中华传统色色卡资料馆</title>
-    <link rel="icon" href="favicon.svg?v=20260610-3" type="image/svg+xml">
+    <link rel="icon" href="favicon.svg?v=20260610-4" type="image/svg+xml">
     <script>
       (() => {
         try {
@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260610-3">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260610-4">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
   <body>
@@ -35,7 +35,6 @@
       </a>
       <nav class="site-nav" id="site-nav" aria-label="主导航">
         <a href="#gallery">浏览色卡</a>
-        <a href="#style-lab">配色应用</a>
         <button type="button" data-open-master-list aria-label="打开完整色值清单">完整清单</button>
         <a href="#download">下载 ZIP</a>
         <a href="#knowledge">怎么用</a>
@@ -156,69 +155,6 @@
             <iconify-icon icon="lucide:chevron-down" aria-hidden="true"></iconify-icon>
             加载更多
           </button>
-        </div>
-      </section>
-
-      <section class="style-lab-section" id="style-lab" aria-labelledby="style-lab-title">
-        <div class="section-heading">
-          <span class="section-kicker">配色应用</span>
-          <h2 id="style-lab-title">先选中国色，再看它能怎么配</h2>
-          <p>先锁定一个传统色作为主色，再切换同类、邻近、互补等配色逻辑。右侧预览会按当前主色和关系色实时更新。</p>
-        </div>
-
-        <div class="style-lab-workbench">
-          <aside class="style-lab-control" aria-label="配色应用控制台">
-            <div class="style-anchor-panel">
-              <span class="style-lab-label">01 选择中国色</span>
-              <button class="style-anchor-card" type="button" data-style-anchor-copy aria-label="复制当前主色">
-                <span class="style-anchor-swatch" data-style-anchor-swatch aria-hidden="true"></span>
-                <span>
-                  <strong data-style-anchor>正在读取色库</strong>
-                  <small data-style-anchor-meta>默认随机一个传统色</small>
-                </span>
-              </button>
-              <label class="style-color-search">
-                <span class="sr-only">搜索并切换当前中国色</span>
-                <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
-                <input type="search" data-style-color-search list="style-color-options" placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
-                <datalist id="style-color-options" data-style-color-options></datalist>
-              </label>
-              <label class="style-format-select">
-                <span>复制格式</span>
-                <select data-style-format aria-label="选择复制色值类型">
-                  <option value="hex">HEX</option>
-                  <option value="rgb">RGB</option>
-                  <option value="hsl">HSL</option>
-                  <option value="cmyk">CMYK</option>
-                </select>
-              </label>
-              <div class="style-lab-actions">
-                <button class="button button-primary" type="button" data-style-refresh>
-                  <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
-                  换主色
-                </button>
-                <button class="button button-secondary" type="button" data-style-copy-all>
-                  <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
-                  复制方案
-                </button>
-                <button class="button button-secondary" type="button" data-style-copy-css>
-                  <iconify-icon icon="lucide:braces" aria-hidden="true"></iconify-icon>
-                  CSS 变量
-                </button>
-              </div>
-            </div>
-            <div class="style-lab-mode">
-              <span class="style-lab-label">02 选择它的配色逻辑</span>
-              <div class="style-mode-grid" data-style-mode-list aria-label="选择配色逻辑"></div>
-              <p class="style-mode-summary" data-style-mode-summary></p>
-              <div class="style-mode-preview" data-style-mode-colors aria-label="当前配色逻辑的关系色"></div>
-            </div>
-            <div class="style-lab-readiness" data-style-readiness aria-label="当前配色可用性"></div>
-            <div class="style-lab-palette" data-style-palette aria-label="当前样式配色色值"></div>
-            <p class="style-lab-status" data-style-status aria-live="polite"></p>
-          </aside>
-
-          <div class="style-template-grid" data-style-lab aria-label="传统色排版样式示例"></div>
         </div>
       </section>
 
@@ -1097,6 +1033,75 @@
           </div>
         </div>
       </section>
+
+      <section class="style-lab-section" id="style-lab" aria-labelledby="style-lab-title" data-experimental="true">
+        <div class="style-lab-intro">
+          <div class="section-heading">
+            <span class="section-kicker">实验功能 / 正在打磨</span>
+            <h2 id="style-lab-title">配色应用实验区</h2>
+            <p>这里用来验证“先选一个中国色，再观察不同配色关系如何落到版面”的思路。当前更适合作为灵感草稿和功能预览，不作为最终设计稿交付依据。</p>
+          </div>
+          <div class="style-lab-note" aria-label="配色应用实验区说明">
+            <strong>当前定位</strong>
+            <p>色值来自当前 742 色库和本地配色关系表；版式模板、用途判断和场景表达还在继续校准。正式取色、下载和协作交付，请优先使用上方色卡弹窗、完整清单和 ZIP 素材。</p>
+          </div>
+        </div>
+
+        <div class="style-lab-workbench">
+          <aside class="style-lab-control" aria-label="配色应用控制台">
+            <div class="style-anchor-panel">
+              <span class="style-lab-label">01 选择中国色</span>
+              <button class="style-anchor-card" type="button" data-style-anchor-copy aria-label="复制当前主色">
+                <span class="style-anchor-swatch" data-style-anchor-swatch aria-hidden="true"></span>
+                <span>
+                  <strong data-style-anchor>正在读取色库</strong>
+                  <small data-style-anchor-meta>默认随机一个传统色</small>
+                </span>
+              </button>
+              <label class="style-color-search">
+                <span class="sr-only">搜索并切换当前中国色</span>
+                <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
+                <input type="search" data-style-color-search list="style-color-options" placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
+                <datalist id="style-color-options" data-style-color-options></datalist>
+              </label>
+              <label class="style-format-select">
+                <span>复制格式</span>
+                <select data-style-format aria-label="选择复制色值类型">
+                  <option value="hex">HEX</option>
+                  <option value="rgb">RGB</option>
+                  <option value="hsl">HSL</option>
+                  <option value="cmyk">CMYK</option>
+                </select>
+              </label>
+              <div class="style-lab-actions">
+                <button class="button button-primary" type="button" data-style-refresh>
+                  <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
+                  换主色
+                </button>
+                <button class="button button-secondary" type="button" data-style-copy-all>
+                  <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
+                  复制方案
+                </button>
+                <button class="button button-secondary" type="button" data-style-copy-css>
+                  <iconify-icon icon="lucide:braces" aria-hidden="true"></iconify-icon>
+                  CSS 变量
+                </button>
+              </div>
+            </div>
+            <div class="style-lab-mode">
+              <span class="style-lab-label">02 选择它的配色逻辑</span>
+              <div class="style-mode-grid" data-style-mode-list aria-label="选择配色逻辑"></div>
+              <p class="style-mode-summary" data-style-mode-summary></p>
+              <div class="style-mode-preview" data-style-mode-colors aria-label="当前配色逻辑的关系色"></div>
+            </div>
+            <div class="style-lab-readiness" data-style-readiness aria-label="当前配色可用性"></div>
+            <div class="style-lab-palette" data-style-palette aria-label="当前样式配色色值"></div>
+            <p class="style-lab-status" data-style-status aria-live="polite"></p>
+          </aside>
+
+          <div class="style-template-grid" data-style-lab aria-label="传统色配色应用实验预览"></div>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -1205,7 +1210,7 @@
           </button>
           <button class="button button-secondary" type="button" data-use-preview-color>
             <iconify-icon icon="lucide:wand-sparkles" aria-hidden="true"></iconify-icon>
-            应用到配色
+            进入实验区
           </button>
           <a class="button button-secondary" data-hero-preview-download download>
             <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
@@ -1242,9 +1247,9 @@
       <div class="master-color-list" data-master-color-list></div>
     </dialog>
 
-    <script src="assets/data/images.js?v=20260610-3"></script>
-    <script src="assets/data/harmonies.js?v=20260610-3"></script>
-    <script src="assets/data/harmony-usage.js?v=20260610-3"></script>
-    <script src="assets/js/app.js?v=20260610-3"></script>
+    <script src="assets/data/images.js?v=20260610-4"></script>
+    <script src="assets/data/harmonies.js?v=20260610-4"></script>
+    <script src="assets/data/harmony-usage.js?v=20260610-4"></script>
+    <script src="assets/js/app.js?v=20260610-4"></script>
   </body>
 </html>

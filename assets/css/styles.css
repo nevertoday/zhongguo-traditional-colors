@@ -1075,10 +1075,45 @@ select:focus-visible,
 }
 
 .style-lab-section {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--paper) 82%, var(--solid)), var(--paper)),
-    var(--paper);
-  border-top: 1px solid var(--line);
+  scroll-margin-top: 0;
+  background: var(--paper);
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+
+.style-lab-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(280px, 0.54fr);
+  gap: clamp(24px, 5vw, 72px);
+  align-items: end;
+  margin-bottom: 46px;
+}
+
+.style-lab-intro .section-heading {
+  margin-bottom: 0;
+}
+
+.style-lab-note {
+  display: grid;
+  gap: 10px;
+  align-self: end;
+  padding: 18px 0 18px 22px;
+  color: var(--ink-soft);
+  border-left: 1px solid var(--line-strong);
+}
+
+.style-lab-note strong {
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.style-lab-note p {
+  max-width: 32em;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.78;
 }
 
 .style-lab-workbench {
@@ -4788,6 +4823,20 @@ select:focus-visible,
 
   .gallery-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .style-lab-intro {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .style-lab-note {
+    align-self: start;
+    max-width: 760px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    border-left: 0;
   }
 
   .style-lab-workbench {

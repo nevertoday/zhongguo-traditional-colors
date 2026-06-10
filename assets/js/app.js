@@ -1258,7 +1258,7 @@ async function copyStyleTemplateColor(roleKey, templateIndex) {
 function usePreviewColorInStyleLab() {
   if (!currentHeroPreviewImage) return;
 
-  applyStyleAnchor(currentHeroPreviewImage, `已把 ${colorName(currentHeroPreviewImage)} 应用到配色工作台`);
+  applyStyleAnchor(currentHeroPreviewImage, `已把 ${colorName(currentHeroPreviewImage)} 带入配色实验区`);
   heroPreviewDialog?.close();
   document.querySelector('#style-lab')?.scrollIntoView({
     behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
