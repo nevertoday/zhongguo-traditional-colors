@@ -4022,17 +4022,20 @@ select:focus-visible,
 
 .hero-preview-dialog[open] {
   display: grid;
-  grid-template-columns: minmax(280px, 0.86fr) minmax(380px, 1.14fr);
+  grid-template-columns: minmax(280px, 0.92fr) minmax(420px, 1.08fr);
   grid-template-rows: minmax(0, 1fr);
   align-items: stretch;
 }
 
 .hero-preview-media {
   position: relative;
+  display: grid;
+  place-items: center;
   height: 100%;
   min-height: 0;
   overflow: hidden;
   background: var(--feature-bg);
+  border-right: 1px solid var(--line);
 }
 
 :root:not([data-theme="dark"]) .hero-preview-media {
@@ -4048,31 +4051,17 @@ select:focus-visible,
 }
 
 .hero-preview-guide {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
   display: grid;
   gap: 12px;
-  max-height: min(42%, 300px);
-  padding: 16px clamp(14px, 2.5vw, 22px) 18px;
-  overflow-y: auto;
-  color: #f7f7f4;
-  background: rgba(17, 17, 17, 0.82);
-  border-top: 1px solid rgba(247, 247, 244, 0.22);
-  backdrop-filter: blur(12px) saturate(108%);
-  scrollbar-width: thin;
+  padding: 16px 0 18px;
+  color: var(--ink);
+  background: transparent;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .hero-preview-guide[hidden] {
   display: none;
-}
-
-:root:not([data-theme="dark"]) .hero-preview-guide {
-  color: #111111;
-  background: rgba(247, 247, 244, 0.9);
-  border-top-color: rgba(17, 17, 17, 0.16);
 }
 
 .preview-guide-head {
@@ -4198,11 +4187,7 @@ select:focus-visible,
   align-content: start;
   min-width: 0;
   padding: 10px 11px;
-  background: color-mix(in srgb, var(--panel) 5%, transparent);
-}
-
-:root:not([data-theme="dark"]) .preview-guide-rules div {
-  background: rgba(255, 255, 255, 0.42);
+  background: var(--panel);
 }
 
 .preview-guide-rules dt,
@@ -4984,6 +4969,8 @@ select:focus-visible,
     min-height: 0;
     max-height: none;
     overflow: visible;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
   }
 
   .hero-preview-media img {
@@ -4998,6 +4985,7 @@ select:focus-visible,
     overflow: visible;
     background: var(--panel);
     border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
     backdrop-filter: none;
   }
 
