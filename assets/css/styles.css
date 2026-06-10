@@ -281,7 +281,7 @@ code {
   background: transparent;
   border: 0;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -4721,7 +4721,7 @@ select:focus-visible,
     background: transparent;
     border: 0;
     border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .site-nav > :last-child {
