@@ -161,6 +161,46 @@ function targetHueColors(base, colors, targets, count, options = {}) {
   }, count);
 }
 
+function balancedTargetHueColors(base, colors, targetOffsets, count, options = {}) {
+  const { preferLightness = base.hsl.l, preferSaturation = base.hsl.s, minSaturation = 0 } = options;
+  const targets = targetOffsets.map((offset) => hueAt(base.hsl.h, offset));
+  const selected = [];
+
+  const addUnique = (items) => {
+    const selectedIds = new Set(selected.map((item) => item.id));
+    const selectedHexes = new Set(selected.map((item) => item.hex));
+    for (const item of items) {
+      if (selected.length >= count) break;
+      if (selectedIds.has(item.id) || selectedHexes.has(item.hex)) continue;
+      selected.push(item);
+      selectedIds.add(item.id);
+      selectedHexes.add(item.hex);
+    }
+  };
+
+  const scoreAgainst = (targetsForScore) => (item) => {
+    const hueScore = Math.min(...targetsForScore.map((target) => hueDistance(item.hsl.h, target))) * 2.8;
+    const lightScore = Math.abs(item.hsl.l - preferLightness) * 0.72;
+    const saturationScore = Math.abs(item.hsl.s - preferSaturation) * 0.38;
+    const perceptualScore = labDistance(base.lab, item.lab) * 0.14;
+    return hueScore + lightScore + saturationScore + perceptualScore;
+  };
+
+  const pool = colors.filter((item) => item.id !== base.id && item.hsl.s >= minSaturation);
+  const perTarget = Math.max(1, Math.floor(count / targets.length));
+
+  for (const target of targets) {
+    addUnique(byScore(base, pool, scoreAgainst([target]), perTarget));
+  }
+
+  if (selected.length < count) {
+    const selectedIds = new Set(selected.map((item) => item.id));
+    addUnique(byScore(base, pool.filter((item) => !selectedIds.has(item.id)), scoreAgainst(targets), count - selected.length));
+  }
+
+  return selected.slice(0, count);
+}
+
 function fallbackFill(base, colors, selected, count) {
   if (selected.length >= count) return selected.slice(0, count);
   const selectedIds = new Set(selected.map((item) => item.id));
@@ -181,7 +221,7 @@ function sameColors(base, colors) {
 
 function analogousColors(base, colors) {
   if (base.hsl.s < 12) return sameColors(base, colors);
-  return targetHueColors(base, colors, [hueAt(base.hsl.h, -30), hueAt(base.hsl.h, 30)], 4, { minSaturation: 8 });
+  return balancedTargetHueColors(base, colors, [-30, 30], 4, { minSaturation: 8 });
 }
 
 function complementaryColors(base, colors) {
@@ -191,19 +231,19 @@ function complementaryColors(base, colors) {
 }
 
 function splitComplementaryColors(base, colors) {
-  return targetHueColors(base, colors, [hueAt(base.hsl.h, 150), hueAt(base.hsl.h, 210)], 4, {
+  return balancedTargetHueColors(base, colors, [150, 210], 4, {
     minSaturation: base.hsl.s < 12 ? 8 : 12,
   });
 }
 
 function triadicColors(base, colors) {
-  return targetHueColors(base, colors, [hueAt(base.hsl.h, 120), hueAt(base.hsl.h, 240)], 4, {
+  return balancedTargetHueColors(base, colors, [120, 240], 4, {
     minSaturation: base.hsl.s < 12 ? 8 : 12,
   });
 }
 
 function tetradicColors(base, colors) {
-  return targetHueColors(base, colors, [hueAt(base.hsl.h, 90), hueAt(base.hsl.h, 180), hueAt(base.hsl.h, 270)], 4, {
+  return balancedTargetHueColors(base, colors, [90, 180, 270], 4, {
     minSaturation: base.hsl.s < 12 ? 8 : 12,
   });
 }
@@ -371,6 +411,7 @@ function markdownForHarmonies(harmonies) {
     );
   }
 
+  while (lines.at(-1) === "") lines.pop();
   return `${lines.join("\n")}\n`;
 }
 

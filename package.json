@@ -9,9 +9,10 @@
     "manifest": "node scripts/build-manifest.mjs",
     "readme": "node scripts/build-readme.mjs",
     "harmonies": "node scripts/build-color-harmonies.mjs",
+    "harmony:audit": "node scripts/audit-color-harmonies.mjs",
     "harmony:uses": "node scripts/build-harmony-use-cases.mjs",
     "package:images": "node scripts/package-images.mjs",
-    "prepare:release": "npm run manifest && npm run harmonies && npm run harmony:uses && npm run readme && npm run package:images"
+    "prepare:release": "npm run manifest && npm run harmonies && npm run harmony:uses && npm run harmony:audit && npm run readme && npm run package:images"
   },
   "keywords": [
     "traditional-colors",
