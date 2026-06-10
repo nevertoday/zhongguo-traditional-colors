@@ -3798,6 +3798,7 @@ select:focus-visible,
 }
 
 .hero-preview-media {
+  position: relative;
   height: 100%;
   min-height: 0;
   overflow: hidden;
@@ -3814,6 +3815,213 @@ select:focus-visible,
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.hero-preview-guide {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: grid;
+  gap: 12px;
+  max-height: min(42%, 300px);
+  padding: 16px clamp(14px, 2.5vw, 22px) 18px;
+  overflow-y: auto;
+  color: #f7f7f4;
+  background: rgba(17, 17, 17, 0.82);
+  border-top: 1px solid rgba(247, 247, 244, 0.22);
+  backdrop-filter: blur(12px) saturate(108%);
+  scrollbar-width: thin;
+}
+
+.hero-preview-guide[hidden] {
+  display: none;
+}
+
+:root:not([data-theme="dark"]) .hero-preview-guide {
+  color: #111111;
+  background: rgba(247, 247, 244, 0.9);
+  border-top-color: rgba(17, 17, 17, 0.16);
+}
+
+.preview-guide-head {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.preview-guide-head span {
+  color: color-mix(in srgb, currentColor 62%, transparent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.preview-guide-head strong {
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: right;
+}
+
+.preview-guide-anchor,
+.preview-guide-color {
+  min-width: 0;
+  color: currentColor;
+  text-align: left;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms var(--ease-out-quart);
+}
+
+.preview-guide-anchor {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.preview-guide-anchor:hover,
+.preview-guide-anchor:focus-visible,
+.preview-guide-color:hover,
+.preview-guide-color:focus-visible,
+.preview-guide-anchor[data-copied="true"],
+.preview-guide-color[data-copied="true"] {
+  color: #f7f7f4;
+  background: #111111;
+  border-color: #f7f7f4;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+:root[data-theme="dark"] .preview-guide-anchor:hover,
+:root[data-theme="dark"] .preview-guide-anchor:focus-visible,
+:root[data-theme="dark"] .preview-guide-color:hover,
+:root[data-theme="dark"] .preview-guide-color:focus-visible,
+:root[data-theme="dark"] .preview-guide-anchor[data-copied="true"],
+:root[data-theme="dark"] .preview-guide-color[data-copied="true"] {
+  color: #11100e;
+  background: #f2f0ea;
+  border-color: #f2f0ea;
+}
+
+.preview-guide-anchor-swatch,
+.preview-guide-color-swatch {
+  display: block;
+  background: var(--swatch, var(--guide-anchor));
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+}
+
+.preview-guide-anchor-swatch {
+  width: 42px;
+  height: 52px;
+}
+
+.preview-guide-anchor span,
+.preview-guide-color span {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.preview-guide-anchor b,
+.preview-guide-color strong,
+.preview-guide-anchor small,
+.preview-guide-color small {
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  text-overflow: ellipsis;
+}
+
+.preview-guide-anchor b {
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+
+.preview-guide-anchor small,
+.preview-guide-color small {
+  color: color-mix(in srgb, currentColor 64%, transparent);
+  font-family: var(--font-rounded);
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.preview-guide-rules {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.preview-guide-rules div {
+  display: grid;
+  gap: 5px;
+  align-content: start;
+  min-width: 0;
+  padding: 10px 11px;
+  background: color-mix(in srgb, var(--panel) 5%, transparent);
+}
+
+:root:not([data-theme="dark"]) .preview-guide-rules div {
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.preview-guide-rules dt,
+.preview-guide-rules dd {
+  margin: 0;
+}
+
+.preview-guide-rules dt {
+  color: color-mix(in srgb, currentColor 60%, transparent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.preview-guide-rules dd {
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.52;
+}
+
+.preview-guide-related {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.preview-guide-related > span {
+  grid-column: 1 / -1;
+  color: color-mix(in srgb, currentColor 66%, transparent);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.preview-guide-color {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  padding: 8px;
+}
+
+.preview-guide-color-swatch {
+  width: 24px;
+  height: 34px;
+}
+
+.preview-guide-color strong {
+  font-size: 0.78rem;
+  line-height: 1.22;
 }
 
 .hero-preview-content {
@@ -4537,15 +4745,35 @@ select:focus-visible,
   }
 
   .hero-preview-dialog[open] {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    display: block;
     overflow: auto;
   }
 
   .hero-preview-media {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .hero-preview-media img {
     height: 44vh;
     min-height: 260px;
     max-height: 420px;
+  }
+
+  .hero-preview-guide {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+    backdrop-filter: none;
+  }
+
+  :root:not([data-theme="dark"]) .hero-preview-guide,
+  :root[data-theme="dark"] .hero-preview-guide {
+    background: var(--panel);
   }
 
   .hero-preview-content {
@@ -4957,9 +5185,31 @@ select:focus-visible,
   }
 
   .hero-preview-media {
+    min-height: 0;
+  }
+
+  .hero-preview-media img {
     height: 34vh;
     min-height: 210px;
     max-height: 42vh;
+  }
+
+  .hero-preview-guide {
+    padding: 14px;
+  }
+
+  .preview-guide-head {
+    display: grid;
+    gap: 4px;
+  }
+
+  .preview-guide-head strong {
+    text-align: left;
+  }
+
+  .preview-guide-rules,
+  .preview-guide-related {
+    grid-template-columns: 1fr;
   }
 
   .hero-preview-content {

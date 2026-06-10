@@ -59,6 +59,7 @@ const titleHoverElements = document.querySelectorAll('h1, h2, h3');
 const heroPreviewDialog = document.querySelector('[data-hero-preview-dialog]');
 const heroPreviewImage = document.querySelector('[data-hero-preview-image]');
 const heroPreviewMedia = document.querySelector('.hero-preview-media');
+const heroPreviewGuide = document.querySelector('[data-preview-left-guide]');
 const heroPreviewContent = document.querySelector('.hero-preview-content');
 const heroPreviewTitle = document.querySelector('[data-hero-preview-title]');
 const heroPreviewHex = document.querySelector('[data-hero-preview-hex]');
@@ -1296,6 +1297,129 @@ function harmonyAnchorUseText(image, harmony, relation, colors) {
   ].join('');
 }
 
+function harmonyRelationColors(harmony, relation) {
+  return harmony?.[relation.key] || [];
+}
+
+function previewRoleLabel(harmony, relation) {
+  const hsl = harmony?.hsl || {};
+
+  if (['complementary', 'splitComplementary'].includes(relation.key)) {
+    return '主色负责识别，关系色只放在最需要被看见的位置';
+  }
+  if (relation.key === 'triadic') {
+    return '主色定整体气质，关系色适合拆成栏目或系列角色';
+  }
+  if (relation.key === 'tetradic') {
+    return '主色先定层级，其他色必须先分配用途再上场';
+  }
+  if (relation.key === 'grayTone') {
+    return '主色保留记忆点，灰调色负责降噪和承托信息';
+  }
+  if (relation.key === 'neutral') {
+    return '主色负责表达，中性色负责留白、边界和阅读秩序';
+  }
+  if (relation.key === 'lighter' || hsl.l >= 84) {
+    return '优先做背景、留白或浅层模块，正文需要另配深色';
+  }
+  if (relation.key === 'darker' || hsl.l <= 28) {
+    return '优先做标题、正文、边界或深底压重';
+  }
+  if (relation.key === 'analogous') {
+    return '主色做视觉气质，邻近色负责柔和过渡';
+  }
+  if (hsl.s >= 72) {
+    return '主色很有存在感，适合做识别或小面积重点';
+  }
+
+  return harmonyAnchorRole(relation);
+}
+
+function previewReadabilityText(harmony, relation) {
+  const hsl = harmony?.hsl || {};
+
+  if (hsl.l >= 82) return '小号文字慎用，正文需配深色；更适合作底色或空白层。';
+  if (hsl.l <= 28) return '适合压重和深底；标题可用，正文需配明色并放大留白。';
+  if (hsl.s >= 72) return '高饱和不要同权重铺满，先检查按钮、标题和正文对比。';
+  if (relation.key === 'grayTone' || relation.key === 'neutral') return '适合信息密集场景；用明暗差建立层级，少靠更多颜色。';
+  if (['complementary', 'splitComplementary'].includes(relation.key)) return '关系色越强，面积越小；点击前先确认唯一焦点。';
+
+  return '先测标题、正文、按钮三处对比，再决定是否扩大使用。';
+}
+
+function previewRelationButtonMarkup(color, relation, index) {
+  const item = lookupDisplayColor(color);
+  if (!item.id || !item.hex) return '';
+
+  const value = colorValue(item);
+  const usageLabel = `${relation.label} ${index + 1}`;
+  const label = `${item.id}-${item.name}`;
+
+  return `
+    <button class="preview-guide-color" type="button" data-harmony-color="${escapeHtml(item.id)}" data-harmony-name="${escapeHtml(item.name)}" data-harmony-hex="${escapeHtml(item.hex)}" data-harmony-use="${escapeHtml(usageLabel)}" style="--swatch: ${escapeHtml(item.hex)}" aria-label="复制 ${escapeHtml(usageLabel)} ${escapeHtml(label)} ${colorValueLabel()} 色值 ${escapeHtml(value)}">
+      <span class="preview-guide-color-swatch" aria-hidden="true"></span>
+      <span>
+        <strong>${escapeHtml(item.name)}</strong>
+        <small data-harmony-value>${escapeHtml(value)}</small>
+      </span>
+    </button>
+  `;
+}
+
+function renderHeroPreviewGuide(image, harmony) {
+  if (!heroPreviewGuide) return;
+  if (!image || !harmony) {
+    heroPreviewGuide.hidden = true;
+    heroPreviewGuide.innerHTML = '';
+    heroPreviewGuide.removeAttribute('style');
+    return;
+  }
+
+  const relation = harmonyRelationType(currentHarmonyKey);
+  const relationColors = harmonyRelationColors(harmony, relation)
+    .map(lookupDisplayColor)
+    .filter((color) => color.id && color.hex)
+    .slice(0, 3);
+  const firstRelation = relationColors[0]?.hex || image.hex || '#777777';
+  const imageValue = colorValue(image);
+  const imageLabel = `${image.id}-${colorName(image)}`;
+
+  heroPreviewGuide.hidden = false;
+  heroPreviewGuide.setAttribute('style', `--guide-anchor: ${image.hex || '#777777'}; --guide-relation: ${firstRelation};`);
+  heroPreviewGuide.innerHTML = `
+    <div class="preview-guide-head">
+      <span>实用规范</span>
+      <strong>${escapeHtml(relation.intent || relation.label)} / ${escapeHtml(relation.label)}</strong>
+    </div>
+    <button class="preview-guide-anchor" type="button" data-harmony-color="${escapeHtml(image.id)}" data-harmony-name="${escapeHtml(colorName(image))}" data-harmony-hex="${escapeHtml(image.hex || '')}" data-harmony-use="主色" style="--swatch: ${escapeHtml(image.hex || '#777777')}" aria-label="复制主色 ${escapeHtml(imageLabel)} ${colorValueLabel()} 色值 ${escapeHtml(imageValue)}">
+      <span class="preview-guide-anchor-swatch" aria-hidden="true"></span>
+      <span>
+        <b>${escapeHtml(imageLabel)}</b>
+        <small data-harmony-value>${escapeHtml(imageValue)}</small>
+      </span>
+    </button>
+    <dl class="preview-guide-rules">
+      <div>
+        <dt>角色</dt>
+        <dd>${escapeHtml(previewRoleLabel(harmony, relation))}</dd>
+      </div>
+      <div>
+        <dt>面积</dt>
+        <dd>${escapeHtml(relation.area || '先小面积验证，再扩大使用。')}</dd>
+      </div>
+      <div>
+        <dt>可读</dt>
+        <dd>${escapeHtml(previewReadabilityText(harmony, relation))}</dd>
+      </div>
+    </dl>
+    <div class="preview-guide-related" aria-label="${escapeHtml(relation.label)}关系色">
+      ${relationColors.length
+        ? relationColors.map((color, index) => previewRelationButtonMarkup(color, relation, index)).join('')
+        : '<span>当前关系色不足，先用主色和中性色建立基础版面。</span>'}
+    </div>
+  `;
+}
+
 function harmonyColorMarkup(color, usageLabel = '') {
   const item = lookupDisplayColor(color);
   const label = `${item.id}-${item.name}`;
@@ -1431,6 +1555,7 @@ function renderHeroPreviewHarmony(image) {
   if (!harmony) {
     if (heroPreviewHue) heroPreviewHue.textContent = '未记录';
     if (heroPreviewHarmony) heroPreviewHarmony.hidden = true;
+    renderHeroPreviewGuide(image, harmony);
     return;
   }
 
@@ -1445,6 +1570,7 @@ function renderHeroPreviewHarmony(image) {
   renderHarmonyRoles(image, harmony);
   renderHarmonyTabs(harmony);
   renderHarmonyPanel(harmony, image);
+  renderHeroPreviewGuide(image, harmony);
 }
 
 function harmonyColorFromButton(button) {
@@ -2346,6 +2472,7 @@ heroPreviewHarmony?.addEventListener('click', (event) => {
     const harmony = harmonyForImage(currentHeroPreviewImage);
     renderHarmonyTabs(harmony);
     renderHarmonyPanel(harmony, currentHeroPreviewImage);
+    renderHeroPreviewGuide(currentHeroPreviewImage, harmony);
     return;
   }
 
@@ -2353,6 +2480,10 @@ heroPreviewHarmony?.addEventListener('click', (event) => {
   if (harmonyButton) {
     copyHarmonyColor(harmonyButton);
   }
+});
+heroPreviewGuide?.addEventListener('click', (event) => {
+  const harmonyButton = event.target.closest('[data-harmony-color]');
+  if (harmonyButton) copyHarmonyColor(harmonyButton);
 });
 copyHeroPreviewButton?.addEventListener('click', async () => {
   if (!currentHeroPreviewImage?.hex) return;
