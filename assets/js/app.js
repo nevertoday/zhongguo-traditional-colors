@@ -58,6 +58,7 @@ const skillAnchorLinks = document.querySelectorAll('[data-skill-anchor]');
 const titleHoverElements = document.querySelectorAll('h1, h2, h3');
 const heroPreviewDialog = document.querySelector('[data-hero-preview-dialog]');
 const heroPreviewImage = document.querySelector('[data-hero-preview-image]');
+const heroPreviewMedia = document.querySelector('.hero-preview-media');
 const heroPreviewContent = document.querySelector('.hero-preview-content');
 const heroPreviewTitle = document.querySelector('[data-hero-preview-title]');
 const heroPreviewHex = document.querySelector('[data-hero-preview-hex]');
@@ -83,6 +84,7 @@ let currentHue = 'all';
 let selectedColorValueType = getSavedColorValueType();
 let footerCopyTimer;
 let scrollControlFrame;
+let heroPreviewResizeFrame;
 let currentHeroPreviewImage;
 let currentHarmonyKey = 'same';
 let navResizeFrame;
@@ -1744,6 +1746,34 @@ function buildHero() {
   )).join('');
 }
 
+function syncHeroPreviewDialogHeight() {
+  if (!heroPreviewDialog?.open || !heroPreviewMedia || !heroPreviewImage) return;
+
+  if (!window.matchMedia('(min-width: 1041px)').matches) {
+    heroPreviewDialog.style.removeProperty('--preview-dialog-height');
+    return;
+  }
+
+  const mediaWidth = heroPreviewMedia.getBoundingClientRect().width;
+  const naturalWidth = heroPreviewImage.naturalWidth || 1086;
+  const naturalHeight = heroPreviewImage.naturalHeight || 1448;
+  if (!mediaWidth || !naturalWidth || !naturalHeight) return;
+
+  const imageHeight = mediaWidth * (naturalHeight / naturalWidth);
+  const maxHeight = Math.min(window.innerHeight * 0.9, 880);
+  const dialogHeight = Math.min(imageHeight, maxHeight);
+  heroPreviewDialog.style.setProperty('--preview-dialog-height', `${Math.round(dialogHeight)}px`);
+}
+
+function queueHeroPreviewDialogHeightSync() {
+  if (heroPreviewResizeFrame) return;
+
+  heroPreviewResizeFrame = window.requestAnimationFrame(() => {
+    heroPreviewResizeFrame = 0;
+    syncHeroPreviewDialogHeight();
+  });
+}
+
 function openHeroPreview(id) {
   const image = images.find((item) => item.id === id);
   if (!image || !heroPreviewDialog) return;
@@ -1770,6 +1800,7 @@ function openHeroPreview(id) {
 
   if (typeof heroPreviewDialog.showModal === 'function') {
     heroPreviewDialog.showModal();
+    queueHeroPreviewDialogHeightSync();
   }
 }
 
@@ -2301,6 +2332,10 @@ openMasterListButtons.forEach((button) => {
 });
 closeMasterListButton?.addEventListener('click', () => masterListDialog?.close());
 closeHeroPreviewButton?.addEventListener('click', () => heroPreviewDialog?.close());
+heroPreviewImage?.addEventListener('load', queueHeroPreviewDialogHeightSync);
+heroPreviewDialog?.addEventListener('close', () => {
+  heroPreviewDialog.style.removeProperty('--preview-dialog-height');
+});
 heroPreviewDialog?.addEventListener('click', (event) => {
   if (event.target === heroPreviewDialog) heroPreviewDialog.close();
 });
@@ -2394,6 +2429,7 @@ window.addEventListener('scroll', queueScrollControlsUpdate, { passive: true });
 window.addEventListener('resize', () => {
   queueScrollControlsUpdate();
   queueMobileNavState();
+  queueHeroPreviewDialogHeightSync();
 });
 window.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') closeMobileNav();
