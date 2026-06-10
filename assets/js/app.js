@@ -17,9 +17,9 @@ const styleStatus = document.querySelector('[data-style-status]');
 const styleAnchor = document.querySelector('[data-style-anchor]');
 const stylePalette = document.querySelector('[data-style-palette]');
 const styleReadiness = document.querySelector('[data-style-readiness]');
-const styleModeList = document.querySelector('[data-style-mode-list]');
-const styleModeSummary = document.querySelector('[data-style-mode-summary]');
-const styleModeColors = document.querySelector('[data-style-mode-colors]');
+const styleSceneList = document.querySelector('[data-style-scene-list]');
+const styleSceneSummary = document.querySelector('[data-style-scene-summary]');
+const styleIntentList = document.querySelector('[data-style-intent-list]');
 const styleColorSearch = document.querySelector('[data-style-color-search]');
 const styleColorOptions = document.querySelector('[data-style-color-options]');
 const styleAnchorMeta = document.querySelector('[data-style-anchor-meta]');
@@ -138,152 +138,143 @@ const HARMONY_RELATION_TYPES = HARMONY_RELATION_KEYS
   .filter((type) => type.label);
 
 const STYLE_LAB_ROLES = [
-  { key: 'background', label: '背景色', use: '铺底和留白', ratio: '大面积' },
-  { key: 'title', label: '标题色', use: '主标题和核心文字', ratio: '标题' },
-  { key: 'body', label: '正文色', use: '说明、日期和弱信息', ratio: '正文' },
-  { key: 'support', label: '主色', use: '品牌、主视觉和系列识别', ratio: '主色' },
-  { key: 'accent', label: '关系色', use: '由所选配色逻辑推导', ratio: '强调' },
+  { key: 'background', label: '背景色', use: '大面积铺底和留白', ratio: '60%' },
+  { key: 'title', label: '标题色', use: '主标题和高权重信息', ratio: '20%' },
+  { key: 'body', label: '正文色', use: '说明文字和弱信息', ratio: '12%' },
+  { key: 'support', label: '按钮色', use: '行动入口、链接和重点控件', ratio: '6%' },
+  { key: 'accent', label: '点缀色', use: '细线、角标、状态和节奏', ratio: '2%' },
 ];
 
-const STYLE_LAB_MODES = [
+const STYLE_LAB_INTENTS = [
   {
-    key: 'same',
-    label: '同类',
-    intent: '统一',
-    relationKeys: ['same'],
-    summary: '适合整套内容保持统一气质，风险最低。',
+    key: 'safe',
+    label: '稳妥',
+    intent: '先保证能落地',
+    relationKeys: ['same', 'analogous', 'neutral', 'grayTone', 'lighter', 'darker'],
+    supportKeys: ['darker', 'lighter', 'same', 'neutral'],
+    accentKeys: ['analogous', 'grayTone', 'neutral'],
+    summary: '适合先做能交付的版本：色彩统一、可读性优先，不抢内容。',
+    theory: '主要使用同类、邻近和中性色，降低冲突。',
   },
   {
-    key: 'analogous',
-    label: '邻近',
-    intent: '柔和',
-    relationKeys: ['analogous'],
-    summary: '适合需要有变化但不跳脱的封面和系列图。',
+    key: 'vivid',
+    label: '醒目',
+    intent: '先让重点被看见',
+    relationKeys: ['complementary', 'splitComplementary', 'triadic', 'temperatureContrast'],
+    supportKeys: ['complementary', 'splitComplementary', 'temperatureContrast'],
+    accentKeys: ['triadic', 'complementary', 'temperatureContrast'],
+    summary: '适合按钮、标题、日期、价格和活动信息需要更快被注意到的画面。',
+    theory: '主要借用互补、分裂互补和冷暖对比制造识别度。',
   },
   {
-    key: 'complementary',
-    label: '互补',
-    intent: '强调',
-    relationKeys: ['complementary'],
-    summary: '适合标题、按钮、价格、日期等需要被看见的位置。',
-  },
-  {
-    key: 'splitComplementary',
-    label: '分裂互补',
-    intent: '稳对比',
-    relationKeys: ['splitComplementary'],
-    summary: '适合既要对比，又不希望画面过于生硬的内容。',
-  },
-  {
-    key: 'triadic',
-    label: '三角',
-    intent: '系列',
-    relationKeys: ['triadic'],
-    summary: '适合多张封面、活动系列、栏目包装和多色主题。',
-  },
-  {
-    key: 'tetradic',
-    label: '四角',
-    intent: '多层级',
-    relationKeys: ['tetradic'],
-    summary: '适合信息层级较多的海报、课程和专题页。',
-  },
-  {
-    key: 'temperatureContrast',
-    label: '冷暖',
-    intent: '情绪差',
-    relationKeys: ['temperatureContrast'],
-    summary: '适合制造冷暖情绪对照，比如温暖主体配冷静信息。',
-  },
-  {
-    key: 'lightDark',
-    label: '明暗',
-    intent: '层次',
-    relationKeys: ['lighter', 'darker'],
-    summary: '适合先解决背景、标题和可读性，再做少量点缀。',
-  },
-  {
-    key: 'grayTone',
-    label: '灰调',
-    intent: '降噪',
-    relationKeys: ['grayTone'],
-    summary: '适合长文、课件、资料型内容，降低颜色噪声。',
-  },
-  {
-    key: 'neutral',
-    label: '中性',
-    intent: '留白',
-    relationKeys: ['neutral'],
-    summary: '适合背景、边界、版式结构和克制的品牌表达。',
+    key: 'elegant',
+    label: '雅致',
+    intent: '先控制气质',
+    relationKeys: ['grayTone', 'neutral', 'lighter', 'darker', 'analogous'],
+    supportKeys: ['grayTone', 'darker', 'neutral', 'analogous'],
+    accentKeys: ['lighter', 'grayTone', 'analogous'],
+    summary: '适合品牌、作品集、封面和长内容：克制、留白多、颜色存在感更安静。',
+    theory: '主要使用灰调、明暗和邻近关系，把颜色收进版面秩序。',
   },
 ];
 
-const STYLE_LAB_TEMPLATES = [
+const STYLE_LAB_SCENES = [
   {
-    id: 'title-cover',
-    label: '标题封面',
-    scene: '公众号首图、作品集封面、系列开篇',
-    size: '3:4 / 1080x1440',
-    layout: '大标题 / 短副标题 / 底部信息',
-    structure: '大标题靠左，短副标题承接，底部信息行收口，点缀色只做细线和角标。',
-    overline: 'TRADITIONAL COLOR',
-    title: '春山如黛',
-    subtitle: '给一组内容先定气质',
-    meta: '视觉练习 / 传统色',
+    key: 'web',
+    label: '网页',
+    short: '首页 / 产品页',
+    scene: '官网首页、产品页、作品集、工具首屏',
+    size: '响应式网页 / 1440 起稿',
+    layout: '导航 / 标题 / 正文 / CTA / 分区',
+    structure: '主色先定首屏气质，按钮色只服务行动入口，点缀色用于链接、细线和当前状态。',
+    relationKeys: ['neutral', 'lighter', 'darker', 'analogous'],
+    overline: 'WEB HERO',
+    title: '中国色也能进入现代网页',
+    subtitle: '先把颜色分成背景、标题、正文、按钮和点缀，页面会比单纯试色更容易落地。',
+    meta: '适合官网、产品页和作品集',
+    action: '查看方案',
   },
   {
-    id: 'quote-card',
-    label: '诗句短卡',
-    scene: '摘录卡、诗词短句、社交媒体配图',
-    size: '4:5 / 1080x1350',
-    layout: '短句居中 / 注释下沉 / 大留白',
-    structure: '短句居中偏上，译注或出处放在低权重位置，用大留白让颜色和文字一起呼吸。',
-    overline: 'NOTE',
-    title: '风过庭前，花影不语',
-    subtitle: '留白适合短句、诗词和摘录',
-    meta: '中式短卡',
-  },
-  {
-    id: 'course-cover',
-    label: '课程封面',
-    scene: '线上课程、知识付费封面、课件首页',
+    key: 'ppt',
+    label: 'PPT',
+    short: '标题页 / 课件',
+    scene: '汇报封面、课程课件、方案演示、知识卡片',
     size: '16:9 / 1920x1080',
-    layout: '课程名 / 模块条 / 讲次信息',
-    structure: '课程名做主视觉，编号和模块列表形成秩序，点缀色用于学习进度和重点提示。',
-    overline: 'COURSE 03',
-    title: '东方色彩课',
-    subtitle: '从色名到版面秩序',
-    meta: '配色 / 字体 / 留白',
+    layout: '大标题 / 小结论 / 信息条 / 页码',
+    structure: '标题和结论必须最清楚，按钮色在 PPT 里转成重点标记，点缀色只做页码、线条和章节提示。',
+    relationKeys: ['same', 'neutral', 'grayTone', 'lighter', 'darker'],
+    overline: 'SLIDE 01',
+    title: '东方色彩方案',
+    subtitle: '让标题、结论和结构先稳定下来，再考虑装饰。',
+    meta: '汇报 / 课程 / 方案',
+    action: '重点结论',
   },
   {
-    id: 'event-poster',
-    label: '活动海报',
-    scene: '公开课、沙龙、直播预告、展览活动',
+    key: 'cover',
+    label: '封面',
+    short: '书封 / 首图',
+    scene: '公众号首图、书籍封面、作品集封面、课程封面',
+    size: '3:4 / 1080x1440',
+    layout: '大标题 / 短副标题 / 作者或期数',
+    structure: '封面最怕所有颜色同时争夺注意力。主色负责气质，标题色负责识别，点缀色只做记忆点。',
+    relationKeys: ['analogous', 'grayTone', 'neutral', 'complementary'],
+    overline: 'COVER',
+    title: '春山如黛',
+    subtitle: '给一组内容先定气质，再决定视觉节奏。',
+    meta: '小小东整理 / 传统色',
+    action: '系列封面',
+  },
+  {
+    key: 'poster',
+    label: '海报',
+    short: '活动 / 宣传',
+    scene: '活动海报、直播预告、展览视觉、公开课宣传',
     size: '9:16 / 1080x1920',
-    layout: '日期 / 活动名 / 行动信息',
-    structure: '活动名和时间形成强主次，辅助信息沿边缘排布，点缀色负责行动入口。',
+    layout: '日期 / 活动名 / 卖点 / 行动信息',
+    structure: '海报要更快建立主次。按钮色承担行动入口，点缀色服务时间、价格、地点和焦点数字。',
+    relationKeys: ['complementary', 'splitComplementary', 'temperatureContrast', 'triadic'],
     overline: 'ONLINE TALK',
     title: '色彩公开课',
-    subtitle: '传统色在现代内容里的用法',
+    subtitle: '传统色在现代内容里的实际用法。',
     meta: '06.18 / 20:00',
+    action: '立即报名',
   },
   {
-    id: 'column-header',
-    label: '栏目头图',
-    scene: '专栏封面、网站头图、视频栏目包装',
-    size: '2:1 / 1600x800',
-    layout: '栏目名 / 期数 / 固定署名',
-    structure: '栏目名稳定出现，期数和短说明建立连续性，适合做一整套内容资产。',
-    overline: 'ISSUE 24',
-    title: '中国色札记',
-    subtitle: '一周一个色彩主题',
-    meta: '小小东整理',
+    key: 'brand',
+    label: '品牌',
+    short: '识别 / 系统',
+    scene: '品牌色板、视觉规范、名片、包装起稿',
+    size: '品牌卡 / 多触点延展',
+    layout: '品牌名 / 标语 / 色彩角色 / 识别元素',
+    structure: '品牌场景不追求一次用完所有颜色，而是先明确主色、按钮色和点缀色各自承担什么识别责任。',
+    relationKeys: ['neutral', 'grayTone', 'same', 'analogous', 'darker'],
+    overline: 'BRAND SYSTEM',
+    title: '小满茶事',
+    subtitle: '把传统色转成可以长期维护的品牌角色。',
+    meta: '主色 / 行动色 / 点缀色',
+    action: '品牌触点',
+  },
+  {
+    key: 'social',
+    label: '社媒图',
+    short: '小红书 / 摘录',
+    scene: '小红书封面、公众号配图、诗句短卡、社交媒体图',
+    size: '4:5 / 1080x1350',
+    layout: '短句 / 注释 / 署名 / 轻按钮',
+    structure: '社媒图需要一眼读懂。背景保留情绪，标题色保证阅读，点缀色用于标签、短线和系列识别。',
+    relationKeys: ['analogous', 'complementary', 'neutral', 'lighter', 'grayTone'],
+    overline: 'SOCIAL CARD',
+    title: '风过庭前，花影不语',
+    subtitle: '留白适合短句、诗词和摘录。',
+    meta: '中式短卡 / 系列内容',
+    action: '保存色板',
   },
 ];
 
 let currentStyleLabScheme;
 let currentStyleAnchorImage;
-let currentStyleLabModeKey = 'complementary';
+let currentStyleSceneKey = 'web';
+let currentStyleIntentKey = 'safe';
 
 function formatBytes(bytes) {
   const units = ['B', 'KB', 'MB', 'GB'];
@@ -728,12 +719,19 @@ function relationDisplayColors(harmony, keys) {
   return uniqueDisplayColors(keys.flatMap((key) => harmony[key] || []));
 }
 
-function styleLabMode(key = currentStyleLabModeKey) {
-  return STYLE_LAB_MODES.find((mode) => mode.key === key) || STYLE_LAB_MODES[0];
+function styleLabScene(key = currentStyleSceneKey) {
+  return STYLE_LAB_SCENES.find((scene) => scene.key === key) || STYLE_LAB_SCENES[0];
 }
 
-function styleLabRelationColors(harmony, mode = styleLabMode()) {
-  return relationDisplayColors(harmony, mode.relationKeys);
+function styleLabIntent(key = currentStyleIntentKey) {
+  return STYLE_LAB_INTENTS.find((intent) => intent.key === key) || STYLE_LAB_INTENTS[0];
+}
+
+function styleLabRelationColors(harmony, scene = styleLabScene(), intent = styleLabIntent()) {
+  return relationDisplayColors(harmony, [
+    ...intent.relationKeys,
+    ...scene.relationKeys,
+  ]);
 }
 
 function sortedStyleColors(colors, direction = 'light') {
@@ -774,17 +772,22 @@ function readableRelationKeysForBackground(background) {
     : ['darker', 'neutral', 'grayTone', 'complementary', 'splitComplementary', 'triadic', 'temperatureContrast'];
 }
 
-function createStyleLabScheme(anchorImage = currentStyleAnchorImage, modeKey = currentStyleLabModeKey) {
+function createStyleLabScheme(
+  anchorImage = currentStyleAnchorImage,
+  sceneKey = currentStyleSceneKey,
+  intentKey = currentStyleIntentKey,
+) {
   anchorImage ||= randomColorItems(1)[0] || images.find((image) => image.hex);
   if (!anchorImage) return null;
 
   const allColors = allDisplayColors();
   const anchor = displayColorFromImage(anchorImage);
   const harmony = harmonyForImage(anchorImage);
-  const mode = styleLabMode(modeKey);
-  const modeColors = styleLabRelationColors(harmony, mode);
-  const relationColors = modeColors.length
-    ? modeColors
+  const scene = styleLabScene(sceneKey);
+  const intent = styleLabIntent(intentKey);
+  const relationColors = styleLabRelationColors(harmony, scene, intent);
+  const fallbackRelations = relationColors.length
+    ? relationColors
     : relationDisplayColors(harmony, ['accent', 'complementary', 'analogous', 'same']);
   const used = new Set();
 
@@ -793,7 +796,7 @@ function createStyleLabScheme(anchorImage = currentStyleAnchorImage, modeKey = c
 
   const readableRelationKeys = readableRelationKeysForBackground(background);
   const coloredTextCandidates = styleColoredColors([
-    ...relationColors,
+    ...fallbackRelations,
     ...relationDisplayColors(harmony, readableRelationKeys),
     ...relationDisplayColors(harmony, ['darker', 'lighter', 'neutral', 'grayTone', 'same']),
   ]);
@@ -812,7 +815,7 @@ function createStyleLabScheme(anchorImage = currentStyleAnchorImage, modeKey = c
 
   const bodyCandidatePool = [
     ...relationDisplayColors(harmony, readableRelationKeys),
-    ...styleColoredColors(relationColors),
+    ...styleColoredColors(fallbackRelations),
     ...relationDisplayColors(harmony, ['darker', 'neutral', 'grayTone']),
     ...allColors,
   ];
@@ -822,10 +825,24 @@ function createStyleLabScheme(anchorImage = currentStyleAnchorImage, modeKey = c
     || title;
   used.add(styleColorKey(body));
 
-  const support = anchor;
+  const supportCandidates = [
+    ...relationDisplayColors(harmony, intent.supportKeys),
+    ...fallbackRelations,
+    ...relationDisplayColors(harmony, scene.relationKeys),
+    ...allColors,
+  ];
+  const support = firstUnusedColor(supportCandidates, used, (color) => styleColorContrast(color, background) >= 2.1)
+    || bestContrastColor(supportCandidates, background, used, 0)
+    || title;
+  used.add(styleColorKey(support));
 
-  const accent = firstUnusedColor(relationColors, used, (color) => styleColorContrast(color, background) >= 1.25)
-    || firstUnusedColor(relationColors, used)
+  const accentCandidates = [
+    ...relationDisplayColors(harmony, intent.accentKeys),
+    ...fallbackRelations,
+    ...relationDisplayColors(harmony, ['accent', 'triadic', 'temperatureContrast']),
+  ];
+  const accent = firstUnusedColor(accentCandidates, used, (color) => styleColorContrast(color, background) >= 1.25)
+    || firstUnusedColor(accentCandidates, used)
     || bestContrastColor([
       ...relationDisplayColors(harmony, ['accent', 'complementary', 'splitComplementary', 'triadic', 'temperatureContrast']),
       anchor,
@@ -836,8 +853,10 @@ function createStyleLabScheme(anchorImage = currentStyleAnchorImage, modeKey = c
   return {
     anchor,
     anchorImage,
-    mode,
-    modeColors: relationColors.slice(0, 4),
+    scene,
+    intent,
+    modeColors: fallbackRelations.slice(0, 4),
+    actionText: styleColorContrast(background, support) >= styleColorContrast(title, support) ? background : title,
     roles: {
       background,
       title,
@@ -858,34 +877,20 @@ function styleLabSchemeText(scheme, roles = scheme.roles) {
     .join('\n');
 }
 
-function styleLabTemplateAccentColor(scheme, index = 0) {
-  return scheme.modeColors[index % scheme.modeColors.length] || scheme.roles.accent;
-}
-
-function styleLabTemplateRoles(scheme, index = 0) {
-  return {
-    ...scheme.roles,
-    accent: styleLabTemplateAccentColor(scheme, index),
-  };
-}
-
-function styleTemplateCopyText(template, scheme, index = 0) {
-  const roles = styleLabTemplateRoles(scheme, index);
-
+function styleSceneCopyText(scene, scheme) {
   return [
-    `应用样式：${template.label}`,
-    `配色逻辑：${scheme.mode.label}（${scheme.mode.intent}）`,
+    `应用场景：${scene.label}（${scene.scene}）`,
+    `方案倾向：${scheme.intent.label}（${scheme.intent.intent}）`,
     `主色：${scheme.anchor.name} ${scheme.anchor.hex}`,
-    `关系色：${styleLabModeColorText(scheme)}`,
-    `当前样式应用关系色：${roles.accent.name} ${roles.accent.hex}`,
-    `适用场景：${template.scene}`,
-    `建议尺寸：${template.size}`,
-    `版式骨架：${template.layout}`,
+    `内部参考关系：${styleLabRelationText(scheme)}`,
+    `理论说明：${scheme.intent.theory}`,
+    `建议尺寸：${scene.size}`,
+    `版式骨架：${scene.layout}`,
     '配色角色：',
-    styleLabSchemeText(scheme, roles),
-    `排版结构：${template.structure}`,
+    styleLabSchemeText(scheme),
+    `落位建议：${scene.structure}`,
     'CSS 变量：',
-    styleLabCssVariables(scheme, roles),
+    styleLabCssVariables(scheme),
   ].join('\n');
 }
 
@@ -893,27 +898,25 @@ function styleLabCopyText() {
   if (!currentStyleLabScheme) return '';
 
   return [
-    '中国传统色配色应用方案',
+    '中国传统色场景配色方案',
     `主色来源：${currentStyleLabScheme.anchor.name} ${currentStyleLabScheme.anchor.hex}`,
-    `配色逻辑：${currentStyleLabScheme.mode.label}（${currentStyleLabScheme.mode.intent}）`,
-    `关系色：${styleLabModeColorText(currentStyleLabScheme)}`,
+    `使用场景：${currentStyleLabScheme.scene.label}（${currentStyleLabScheme.scene.scene}）`,
+    `方案倾向：${currentStyleLabScheme.intent.label}（${currentStyleLabScheme.intent.intent}）`,
+    `内部参考关系：${styleLabRelationText(currentStyleLabScheme)}`,
+    `理论说明：${currentStyleLabScheme.intent.theory}`,
     `标题可读性：${styleLabContrastLabel(currentStyleLabScheme)}，适合直接放主标题；仍建议按实际字号复核。`,
     '',
     '当前配色角色：',
     styleLabSchemeText(currentStyleLabScheme),
     '',
-    '样式卡：',
-    STYLE_LAB_TEMPLATES.map((template, index) => {
-      const accent = styleLabTemplateAccentColor(currentStyleLabScheme, index);
-      return `- ${template.label}：${template.scene}；${template.size}；${template.layout}；关系色 ${accent.name} ${accent.hex}`;
-    }).join('\n'),
-    '',
+    `落位建议：${currentStyleLabScheme.scene.structure}`,
+    `预览尺寸：${currentStyleLabScheme.scene.size}`,
     'CSS 变量：',
     styleLabCssVariables(currentStyleLabScheme),
   ].join('\n');
 }
 
-function styleLabModeColorText(scheme) {
+function styleLabRelationText(scheme) {
   return scheme.modeColors.length
     ? scheme.modeColors.map((color) => `${color.name} ${color.hex}`).join(' / ')
     : '当前主色没有可用关系色，已使用色库兜底方案';
@@ -931,13 +934,14 @@ function styleLabCssVariables(scheme, roles = scheme.roles) {
   const roleColor = (key) => roles[key];
 
   return [
-    `--ctc-mode: ${scheme.mode.key}; /* ${scheme.mode.label} */`,
+    `--ctc-scene: ${scheme.scene.key}; /* ${scheme.scene.label} */`,
+    `--ctc-intent: ${scheme.intent.key}; /* ${scheme.intent.label} */`,
     `--ctc-anchor: ${scheme.anchor.hex}; /* ${scheme.anchor.name} */`,
     `--ctc-bg: ${roleColor('background').hex}; /* ${roleColor('background').name} */`,
     `--ctc-title: ${roleColor('title').hex}; /* ${roleColor('title').name} */`,
     `--ctc-body: ${roleColor('body').hex}; /* ${roleColor('body').name} */`,
-    `--ctc-main: ${roleColor('support').hex}; /* ${roleColor('support').name} */`,
-    `--ctc-relation: ${roleColor('accent').hex}; /* ${roleColor('accent').name} */`,
+    `--ctc-button: ${roleColor('support').hex}; /* ${roleColor('support').name} */`,
+    `--ctc-accent: ${roleColor('accent').hex}; /* ${roleColor('accent').name} */`,
   ].join('\n');
 }
 
@@ -952,11 +956,11 @@ function styleLabReadinessMarkup(scheme) {
     </span>
     <span>
       <strong>${escapeHtml(String(scheme.modeColors.length || 1))}</strong>
-      <small>当前模式关系色</small>
+      <small>内部参考关系色</small>
     </span>
     <span>
-      <strong>${escapeHtml(scheme.anchor.id)}</strong>
-      <small>主色编号</small>
+      <strong>${escapeHtml(scheme.intent.label)}</strong>
+      <small>${escapeHtml(scheme.scene.label)}场景倾向</small>
     </span>
   `;
 }
@@ -986,97 +990,117 @@ function renderStyleAnchor(scheme) {
   }
 }
 
-function styleLabModeMarkup(mode) {
-  const selected = mode.key === currentStyleLabModeKey;
+function styleLabSceneMarkup(scene) {
+  const selected = scene.key === currentStyleSceneKey;
 
   return `
-    <button class="style-mode-button" type="button" data-style-mode="${escapeHtml(mode.key)}" aria-pressed="${selected ? 'true' : 'false'}">
-      <strong>${escapeHtml(mode.label)}</strong>
-      <span>${escapeHtml(mode.intent)}</span>
+    <button class="style-mode-button" type="button" data-style-scene="${escapeHtml(scene.key)}" aria-pressed="${selected ? 'true' : 'false'}">
+      <strong>${escapeHtml(scene.label)}</strong>
+      <span>${escapeHtml(scene.short)}</span>
     </button>
   `;
 }
 
-function styleLabModeColorMarkup(color) {
-  const value = colorValue(color);
-  const label = `${color.name} ${value}`;
+function styleLabIntentMarkup(intent) {
+  const selected = intent.key === currentStyleIntentKey;
 
   return `
-    <button class="style-mode-color" type="button" data-style-mode-color="${escapeHtml(color.id)}" aria-label="复制关系色 ${escapeHtml(label)}">
-      <span style="--mode-color: ${escapeHtml(color.hex)}" aria-hidden="true"></span>
-      <strong>${escapeHtml(color.name)}</strong>
-      <em data-style-mode-value>${escapeHtml(value)}</em>
+    <button class="style-intent-button" type="button" data-style-intent="${escapeHtml(intent.key)}" aria-pressed="${selected ? 'true' : 'false'}">
+      <strong>${escapeHtml(intent.label)}</strong>
+      <span>${escapeHtml(intent.intent)}</span>
     </button>
   `;
 }
 
 function renderStyleLabModes(scheme = currentStyleLabScheme) {
-  if (styleModeList) {
-    styleModeList.innerHTML = STYLE_LAB_MODES.map(styleLabModeMarkup).join('');
+  if (styleSceneList) {
+    styleSceneList.innerHTML = STYLE_LAB_SCENES.map(styleLabSceneMarkup).join('');
   }
 
-  const mode = styleLabMode();
-  if (styleModeSummary) {
-    styleModeSummary.textContent = `${mode.label}：${mode.summary} 右侧样式卡会依次套用下方关系色。`;
+  const scene = styleLabScene();
+  const intent = styleLabIntent();
+  if (styleSceneSummary) {
+    styleSceneSummary.textContent = `${scene.label}：${scene.structure} 当前用「${intent.label}」倾向生成角色色。`;
   }
 
-  if (styleModeColors) {
-    styleModeColors.innerHTML = scheme?.modeColors?.length
-      ? scheme.modeColors.map(styleLabModeColorMarkup).join('')
-      : '<span class="style-mode-empty">当前主色没有可用关系色，已使用色库兜底方案</span>';
+  if (styleIntentList) {
+    styleIntentList.innerHTML = STYLE_LAB_INTENTS.map(styleLabIntentMarkup).join('');
   }
 }
 
-function styleLabCanvasMarkup(template) {
-  if (template.id === 'quote-card') {
+function styleLabCanvasMarkup(scene, scheme) {
+  if (scene.key === 'web') {
+    return `
+      <div class="style-sample-browserbar"><span></span><span></span><span></span></div>
+      <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
+      <h3>${escapeHtml(scene.title)}</h3>
+      <p>${escapeHtml(scene.subtitle)}</p>
+      <span class="style-sample-action">${escapeHtml(scene.action)}</span>
+      <div class="style-sample-feature">
+        <b>背景</b>
+        <b>标题</b>
+        <b>按钮</b>
+      </div>
+      <em>${escapeHtml(scene.meta)}</em>
+    `;
+  }
+
+  if (scene.key === 'ppt') {
+    return `
+      <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
+      <h3>${escapeHtml(scene.title)}</h3>
+      <p>${escapeHtml(scene.subtitle)}</p>
+      <div class="style-sample-module">
+        <span>主结论</span>
+        <span>行动色</span>
+        <span>页码</span>
+      </div>
+      <em>${escapeHtml(scene.meta)}</em>
+    `;
+  }
+
+  if (scene.key === 'poster') {
+    return `
+      <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
+      <strong class="style-sample-date">06.18</strong>
+      <h3>${escapeHtml(scene.title)}</h3>
+      <p>${escapeHtml(scene.subtitle)}</p>
+      <span class="style-sample-action">${escapeHtml(scene.action)}</span>
+      <em>${escapeHtml(scene.meta)}</em>
+    `;
+  }
+
+  if (scene.key === 'brand') {
+    return `
+      <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
+      <div class="style-sample-brand-mark">${escapeHtml(scheme.anchor.name.slice(0, 1))}</div>
+      <h3>${escapeHtml(scene.title)}</h3>
+      <p>${escapeHtml(scene.subtitle)}</p>
+      <div class="style-sample-brand-strip">
+        <span></span><span></span><span></span>
+      </div>
+      <em>${escapeHtml(scene.meta)}</em>
+    `;
+  }
+
+  if (scene.key === 'social') {
     return `
       <div class="style-sample-quote-mark">“</div>
-      <p class="style-sample-quote">${escapeHtml(template.title)}</p>
+      <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
+      <p class="style-sample-quote">${escapeHtml(scene.title)}</p>
       <span class="style-sample-line"></span>
-      <small>${escapeHtml(template.subtitle)}</small>
-      <em>${escapeHtml(template.meta)}</em>
-    `;
-  }
-
-  if (template.id === 'course-cover') {
-    return `
-      <span class="style-sample-overline">${escapeHtml(template.overline)}</span>
-      <h3>${escapeHtml(template.title)}</h3>
-      <p>${escapeHtml(template.subtitle)}</p>
-      <div class="style-sample-module">
-        <span>色名</span>
-        <span>比例</span>
-        <span>交付</span>
-      </div>
-      <em>${escapeHtml(template.meta)}</em>
-    `;
-  }
-
-  if (template.id === 'event-poster') {
-    return `
-      <span class="style-sample-overline">${escapeHtml(template.overline)}</span>
-      <strong class="style-sample-date">06.18</strong>
-      <h3>${escapeHtml(template.title)}</h3>
-      <p>${escapeHtml(template.subtitle)}</p>
-      <em>${escapeHtml(template.meta)}</em>
-    `;
-  }
-
-  if (template.id === 'column-header') {
-    return `
-      <span class="style-sample-rule"></span>
-      <span class="style-sample-overline">${escapeHtml(template.overline)}</span>
-      <h3>${escapeHtml(template.title)}</h3>
-      <p>${escapeHtml(template.subtitle)}</p>
-      <em>${escapeHtml(template.meta)}</em>
+      <small>${escapeHtml(scene.subtitle)}</small>
+      <span class="style-sample-action">${escapeHtml(scene.action)}</span>
+      <em>${escapeHtml(scene.meta)}</em>
     `;
   }
 
   return `
-    <span class="style-sample-overline">${escapeHtml(template.overline)}</span>
-    <h3>${escapeHtml(template.title)}</h3>
-    <p>${escapeHtml(template.subtitle)}</p>
-    <em>${escapeHtml(template.meta)}</em>
+    <span class="style-sample-overline">${escapeHtml(scene.overline)}</span>
+    <h3>${escapeHtml(scene.title)}</h3>
+    <p>${escapeHtml(scene.subtitle)}</p>
+    <span class="style-sample-action">${escapeHtml(scene.action)}</span>
+    <em>${escapeHtml(scene.meta)}</em>
   `;
 }
 
@@ -1096,12 +1120,12 @@ function styleRoleSwatchMarkup(role, color) {
   `;
 }
 
-function styleTemplateRoleMarkup(role, color, index) {
+function styleTemplateRoleMarkup(role, color) {
   const value = colorValue(color);
   const label = `${role.label} ${color.name} ${value}`;
 
   return `
-    <button class="style-template-role" type="button" data-style-template-role="${escapeHtml(role.key)}" data-style-template-index="${index}" aria-label="复制 ${escapeHtml(label)}">
+    <button class="style-template-role" type="button" data-style-template-role="${escapeHtml(role.key)}" aria-label="复制 ${escapeHtml(label)}">
       <i style="--style-role-color: ${escapeHtml(color.hex)}" aria-hidden="true"></i>
       <b>${escapeHtml(role.label)}</b>
       <em data-style-template-value>${escapeHtml(color.name)} ${escapeHtml(value)}</em>
@@ -1109,35 +1133,37 @@ function styleTemplateRoleMarkup(role, color, index) {
   `;
 }
 
-function styleTemplateMarkup(template, index, scheme) {
-  const roles = styleLabTemplateRoles(scheme, index);
+function styleTemplateMarkup(scene, scheme) {
+  const roles = scheme.roles;
   const customProperties = [
     `--sample-bg: ${roles.background.hex}`,
     `--sample-title: ${roles.title.hex}`,
     `--sample-body: ${roles.body.hex}`,
     `--sample-support: ${roles.support.hex}`,
     `--sample-accent: ${roles.accent.hex}`,
+    `--sample-action-text: ${scheme.actionText.hex}`,
   ].join('; ');
 
   return `
-    <article class="style-template-card style-template-card--${escapeHtml(template.id)}" data-style-template-id="${escapeHtml(template.id)}" style="${escapeHtml(customProperties)}">
+    <article class="style-template-card style-template-card--scene style-template-card--${escapeHtml(scene.key)}" data-style-template-id="${escapeHtml(scene.key)}" style="${escapeHtml(customProperties)}">
       <header class="style-template-meta">
-        <span>${String(index + 1).padStart(2, '0')}</span>
-        <strong>${escapeHtml(template.label)}</strong>
-        <button type="button" data-style-copy="${escapeHtml(template.id)}" aria-label="复制 ${escapeHtml(template.label)} 配色方案">
+        <span>${escapeHtml(scheme.intent.label)}</span>
+        <strong>${escapeHtml(scene.label)}场景预览</strong>
+        <button type="button" data-style-copy="${escapeHtml(scene.key)}" aria-label="复制 ${escapeHtml(scene.label)} 场景配色方案">
           <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
         </button>
       </header>
       <div class="style-template-canvas">
-        ${styleLabCanvasMarkup(template)}
+        ${styleLabCanvasMarkup(scene, scheme)}
       </div>
       <div class="style-template-brief">
-        <p><strong>用在</strong><span>${escapeHtml(template.scene)}</span></p>
-        <p><strong>尺寸</strong><span>${escapeHtml(template.size)}</span></p>
-        <p><strong>骨架</strong><span>${escapeHtml(template.layout)}</span></p>
+        <p><strong>用在</strong><span>${escapeHtml(scene.scene)}</span></p>
+        <p><strong>尺寸</strong><span>${escapeHtml(scene.size)}</span></p>
+        <p><strong>骨架</strong><span>${escapeHtml(scene.layout)}</span></p>
+        <p><strong>说明</strong><span>${escapeHtml(scheme.intent.summary)}</span></p>
       </div>
       <footer class="style-template-roles">
-        ${STYLE_LAB_ROLES.map((role) => styleTemplateRoleMarkup(role, roles[role.key], index)).join('')}
+        ${STYLE_LAB_ROLES.map((role) => styleTemplateRoleMarkup(role, roles[role.key])).join('')}
       </footer>
     </article>
   `;
@@ -1157,7 +1183,7 @@ function renderStyleLab(statusMessage = '', options = {}) {
     currentStyleAnchorImage = randomColorItems(1)[0] || images.find((image) => image.hex);
   }
 
-  const scheme = createStyleLabScheme(currentStyleAnchorImage, currentStyleLabModeKey);
+  const scheme = createStyleLabScheme(currentStyleAnchorImage, currentStyleSceneKey, currentStyleIntentKey);
   if (!scheme) {
     styleLab.innerHTML = '<div class="empty-state"><strong>配色应用暂时无法生成</strong><span>没有读取到可用色值。</span></div>';
     return;
@@ -1175,17 +1201,15 @@ function renderStyleLab(statusMessage = '', options = {}) {
     styleReadiness.innerHTML = styleLabReadinessMarkup(scheme);
   }
   renderStyleLabModes(scheme);
-  styleLab.innerHTML = STYLE_LAB_TEMPLATES
-    .map((template, index) => styleTemplateMarkup(template, index, scheme))
-    .join('');
-  setStyleLabStatus(statusMessage || `当前主色：${scheme.anchor.name}；已应用 ${scheme.mode.label} 配色逻辑`);
+  styleLab.innerHTML = styleTemplateMarkup(scheme.scene, scheme);
+  setStyleLabStatus(statusMessage || `当前主色：${scheme.anchor.name}；${scheme.scene.label}场景 · ${scheme.intent.label}倾向`);
 }
 
 function applyStyleAnchor(image, statusMessage = '') {
   if (!image?.hex) return;
 
   currentStyleAnchorImage = image;
-  renderStyleLab(statusMessage || `已切换主色：${colorName(image)} ${colorValue(image)}，保留 ${styleLabMode().label} 配色逻辑`);
+  renderStyleLab(statusMessage || `已切换主色：${colorName(image)} ${colorValue(image)}，保留 ${styleLabScene().label}场景`);
 }
 
 function commitStyleColorSearch() {
@@ -1201,13 +1225,12 @@ function commitStyleColorSearch() {
   styleColorSearch.blur();
 }
 
-async function copyStyleTemplate(templateId) {
-  const template = STYLE_LAB_TEMPLATES.find((item) => item.id === templateId);
-  const templateIndex = STYLE_LAB_TEMPLATES.findIndex((item) => item.id === templateId);
-  if (!template || !currentStyleLabScheme) return;
+async function copyStyleTemplate(sceneKey) {
+  const scene = STYLE_LAB_SCENES.find((item) => item.key === sceneKey) || currentStyleLabScheme?.scene;
+  if (!scene || !currentStyleLabScheme) return;
 
-  await writeClipboard(styleTemplateCopyText(template, currentStyleLabScheme, templateIndex));
-  setStyleLabStatus(`已复制：${template.label}`);
+  await writeClipboard(styleSceneCopyText(scene, currentStyleLabScheme));
+  setStyleLabStatus(`已复制：${scene.label}场景方案`);
 }
 
 async function copyStyleRole(roleKey) {
@@ -1228,15 +1251,6 @@ async function copyStyleAnchor() {
   setStyleLabStatus(`已复制：${copyText}`);
 }
 
-async function copyStyleModeColor(colorId) {
-  const color = currentStyleLabScheme?.modeColors.find((item) => item.id === colorId);
-  if (!color) return;
-
-  const copyText = `${color.name} ${colorValue(color)}`;
-  await writeClipboard(copyText);
-  setStyleLabStatus(`已复制关系色：${copyText}`);
-}
-
 async function copyStyleCssVariables() {
   if (!currentStyleLabScheme) return;
 
@@ -1244,10 +1258,9 @@ async function copyStyleCssVariables() {
   setStyleLabStatus('已复制 CSS 变量');
 }
 
-async function copyStyleTemplateColor(roleKey, templateIndex) {
+async function copyStyleTemplateColor(roleKey) {
   const role = STYLE_LAB_ROLES.find((item) => item.key === roleKey);
-  const roles = currentStyleLabScheme ? styleLabTemplateRoles(currentStyleLabScheme, templateIndex) : null;
-  const color = roles?.[roleKey];
+  const color = currentStyleLabScheme?.roles[roleKey];
   if (!role || !color) return;
 
   const copyText = `${role.label}：${color.name} ${colorValue(color)}`;
@@ -2169,9 +2182,7 @@ function updateCopyControls() {
     }
     renderStyleLabModes(currentStyleLabScheme);
     if (styleLab) {
-      styleLab.innerHTML = STYLE_LAB_TEMPLATES
-        .map((template, index) => styleTemplateMarkup(template, index, currentStyleLabScheme))
-        .join('');
+      styleLab.innerHTML = styleTemplateMarkup(currentStyleLabScheme.scene, currentStyleLabScheme);
     }
   }
 }
@@ -2434,7 +2445,7 @@ loadMoreButton?.addEventListener('click', () => {
   appendGalleryItems(shuffled ? 24 : 32);
 });
 styleRefreshButton?.addEventListener('click', () => {
-  renderStyleLab(`已换主色，并应用 ${styleLabMode().label} 配色逻辑`, { newAnchor: true });
+  renderStyleLab(`已换主色，保留 ${styleLabScene().label}场景和 ${styleLabIntent().label}倾向`, { newAnchor: true });
 });
 styleAnchorCopyButton?.addEventListener('click', copyStyleAnchor);
 styleColorSearch?.addEventListener('change', commitStyleColorSearch);
@@ -2457,16 +2468,19 @@ styleCopyAllButton?.addEventListener('click', async () => {
   setStyleLabStatus('已复制当前整组方案');
 });
 styleCopyCssButton?.addEventListener('click', copyStyleCssVariables);
-styleModeList?.addEventListener('click', (event) => {
-  const modeButton = event.target.closest('[data-style-mode]');
-  if (!modeButton) return;
+styleSceneList?.addEventListener('click', (event) => {
+  const sceneButton = event.target.closest('[data-style-scene]');
+  if (!sceneButton) return;
 
-  currentStyleLabModeKey = modeButton.dataset.styleMode;
-  renderStyleLab(`已在 ${currentStyleLabScheme?.anchor.name || '当前主色'} 上应用 ${styleLabMode().label} 配色逻辑`);
+  currentStyleSceneKey = sceneButton.dataset.styleScene;
+  renderStyleLab(`已切换到 ${styleLabScene().label}场景，保留 ${styleLabIntent().label}倾向`);
 });
-styleModeColors?.addEventListener('click', (event) => {
-  const colorButton = event.target.closest('[data-style-mode-color]');
-  if (colorButton) copyStyleModeColor(colorButton.dataset.styleModeColor);
+styleIntentList?.addEventListener('click', (event) => {
+  const intentButton = event.target.closest('[data-style-intent]');
+  if (!intentButton) return;
+
+  currentStyleIntentKey = intentButton.dataset.styleIntent;
+  renderStyleLab(`已切换为 ${styleLabIntent().label}倾向，当前场景：${styleLabScene().label}`);
 });
 stylePalette?.addEventListener('click', (event) => {
   const roleButton = event.target.closest('[data-style-role]');
@@ -2475,10 +2489,7 @@ stylePalette?.addEventListener('click', (event) => {
 styleLab?.addEventListener('click', (event) => {
   const roleButton = event.target.closest('[data-style-template-role]');
   if (roleButton) {
-    copyStyleTemplateColor(
-      roleButton.dataset.styleTemplateRole,
-      Number.parseInt(roleButton.dataset.styleTemplateIndex || '0', 10),
-    );
+    copyStyleTemplateColor(roleButton.dataset.styleTemplateRole);
     return;
   }
 
