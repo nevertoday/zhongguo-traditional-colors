@@ -109,6 +109,8 @@ const COLOR_VALUE_TYPES = [
   { value: 'cmyk', label: 'CMYK' },
 ];
 
+const GALLERY_RANDOM_HUES = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple', 'neutral'];
+
 const HARMONY_USAGE_NOTE = '先看使用场景，再点击色块复制色值；格式会跟随上方选择。';
 
 const HARMONY_ROLE_TYPES = [
@@ -536,6 +538,41 @@ function randomizeImageOrder(items) {
     [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
   }
   return pool;
+}
+
+function galleryHueItems(hue) {
+  return images.filter((image) => image.hex && hueFromHex(image.hex) === hue);
+}
+
+function availableGalleryRandomHues() {
+  return GALLERY_RANDOM_HUES.filter((hue) => galleryHueItems(hue).length);
+}
+
+function readLastRandomGalleryHue() {
+  try {
+    return sessionStorage.getItem('lastRandomGalleryHue') || '';
+  } catch (error) {
+    return '';
+  }
+}
+
+function saveLastRandomGalleryHue(hue) {
+  try {
+    sessionStorage.setItem('lastRandomGalleryHue', hue);
+  } catch (error) {
+    // Random hue selection still works when session storage is unavailable.
+  }
+}
+
+function randomGalleryHue() {
+  const availableHues = availableGalleryRandomHues();
+  const previousHue = readLastRandomGalleryHue();
+  const huePool = availableHues.length > 1
+    ? availableHues.filter((hue) => hue !== previousHue)
+    : availableHues;
+  const hue = huePool[randomInt(huePool.length)] || availableHues[0] || 'all';
+  saveLastRandomGalleryHue(hue);
+  return hue;
 }
 
 function randomColorItems(count) {
@@ -2031,6 +2068,15 @@ function applySearch() {
   applyFilters();
 }
 
+function initializeGallery() {
+  const query = normalize(searchInput?.value || '');
+  if (!query && hueFilter) {
+    hueFilter.value = randomGalleryHue();
+  }
+
+  applyFilters();
+}
+
 function applyFilters() {
   const query = normalize(searchInput?.value || '');
   currentHue = hueFilter?.value || 'all';
@@ -2364,7 +2410,7 @@ buildHero();
 buildFooterSpectrum();
 renderStyleColorOptions();
 renderStyleLab();
-renderGallery();
+initializeGallery();
 updateScrollControls();
 skillToggleButtons.forEach((button) => {
   setSkillOpen(button.closest('.skill-item'), false);
