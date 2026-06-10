@@ -1,5 +1,6 @@
 const images = window.TRADITIONAL_COLOR_IMAGES || [];
 const colorHarmonies = window.TRADITIONAL_COLOR_HARMONIES || {};
+const harmonyUsage = window.TRADITIONAL_COLOR_HARMONY_USAGE || {};
 const project = window.TRADITIONAL_COLOR_PROJECT || {
   count: images.length,
   totalBytes: images.reduce((total, image) => total + image.size, 0),
@@ -76,8 +77,8 @@ const harmonyTabs = document.querySelector('[data-harmony-tabs]');
 const harmonyPanel = document.querySelector('[data-harmony-panel]');
 
 let visibleCount = 24;
-let currentItems = [...images];
-let shuffled = false;
+let currentItems = randomizeImageOrder(images);
+let shuffled = true;
 let currentHue = 'all';
 let selectedColorValueType = getSavedColorValueType();
 let footerCopyTimer;
@@ -113,85 +114,23 @@ const HARMONY_ROLE_TYPES = [
   { key: 'accent', label: '强调色', context: '按钮 / 重点', hint: '按钮、标题、数字或焦点' },
 ];
 
-const HARMONY_RELATION_TYPES = [
-  {
-    key: 'same',
-    intent: '统一',
-    label: '同类',
-    note: '需要安静、统一、低风险的页面时，先看这一组。适合背景、模块底色和同一品牌语气的延展。',
-    method: '优先找颜色方向接近、饱和度相近的传统色，再按视觉距离和明暗层次排序。',
-  },
-  {
-    key: 'analogous',
-    intent: '柔和',
-    label: '邻近',
-    note: '需要有一点变化但不想跳脱时使用。适合渐变、插画、章节分区和柔和的视觉层次。',
-    method: '从当前色在色环左右相邻的区域中挑选，再优先选择视觉上更接近的传统色。',
-  },
-  {
-    key: 'complementary',
-    intent: '强调',
-    label: '互补',
-    note: '需要按钮、标题、重点数据或视觉焦点时使用。面积要克制，通常少量点缀比大面积铺开更稳。',
-    method: '从色环对面寻找候选色，再排除明暗和饱和度过于跳脱的组合。',
-  },
-  {
-    key: 'splitComplementary',
-    intent: '稳对比',
-    label: '分裂互补',
-    note: '需要对比但不希望互补色过于直接时使用。适合界面强调色、封面辅助色和内容重点。',
-    method: '从互补色两侧寻找候选色，保留对比，但比直接互补更柔和。',
-  },
-  {
-    key: 'triadic',
-    intent: '系列感',
-    label: '三角',
-    note: '需要做多张海报、一组图表或系列主题时使用。适合建立多色节奏，但要控制主次面积。',
-    method: '从色环上相隔较远的三个方向寻找候选色，用来形成系列节奏。',
-  },
-  {
-    key: 'tetradic',
-    intent: '多层级',
-    label: '四角',
-    note: '需要复杂页面、多个信息层级或多状态系统时使用。建议先选 2 到 3 个颜色试，不必全部使用。',
-    method: '从色环上四个方向寻找候选色，提供更宽的冷暖、明暗和层级选择。',
-  },
-  {
-    key: 'temperatureContrast',
-    intent: '冷暖差',
-    label: '冷暖',
-    note: '需要明显情绪转折时使用，例如温暖主体配冷色信息，或冷静界面加暖色提示。',
-    method: '先判断当前色偏冷或偏暖，再寻找另一侧色温中明暗更接近的传统色。',
-  },
-  {
-    key: 'lighter',
-    intent: '浅背景',
-    label: '明色',
-    note: '需要背景、留白、轻提示或弱分隔时使用。文字放在上面时仍要单独检查对比度。',
-    method: '优先找比当前色更亮、同时仍保持相近气质的传统色。',
-  },
-  {
-    key: 'darker',
-    intent: '深文字',
-    label: '暗色',
-    note: '需要正文、标题、边界或压重点时使用。尤其适合从浅色主色中找可读的深色搭配。',
-    method: '优先找比当前色更暗、同时仍保持相近气质的传统色。',
-  },
-  {
-    key: 'grayTone',
-    intent: '降噪',
-    label: '灰调',
-    note: '需要大面积耐看、降低情绪噪声时使用。适合后台界面、长文阅读和中性信息区。',
-    method: '优先找饱和度更低的传统色，再按明暗层次和视觉接近度排序。',
-  },
-  {
-    key: 'neutral',
-    intent: '留白',
-    label: '中性',
-    note: '需要留白、分隔、背景或结构色时使用。它帮助主色更突出，而不是抢走注意力。',
-    method: '从低饱和传统色中挑选，再按当前色的明暗寻找更合适的承接色。',
-  },
+const HARMONY_RELATION_KEYS = [
+  'same',
+  'analogous',
+  'complementary',
+  'splitComplementary',
+  'triadic',
+  'tetradic',
+  'temperatureContrast',
+  'lighter',
+  'darker',
+  'grayTone',
+  'neutral',
 ];
+
+const HARMONY_RELATION_TYPES = HARMONY_RELATION_KEYS
+  .map((key) => ({ key, ...(harmonyUsage[key] || {}) }))
+  .filter((type) => type.label);
 
 const STYLE_LAB_ROLES = [
   { key: 'background', label: '背景色', use: '铺底和留白', ratio: '大面积' },
@@ -587,12 +526,17 @@ function randomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-function randomColorItems(count) {
-  const pool = images.filter((image) => image.hex);
+function randomizeImageOrder(items) {
+  const pool = [...items];
   for (let index = pool.length - 1; index > 0; index -= 1) {
     const swapIndex = randomInt(index + 1);
     [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
   }
+  return pool;
+}
+
+function randomColorItems(count) {
+  const pool = randomizeImageOrder(images.filter((image) => image.hex));
   return pool.slice(0, count);
 }
 
@@ -1295,6 +1239,61 @@ function harmonyRelationType(key) {
   return HARMONY_RELATION_TYPES.find((type) => type.key === key) || HARMONY_RELATION_TYPES[0];
 }
 
+function lightnessLabel(lightness) {
+  if (lightness >= 82) return '高明度';
+  if (lightness >= 62) return '中高明度';
+  if (lightness >= 42) return '中明度';
+  if (lightness >= 26) return '中低明度';
+  return '低明度';
+}
+
+function saturationLabel(saturation) {
+  if (saturation >= 72) return '高饱和';
+  if (saturation >= 42) return '中饱和';
+  if (saturation >= 18) return '低饱和';
+  return '近中性';
+}
+
+function harmonyAnchorRole(relation) {
+  const roles = {
+    same: '整套视觉的母色或系列识别色',
+    analogous: '主视觉气质色，关系色负责柔和过渡',
+    complementary: '主要识别色，互补色只放在必须被看见的位置',
+    splitComplementary: '稳定主色，分裂互补色承担辅助强调和视觉装饰',
+    triadic: '系列母色，其他三角色分配给栏目、章节或分类',
+    tetradic: '复杂系统的主色，其他色先分配为辅色、状态色和结构色',
+    temperatureContrast: '情绪基准色，另一侧色温负责制造对照',
+    lighter: '识别色或标题色，明色关系色优先做背景和留白',
+    darker: '气质来源色，暗色关系色优先做标题、正文和边界',
+    grayTone: '识别色，灰调关系色负责降低噪声和承托信息',
+    neutral: '主视觉色，中性色负责结构、留白和阅读秩序',
+  };
+
+  return roles[relation.key] || '主色';
+}
+
+function harmonyAnchorUseText(image, harmony, relation, colors) {
+  const hsl = harmony?.hsl || {};
+  const colorNames = colors
+    .slice(0, 3)
+    .map(lookupDisplayColor)
+    .filter((color) => color.name)
+    .map((color) => `${color.name} ${color.hex}`)
+    .join(' / ');
+  const tone = [
+    harmony?.hueFamily,
+    harmony?.temperature,
+    Number.isFinite(hsl.l) ? lightnessLabel(hsl.l) : '',
+    Number.isFinite(hsl.s) ? saturationLabel(hsl.s) : '',
+  ].filter(Boolean).join('、');
+
+  return [
+    `${colorName(image)} 属于 ${tone || '当前传统色'}。`,
+    `在「${relation.label}」里，建议先把它当作${harmonyAnchorRole(relation)}。`,
+    colorNames ? `本组可先试 ${colorNames}，从小面积开始，确认可读性后再扩大。` : '当前没有足够关系色时，先用主色和中性色建立基础版面。',
+  ].join('');
+}
+
 function harmonyColorMarkup(color, usageLabel = '') {
   const item = lookupDisplayColor(color);
   const label = `${item.id}-${item.name}`;
@@ -1370,26 +1369,55 @@ function renderHarmonyTabs(harmony) {
   harmonyTabs.innerHTML = availableTypes.map(harmonyTabMarkup).join('');
 }
 
-function harmonyPanelCopyMarkup(relation) {
+function harmonyPanelCopyMarkup(relation, image, harmony, colors) {
   return `
     <div class="harmony-panel-copy">
       <div>
         <strong>${relation.intent}</strong>
         <span>${relation.label}</span>
       </div>
-      <p>${relation.note}</p>
+      <p><b>适合方向</b>${escapeHtml(relation.direction || '')}</p>
     </div>
-    <p class="harmony-panel-method"><strong>依据</strong>${relation.method}</p>
+    <div class="harmony-use-grid">
+      <section>
+        <strong>典型场景</strong>
+        <p>${escapeHtml(relation.scenarios || '')}</p>
+      </section>
+      <section>
+        <strong>设计师用法</strong>
+        <p>${escapeHtml(relation.designerUse || '')}</p>
+      </section>
+      <section>
+        <strong>普通人理解</strong>
+        <p>${escapeHtml(relation.plainUse || '')}</p>
+      </section>
+      <section>
+        <strong>面积建议</strong>
+        <p>${escapeHtml(relation.area || '')}</p>
+      </section>
+      <section>
+        <strong>当前色落地</strong>
+        <p>${escapeHtml(harmonyAnchorUseText(image, harmony, relation, colors))}</p>
+      </section>
+      <section>
+        <strong>风险提醒</strong>
+        <p>${escapeHtml(relation.risk || '')}</p>
+      </section>
+    </div>
+    <p class="harmony-panel-method">
+      <strong>依据</strong>
+      <span>${escapeHtml(relation.method || '')} 全量用途表见 <a href="docs/chinese-color-harmony-use-cases.csv">CSV</a>。</span>
+    </p>
   `;
 }
 
-function renderHarmonyPanel(harmony) {
+function renderHarmonyPanel(harmony, image = currentHeroPreviewImage) {
   if (!harmonyPanel || !harmony) return;
 
   const relation = harmonyRelationType(currentHarmonyKey);
   const colors = harmony[currentHarmonyKey] || [];
   harmonyPanel.innerHTML = `
-    ${harmonyPanelCopyMarkup(relation)}
+    ${harmonyPanelCopyMarkup(relation, image, harmony, colors)}
     <div class="harmony-color-grid">
       ${colors.map((color) => harmonyColorMarkup(color)).join('')}
     </div>
@@ -1414,7 +1442,7 @@ function renderHeroPreviewHarmony(image) {
 
   renderHarmonyRoles(image, harmony);
   renderHarmonyTabs(harmony);
-  renderHarmonyPanel(harmony);
+  renderHarmonyPanel(harmony, image);
 }
 
 function harmonyColorFromButton(button) {
@@ -1836,24 +1864,20 @@ function applySearch() {
 function applyFilters() {
   const query = normalize(searchInput?.value || '');
   currentHue = hueFilter?.value || 'all';
-  currentItems = images.filter((image) => {
+  const filteredItems = images.filter((image) => {
     const searchable = `${image.id} ${image.file} ${image.path} ${image.hex || ''}`.toLowerCase();
     const matchesQuery = query ? searchable.includes(query) : true;
     const matchesHue = currentHue === 'all' ? true : hueFromHex(image.hex) === currentHue;
     return matchesQuery && matchesHue;
   });
+  currentItems = randomizeImageOrder(filteredItems);
   visibleCount = 24;
-  shuffled = false;
+  shuffled = true;
   renderGallery();
 }
 
 function shuffleItems() {
-  const pool = [...currentItems];
-  for (let i = pool.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
-  currentItems = pool;
+  currentItems = randomizeImageOrder(currentItems);
   visibleCount = 24;
   shuffled = true;
   renderGallery();
@@ -2286,7 +2310,7 @@ heroPreviewHarmony?.addEventListener('click', (event) => {
     currentHarmonyKey = tab.dataset.harmonyKey;
     const harmony = harmonyForImage(currentHeroPreviewImage);
     renderHarmonyTabs(harmony);
-    renderHarmonyPanel(harmony);
+    renderHarmonyPanel(harmony, currentHeroPreviewImage);
     return;
   }
 

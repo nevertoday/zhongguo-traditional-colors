@@ -797,6 +797,22 @@ select:focus-visible,
   padding-inline: 15px;
 }
 
+.toolbar .shuffle-tool-button {
+  min-width: 108px;
+  justify-content: space-between;
+  color: var(--ink);
+  background: var(--solid);
+  border-color: var(--line);
+  font-weight: 800;
+}
+
+.toolbar .shuffle-tool-button:hover,
+.toolbar .shuffle-tool-button:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border-color: var(--hover-bg);
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2738,18 +2754,20 @@ select:focus-visible,
 
 .skill-actions {
   display: grid;
-  gap: 10px;
+  gap: 12px;
   justify-items: end;
   align-content: start;
+  min-width: 128px;
 }
 
 .skill-toggle {
   display: inline-flex;
   gap: 10px;
   align-items: center;
-  justify-content: center;
-  min-height: 38px;
-  padding: 7px 11px;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
   color: var(--ink);
   background: transparent;
   border: 1px solid var(--line-strong);
@@ -2773,27 +2791,33 @@ select:focus-visible,
   display: inline-flex;
   gap: 8px;
   align-items: center;
-  justify-content: flex-end;
-  min-height: 34px;
-  color: var(--muted);
-  font-size: 0.78rem;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  color: var(--ink-soft);
+  background: var(--solid);
+  border: 1px solid var(--line);
+  font-size: 0.8rem;
   font-weight: 800;
   line-height: 1.4;
   text-decoration: none;
   white-space: nowrap;
-  transition: color 160ms ease, transform 200ms var(--ease-out-expo);
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 200ms var(--ease-out-expo);
 }
 
 .skill-doc-link:hover,
 .skill-doc-link:focus-visible {
-  color: var(--ink);
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border-color: var(--hover-bg);
   outline: none;
-  transform: translateX(4px);
+  transform: translateY(-1px);
 }
 
 .skill-doc-link iconify-icon {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
 }
 
 .skill-toggle iconify-icon {
@@ -4022,6 +4046,44 @@ select:focus-visible,
   line-height: 1.72;
 }
 
+.harmony-panel-copy b {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: 0.76rem;
+}
+
+.harmony-use-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.harmony-use-grid section {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  min-width: 0;
+  padding: 13px 14px;
+  background: var(--panel);
+}
+
+.harmony-use-grid strong {
+  color: var(--ink);
+  font-size: 0.76rem;
+  line-height: 1.55;
+}
+
+.harmony-use-grid p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
 .harmony-method,
 .harmony-panel-method {
   display: grid;
@@ -4042,6 +4104,17 @@ select:focus-visible,
   margin: 0;
   padding: 11px 0;
   line-height: 1.65;
+}
+
+.harmony-panel-method span {
+  min-width: 0;
+}
+
+.harmony-panel-method a {
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .harmony-color-grid {
@@ -4854,6 +4927,10 @@ select:focus-visible,
 
   .harmony-role-strip,
   .harmony-color-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .harmony-use-grid {
     grid-template-columns: 1fr;
   }
 
