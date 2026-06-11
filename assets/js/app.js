@@ -24,8 +24,16 @@ const styleColorSearch = document.querySelector('[data-style-color-search]');
 const styleColorOptions = document.querySelector('[data-style-color-options]');
 const styleAnchorMeta = document.querySelector('[data-style-anchor-meta]');
 const styleAnchorSwatch = document.querySelector('[data-style-anchor-swatch]');
-const styleAnchorCopyButton = document.querySelector('[data-style-anchor-copy]');
+const styleAnchorButton = document.querySelector('[data-style-anchor-button]');
 const styleFormatSelect = document.querySelector('[data-style-format]');
+const styleColorDialog = document.querySelector('[data-style-color-dialog]');
+const styleColorGrid = document.querySelector('[data-style-color-grid]');
+const styleColorPickerSearch = document.querySelector('[data-style-color-picker-search]');
+const styleColorHueButtons = document.querySelectorAll('[data-style-color-hue]');
+const styleColorDialogStatus = document.querySelector('[data-style-color-dialog-status]');
+const closeStyleColorButton = document.querySelector('[data-close-style-color]');
+const styleColorRandomButton = document.querySelector('[data-style-color-random]');
+const styleColorCopyCurrentButton = document.querySelector('[data-style-color-copy-current]');
 const heroMosaic = document.querySelector('[data-hero-mosaic]');
 const searchInput = document.querySelector('[data-search]');
 const hueFilter = document.querySelector('[data-hue-filter]');
@@ -89,6 +97,7 @@ let heroPreviewResizeFrame;
 let currentHeroPreviewImage;
 let currentHarmonyKey = 'same';
 let navResizeFrame;
+let styleColorPickerHue = 'all';
 
 const TITLE_TONE_MAP = [
   { match: ['hero', 'top'], hues: ['red', 'orange', 'yellow'] },
@@ -978,9 +987,9 @@ function renderStyleAnchor(scheme) {
   if (styleAnchor) styleAnchor.textContent = `${scheme.anchor.name} ${anchorValue}`;
   if (styleAnchorMeta) styleAnchorMeta.textContent = meta;
   if (styleAnchorSwatch) styleAnchorSwatch.style.setProperty('--anchor-color', scheme.anchor.hex);
-  if (styleAnchorCopyButton) {
-    styleAnchorCopyButton.style.setProperty('--anchor-color', scheme.anchor.hex);
-    styleAnchorCopyButton.setAttribute('aria-label', `复制当前主色 ${scheme.anchor.name} ${anchorValue}`);
+  if (styleAnchorButton) {
+    styleAnchorButton.style.setProperty('--anchor-color', scheme.anchor.hex);
+    styleAnchorButton.setAttribute('aria-label', `切换当前中国色，当前为 ${scheme.anchor.name} ${anchorValue}`);
   }
   if (styleColorSearch) {
     styleColorSearch.value = styleColorOptionValue(scheme.anchorImage);
@@ -1210,6 +1219,7 @@ function applyStyleAnchor(image, statusMessage = '') {
 
   currentStyleAnchorImage = image;
   renderStyleLab(statusMessage || `已切换主色：${colorName(image)} ${colorValue(image)}，保留 ${styleLabScene().label}场景`);
+  if (styleColorDialog?.open) renderStyleColorPicker();
 }
 
 function commitStyleColorSearch() {
@@ -1223,6 +1233,75 @@ function commitStyleColorSearch() {
 
   applyStyleAnchor(image);
   styleColorSearch.blur();
+}
+
+function styleColorPickerItems() {
+  const query = normalize(styleColorPickerSearch?.value || '');
+
+  return images.filter((image) => {
+    if (!image.hex) return false;
+
+    const matchesHue = styleColorPickerHue === 'all' || hueFromHex(image.hex) === styleColorPickerHue;
+    const matchesQuery = query ? styleColorSearchText(image).includes(query) : true;
+    return matchesHue && matchesQuery;
+  });
+}
+
+function styleColorPickerItemMarkup(image) {
+  const selected = currentStyleAnchorImage?.id === image.id;
+  const harmony = harmonyForImage(image);
+  const meta = [
+    image.id,
+    harmony?.hueFamily || hueFromHex(image.hex),
+    colorValue(image),
+  ].filter(Boolean).join(' · ');
+
+  return `
+    <button class="style-color-choice" type="button" data-style-color-choice="${escapeHtml(image.id)}" aria-current="${selected ? 'true' : 'false'}" style="--choice-color: ${escapeHtml(image.hex)}" aria-label="切换到 ${escapeHtml(colorName(image))} ${escapeHtml(colorValue(image))}">
+      <span class="style-color-choice-swatch" aria-hidden="true"></span>
+      <span>
+        <strong>${escapeHtml(colorName(image))}</strong>
+        <small>${escapeHtml(meta)}</small>
+      </span>
+    </button>
+  `;
+}
+
+function renderStyleColorPicker() {
+  if (!styleColorGrid) return;
+
+  const items = styleColorPickerItems();
+  styleColorHueButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', String(button.dataset.styleColorHue === styleColorPickerHue));
+  });
+
+  styleColorGrid.innerHTML = items.length
+    ? items.map(styleColorPickerItemMarkup).join('')
+    : '<div class="style-color-empty"><strong>没有找到颜色</strong><span>换一个色相、编号、色名或 HEX 试试。</span></div>';
+
+  if (styleColorDialogStatus) {
+    const total = images.filter((image) => image.hex).length;
+    styleColorDialogStatus.textContent = `${items.length.toLocaleString('zh-CN')} / ${total.toLocaleString('zh-CN')} 个传统色`;
+  }
+}
+
+function openStyleColorPicker() {
+  if (!styleColorDialog) return;
+
+  renderStyleColorPicker();
+  if (typeof styleColorDialog.showModal === 'function') {
+    styleColorDialog.showModal();
+    window.setTimeout(() => styleColorPickerSearch?.focus(), 60);
+  }
+}
+
+function applyStyleColorChoice(id, closeDialog = true) {
+  const image = imagesById.get(id);
+  if (!image?.hex) return;
+
+  applyStyleAnchor(image, `已切换主色：${colorName(image)} ${colorValue(image)}`);
+  renderStyleColorPicker();
+  if (closeDialog) styleColorDialog?.close();
 }
 
 async function copyStyleTemplate(sceneKey) {
@@ -2173,6 +2252,7 @@ function updateCopyControls() {
   });
 
   updateHarmonyValues();
+  renderStyleColorPicker();
   if (currentStyleLabScheme) {
     renderStyleAnchor(currentStyleLabScheme);
     if (stylePalette) {
@@ -2421,6 +2501,7 @@ buildHero();
 buildFooterSpectrum();
 renderStyleColorOptions();
 renderStyleLab();
+renderStyleColorPicker();
 initializeGallery();
 updateScrollControls();
 skillToggleButtons.forEach((button) => {
@@ -2446,8 +2527,9 @@ loadMoreButton?.addEventListener('click', () => {
 });
 styleRefreshButton?.addEventListener('click', () => {
   renderStyleLab(`已换主色，保留 ${styleLabScene().label}场景和 ${styleLabIntent().label}倾向`, { newAnchor: true });
+  renderStyleColorPicker();
 });
-styleAnchorCopyButton?.addEventListener('click', copyStyleAnchor);
+styleAnchorButton?.addEventListener('click', openStyleColorPicker);
 styleColorSearch?.addEventListener('change', commitStyleColorSearch);
 styleColorSearch?.addEventListener('keydown', (event) => {
   if (event.key !== 'Enter') return;
@@ -2460,6 +2542,34 @@ styleFormatSelect?.addEventListener('change', () => {
   updateCopyControls();
   setStyleLabStatus(`已切换复制格式：${colorValueLabel()}，后续色值复制会沿用`);
 });
+styleColorPickerSearch?.addEventListener('input', renderStyleColorPicker);
+styleColorHueButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    styleColorPickerHue = button.dataset.styleColorHue || 'all';
+    renderStyleColorPicker();
+  });
+});
+styleColorGrid?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-style-color-choice]');
+  if (!button) return;
+
+  applyStyleColorChoice(button.dataset.styleColorChoice);
+});
+closeStyleColorButton?.addEventListener('click', () => styleColorDialog?.close());
+styleColorDialog?.addEventListener('click', (event) => {
+  if (event.target === styleColorDialog) styleColorDialog.close();
+});
+styleColorRandomButton?.addEventListener('click', () => {
+  const items = styleColorPickerItems();
+  const pool = items.length ? items : images.filter((image) => image.hex);
+  const image = pool[randomInt(pool.length)];
+  if (!image) return;
+
+  currentStyleAnchorImage = image;
+  renderStyleLab(`已随机切换主色：${colorName(image)} ${colorValue(image)}`);
+  renderStyleColorPicker();
+});
+styleColorCopyCurrentButton?.addEventListener('click', copyStyleAnchor);
 styleCopyAllButton?.addEventListener('click', async () => {
   const copyText = styleLabCopyText();
   if (!copyText) return;

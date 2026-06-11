@@ -1670,8 +1670,8 @@ npm run readme
       <strong>支付宝</strong>
     </td>
     <td align="center" width="220">
-      <img src="docs/images/buy-me-a-coffee-qr.png" alt="赞赏小小东算力的二维码" width="180"><br>
-      <strong>算力赞赏</strong>
+      <img src="docs/images/buy-me-a-coffee-qr.png" alt="通过 Buy Me a Coffee 请小小东喝咖啡的二维码" width="180"><br>
+      <strong>请喝咖啡</strong>
     </td>
   </tr>
 </table>

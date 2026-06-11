@@ -1388,7 +1388,7 @@ The complete ZIP is provided through GitHub Releases. Browser-side ZIP generatio
 
 ## Support
 
-This archive remains free and open source. If it saves you time, a Star, a share, a useful issue, or a small contribution toward compute for 小小东 all help the project keep improving.
+This archive remains free and open source. If it saves you time, a Star, a share, a useful issue, or buying 小小东 a coffee through Buy Me a Coffee all help the project keep improving.
 
 <table>
   <tr>
@@ -1398,7 +1398,7 @@ This archive remains free and open source. If it saves you time, a Star, a share
     </td>
     <td align="center" width="220">
       <img src="docs/images/buy-me-a-coffee-qr.png" alt="Support 小小东 QR code" width="180"><br>
-      <strong>Compute support</strong>
+      <strong>Buy Me a Coffee</strong>
     </td>
   </tr>
 </table>

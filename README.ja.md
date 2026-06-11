@@ -1388,7 +1388,7 @@ http://localhost:5173
 
 ## サポート
 
-このアーカイブは無料かつオープンソースで公開し続けます。役に立った場合は Star、共有、Issue、または小小東の継続的な改善に向けた算力支援が励みになります。
+このアーカイブは無料かつオープンソースで公開し続けます。役に立った場合は Star、共有、Issue、または Buy Me a Coffee での支援が小小東の継続的な改善につながります。
 
 <table>
   <tr>
@@ -1398,7 +1398,7 @@ http://localhost:5173
     </td>
     <td align="center" width="220">
       <img src="docs/images/buy-me-a-coffee-qr.png" alt="小小東を支援する QR コード" width="180"><br>
-      <strong>算力支援</strong>
+      <strong>Buy Me a Coffee</strong>
     </td>
   </tr>
 </table>

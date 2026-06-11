@@ -967,7 +967,7 @@
           <div class="support-copy">
             <span class="section-kicker">支持作者</span>
             <h3>打赏小小东一点算力</h3>
-            <p>微信、支付宝或算力赞赏，任选一种</p>
+            <p>微信、支付宝，或海外 Buy Me a Coffee</p>
           </div>
           <div class="support-qr-list">
             <figure class="support-qr">
@@ -979,8 +979,8 @@
               <figcaption>支付宝</figcaption>
             </figure>
             <figure class="support-qr">
-              <img src="docs/images/buy-me-a-coffee-qr.png" alt="赞赏小小东算力的二维码" width="220" height="220">
-              <figcaption>算力赞赏</figcaption>
+              <img src="docs/images/buy-me-a-coffee-qr.png" alt="通过 Buy Me a Coffee 请小小东喝咖啡的二维码" width="220" height="220">
+              <figcaption>请喝咖啡</figcaption>
             </figure>
           </div>
         </aside>
@@ -1051,7 +1051,7 @@
           <aside class="style-lab-control" aria-label="配色应用控制台">
             <div class="style-anchor-panel">
               <span class="style-lab-label">01 选择中国色</span>
-              <button class="style-anchor-card" type="button" data-style-anchor-copy aria-label="复制当前主色">
+              <button class="style-anchor-card" type="button" data-style-anchor-button aria-label="切换当前中国色">
                 <span class="style-anchor-swatch" data-style-anchor-swatch aria-hidden="true"></span>
                 <span>
                   <strong data-style-anchor>正在读取色库</strong>
@@ -1145,6 +1145,49 @@
         <iconify-icon icon="lucide:arrow-down" aria-hidden="true"></iconify-icon>
       </button>
     </nav>
+
+    <dialog class="style-color-dialog" data-style-color-dialog>
+      <div class="style-color-dialog-head">
+        <div>
+          <span class="section-kicker">切换主色</span>
+          <h2>选择一个中国色</h2>
+          <p>按色相或关键词快速切换。选中后会立即更新右侧场景预览、角色色和复制方案。</p>
+        </div>
+        <button class="dialog-close style-color-close" type="button" data-close-style-color aria-label="关闭颜色选择器">
+          <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
+        </button>
+      </div>
+      <div class="style-color-dialog-tools">
+        <label class="style-picker-search">
+          <span class="sr-only">搜索中国传统色</span>
+          <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
+          <input type="search" data-style-color-picker-search placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
+        </label>
+        <div class="style-color-hues" aria-label="按色相筛选中国色">
+          <button type="button" data-style-color-hue="all" aria-pressed="true">全部</button>
+          <button type="button" data-style-color-hue="red" aria-pressed="false">红</button>
+          <button type="button" data-style-color-hue="orange" aria-pressed="false">橙</button>
+          <button type="button" data-style-color-hue="yellow" aria-pressed="false">黄</button>
+          <button type="button" data-style-color-hue="green" aria-pressed="false">绿</button>
+          <button type="button" data-style-color-hue="cyan" aria-pressed="false">青</button>
+          <button type="button" data-style-color-hue="blue" aria-pressed="false">蓝</button>
+          <button type="button" data-style-color-hue="purple" aria-pressed="false">紫</button>
+          <button type="button" data-style-color-hue="neutral" aria-pressed="false">灰</button>
+        </div>
+      </div>
+      <div class="style-color-grid" data-style-color-grid aria-label="可切换的中国传统色"></div>
+      <div class="style-color-dialog-foot">
+        <span data-style-color-dialog-status aria-live="polite">742 个传统色</span>
+        <button class="button button-secondary" type="button" data-style-color-copy-current>
+          <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
+          复制当前色
+        </button>
+        <button class="button button-primary" type="button" data-style-color-random>
+          <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
+          随机换色
+        </button>
+      </div>
+    </dialog>
 
     <dialog class="hero-preview-dialog" data-hero-preview-dialog>
       <button class="dialog-close hero-preview-close" type="button" data-close-hero-preview aria-label="关闭色卡信息">

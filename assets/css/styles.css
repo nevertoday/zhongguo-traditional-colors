@@ -71,12 +71,12 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--ink);
   background:
     linear-gradient(180deg, var(--solid) 0, var(--paper) 360px),
@@ -1148,7 +1148,7 @@ select:focus-visible,
 
 .style-anchor-card {
   display: grid;
-  grid-template-columns: 74px minmax(0, 1fr);
+  grid-template-columns: 74px minmax(0, 1fr) auto;
   gap: 16px;
   align-items: stretch;
   min-width: 0;
@@ -1161,15 +1161,38 @@ select:focus-visible,
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   cursor: pointer;
-  transition: background 180ms ease, color 180ms ease, transform 220ms var(--ease-out-quart);
+  transition: background 180ms ease, color 180ms ease, transform 220ms var(--ease-out-quart), border-color 180ms ease;
+}
+
+.style-anchor-card::after {
+  grid-column: 3;
+  grid-row: 1;
+  display: grid;
+  align-self: end;
+  margin: 0 14px 14px 0;
+  padding: 5px 8px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  content: "切换";
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  transition: color 180ms ease, border-color 180ms ease;
 }
 
 .style-anchor-card:hover,
 .style-anchor-card:focus-visible {
   color: var(--hover-text);
   background: var(--hover-bg);
+  border-color: var(--hover-bg);
   outline: none;
   transform: translateY(-1px);
+}
+
+.style-anchor-card:hover::after,
+.style-anchor-card:focus-visible::after {
+  color: var(--hover-text);
+  border-color: color-mix(in srgb, var(--hover-text) 58%, transparent);
 }
 
 .style-anchor-swatch {
@@ -1191,7 +1214,7 @@ select:focus-visible,
   gap: 9px;
   align-content: center;
   min-width: 0;
-  padding: 18px 18px 18px 0;
+  padding: 18px 0 18px 0;
 }
 
 .style-anchor-card strong {
@@ -2644,9 +2667,14 @@ select:focus-visible,
 .skills-brief {
   position: sticky;
   top: 96px;
+  max-height: calc(100vh - 118px);
+  overflow: auto;
+  overscroll-behavior: contain;
   padding: 24px 0 28px;
+  background: var(--solid);
   border-top: 1px solid var(--line-strong);
   border-bottom: 1px solid var(--line);
+  scrollbar-width: thin;
 }
 
 .skills-brief > span {
@@ -2788,9 +2816,10 @@ select:focus-visible,
   gap: clamp(16px, 2.6vw, 30px);
   width: calc(100% - var(--skill-offset));
   margin-left: var(--skill-offset);
+  padding-right: clamp(10px, 1.8vw, 18px);
   color: var(--ink);
   border-top: 1px solid var(--line);
-  transition: background 220ms ease, opacity 180ms ease, transform 260ms var(--ease-out-expo), border-color 180ms ease;
+  transition: background 220ms ease, opacity 180ms ease, transform 260ms var(--ease-out-expo), border-color 180ms ease, padding 220ms var(--ease-out-expo);
 }
 
 .skill-item:focus {
@@ -2855,7 +2884,9 @@ select:focus-visible,
 .skill-item:target,
 .skill-item[data-open="true"] {
   border-color: var(--line-strong);
-  transform: translateX(-6px);
+  padding-left: clamp(10px, 1.5vw, 16px);
+  padding-right: clamp(14px, 2vw, 22px);
+  transform: translateX(-4px);
 }
 
 .skill-item:hover,
@@ -2906,7 +2937,7 @@ select:focus-visible,
 .skill-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 18px clamp(18px, 3vw, 34px);
+  gap: 18px clamp(22px, 3vw, 38px);
   align-items: start;
   padding: 20px 0 22px;
 }
@@ -3013,7 +3044,7 @@ select:focus-visible,
   gap: 12px;
   justify-items: end;
   align-content: start;
-  min-width: 128px;
+  min-width: 136px;
 }
 
 .skill-item[data-open="true"] .skill-actions {
@@ -3943,18 +3974,21 @@ select:focus-visible,
 }
 
 .hero-preview-dialog[open],
-.master-list-dialog[open] {
+.master-list-dialog[open],
+.style-color-dialog[open] {
   animation: dialog-enter 240ms var(--ease-out-quint) both;
 }
 
 .hero-preview-dialog::backdrop,
-.master-list-dialog::backdrop {
+.master-list-dialog::backdrop,
+.style-color-dialog::backdrop {
   background: rgba(17, 17, 17, 0.72);
   backdrop-filter: blur(8px);
 }
 
 .hero-preview-dialog[open]::backdrop,
-.master-list-dialog[open]::backdrop {
+.master-list-dialog[open]::backdrop,
+.style-color-dialog[open]::backdrop {
   animation: backdrop-enter 220ms ease both;
 }
 
@@ -4002,6 +4036,254 @@ select:focus-visible,
   to {
     opacity: 1;
   }
+}
+
+.style-color-dialog {
+  width: min(980px, calc(100vw - 32px));
+  max-height: min(88vh, 860px);
+  padding: 0;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.style-color-dialog[open] {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+}
+
+.style-color-dialog-head {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  padding: 30px clamp(22px, 4vw, 36px) 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.style-color-dialog-head h2 {
+  margin-bottom: 10px;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.08;
+}
+
+.style-color-dialog-head p {
+  max-width: 45em;
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.75;
+}
+
+.style-color-close {
+  position: static;
+  align-self: start;
+  background: transparent;
+}
+
+.style-color-dialog-tools {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(360px, auto);
+  gap: 14px;
+  align-items: center;
+  padding: 14px clamp(22px, 4vw, 36px);
+  background: color-mix(in srgb, var(--panel) 72%, var(--paper));
+  border-bottom: 1px solid var(--line);
+}
+
+.style-picker-search {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 14px;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.style-picker-search:focus-within {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.style-picker-search iconify-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.style-picker-search input {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.style-picker-search input::placeholder {
+  color: var(--muted);
+}
+
+.style-color-hues {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.style-color-hues button {
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0 12px;
+  color: var(--ink-soft);
+  background: var(--panel);
+  border: 0;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 800;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.style-color-hues button[aria-pressed="true"] {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+}
+
+.style-color-hues button:hover,
+.style-color-hues button:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  outline: none;
+}
+
+.style-color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
+  gap: 1px;
+  min-height: 220px;
+  overflow: auto;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.style-color-choice {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+  min-height: 78px;
+  padding: 12px;
+  color: var(--ink);
+  text-align: left;
+  background: var(--panel);
+  border: 0;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.style-color-choice:hover,
+.style-color-choice:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  outline: none;
+}
+
+.style-color-choice[aria-current="true"] {
+  background: var(--solid);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+:root[data-theme="dark"] .style-color-choice[aria-current="true"] {
+  box-shadow: inset 0 0 0 2px var(--line-strong);
+}
+
+.style-color-choice[aria-current="true"]:hover,
+.style-color-choice[aria-current="true"]:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--hover-text) 72%, transparent);
+}
+
+.style-color-choice-swatch {
+  width: 32px;
+  height: 44px;
+  background: var(--choice-color);
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+.style-color-choice:hover .style-color-choice-swatch,
+.style-color-choice:focus-visible .style-color-choice-swatch {
+  border-color: color-mix(in srgb, var(--hover-text) 48%, transparent);
+}
+
+.style-color-choice span:not(.style-color-choice-swatch) {
+  min-width: 0;
+}
+
+.style-color-choice strong,
+.style-color-choice small {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.style-color-choice strong {
+  margin-bottom: 6px;
+  font-size: 0.94rem;
+  font-weight: 800;
+}
+
+.style-color-choice small {
+  color: var(--muted);
+  font-family: var(--font-rounded);
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.style-color-choice:hover small,
+.style-color-choice:focus-visible small {
+  color: color-mix(in srgb, var(--hover-text) 74%, transparent);
+}
+
+.style-color-empty {
+  grid-column: 1 / -1;
+  display: grid;
+  place-content: center;
+  min-height: 220px;
+  padding: 32px;
+  color: var(--ink-soft);
+  background: var(--panel);
+  text-align: center;
+}
+
+.style-color-empty strong {
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.style-color-dialog-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px clamp(22px, 4vw, 36px);
+  background: var(--panel);
+}
+
+.style-color-dialog-foot > span {
+  color: var(--muted);
+  font-family: var(--font-rounded);
+  font-size: 0.86rem;
+  font-weight: 500;
 }
 
 .hero-preview-dialog {
@@ -5534,7 +5816,7 @@ select:focus-visible,
   }
 
   .style-anchor-card {
-    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-columns: 64px minmax(0, 1fr) auto;
     min-height: 104px;
   }
 
@@ -5566,6 +5848,31 @@ select:focus-visible,
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .style-color-dialog {
+    width: calc(100vw - 20px);
+    max-height: 92vh;
+  }
+
+  .style-color-dialog-tools {
+    grid-template-columns: 1fr;
+  }
+
+  .style-color-hues {
+    justify-content: flex-start;
+  }
+
+  .style-color-grid {
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  }
+
+  .style-color-dialog-foot {
+    grid-template-columns: 1fr;
+  }
+
+  .style-color-dialog-foot .button {
+    width: 100%;
+  }
+
   .knowledge-threads {
     grid-template-columns: 1fr;
   }
@@ -5587,6 +5894,9 @@ select:focus-visible,
   }
 
   .skills-brief {
+    position: static;
+    max-height: none;
+    overflow: visible;
     grid-template-columns: 1fr;
     gap: 16px;
     padding-top: 22px;
@@ -5607,6 +5917,7 @@ select:focus-visible,
     grid-template-columns: 42px minmax(0, 1fr);
     width: 100%;
     margin-left: 0;
+    padding-right: 0;
   }
 
   .skill-item::before {
@@ -5616,6 +5927,8 @@ select:focus-visible,
   .skill-item:hover,
   .skill-item:focus-within,
   .skill-item[data-open="true"] {
+    padding-left: 0;
+    padding-right: 0;
     transform: none;
   }
 
