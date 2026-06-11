@@ -1353,7 +1353,7 @@ h3::before {
 
 .use-shell--simple {
   width: min(100vw - 40px, 1280px);
-  padding-top: 32px;
+  padding-top: 20px;
 }
 
 .use-shell--simple .use-hero {
@@ -1373,7 +1373,7 @@ h3::before {
 
 .use-workspace--simple {
   display: block;
-  padding-top: 26px;
+  padding-top: 0;
 }
 
 .use-searchbar {
@@ -1384,9 +1384,13 @@ h3::before {
   grid-template-columns: minmax(280px, 1fr) auto minmax(170px, 220px) auto auto;
   gap: 8px;
   align-items: center;
-  padding: 10px 0;
+  padding: 16px 0 18px;
   background: var(--paper);
   border-bottom: 1px solid var(--line);
+}
+
+.use-workspace--simple .palette-meta {
+  margin: 18px 0 24px;
 }
 
 .use-modebar {

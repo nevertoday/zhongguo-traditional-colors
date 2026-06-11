@@ -219,14 +219,23 @@ function partnerIds(color) {
   ];
 }
 
+function uniqueColors(colors) {
+  const seen = new Set();
+  return colors.filter((color) => {
+    if (!color?.id || seen.has(color.id)) return false;
+    seen.add(color.id);
+    return true;
+  });
+}
+
 function pairCandidates(color, secondQuery) {
-  const source = partnerIds(color).map(colorFromId).filter(Boolean);
+  const source = uniqueColors(partnerIds(color).map(colorFromId).filter(Boolean));
   const pool = source.length ? source : colorPool();
   const filtered = secondQuery ? pool.filter((item) => colorMatches(item, secondQuery)) : pool;
   const fallback = secondQuery && !filtered.length
     ? colorPool().filter((item) => colorMatches(item, secondQuery))
     : filtered;
-  return fallback.filter((item) => item.id !== color.id);
+  return uniqueColors(fallback).filter((item) => item.id !== color.id);
 }
 
 function biasScore(background, text) {
@@ -241,8 +250,13 @@ function cardId(background, text) {
   return `${background.id}-${text.id}`;
 }
 
+function cardPairKey(background, text) {
+  return [background.id, text.id].sort().join('|');
+}
+
 function allCards() {
   const search = parsedSearch();
+  const seen = new Set();
   return colorPool()
     .filter((background) => colorMatches(background, search.first))
     .flatMap((background) => pairCandidates(background, search.second)
@@ -255,6 +269,12 @@ function allCards() {
         ratio: contrastRatio(background.hex, text.hex),
       })))
     .filter((card) => card.ratio >= 2.2)
+    .filter((card) => {
+      const key = cardPairKey(card.background, card.text);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
     .sort((first, second) => (randomRanks.get(first.id) ?? 0) - (randomRanks.get(second.id) ?? 0));
 }
 
