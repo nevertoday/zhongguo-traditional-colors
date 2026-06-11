@@ -27,6 +27,8 @@ const requiredCssSnippets = [
 ];
 
 const requiredHtmlPatterns = [
+  /<h1 id="style-lab-title">选中国色，看场景效果<\/h1>/,
+  /选一个主色，切换网页、PPT、封面、海报和品牌预览。/,
   /assets\/css\/styles\.css\?v=\d{8}-\d+/,
   /assets\/js\/app\.js\?v=\d{8}-\d+/,
 ];
