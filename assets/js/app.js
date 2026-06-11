@@ -27,6 +27,9 @@ const styleAnchorSwatch = document.querySelector('[data-style-anchor-swatch]');
 const styleAnchorButton = document.querySelector('[data-style-anchor-button]');
 const styleFormatSelect = document.querySelector('[data-style-format]');
 const styleColorDialog = document.querySelector('[data-style-color-dialog]');
+const styleColorDialogTitle = document.querySelector('[data-style-color-dialog-title]');
+const styleColorDialogNote = document.querySelector('[data-style-color-dialog-note]');
+const styleColorRecommendations = document.querySelector('[data-style-color-recommendations]');
 const styleColorGrid = document.querySelector('[data-style-color-grid]');
 const styleColorPickerSearch = document.querySelector('[data-style-color-picker-search]');
 const styleColorHueButtons = document.querySelectorAll('[data-style-color-hue]');
@@ -287,6 +290,8 @@ let currentStyleLabScheme;
 let currentStyleAnchorImage = styleLabInitialColorImage();
 let currentStyleSceneKey = 'web';
 let currentStyleIntentKey = 'safe';
+let currentStyleRoleOverrides = {};
+let styleRoleReplacementKey = '';
 
 function formatBytes(bytes) {
   const units = ['B', 'KB', 'MB', 'GB'];
@@ -895,6 +900,33 @@ function styleLabSchemeText(scheme, roles = scheme.roles) {
     .join('\n');
 }
 
+function styleLabRoleByKey(roleKey) {
+  return STYLE_LAB_ROLES.find((role) => role.key === roleKey) || null;
+}
+
+function styleLabRolesWithOverrides(scheme) {
+  return {
+    ...scheme.roles,
+    ...currentStyleRoleOverrides,
+  };
+}
+
+function styleLabActionTextForRoles(roles) {
+  return styleColorContrast(roles.background, roles.support) >= styleColorContrast(roles.title, roles.support)
+    ? roles.background
+    : roles.title;
+}
+
+function applyStyleLabRoleOverrides(scheme) {
+  const roles = styleLabRolesWithOverrides(scheme);
+
+  return {
+    ...scheme,
+    roles,
+    actionText: styleLabActionTextForRoles(roles),
+  };
+}
+
 function styleSceneCopyText(scene, scheme) {
   return [
     `场景：${scene.label}（${scene.scene}）`,
@@ -921,6 +953,8 @@ function styleLabCopyText() {
     `倾向：${currentStyleLabScheme.intent.label}`,
     `关系色：${styleLabRelationText(currentStyleLabScheme)}`,
     `标题对比：${styleLabContrastLabel(currentStyleLabScheme)}`,
+    `使用逻辑：${currentStyleLabScheme.scene.structure}`,
+    `面积建议：${STYLE_LAB_ROLES.map((role) => `${role.label}${role.ratio}`).join(' / ')}`,
     '',
     '角色色：',
     styleLabSchemeText(currentStyleLabScheme),
@@ -1160,11 +1194,12 @@ function styleRoleSwatchMarkup(role, color) {
   const label = `${role.label} ${color.name} ${value}`;
 
   return `
-    <button class="style-palette-role" type="button" data-style-role="${role.key}" aria-label="复制 ${escapeHtml(label)}" title="复制 ${escapeHtml(label)}">
+    <button class="style-palette-role" type="button" data-style-role="${role.key}" aria-label="替换 ${escapeHtml(label)}" title="替换 ${escapeHtml(label)}">
       <span class="style-role-swatch" style="--style-role-color: ${escapeHtml(color.hex)}" aria-hidden="true"></span>
       <span>
         <strong>${escapeHtml(role.label)}</strong>
         <small data-style-role-value>${escapeHtml(color.name)} ${escapeHtml(value)}</small>
+        <em>点击替换</em>
       </span>
     </button>
   `;
@@ -1175,7 +1210,7 @@ function styleTemplateRoleMarkup(role, color) {
   const label = `${role.label} ${color.name} ${value}`;
 
   return `
-    <button class="style-template-role" type="button" data-style-template-role="${escapeHtml(role.key)}" aria-label="复制 ${escapeHtml(label)}">
+    <button class="style-template-role" type="button" data-style-template-role="${escapeHtml(role.key)}" aria-label="替换 ${escapeHtml(label)}">
       <i style="--style-role-color: ${escapeHtml(color.hex)}" aria-hidden="true"></i>
       <b>${escapeHtml(role.label)}</b>
       <em data-style-template-value>${escapeHtml(color.name)} ${escapeHtml(value)}</em>
@@ -1230,15 +1265,19 @@ function renderStyleLab(statusMessage = '', options = {}) {
   if (!styleLab) return;
 
   if (options.newAnchor || !currentStyleAnchorImage) {
+    if (!options.preserveOverrides) currentStyleRoleOverrides = {};
     currentStyleAnchorImage = randomColorItems(1)[0] || images.find((image) => image.hex);
   }
 
-  const scheme = createStyleLabScheme(currentStyleAnchorImage, currentStyleSceneKey, currentStyleIntentKey);
+  let scheme = createStyleLabScheme(currentStyleAnchorImage, currentStyleSceneKey, currentStyleIntentKey);
   if (!scheme) {
     styleLab.innerHTML = '<div class="empty-state"><strong>配色应用暂时无法生成</strong><span>没有读取到可用色值。</span></div>';
     return;
   }
 
+  if (Object.keys(currentStyleRoleOverrides).length) {
+    scheme = applyStyleLabRoleOverrides(scheme);
+  }
   currentStyleLabScheme = scheme;
   currentStyleAnchorImage = scheme.anchorImage;
   renderStyleAnchor(scheme);
@@ -1258,6 +1297,7 @@ function renderStyleLab(statusMessage = '', options = {}) {
 function applyStyleAnchor(image, statusMessage = '') {
   if (!image?.hex) return;
 
+  currentStyleRoleOverrides = {};
   currentStyleAnchorImage = image;
   renderStyleLab(statusMessage || `已切换：${colorName(image)} ${colorValue(image)}`);
   if (styleColorDialog?.open) renderStyleColorPicker();
@@ -1276,20 +1316,109 @@ function commitStyleColorSearch() {
   styleColorSearch.blur();
 }
 
+function styleColorDialogModeText() {
+  const role = styleLabRoleByKey(styleRoleReplacementKey);
+  if (!role) {
+    return {
+      title: '选择一个中国色',
+      note: '按色相或关键词切换。',
+      kicker: '推荐色',
+    };
+  }
+
+  return {
+    title: `替换${role.label}`,
+    note: `${role.use}，建议保持 ${role.ratio} 左右的面积。下方优先显示适合当前方案的推荐色。`,
+    kicker: `${role.label}推荐`,
+  };
+}
+
+function styleRoleRecommendedColors(roleKey) {
+  if (!currentStyleLabScheme) return [];
+
+  const scheme = currentStyleLabScheme;
+  const role = styleLabRoleByKey(roleKey);
+  const harmony = harmonyForImage(scheme.anchorImage);
+  const background = scheme.roles.background;
+  const intent = scheme.intent;
+  let candidates = [];
+
+  if (!role) return [];
+
+  if (roleKey === 'background') {
+    candidates = [
+      scheme.anchor,
+      ...relationDisplayColors(harmony, ['same', 'analogous', 'lighter', 'neutral', 'grayTone']),
+      ...allDisplayColors().filter((color) => styleColorLuminance(color) >= 0.72),
+    ];
+  } else if (roleKey === 'title') {
+    candidates = [
+      ...relationDisplayColors(harmony, readableRelationKeysForBackground(background)),
+      ...relationDisplayColors(harmony, ['darker', 'complementary', 'splitComplementary', 'temperatureContrast']),
+      ...allDisplayColors(),
+    ].filter((color) => styleColorContrast(color, background) >= 4.5);
+  } else if (roleKey === 'body') {
+    candidates = [
+      ...relationDisplayColors(harmony, ['darker', 'neutral', 'grayTone', 'same']),
+      ...relationDisplayColors(harmony, readableRelationKeysForBackground(background)),
+      ...allDisplayColors(),
+    ].filter((color) => styleColorContrast(color, background) >= 4.5);
+  } else if (roleKey === 'support') {
+    candidates = [
+      ...relationDisplayColors(harmony, intent.supportKeys),
+      ...relationDisplayColors(harmony, ['complementary', 'splitComplementary', 'temperatureContrast', 'darker', 'lighter']),
+      ...allDisplayColors(),
+    ].filter((color) => styleColorContrast(color, background) >= 2.1);
+  } else {
+    candidates = [
+      ...relationDisplayColors(harmony, intent.accentKeys),
+      ...relationDisplayColors(harmony, ['accent', 'triadic', 'temperatureContrast', 'analogous']),
+      ...allDisplayColors(),
+    ].filter((color) => styleColorContrast(color, background) >= 1.25);
+  }
+
+  const currentKey = styleColorKey(scheme.roles[roleKey]);
+  return uniqueDisplayColors(candidates)
+    .filter((color) => styleColorKey(color) !== currentKey)
+    .slice(0, 12);
+}
+
+function styleRecommendedColorKeys() {
+  return new Set(styleRoleRecommendedColors(styleRoleReplacementKey).map(styleColorKey));
+}
+
+function styleColorDialogCurrentColor() {
+  if (styleRoleReplacementKey && currentStyleLabScheme?.roles?.[styleRoleReplacementKey]) {
+    return currentStyleLabScheme.roles[styleRoleReplacementKey];
+  }
+  return currentStyleLabScheme?.anchor || null;
+}
+
 function styleColorPickerItems() {
   const query = normalize(styleColorPickerSearch?.value || '');
+  const recommendedKeys = styleRecommendedColorKeys();
 
-  return images.filter((image) => {
+  const items = images.filter((image) => {
     if (!image.hex) return false;
 
     const matchesHue = styleColorPickerHue === 'all' || hueFromHex(image.hex) === styleColorPickerHue;
     const matchesQuery = query ? styleColorSearchText(image).includes(query) : true;
     return matchesHue && matchesQuery;
   });
+
+  if (!styleRoleReplacementKey || query || styleColorPickerHue !== 'all') return items;
+
+  return [
+    ...items.filter((image) => recommendedKeys.has(image.id)),
+    ...items.filter((image) => !recommendedKeys.has(image.id)),
+  ];
 }
 
 function styleColorPickerItemMarkup(image) {
-  const selected = currentStyleAnchorImage?.id === image.id;
+  const selectedColor = styleColorDialogCurrentColor();
+  const recommendedKeys = styleRecommendedColorKeys();
+  const selected = selectedColor?.id === image.id || selectedColor?.hex === image.hex;
+  const recommended = recommendedKeys.has(image.id);
   const harmony = harmonyForImage(image);
   const meta = [
     image.id,
@@ -1298,7 +1427,7 @@ function styleColorPickerItemMarkup(image) {
   ].filter(Boolean).join(' · ');
 
   return `
-    <button class="style-color-choice" type="button" data-style-color-choice="${escapeHtml(image.id)}" aria-current="${selected ? 'true' : 'false'}" style="--choice-color: ${escapeHtml(image.hex)}" aria-label="切换到 ${escapeHtml(colorName(image))} ${escapeHtml(colorValue(image))}">
+    <button class="style-color-choice" type="button" data-style-color-choice="${escapeHtml(image.id)}" aria-current="${selected ? 'true' : 'false'}" data-recommended="${recommended ? 'true' : 'false'}" style="--choice-color: ${escapeHtml(image.hex)}" aria-label="选择 ${escapeHtml(colorName(image))} ${escapeHtml(colorValue(image))}">
       <span class="style-color-choice-swatch" aria-hidden="true"></span>
       <span>
         <strong>${escapeHtml(colorName(image))}</strong>
@@ -1308,10 +1437,35 @@ function styleColorPickerItemMarkup(image) {
   `;
 }
 
+function styleColorRecommendationMarkup(color) {
+  return `
+    <button class="style-recommendation" type="button" data-style-color-choice="${escapeHtml(color.id)}" style="--choice-color: ${escapeHtml(color.hex)}" aria-label="推荐 ${escapeHtml(color.name)} ${escapeHtml(color.hex)}">
+      <span aria-hidden="true"></span>
+      <strong>${escapeHtml(color.name)}</strong>
+      <small>${escapeHtml(color.hex)}</small>
+    </button>
+  `;
+}
+
+function renderStyleColorRecommendations() {
+  if (!styleColorRecommendations) return;
+
+  const mode = styleColorDialogModeText();
+  const items = styleRoleReplacementKey ? styleRoleRecommendedColors(styleRoleReplacementKey) : [];
+  styleColorRecommendations.hidden = !styleRoleReplacementKey;
+  styleColorRecommendations.innerHTML = items.length
+    ? `<span>${escapeHtml(mode.kicker)}</span>${items.map(styleColorRecommendationMarkup).join('')}`
+    : '';
+}
+
 function renderStyleColorPicker() {
   if (!styleColorGrid) return;
 
   const items = styleColorPickerItems();
+  const mode = styleColorDialogModeText();
+  if (styleColorDialogTitle) styleColorDialogTitle.textContent = mode.title;
+  if (styleColorDialogNote) styleColorDialogNote.textContent = mode.note;
+  renderStyleColorRecommendations();
   styleColorHueButtons.forEach((button) => {
     button.setAttribute('aria-pressed', String(button.dataset.styleColorHue === styleColorPickerHue));
   });
@@ -1329,6 +1483,20 @@ function renderStyleColorPicker() {
 function openStyleColorPicker() {
   if (!styleColorDialog) return;
 
+  styleRoleReplacementKey = '';
+  renderStyleColorPicker();
+  if (typeof styleColorDialog.showModal === 'function') {
+    styleColorDialog.showModal();
+    window.setTimeout(() => styleColorPickerSearch?.focus(), 60);
+  }
+}
+
+function openStyleRoleColorPicker(roleKey) {
+  if (!styleColorDialog || !styleLabRoleByKey(roleKey)) return;
+
+  styleRoleReplacementKey = roleKey;
+  styleColorPickerSearch.value = '';
+  styleColorPickerHue = 'all';
   renderStyleColorPicker();
   if (typeof styleColorDialog.showModal === 'function') {
     styleColorDialog.showModal();
@@ -1340,6 +1508,22 @@ function applyStyleColorChoice(id, closeDialog = true) {
   const image = imagesById.get(id);
   if (!image?.hex) return;
 
+  if (styleRoleReplacementKey) {
+    const role = styleLabRoleByKey(styleRoleReplacementKey);
+    const color = displayColorFromImage(image);
+    if (!role || !color) return;
+
+    currentStyleRoleOverrides = {
+      ...currentStyleRoleOverrides,
+      [styleRoleReplacementKey]: color,
+    };
+    renderStyleLab(`已替换${role.label}：${color.name} ${colorValue(color)}`, { preserveOverrides: true });
+    renderStyleColorPicker();
+    if (closeDialog) styleColorDialog?.close();
+    return;
+  }
+
+  currentStyleRoleOverrides = {};
   applyStyleAnchor(image, `已切换：${colorName(image)} ${colorValue(image)}`);
   renderStyleColorPicker();
   if (closeDialog) styleColorDialog?.close();
@@ -1369,6 +1553,21 @@ async function copyStyleAnchor() {
   const copyText = `主色：${currentStyleLabScheme.anchor.name} ${colorValue(currentStyleLabScheme.anchor)}`;
   await writeClipboard(copyText);
   setStyleLabStatus(`已复制：${copyText}`);
+}
+
+async function copyStyleDialogCurrentColor() {
+  if (styleRoleReplacementKey) {
+    const role = styleLabRoleByKey(styleRoleReplacementKey);
+    const color = currentStyleLabScheme?.roles?.[styleRoleReplacementKey];
+    if (!role || !color) return;
+
+    const copyText = `${role.label}：${color.name} ${colorValue(color)}`;
+    await writeClipboard(copyText);
+    setStyleLabStatus(`已复制：${copyText}`);
+    return;
+  }
+
+  copyStyleAnchor();
 }
 
 async function copyStyleCssVariables() {
@@ -2596,21 +2795,30 @@ styleColorGrid?.addEventListener('click', (event) => {
 
   applyStyleColorChoice(button.dataset.styleColorChoice);
 });
+styleColorRecommendations?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-style-color-choice]');
+  if (!button) return;
+
+  applyStyleColorChoice(button.dataset.styleColorChoice);
+});
 closeStyleColorButton?.addEventListener('click', () => styleColorDialog?.close());
 styleColorDialog?.addEventListener('click', (event) => {
   if (event.target === styleColorDialog) styleColorDialog.close();
 });
 styleColorRandomButton?.addEventListener('click', () => {
+  const recommended = styleRoleReplacementKey
+    ? styleRoleRecommendedColors(styleRoleReplacementKey)
+      .map((color) => imagesById.get(color.id))
+      .filter(Boolean)
+    : [];
   const items = styleColorPickerItems();
-  const pool = items.length ? items : images.filter((image) => image.hex);
+  const pool = recommended.length ? recommended : (items.length ? items : images.filter((image) => image.hex));
   const image = pool[randomInt(pool.length)];
   if (!image) return;
 
-  currentStyleAnchorImage = image;
-  renderStyleLab(`已切换：${colorName(image)} ${colorValue(image)}`);
-  renderStyleColorPicker();
+  applyStyleColorChoice(image.id, false);
 });
-styleColorCopyCurrentButton?.addEventListener('click', copyStyleAnchor);
+styleColorCopyCurrentButton?.addEventListener('click', copyStyleDialogCurrentColor);
 styleCopyAllButton?.addEventListener('click', async () => {
   const copyText = styleLabCopyText();
   if (!copyText) return;
@@ -2635,12 +2843,12 @@ styleIntentList?.addEventListener('click', (event) => {
 });
 stylePalette?.addEventListener('click', (event) => {
   const roleButton = event.target.closest('[data-style-role]');
-  if (roleButton) copyStyleRole(roleButton.dataset.styleRole);
+  if (roleButton) openStyleRoleColorPicker(roleButton.dataset.styleRole);
 });
 styleLab?.addEventListener('click', (event) => {
   const roleButton = event.target.closest('[data-style-template-role]');
   if (roleButton) {
-    copyStyleTemplateColor(roleButton.dataset.styleTemplateRole);
+    openStyleRoleColorPicker(roleButton.dataset.styleTemplateRole);
     return;
   }
 

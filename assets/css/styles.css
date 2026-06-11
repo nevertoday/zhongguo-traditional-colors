@@ -4501,7 +4501,7 @@ body[data-no-gradient-logic] .skills-list::before {
 
 .style-color-dialog[open] {
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
 }
 
 .style-color-dialog-head {
@@ -4611,6 +4611,82 @@ body[data-no-gradient-logic] .skills-list::before {
   color: var(--hover-text);
   background: var(--hover-bg);
   outline: none;
+}
+
+.style-color-recommendations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  align-items: stretch;
+  max-height: 176px;
+  overflow: auto;
+  padding: 12px clamp(22px, 4vw, 36px);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.style-color-recommendations[hidden] {
+  display: none;
+}
+
+.style-color-recommendations > span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding-right: 12px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.style-recommendation {
+  display: grid;
+  grid-template-columns: 24px minmax(72px, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-width: 156px;
+  min-height: 42px;
+  padding: 7px 10px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  text-align: left;
+}
+
+.style-recommendation:hover,
+.style-recommendation:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border-color: var(--hover-bg);
+  outline: none;
+}
+
+.style-recommendation span {
+  width: 24px;
+  height: 24px;
+  background: var(--choice-color);
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+.style-recommendation strong,
+.style-recommendation small {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.style-recommendation strong {
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.style-recommendation small {
+  color: var(--muted);
+  font-family: var(--font-rounded);
+  font-size: 0.66rem;
 }
 
 .style-color-grid {

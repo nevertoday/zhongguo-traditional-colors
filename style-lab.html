@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260611-8">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260612-2">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
   <body data-current-page="style-lab">
@@ -92,7 +92,7 @@
               <div class="style-intent-grid" data-style-intent-list aria-label="选择方案倾向"></div>
             </div>
             <div class="style-lab-readiness" data-style-readiness aria-label="当前配色可用性"></div>
-            <span class="style-lab-label style-palette-label">03 复制角色色</span>
+            <span class="style-lab-label style-palette-label">03 替换角色色</span>
             <div class="style-lab-palette" data-style-palette aria-label="当前样式配色色值"></div>
             <p class="style-lab-status" data-style-status aria-live="polite"></p>
           </aside>
@@ -108,8 +108,8 @@
       <div class="style-color-dialog-head">
         <div>
           <span class="section-kicker">切换主色</span>
-          <h2>选择一个中国色</h2>
-          <p>按色相或关键词切换。</p>
+          <h2 data-style-color-dialog-title>选择一个中国色</h2>
+          <p data-style-color-dialog-note>按色相或关键词切换。</p>
         </div>
         <button class="dialog-close style-color-close" type="button" data-close-style-color aria-label="关闭颜色选择器">
           <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
@@ -133,6 +133,7 @@
           <button type="button" data-style-color-hue="neutral" aria-pressed="false">灰</button>
         </div>
       </div>
+      <div class="style-color-recommendations" data-style-color-recommendations aria-label="推荐替换色"></div>
       <div class="style-color-grid" data-style-color-grid aria-label="可切换的中国传统色"></div>
       <div class="style-color-dialog-foot">
         <span data-style-color-dialog-status aria-live="polite">742 个传统色</span>
@@ -151,6 +152,6 @@
     <script src="assets/data/images.js?v=20260610-6"></script>
     <script src="assets/data/harmonies.js?v=20260610-6"></script>
     <script src="assets/data/harmony-usage.js?v=20260610-6"></script>
-    <script src="assets/js/app.js?v=20260611-7"></script>
+    <script src="assets/js/app.js?v=20260612-3"></script>
   </body>
 </html>
