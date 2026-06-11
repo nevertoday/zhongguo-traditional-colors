@@ -1394,11 +1394,7 @@ http://localhost:5173
 <table>
   <tr>
     <td align="center" width="220">
-      <img src="docs/images/alipay-reward-qr.png" alt="支付宝で小小東を支援する QR コード" width="180"><br>
-      <strong>支付宝</strong>
-    </td>
-    <td align="center" width="220">
-      <img src="docs/images/buy-me-a-coffee-qr.png" alt="小小東を支援する QR コード" width="180"><br>
+      <img src="docs/images/buy-me-a-coffee-qr.png" alt="Buy Me a Coffee で小小東を支援する QR コード" width="180"><br>
       <strong>Buy Me a Coffee</strong>
     </td>
   </tr>

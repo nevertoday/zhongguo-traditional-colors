@@ -1394,11 +1394,7 @@ This archive remains free and open source. If it saves you time, a Star, a share
 <table>
   <tr>
     <td align="center" width="220">
-      <img src="docs/images/alipay-reward-qr.png" alt="Support 小小东 with Alipay QR code" width="180"><br>
-      <strong>Alipay</strong>
-    </td>
-    <td align="center" width="220">
-      <img src="docs/images/buy-me-a-coffee-qr.png" alt="Support 小小东 QR code" width="180"><br>
+      <img src="docs/images/buy-me-a-coffee-qr.png" alt="Support 小小东 through Buy Me a Coffee QR code" width="180"><br>
       <strong>Buy Me a Coffee</strong>
     </td>
   </tr>

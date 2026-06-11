@@ -19,24 +19,24 @@ const toast = document.querySelector('[data-toast]');
 
 const FEEDS = [
   { key: 'new', label: '新鲜', icon: '01' },
-  { key: 'popular', label: '热门', icon: '02' },
+  { key: 'popular', label: '编号', icon: '02' },
   { key: 'random', label: '随机', icon: '03' },
   { key: 'collection', label: '收藏', icon: '04' },
 ];
 
 const RELATIONS = [
-  { key: 'curated', label: '主辅点缀', short: '角色明确', use: '适合网页、PPT、品牌起稿，先决定背景、辅助和强调。' },
-  { key: 'same', label: '同类', short: '统一', use: '适合系列封面、课程页、品牌延展，整体气质稳定。' },
-  { key: 'analogous', label: '邻近', short: '柔和', use: '适合插画、内容封面、长图背景，过渡自然。' },
-  { key: 'complementary', label: '互补', short: '突出', use: '适合按钮、标题、活动信息和需要明确焦点的位置。' },
-  { key: 'splitComplementary', label: '分裂互补', short: '有张力', use: '适合海报、社媒图和视觉主图，醒目但不失控。' },
-  { key: 'triadic', label: '三角', short: '系列', use: '适合栏目分类、数据可视化和多主题内容。' },
-  { key: 'tetradic', label: '四角', short: '丰富', use: '适合复杂视觉系统，建议先限制面积再使用。' },
-  { key: 'temperatureContrast', label: '冷暖', short: '情绪对照', use: '适合活动页、展览视觉和需要情绪反差的画面。' },
-  { key: 'lighter', label: '明色', short: '留白', use: '适合背景、浅层模块、柔和内容卡和大面积铺底。' },
-  { key: 'darker', label: '暗色', short: '压重', use: '适合标题、正文、边界、深色页面和沉稳品牌。' },
-  { key: 'grayTone', label: '灰调', short: '降噪', use: '适合信息密集界面、报告、作品集和需要克制的系统。' },
-  { key: 'neutral', label: '中性', short: '秩序', use: '适合正文、分割线、底色和需要降低情绪干扰的位置。' },
+  { key: 'curated', label: '主辅点缀', short: '角色明确', use: '网页、PPT、品牌起稿' },
+  { key: 'same', label: '同类', short: '统一', use: '系列封面、品牌延展' },
+  { key: 'analogous', label: '邻近', short: '柔和', use: '插画、封面、长图' },
+  { key: 'complementary', label: '互补', short: '突出', use: '按钮、标题、活动信息' },
+  { key: 'splitComplementary', label: '分裂互补', short: '有张力', use: '海报、社媒图、主视觉' },
+  { key: 'triadic', label: '三角', short: '系列', use: '栏目、图表、多主题内容' },
+  { key: 'tetradic', label: '四角', short: '丰富', use: '复杂系统，先限面积' },
+  { key: 'temperatureContrast', label: '冷暖', short: '情绪对照', use: '活动页、展览、情绪反差' },
+  { key: 'lighter', label: '明色', short: '留白', use: '背景、浅层模块、铺底' },
+  { key: 'darker', label: '暗色', short: '压重', use: '标题、正文、深色页面' },
+  { key: 'grayTone', label: '灰调', short: '降噪', use: '报告、作品集、密集界面' },
+  { key: 'neutral', label: '中性', short: '秩序', use: '正文、分割线、底色' },
 ];
 
 const TONES = [
@@ -58,6 +58,16 @@ const TONES = [
 ];
 
 const ROLE_LABELS = ['主色', '辅助', '强调', '承托'];
+const STACK_PATTERNS = [
+  [41, 26, 18, 15],
+  [44, 24, 18, 14],
+  [38, 29, 19, 14],
+  [43, 22, 21, 14],
+  [36, 30, 20, 14],
+  [40, 24, 22, 14],
+  [45, 23, 17, 15],
+  [39, 28, 18, 15],
+];
 const PALETTE_LIMIT_STEP = 36;
 const FAVORITE_STORAGE_KEY = 'zhongguoPaletteFavorites';
 
@@ -67,8 +77,9 @@ let currentTone = 'all';
 let visibleCount = PALETTE_LIMIT_STEP;
 let selectedPaletteId = '';
 let favorites = readFavorites();
-let randomSeed = Date.now();
+let randomRanks = new Map();
 let toastTimer;
+let paletteAutoObserver;
 
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) => ({
@@ -161,10 +172,6 @@ function hashString(value) {
   return Math.abs(hash);
 }
 
-function seededScore(value, seed = randomSeed) {
-  return hashString(`${value}-${seed}`);
-}
-
 function imageToColor(image) {
   if (!image?.hex) return null;
   const harmony = harmonies[image.id];
@@ -248,7 +255,6 @@ function paletteFromImage(image, relationKey = currentRelation) {
     hueFamily: harmony?.hueFamily || colors[0].hueFamily,
     temperature: harmony?.temperature || colors[0].temperature,
     hsl: harmony?.hsl || colors[0].hsl,
-    score: 48 + (hashString(id) % 2600),
   };
 }
 
@@ -281,7 +287,7 @@ function paletteSearchText(palette) {
   ].join(' ').toLowerCase();
 }
 
-function filteredPalettes() {
+function filteredPalettes(options = {}) {
   const query = searchInput?.value.trim().toLowerCase() || '';
   let palettes = allPalettes()
     .filter(matchesTone)
@@ -292,14 +298,54 @@ function filteredPalettes() {
   }
 
   if (currentFeed === 'popular') {
-    palettes.sort((first, second) => second.score - first.score);
-  } else if (currentFeed === 'random') {
-    palettes.sort((first, second) => seededScore(first.id) - seededScore(second.id));
+    palettes.sort((first, second) => Number(first.anchorId) - Number(second.anchorId));
+  } else if (currentFeed === 'random' && !options.ignoreRandom) {
+    if (randomRanks.size === 0) randomRanks = shuffledPaletteRanks(palettes);
+    palettes.sort((first, second) => (
+      (randomRanks.get(first.id) ?? Number.MAX_SAFE_INTEGER)
+      - (randomRanks.get(second.id) ?? Number.MAX_SAFE_INTEGER)
+    ));
   } else {
     palettes.sort((first, second) => Number(second.anchorId) - Number(first.anchorId));
   }
 
   return palettes;
+}
+
+function randomInt(max) {
+  if (max <= 0) return 0;
+  if (window.crypto?.getRandomValues) {
+    const value = new Uint32Array(1);
+    const limit = Math.floor(0x100000000 / max) * max;
+    do {
+      window.crypto.getRandomValues(value);
+    } while (value[0] >= limit);
+    return value[0] % max;
+  }
+  return Math.floor(Math.random() * max);
+}
+
+function shuffledPaletteRanks(palettes) {
+  const ids = palettes.map((palette) => palette.id);
+  for (let index = ids.length - 1; index > 0; index -= 1) {
+    const swapIndex = randomInt(index + 1);
+    [ids[index], ids[swapIndex]] = [ids[swapIndex], ids[index]];
+  }
+  return new Map(ids.map((id, index) => [id, index]));
+}
+
+function shuffleCurrentPaletteOrder() {
+  const previousFirstId = filteredPalettes()[0]?.id || '';
+  const palettes = filteredPalettes({ ignoreRandom: true });
+  randomRanks = shuffledPaletteRanks(palettes);
+
+  if (palettes.length > 1 && randomRanks.get(previousFirstId) === 0) {
+    const secondPalette = palettes.find((palette) => randomRanks.get(palette.id) === 1);
+    if (secondPalette) {
+      randomRanks.set(previousFirstId, 1);
+      randomRanks.set(secondPalette.id, 0);
+    }
+  }
 }
 
 function readFavorites() {
@@ -358,6 +404,15 @@ function paletteText(palette) {
     .join('\n');
 }
 
+function paletteStackWeights(palette) {
+  return STACK_PATTERNS[hashString(`${palette.id}-${palette.colors.map((color) => color.hex).join('-')}`) % STACK_PATTERNS.length];
+}
+
+function paletteStackStyle(palette) {
+  const weights = paletteStackWeights(palette);
+  return weights.map((weight, index) => `--stack-${index}: ${weight}fr`).join('; ');
+}
+
 function paletteCss(palette) {
   const [main, secondary, accent, support] = palette.colors;
   return [
@@ -393,8 +448,8 @@ function showToast(message) {
 
 function swatchMarkup(color, index) {
   return `
-    <button class="palette-swatch" type="button" data-copy-color="${escapeHtml(color.id)}" style="--swatch: ${escapeHtml(color.hex)}; --swatch-text: ${readableTextColor(color.hex)};" aria-label="复制 ${escapeHtml(color.name)} ${escapeHtml(color.hex)}">
-      <span>
+    <button class="palette-swatch" type="button" data-copy-color="${escapeHtml(color.id)}" style="--swatch: ${escapeHtml(color.hex)}; --swatch-text: ${readableTextColor(color.hex)}; --swatch-index: ${index};" aria-label="复制 ${escapeHtml(color.name)} ${escapeHtml(color.hex)}">
+      <span class="palette-swatch-label">
         <strong>${escapeHtml(color.name)}</strong>
         <small>${escapeHtml(color.hex)}</small>
       </span>
@@ -405,17 +460,17 @@ function swatchMarkup(color, index) {
 function paletteCardMarkup(palette) {
   const favorite = favorites.has(palette.id);
   const selected = palette.id === selectedPaletteId;
-  const count = (palette.score + (favorite ? 1 : 0)).toLocaleString('zh-CN');
+  const favoriteLabel = favorite ? '<span>已收藏</span>' : '';
 
   return `
     <article class="palette-card" tabindex="0" data-palette-id="${escapeHtml(palette.id)}" aria-selected="${selected ? 'true' : 'false'}">
-      <div class="palette-stack" aria-label="${escapeHtml(palette.relationLabel)}配色">
+      <div class="palette-stack" style="${paletteStackStyle(palette)}" aria-label="${escapeHtml(palette.relationLabel)}配色">
         ${palette.colors.map(swatchMarkup).join('')}
       </div>
       <footer class="palette-card-footer">
         <button class="favorite-button" type="button" data-favorite="${escapeHtml(palette.id)}" aria-pressed="${favorite ? 'true' : 'false'}" aria-label="${favorite ? '取消收藏' : '收藏'} ${escapeHtml(palette.anchor.name)} 配色">
-          <iconify-icon icon="${favorite ? 'lucide:heart' : 'lucide:heart'}" aria-hidden="true"></iconify-icon>
-          ${count}
+          <iconify-icon icon="lucide:heart" aria-hidden="true"></iconify-icon>
+          ${favoriteLabel}
         </button>
         <span class="palette-caption">${escapeHtml(palette.anchor.id)} · ${escapeHtml(palette.relationLabel)} · ${escapeHtml(palette.hueFamily)}</span>
         <button class="copy-palette-button" type="button" data-copy-palette="${escapeHtml(palette.id)}">
@@ -454,9 +509,34 @@ function renderGrid() {
     resultCount.textContent = `已显示 ${visible.length.toLocaleString('zh-CN')} / ${palettes.length.toLocaleString('zh-CN')} 组配色`;
   }
   if (loadMoreButton) {
-    loadMoreButton.hidden = visible.length >= palettes.length;
+    const autoLoadSupported = 'IntersectionObserver' in window;
+    loadMoreButton.hidden = autoLoadSupported || visible.length >= palettes.length;
   }
+  setupAutoLoad();
   renderInspector(findPalette(selectedPaletteId));
+}
+
+function setupAutoLoad() {
+  if (!paletteGrid || !loadMoreButton || !('IntersectionObserver' in window)) return;
+
+  const trigger = loadMoreButton.closest('.palette-more') || loadMoreButton;
+  paletteAutoObserver?.disconnect();
+  paletteAutoObserver = new IntersectionObserver((entries) => {
+    const palettes = currentPaletteList();
+    const shouldLoad = entries.some((entry) => entry.isIntersecting) && visibleCount < palettes.length;
+    if (shouldLoad) appendPalettes(PALETTE_LIMIT_STEP);
+  }, { rootMargin: '520px 0px' });
+  paletteAutoObserver.observe(trigger);
+}
+
+function appendPalettes(count) {
+  const palettes = currentPaletteList();
+  const currentVisible = Math.min(visibleCount, palettes.length);
+  const nextVisible = Math.min(currentVisible + count, palettes.length);
+  if (nextVisible <= currentVisible) return;
+
+  visibleCount = nextVisible;
+  renderGrid();
 }
 
 function roleMarkup(color, index) {
@@ -477,9 +557,9 @@ function renderInspector(palette) {
   if (!palette) {
     inspector.innerHTML = `
       <div class="inspector-empty">
-        <span>当前配色</span>
-        <strong>选择一组配色</strong>
-        <p>右侧会显示复制格式、色彩角色、CSS 变量和适用场景。</p>
+        <span>配色</span>
+        <strong>选一组配色</strong>
+        <p>显示角色色和 CSS 变量。</p>
       </div>
     `;
     return;
@@ -488,10 +568,10 @@ function renderInspector(palette) {
   inspector.innerHTML = `
     <div class="inspector-content">
       <div>
-        <span class="inspector-kicker">当前配色 / ${escapeHtml(palette.relationLabel)}</span>
-        <h2 class="inspector-title">${escapeHtml(palette.anchor.name)} 起色</h2>
+        <span class="inspector-kicker">配色 / ${escapeHtml(palette.relationLabel)}</span>
+        <h2 class="inspector-title">${escapeHtml(palette.anchor.name)}</h2>
         <p class="inspector-note">${escapeHtml(palette.use)}</p>
-        <div class="inspector-stack" aria-hidden="true">
+        <div class="inspector-stack" style="${paletteStackStyle(palette)}" aria-hidden="true">
           ${palette.colors.map((color) => `<span style="--swatch: ${escapeHtml(color.hex)}"></span>`).join('')}
         </div>
       </div>
@@ -509,8 +589,8 @@ function renderInspector(palette) {
         ${palette.colors.map(roleMarkup).join('')}
       </div>
       <div class="inspector-use">
-        <strong>使用判断</strong>
-        <p>${escapeHtml(palette.anchor.hueFamily || palette.hueFamily)}，${escapeHtml(palette.temperature || '冷暖适中')}。如果用于界面，先用 ${escapeHtml(palette.colors[0].name)} 定背景或主视觉，再让 ${escapeHtml(palette.colors[2].name)} 承担按钮、标题或重点标记。</p>
+        <strong>建议</strong>
+        <p>${escapeHtml(palette.colors[0].name)} 做底，${escapeHtml(palette.colors[2].name)} 做重点。</p>
       </div>
     </div>
   `;
@@ -571,7 +651,7 @@ themeToggle?.addEventListener('click', () => {
 
 bindOptionClicks(feedList, '[data-feed]', (button) => {
   currentFeed = button.dataset.feed;
-  if (currentFeed === 'random') randomSeed = Date.now();
+  if (currentFeed === 'random') shuffleCurrentPaletteOrder();
   rerender();
 });
 
@@ -589,7 +669,7 @@ searchInput?.addEventListener('input', () => rerender());
 
 shuffleButton?.addEventListener('click', () => {
   currentFeed = 'random';
-  randomSeed = Date.now();
+  shuffleCurrentPaletteOrder();
   rerender();
 });
 
@@ -598,8 +678,7 @@ copySelectedButton?.addEventListener('click', () => {
 });
 
 loadMoreButton?.addEventListener('click', () => {
-  visibleCount += PALETTE_LIMIT_STEP;
-  renderGrid();
+  appendPalettes(PALETTE_LIMIT_STEP);
 });
 
 paletteGrid?.addEventListener('click', (event) => {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="基于 742 个中国传统色自动生成、筛选、收藏和复制的配色页面。">
+    <meta name="description" content="基于 742 个中国传统色的配色筛选与复制工具。">
     <meta name="theme-color" content="#f7f7f4" data-theme-color>
     <title>中国色配色猎场 - 中国传统配色</title>
     <link rel="icon" href="favicon.svg?v=20260611-1" type="image/svg+xml">
@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/palettes.css?v=20260611-1">
+    <link rel="stylesheet" href="assets/css/palettes.css?v=20260611-5">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
   <body>
@@ -35,7 +35,7 @@
       </a>
       <nav class="palette-nav" aria-label="页面导航">
         <a href="index.html#gallery">浏览色卡</a>
-        <a href="index.html#style-lab">场景试色</a>
+        <a href="style-lab.html">场景试色</a>
         <a aria-current="page" href="palettes.html">配色猎场</a>
         <a href="index.html#download">下载 ZIP</a>
         <a href="https://github.com/nevertoday/zhongguo-traditional-colors">GitHub</a>
@@ -63,16 +63,16 @@
 
       <section class="palette-main" aria-labelledby="palette-title">
         <div class="palette-hero">
-          <span class="eyebrow">基于 742 个中国传统色</span>
-          <h1 id="palette-title">像浏览灵感图库一样，快速找到一组中国色</h1>
-          <p>每组配色都来自当前色库和本地配色关系表。你可以按关系、色相、气质和关键词筛选，点击色块复制单色，或者一键复制整组方案。</p>
+          <span class="eyebrow">742 色 · 本地配色关系</span>
+          <h1 id="palette-title">中国色配色猎场</h1>
+          <p>筛选、复制、收藏配色。</p>
         </div>
 
         <div class="palette-toolbar" aria-label="配色工具栏">
           <label class="palette-search">
             <span class="sr-only">搜索配色</span>
             <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
-            <input type="search" data-search placeholder="搜索色名 / 编号 / HEX / 色系" autocomplete="off">
+            <input type="search" data-search placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
           </label>
           <button class="toolbar-button" type="button" data-shuffle>
             <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
@@ -86,7 +86,7 @@
 
         <div class="palette-meta">
           <span data-result-count>正在读取配色</span>
-          <span>点击色块复制单色，点击卡片查看落位建议</span>
+          <span>选卡片看角色</span>
         </div>
 
         <div class="palette-grid" id="palette-grid" data-palette-grid></div>
@@ -100,9 +100,9 @@
 
       <aside class="palette-inspector" aria-label="当前配色详情" data-inspector>
         <div class="inspector-empty">
-          <span>当前配色</span>
-          <strong>选择一组配色</strong>
-          <p>右侧会显示复制格式、色彩角色、CSS 变量和适用场景。</p>
+          <span>配色</span>
+          <strong>选一组配色</strong>
+          <p>显示角色色和 CSS 变量。</p>
         </div>
       </aside>
     </main>
@@ -111,6 +111,6 @@
 
     <script src="assets/data/images.js?v=20260610-6"></script>
     <script src="assets/data/harmonies.js?v=20260610-6"></script>
-    <script src="assets/js/palettes.js?v=20260611-1" defer></script>
+    <script src="assets/js/palettes.js?v=20260611-5" defer></script>
   </body>
 </html>
