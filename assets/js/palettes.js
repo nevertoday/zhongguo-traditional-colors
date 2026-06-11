@@ -499,7 +499,6 @@ function paletteCardMarkup(palette) {
           <iconify-icon icon="lucide:heart" aria-hidden="true"></iconify-icon>
           ${favoriteLabel}
         </button>
-        <span class="palette-caption">${escapeHtml(palette.anchor.id)} · ${escapeHtml(palette.relationLabel)} · ${escapeHtml(palette.hueFamily)}</span>
         <button class="copy-palette-button" type="button" data-copy-palette="${escapeHtml(palette.id)}">
           <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
           整组

@@ -431,6 +431,7 @@ iconify-icon {
 }
 
 .palette-stack {
+  container-type: inline-size;
   display: grid;
   grid-template-rows: var(--stack-0, 41fr) var(--stack-1, 26fr) var(--stack-2, 18fr) var(--stack-3, 15fr);
   aspect-ratio: 1 / 1;
@@ -456,7 +457,7 @@ iconify-icon {
   display: grid;
   align-items: start;
   min-height: 0;
-  padding: 7px 10px;
+  padding: clamp(5px, 3cqw, 10px);
   color: var(--swatch-text);
   background: var(--swatch);
   border: 0;
@@ -481,6 +482,9 @@ iconify-icon {
   display: grid;
   gap: 1px;
   min-width: 0;
+  max-width: calc(100% - 16px);
+  max-height: 100%;
+  overflow: hidden;
   opacity: 0;
   transform: translateY(-8px);
   transition: opacity 190ms ease, transform 220ms var(--ease-out-quart);
@@ -491,21 +495,21 @@ iconify-icon {
 .palette-swatch small {
   display: block;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .palette-swatch strong {
-  font-size: 0.76rem;
+  font-size: clamp(0.62rem, 4.3cqw, 0.78rem);
   font-weight: 850;
-  line-height: 1.08;
+  line-height: 1.12;
 }
 
 .palette-swatch small {
   font-family: var(--font-rounded);
-  font-size: 0.64rem;
+  font-size: clamp(0.56rem, 3.3cqw, 0.66rem);
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.12;
   opacity: 0.84;
 }
 
@@ -532,10 +536,10 @@ iconify-icon {
 }
 
 .palette-card-footer {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  display: flex;
   gap: 10px;
   align-items: center;
+  justify-content: space-between;
   padding-top: 12px;
 }
 
@@ -563,15 +567,6 @@ iconify-icon {
   background: var(--hover-bg);
   border-color: var(--hover-bg);
   outline: none;
-}
-
-.palette-caption {
-  min-width: 0;
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-align: right;
-  white-space: nowrap;
 }
 
 .empty-state {
@@ -921,14 +916,6 @@ iconify-icon {
     grid-template-columns: 1fr;
   }
 
-  .palette-card-footer {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-
-  .palette-caption {
-    grid-column: auto;
-    text-align: right;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
