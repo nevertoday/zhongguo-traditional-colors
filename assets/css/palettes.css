@@ -1380,8 +1380,8 @@ h3::before {
   position: sticky;
   top: 69px;
   z-index: 12;
-  display: grid;
-  grid-template-columns: minmax(280px, 1fr) auto minmax(170px, 220px) auto auto;
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   align-items: center;
   padding: 16px 0 18px;
@@ -1400,6 +1400,10 @@ h3::before {
   padding: 0 8px;
   background: var(--panel);
   border: 1px solid var(--line);
+}
+
+.use-searchbar .palette-search {
+  flex: 1 1 340px;
 }
 
 .use-modebar button {
@@ -1426,11 +1430,43 @@ h3::before {
   height: 18px;
 }
 
+.use-huebar {
+  display: inline-flex;
+  flex: 1 1 360px;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 48px;
+  padding: 5px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.use-huebar button {
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0 9px;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.use-huebar button[aria-pressed="true"],
+.use-huebar button:hover,
+.use-huebar button:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  outline: none;
+}
+
 .use-bias {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 10px;
   align-items: center;
+  flex: 0 1 230px;
   min-height: 48px;
   padding: 0 12px;
   color: var(--ink-soft);
@@ -1486,24 +1522,35 @@ h3::before {
   right: 12px;
   display: flex;
   gap: 4px;
-  opacity: 0;
-  transition: opacity 160ms ease;
-}
-
-.use-pair-card:hover .use-pair-actions,
-.use-pair-card:focus-within .use-pair-actions {
-  opacity: 1;
+  z-index: 2;
 }
 
 .use-pair-actions button {
-  min-height: 30px;
-  padding: 0 9px;
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 10px;
   color: var(--pair-bg);
   background: var(--pair-text);
   border: 0;
   cursor: pointer;
   font-size: 0.72rem;
   font-weight: 850;
+  transition: opacity 160ms ease, transform 160ms var(--ease-out-quart);
+}
+
+.use-pair-actions button:hover,
+.use-pair-actions button:focus-visible,
+.use-pair-actions button[data-copied="true"] {
+  outline: none;
+  opacity: 0.86;
+  transform: translateY(-1px);
+}
+
+.use-pair-actions iconify-icon {
+  width: 14px;
+  height: 14px;
 }
 
 .use-pair-type {
@@ -1797,11 +1844,18 @@ h3::before {
 
   .use-searchbar {
     position: static;
-    grid-template-columns: 1fr;
   }
 
-  .use-modebar {
+  .use-modebar,
+  .use-huebar {
     justify-content: center;
+  }
+
+  .use-searchbar .palette-search,
+  .use-huebar,
+  .use-bias,
+  .use-searchbar .toolbar-button {
+    flex-basis: 100%;
   }
 
   .use-workspace--simple .use-grid {

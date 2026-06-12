@@ -13,9 +13,9 @@ const footerColorButtons = document.querySelectorAll('[data-footer-color]');
 const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
 const searchInput = document.querySelector('[data-use-search]');
 const modebar = document.querySelector('[data-use-modebar]');
+const huebar = document.querySelector('[data-use-huebar]');
 const biasInput = document.querySelector('[data-use-bias]');
 const shuffleButton = document.querySelector('[data-use-shuffle]');
-const copyButton = document.querySelector('[data-use-copy]');
 const grid = document.querySelector('[data-use-grid]');
 const resultCount = document.querySelector('[data-use-count]');
 const loadMoreButton = document.querySelector('[data-use-load-more]');
@@ -29,6 +29,17 @@ const MODES = [
   { key: 'scale', label: '阶梯', icon: 'lucide:bar-chart-3' },
   { key: 'image', label: '图像', icon: 'lucide:image' },
   { key: 'palette', label: '色板', icon: 'lucide:rows-3' },
+];
+const HUE_FILTERS = [
+  { key: 'all', label: '全部' },
+  { key: 'red', label: '红' },
+  { key: 'orange', label: '橙' },
+  { key: 'yellow', label: '黄' },
+  { key: 'green', label: '绿' },
+  { key: 'cyan', label: '青' },
+  { key: 'blue', label: '蓝' },
+  { key: 'purple', label: '紫' },
+  { key: 'neutral', label: '灰' },
 ];
 const TYPE_TESTS = {
   all: () => true,
@@ -71,6 +82,7 @@ const TYPE_TESTS = {
 let visibleCount = STEP;
 let selectedId = '';
 let currentMode = 'type';
+let currentHue = 'all';
 let randomRanks = new Map();
 let toastTimer;
 let footerCopyTimer;
@@ -258,6 +270,7 @@ function allCards() {
   const search = parsedSearch();
   const seen = new Set();
   return colorPool()
+    .filter((background) => currentHue === 'all' || background.hue === currentHue)
     .filter((background) => colorMatches(background, search.first))
     .flatMap((background) => pairCandidates(background, search.second)
       .sort((first, second) => biasScore(background, second) - biasScore(background, first))
@@ -294,8 +307,14 @@ function cardMarkup(card, index) {
   return `
     <article class="use-pair-card use-pair-card--${escapeHtml(currentMode)}" tabindex="0" data-use-card="${escapeHtml(card.id)}" aria-selected="${card.id === selectedId ? 'true' : 'false'}" style="--pair-bg: ${escapeHtml(card.background.hex)}; --pair-text: ${escapeHtml(card.text.hex)};">
       <div class="use-pair-actions">
-        <button type="button" data-use-color="${escapeHtml(card.background.id)}" aria-label="复制背景色 ${escapeHtml(card.background.name)} ${escapeHtml(card.background.hex)}">背景</button>
-        <button type="button" data-use-color="${escapeHtml(card.text.id)}" aria-label="复制文字色 ${escapeHtml(card.text.name)} ${escapeHtml(card.text.hex)}">文字</button>
+        <button type="button" data-use-copy-card="${escapeHtml(card.id)}" aria-label="复制 ${escapeHtml(card.background.name)} 和 ${escapeHtml(card.text.name)} 整组配色">
+          <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
+          复制方案
+        </button>
+        <button type="button" data-use-remix="${escapeHtml(card.background.id)}" aria-label="以 ${escapeHtml(card.background.name)} 重新生成配色">
+          <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
+          换相近
+        </button>
       </div>
       ${modeBody}
       <footer class="use-pair-meta">
@@ -438,18 +457,27 @@ function renderModebar() {
   `).join('');
 }
 
+function renderHuebar() {
+  if (!huebar) return;
+  huebar.innerHTML = HUE_FILTERS.map((filter) => `
+    <button type="button" data-use-hue="${escapeHtml(filter.key)}" aria-pressed="${filter.key === currentHue ? 'true' : 'false'}">${escapeHtml(filter.label)}</button>
+  `).join('');
+}
+
 function rerender(resetVisible = true) {
   if (resetVisible) visibleCount = STEP;
   renderModebar();
+  renderHuebar();
   renderGrid();
 }
 
 function cardText(card) {
   return [
-    `${card.background.name} & ${card.text.name}`,
-    `背景：${card.background.hex}`,
-    `文字：${card.text.hex}`,
+    `中国传统色用途卡片：${card.background.name} & ${card.text.name}`,
+    `背景：${card.background.name} ${card.background.hex}`,
+    `文字：${card.text.name} ${card.text.hex}`,
     `对比：${card.ratio.toFixed(1)}:1`,
+    `建议：${card.background.name}作背景，${card.text.name}作标题、正文或按钮文字。`,
   ].join('\n');
 }
 
@@ -483,13 +511,36 @@ async function copyColor(id) {
   showToast(`已复制：${color.name} ${color.hex}`);
 }
 
-async function copyCard(id = selectedId) {
+async function copyCard(id = selectedId, renderAfterCopy = true) {
   const card = findCard(id);
   if (!card) return;
   selectedId = card.id;
   await writeClipboard(cardText(card));
   showToast(`已复制：${card.background.name} & ${card.text.name}`);
-  renderGrid();
+  if (renderAfterCopy) renderGrid();
+}
+
+function remixFromColor(id) {
+  const color = colorFromId(id);
+  if (!color) return;
+  if (searchInput) searchInput.value = color.name;
+  currentHue = color.hue || 'all';
+  shuffleOrder();
+  rerender();
+  showToast(`已用 ${color.name} 换一组`);
+}
+
+function setUseActionState(button, label) {
+  if (!button) return;
+
+  window.clearTimeout(button._useActionTimer);
+  const original = button.innerHTML;
+  button.dataset.copied = 'true';
+  button.innerHTML = `<iconify-icon icon="lucide:check" aria-hidden="true"></iconify-icon>${escapeHtml(label)}`;
+  button._useActionTimer = window.setTimeout(() => {
+    delete button.dataset.copied;
+    button.innerHTML = original;
+  }, 1300);
 }
 
 function currentTheme() {
@@ -591,18 +642,39 @@ modebar?.addEventListener('click', (event) => {
   rerender(false);
 });
 
+huebar?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-use-hue]');
+  if (!button) return;
+  currentHue = button.dataset.useHue || 'all';
+  rerender();
+});
+
 shuffleButton?.addEventListener('click', () => {
   shuffleOrder();
   rerender();
 });
-
-copyButton?.addEventListener('click', () => copyCard());
 
 loadMoreButton?.addEventListener('click', () => {
   appendCards(STEP);
 });
 
 grid?.addEventListener('click', (event) => {
+  const copyCardButton = event.target.closest('[data-use-copy-card]');
+  if (copyCardButton) {
+    event.stopPropagation();
+    copyCard(copyCardButton.dataset.useCopyCard, false).then(() => {
+      setUseActionState(copyCardButton, '已复制');
+    });
+    return;
+  }
+
+  const remixButton = event.target.closest('[data-use-remix]');
+  if (remixButton) {
+    event.stopPropagation();
+    remixFromColor(remixButton.dataset.useRemix);
+    return;
+  }
+
   const colorButton = event.target.closest('[data-use-color]');
   if (colorButton) {
     event.stopPropagation();
