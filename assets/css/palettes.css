@@ -162,7 +162,7 @@ h3::before {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 28px;
+  gap: clamp(14px, 1.6vw, 24px);
   min-height: 68px;
   padding: 16px clamp(20px, 2.4vw, 36px);
   background: var(--header-bg);
@@ -195,7 +195,7 @@ h3::before {
 .site-nav {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 4px;
   min-width: 0;
 }
@@ -206,7 +206,7 @@ h3::before {
   align-items: center;
   justify-content: center;
   min-height: 36px;
-  padding: 8px 10px;
+  padding: 8px clamp(8px, 0.75vw, 12px);
   color: var(--ink-soft);
   background: transparent;
   border: 0;
