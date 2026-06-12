@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="基于 742 个中国传统色生成五色配色方案，支持锁定、替换、查看、复制和导出。">
+    <meta name="theme-color" content="#f7f7f4" data-theme-color>
+    <title>中国色配色生成 - 中国传统配色</title>
+    <link rel="icon" href="favicon.svg?v=20260611-1" type="image/svg+xml">
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('theme');
+          if (theme === 'dark' || theme === 'light') {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch (error) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/palettes.css?v=20260612-5">
+    <link rel="stylesheet" href="assets/css/generator.css?v=20260612-1">
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
+  </head>
+  <body data-current-page="generator">
+    <a class="skip-link" href="#generator-board">跳到配色生成器</a>
+
+    <div data-shared-header></div>
+
+    <main class="generator-shell">
+      <section class="generator-workspace" aria-labelledby="generator-title">
+        <h1 class="sr-only" id="generator-title">中国色配色生成</h1>
+
+        <div class="generator-commandbar" aria-label="配色生成工具">
+          <div class="generator-method" role="group" aria-label="生成方式">
+            <button type="button" data-method="auto" aria-pressed="true">自动</button>
+            <button type="button" data-method="analogous" aria-pressed="false">近似</button>
+            <button type="button" data-method="complementary" aria-pressed="false">对比</button>
+            <button type="button" data-method="triadic" aria-pressed="false">三分</button>
+            <button type="button" data-method="neutral" aria-pressed="false">中性</button>
+          </div>
+
+          <label class="generator-search">
+            <span class="sr-only">搜索起点色</span>
+            <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
+            <input type="search" data-generator-search placeholder="从一个中国色开始：月白 / 霁青 / #F9F4DC" autocomplete="off">
+          </label>
+
+          <div class="generator-actions">
+            <button type="button" data-generator-generate>
+              <iconify-icon icon="lucide:sparkles" aria-hidden="true"></iconify-icon>
+              生成
+            </button>
+            <button type="button" data-generator-view>
+              <iconify-icon icon="lucide:eye" aria-hidden="true"></iconify-icon>
+              查看
+            </button>
+            <button type="button" data-generator-export>
+              <iconify-icon icon="lucide:share" aria-hidden="true"></iconify-icon>
+              导出
+            </button>
+          </div>
+        </div>
+
+        <p class="generator-hint" data-generator-hint>按空格生成新方案；锁定的颜色不会被替换。</p>
+
+        <div class="generator-board" id="generator-board" data-generator-board aria-live="polite"></div>
+      </section>
+    </main>
+
+    <div data-shared-footer></div>
+
+    <dialog class="generator-dialog" data-color-dialog>
+      <form method="dialog" class="generator-dialog-panel generator-dialog-panel--wide">
+        <header>
+          <strong data-color-dialog-title>替换颜色</strong>
+          <button type="submit" aria-label="关闭">
+            <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
+          </button>
+        </header>
+        <label class="generator-dialog-search">
+          <span class="sr-only">搜索推荐色</span>
+          <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
+          <input type="search" data-color-dialog-search placeholder="搜索色名 / 编号 / HEX">
+        </label>
+        <div class="generator-recommend-tabs" role="group" aria-label="推荐方式">
+          <button type="button" data-recommend-tab="same" aria-pressed="true">相近</button>
+          <button type="button" data-recommend-tab="lighter" aria-pressed="false">更亮</button>
+          <button type="button" data-recommend-tab="darker" aria-pressed="false">更深</button>
+          <button type="button" data-recommend-tab="accent" aria-pressed="false">强调</button>
+        </div>
+        <div class="generator-recommend-grid" data-color-dialog-grid></div>
+      </form>
+    </dialog>
+
+    <dialog class="generator-dialog" data-view-dialog>
+      <form method="dialog" class="generator-dialog-panel">
+        <header>
+          <strong>快速查看</strong>
+          <button type="submit" aria-label="关闭">
+            <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
+          </button>
+        </header>
+        <div class="generator-view-body" data-view-body></div>
+      </form>
+    </dialog>
+
+    <dialog class="generator-dialog" data-export-dialog>
+      <form method="dialog" class="generator-dialog-panel">
+        <header>
+          <strong>导出方案</strong>
+          <button type="submit" aria-label="关闭">
+            <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
+          </button>
+        </header>
+        <div class="generator-export-grid">
+          <button type="button" data-export-kind="text"><iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon><span>文本</span></button>
+          <button type="button" data-export-kind="css"><iconify-icon icon="lucide:braces" aria-hidden="true"></iconify-icon><span>CSS</span></button>
+          <button type="button" data-export-kind="json"><iconify-icon icon="lucide:code-2" aria-hidden="true"></iconify-icon><span>JSON</span></button>
+          <button type="button" data-export-kind="url"><iconify-icon icon="lucide:link" aria-hidden="true"></iconify-icon><span>链接</span></button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="generator-toast" data-generator-toast role="status" aria-live="polite"></div>
+
+    <script src="assets/js/shared-chrome.js?v=20260612-2"></script>
+    <script src="assets/data/images.js?v=20260610-6"></script>
+    <script src="assets/data/harmonies.js?v=20260610-6"></script>
+    <script src="assets/js/generator.js?v=20260612-1" defer></script>
+  </body>
+</html>
