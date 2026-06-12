@@ -51,6 +51,10 @@
 
   function bindEvents() {
     document.querySelector('[data-generator-generate]')?.addEventListener('click', () => generate());
+    document.querySelector('[data-copy-palette]')?.addEventListener('click', () => copyExport('text'));
+    document.querySelector('[data-generator-rotate]')?.addEventListener('click', rotatePalette);
+    document.querySelector('[data-generator-reverse]')?.addEventListener('click', reversePalette);
+    document.querySelector('[data-generator-unlock]')?.addEventListener('click', unlockAll);
     document.querySelector('[data-generator-view]')?.addEventListener('click', openView);
     document.querySelector('[data-generator-export]')?.addEventListener('click', () => exportDialog?.showModal());
 
@@ -110,13 +114,20 @@
     board.querySelectorAll('[data-replace-color]').forEach((button) => {
       button.addEventListener('click', () => openColorDialog(Number(button.dataset.replaceColor)));
     });
+    board.querySelectorAll('[data-suggest-color]').forEach((button) => {
+      button.addEventListener('click', () => pickInlineSuggestion(button));
+    });
     updateHint();
   }
 
   function colorTile(color, index) {
     const textColor = readableText(color.cleanHex);
+    const rgb = hexToRgb(color.cleanHex);
+    const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+    const suggestions = inlineSuggestions(color.id, index);
     return `
       <article class="generator-color" style="background:${color.cleanHex}; --tile-text:${textColor}" data-locked="${locked[index]}" aria-label="${escapeHtml(color.name)} ${color.cleanHex}">
+        <span class="generator-index">${String(index + 1).padStart(2, '0')}</span>
         <div class="generator-color-tools" aria-label="${escapeHtml(color.name)} 操作">
           <button type="button" data-copy-color="${index}" aria-label="复制 ${escapeHtml(color.name)}">
             <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
@@ -131,6 +142,13 @@
         <div class="generator-color-main">
           <strong class="generator-hex">${color.cleanHex.replace('#', '')}</strong>
           <span class="generator-name">${escapeHtml(color.name)}</span>
+          <span class="generator-value">RGB ${rgb.r} ${rgb.g} ${rgb.b}</span>
+          <span class="generator-value">HSL ${hsl.h} ${hsl.s} ${hsl.l}</span>
+        </div>
+        <div class="generator-suggestions" aria-label="${escapeHtml(color.name)} 推荐替换">
+          ${suggestions.map((suggestion) => `
+            <button type="button" style="background:${suggestion.cleanHex}" data-suggest-color="${suggestion.id}" data-suggest-index="${index}" aria-label="替换为 ${escapeHtml(suggestion.name)}"></button>
+          `).join('')}
         </div>
         <span class="generator-role">${roles[index]}</span>
       </article>
@@ -186,6 +204,24 @@
       ...ids(harmony.temperatureContrast).slice(0, 1),
       ...ids(harmony.darker).slice(0, 1),
     ];
+  }
+
+  function inlineSuggestions(anchorId, index) {
+    const harmony = harmonies[anchorId] || {};
+    const relation = [
+      ...ids(harmony.same).slice(0, 1),
+      ...ids(harmony.lighter).slice(0, 1),
+      ...ids(harmony.darker).slice(0, 1),
+      ...ids(harmony.accent).slice(0, 1),
+      ...ids(harmony.complementary).slice(0, 1),
+      ...candidateIds(anchorId, method),
+    ];
+    const used = new Set(palette.map((item, itemIndex) => (itemIndex === index ? null : item.id)).filter(Boolean));
+    return uniqueIds(relation)
+      .filter((id) => !used.has(id) && id !== anchorId)
+      .map((id) => colorById.get(id))
+      .filter(Boolean)
+      .slice(0, 5);
   }
 
   function openColorDialog(index) {
@@ -273,6 +309,42 @@
     locked[index] = !locked[index];
     render();
     showToast(`${locked[index] ? '已锁定' : '已解锁'} ${palette[index].name}`);
+  }
+
+  function rotatePalette() {
+    palette = [...palette.slice(1), palette[0]];
+    locked = [...locked.slice(1), locked[0]];
+    render();
+    updateUrl();
+    showToast('已轮换配色顺序');
+  }
+
+  function reversePalette() {
+    palette = [...palette].reverse();
+    locked = [...locked].reverse();
+    render();
+    updateUrl();
+    showToast('已反转配色顺序');
+  }
+
+  function unlockAll() {
+    if (!locked.some(Boolean)) {
+      showToast('当前没有锁定颜色');
+      return;
+    }
+    locked = locked.map(() => false);
+    render();
+    showToast('已解锁全部颜色');
+  }
+
+  function pickInlineSuggestion(button) {
+    const index = Number(button.dataset.suggestIndex);
+    const color = colorById.get(button.dataset.suggestColor);
+    if (!color || Number.isNaN(index)) return;
+    palette[index] = color;
+    render();
+    updateUrl();
+    showToast(`已替换为 ${color.name}`);
   }
 
   function copyExport(kind) {

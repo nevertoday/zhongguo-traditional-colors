@@ -14,7 +14,7 @@
   top: 68px;
   z-index: 12;
   display: grid;
-  grid-template-columns: auto minmax(260px, 1fr) auto;
+  grid-template-columns: auto minmax(280px, 1fr) auto;
   gap: 12px;
   align-items: center;
   padding: 12px clamp(16px, 2.4vw, 36px);
@@ -126,12 +126,15 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
   min-height: 520px;
   overflow: hidden;
+  background: var(--line);
+  gap: 1px;
 }
 
 .generator-color {
   --tile-text: #111111;
   position: relative;
   display: grid;
+  grid-template-rows: auto 1fr auto;
   min-width: 0;
   min-height: 100%;
   padding: clamp(18px, 2.6vw, 34px);
@@ -157,51 +160,75 @@
 
 .generator-color[data-locked="true"]::after {
   position: absolute;
-  top: 16px;
-  left: 16px;
-  width: 8px;
-  height: 8px;
+  top: 46px;
+  left: 18px;
+  width: 28px;
+  height: 2px;
   background: currentColor;
   content: "";
 }
 
+.generator-index {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  color: currentColor;
+  font-family: var(--font-rounded);
+  font-size: 0.74rem;
+  font-weight: 900;
+  opacity: 0.54;
+  transform: translateY(18px);
+}
+
 .generator-color-main {
   align-self: center;
-  justify-self: center;
+  justify-self: stretch;
   display: grid;
-  gap: 10px;
+  gap: 8px;
   min-width: 0;
-  text-align: center;
-  transform: translateY(32px);
+  padding-top: 38px;
+  text-align: left;
+  transform: translateY(10px);
   transition: transform 260ms var(--ease-out-expo);
 }
 
 .generator-color:hover .generator-color-main,
 .generator-color:focus-within .generator-color-main {
-  transform: translateY(18px);
+  transform: translateY(0);
 }
 
 .generator-hex {
   font-family: var(--font-rounded);
-  font-size: clamp(1.35rem, 2.2vw, 2.25rem);
+  font-size: clamp(1.32rem, 2vw, 2.1rem);
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1;
 }
 
 .generator-name {
-  font-size: 0.82rem;
+  font-size: clamp(1.35rem, 2.4vw, 2.6rem);
+  font-family: var(--font-title);
   font-weight: 800;
-  opacity: 0.62;
+  line-height: 1.08;
+}
+
+.generator-value {
+  display: block;
+  color: currentColor;
+  font-family: var(--font-rounded);
+  font-size: 0.74rem;
+  font-weight: 850;
+  line-height: 1.25;
+  opacity: 0.56;
 }
 
 .generator-role {
   position: absolute;
   right: 18px;
-  bottom: 18px;
+  bottom: 78px;
   left: 18px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   color: currentColor;
   font-size: 0.78rem;
   font-weight: 850;
@@ -214,15 +241,15 @@
   right: 18px;
   display: flex;
   gap: 6px;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 180ms ease, transform 220ms var(--ease-out-expo);
+  opacity: 0.72;
+  transform: translateY(0);
+  transition: opacity 180ms ease, transform 220ms var(--ease-out-expo), background 160ms ease;
 }
 
 .generator-color:hover .generator-color-tools,
 .generator-color:focus-within .generator-color-tools {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(-1px);
 }
 
 .generator-color-tools button {
@@ -248,6 +275,33 @@
 .generator-color-tools iconify-icon {
   width: 17px;
   height: 17px;
+}
+
+.generator-suggestions {
+  align-self: end;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
+  min-height: 38px;
+  margin-top: 26px;
+}
+
+.generator-suggestions button {
+  min-width: 0;
+  height: 38px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--solid) 16%, transparent);
+  cursor: pointer;
+  transition: transform 180ms var(--ease-out-expo), border-color 160ms ease;
+}
+
+.generator-suggestions button:hover,
+.generator-suggestions button:focus-visible {
+  border-color: currentColor;
+  outline: none;
+  transform: translateY(-2px);
 }
 
 .generator-dialog {
@@ -528,6 +582,22 @@
     opacity: 1;
     transform: none;
   }
+
+  .generator-index {
+    right: 18px;
+    left: auto;
+    transform: none;
+  }
+
+  .generator-role {
+    bottom: 24px;
+    left: auto;
+    justify-content: flex-end;
+  }
+
+  .generator-suggestions {
+    max-width: 360px;
+  }
 }
 
 @media (max-width: 720px) {
@@ -539,9 +609,16 @@
   .generator-method,
   .generator-actions {
     display: grid;
-    grid-template-columns: 1fr;
     width: 100%;
     min-width: 0;
+  }
+
+  .generator-method {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .generator-actions {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .generator-method button,
@@ -561,6 +638,14 @@
 }
 
 @media (max-width: 480px) {
+  .generator-method {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .generator-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .generator-export-grid {
     grid-template-columns: 1fr 1fr;
   }

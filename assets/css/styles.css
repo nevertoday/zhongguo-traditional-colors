@@ -5,9 +5,11 @@
   --muted: #777777;
   --paper: #f7f7f4;
   --panel: #ffffff;
-  --panel-soft: #eeeeeb;
-  --line: #d9d9d4;
-  --line-strong: #b8b8b2;
+  --panel-soft: #f0eee9;
+  --line-soft: #e9e4da;
+  --line: #ddd6ca;
+  --line-strong: #aaa093;
+  --line-ink: color-mix(in srgb, var(--ink) 18%, transparent);
   --inverse: #f7f7f4;
   --solid: #ffffff;
   --header-bg: rgba(255, 255, 255, 0.86);
@@ -43,8 +45,10 @@
   --paper: #11100e;
   --panel: #191816;
   --panel-soft: #24221f;
-  --line: #34312c;
-  --line-strong: #5a554c;
+  --line-soft: #2a2723;
+  --line: #38332d;
+  --line-strong: #625a4f;
+  --line-ink: color-mix(in srgb, var(--ink) 20%, transparent);
   --inverse: #11100e;
   --solid: #151411;
   --header-bg: rgba(17, 16, 14, 0.86);
