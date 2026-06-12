@@ -497,6 +497,9 @@
   .generator-commandbar {
     grid-template-columns: 1fr;
     top: 0;
+    width: 100%;
+    min-width: 0;
+    overflow-x: clip;
   }
 
   .generator-board {
@@ -520,6 +523,8 @@
   }
 
   .generator-color-tools {
+    right: auto;
+    left: 18px;
     opacity: 1;
     transform: none;
   }
@@ -534,12 +539,15 @@
   .generator-method,
   .generator-actions {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    width: 100%;
+    min-width: 0;
   }
 
   .generator-method button,
   .generator-actions button {
     width: 100%;
+    min-width: 0;
   }
 
   .generator-hint {
@@ -553,8 +561,6 @@
 }
 
 @media (max-width: 480px) {
-  .generator-method,
-  .generator-actions,
   .generator-export-grid {
     grid-template-columns: 1fr 1fr;
   }
