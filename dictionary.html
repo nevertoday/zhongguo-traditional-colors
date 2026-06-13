@@ -23,6 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css?v=20260613-4">
+    <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260614-1">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
   <body data-current-page="dictionary">
@@ -78,7 +79,7 @@
           <label class="dictionary-search">
             <span class="sr-only">检索色彩字典</span>
             <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
-            <input type="search" data-dictionary-search placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
+            <input type="search" data-dictionary-search data-color-suggest placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
           </label>
           <label class="dictionary-filter">
             <span class="sr-only">按色系筛选</span>
@@ -149,6 +150,7 @@
     <script src="assets/js/shared-chrome.js?v=20260613-1"></script>
     <script src="assets/data/images.js?v=20260610-6"></script>
     <script src="assets/data/harmonies.js?v=20260610-6"></script>
-    <script src="assets/js/dictionary.js?v=20260613-1" defer></script>
+    <script src="assets/js/color-search-suggestions.js?v=20260614-1"></script>
+    <script src="assets/js/dictionary.js?v=20260614-1" defer></script>
   </body>
 </html>

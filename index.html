@@ -23,6 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css?v=20260613-4">
+    <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260614-1">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
   <body data-current-page="home">
@@ -88,7 +89,7 @@
           <label class="search-box">
             <span class="sr-only">检索</span>
             <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
-            <input type="search" data-search placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
+            <input type="search" data-search data-color-suggest placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
           </label>
           <button class="tool-button shuffle-tool-button" type="button" data-shuffle>
             <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
@@ -416,7 +417,7 @@
         <label class="master-search">
           <span class="sr-only">检索 742 色清单</span>
           <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
-          <input type="search" data-master-search placeholder="检索编号 / 色名 / HEX" autocomplete="off">
+          <input type="search" data-master-search data-color-suggest placeholder="检索编号 / 色名 / HEX" autocomplete="off">
         </label>
         <button class="master-copy-button" type="button" data-copy-master-list>
           <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
@@ -431,7 +432,8 @@
     <script src="assets/js/favorites-store.js?v=20260612-1"></script>
     <script src="assets/data/images.js?v=20260610-6"></script>
     <script src="assets/data/harmonies.js?v=20260610-6"></script>
+    <script src="assets/js/color-search-suggestions.js?v=20260614-1"></script>
     <script src="assets/data/harmony-usage.js?v=20260610-6"></script>
-    <script src="assets/js/app.js?v=20260613-2"></script>
+    <script src="assets/js/app.js?v=20260614-1"></script>
   </body>
 </html>

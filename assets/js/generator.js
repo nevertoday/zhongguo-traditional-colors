@@ -306,7 +306,7 @@
     let list = [];
 
     if (query) {
-      list = colors.filter((color) => searchableText(color).includes(query)).slice(0, 48);
+      list = rankedColorMatches(query, 48);
     } else {
       const relation = activeRecommendTab === 'accent'
         ? [...ids(harmony.accent), ...ids(harmony.complementary), ...ids(harmony.temperatureContrast)]

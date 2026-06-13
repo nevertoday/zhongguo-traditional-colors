@@ -353,7 +353,9 @@
 
   function imageMatches(image, query, hue) {
     const searchable = `${image.id} ${colorName(image)} ${image.file} ${image.hex || ''}`.toLowerCase();
-    const matchesQuery = query ? searchable.includes(query) : true;
+    const matchesQuery = query
+      ? (window.ZH_COLOR_SEARCH?.matchesImage?.(image, query) || searchable.includes(query))
+      : true;
     const matchesHue = hue === 'all' ? true : hueFromHex(image.hex) === hue;
     return matchesQuery && matchesHue;
   }

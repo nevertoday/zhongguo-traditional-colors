@@ -213,7 +213,7 @@ function colorMatches(color, query) {
   return tokens(value).every((token) => {
     const test = TYPE_TESTS[token];
     if (test) return test(color);
-    return color.searchText.includes(token);
+    return window.ZH_COLOR_SEARCH?.matchesText?.(color.searchText, token) || color.searchText.includes(token);
   });
 }
 

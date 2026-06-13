@@ -672,6 +672,21 @@ function styleColorSearchText(image) {
   return `${image.id} ${colorName(image)} ${image.file} ${image.hex || ''}`.toLowerCase();
 }
 
+function colorQueryMatchesImage(image, query) {
+  const normalized = normalize(query || '');
+  if (!normalized) return true;
+  if (window.ZH_COLOR_SEARCH?.matchesImage) {
+    return window.ZH_COLOR_SEARCH.matchesImage(image, normalized);
+  }
+  return styleColorSearchText(image).includes(normalized);
+}
+
+function bestColorQueryImage(query) {
+  const normalized = normalize(query || '');
+  if (!normalized) return null;
+  return window.ZH_COLOR_SEARCH?.rankedImages?.(normalized, 1)?.[0] || null;
+}
+
 function renderStyleColorOptions() {
   if (!styleColorOptions) return;
 
@@ -698,7 +713,9 @@ function findStyleColorImage(value) {
     if (exact) return exact;
   }
 
-  return images.find((image) => image.hex && styleColorSearchText(image).includes(query)) || null;
+  return images.find((image) => image.hex && styleColorSearchText(image).includes(query))
+    || bestColorQueryImage(query)
+    || null;
 }
 
 function styleColoredColors(colors) {
@@ -1403,6 +1420,7 @@ function applyStyleAnchor(image, statusMessage = '') {
   currentStyleRoleOverrides = {};
   currentStyleAnchorImage = image;
   renderStyleLab(statusMessage || `已切换：${colorName(image)} ${colorValue(image)}`);
+  if (styleColorSearch) styleColorSearch.value = colorName(image);
   if (styleColorDialog?.open) renderStyleColorPicker();
 }
 
@@ -1509,7 +1527,7 @@ function styleColorPickerItems() {
     if (!image.hex) return false;
 
     const matchesHue = styleColorPickerHue === 'all' || hueFromHex(image.hex) === styleColorPickerHue;
-    const matchesQuery = query ? styleColorSearchText(image).includes(query) : true;
+    const matchesQuery = query ? colorQueryMatchesImage(image, query) : true;
     return matchesHue && matchesQuery;
   });
 
@@ -2548,8 +2566,7 @@ function applyFilters() {
   const query = normalize(searchInput?.value || '');
   currentHue = hueFilter?.value || 'all';
   const filteredItems = images.filter((image) => {
-    const searchable = `${image.id} ${image.file} ${image.path} ${image.hex || ''}`.toLowerCase();
-    const matchesQuery = query ? searchable.includes(query) : true;
+    const matchesQuery = query ? colorQueryMatchesImage(image, query) : true;
     const matchesHue = currentHue === 'all' ? true : hueFromHex(image.hex) === currentHue;
     return matchesQuery && matchesHue;
   });
@@ -2651,8 +2668,7 @@ function masterListItems() {
   if (!query) return images;
 
   return images.filter((image) => {
-    const searchable = `${image.id} ${colorName(image)} ${image.file} ${image.hex || ''}`.toLowerCase();
-    return searchable.includes(query);
+    return colorQueryMatchesImage(image, query);
   });
 }
 

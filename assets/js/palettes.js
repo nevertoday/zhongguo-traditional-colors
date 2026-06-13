@@ -467,12 +467,18 @@ function paletteSearchText(palette) {
   ].join(' ').toLowerCase();
 }
 
+function paletteMatchesQuery(palette, query) {
+  if (!query) return true;
+  const text = paletteSearchText(palette);
+  return window.ZH_COLOR_SEARCH?.matchesText?.(text, query) || text.includes(query);
+}
+
 function filteredPalettes(options = {}) {
   const query = searchInput?.value.trim().toLowerCase() || '';
   let palettes = allPalettes()
     .filter((palette) => currentRelation === 'all' || palette.relationKey === currentRelation)
     .filter(matchesTone)
-    .filter((palette) => (query ? paletteSearchText(palette).includes(query) : true));
+    .filter((palette) => paletteMatchesQuery(palette, query));
 
   if (currentFeed === 'collection') {
     palettes = palettes.filter((palette) => favorites.has(palette.id));
