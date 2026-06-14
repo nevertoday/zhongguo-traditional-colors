@@ -29,6 +29,16 @@
   ];
 
   const currentPage = document.body?.dataset.currentPage || pageKeyFromPath();
+  const sharedUtils = window.ZH_UTILS || {};
+
+  sharedUtils.debounce ||= function debounce(fn, delay) {
+    let timer;
+    return (...args) => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => fn(...args), delay);
+    };
+  };
+  window.ZH_UTILS = sharedUtils;
 
   function pageKeyFromPath() {
     const path = window.location.pathname.split('/').pop() || 'index.html';

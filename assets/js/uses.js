@@ -20,6 +20,13 @@ const grid = document.querySelector('[data-use-grid]');
 const resultCount = document.querySelector('[data-use-count]');
 const loadMoreButton = document.querySelector('[data-use-load-more]');
 const toast = document.querySelector('[data-toast]');
+const debounce = window.ZH_UTILS?.debounce || ((fn, delay) => {
+  let timer;
+  return (...args) => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => fn(...args), delay);
+  };
+});
 
 const STEP = 32;
 const CONNECTOR_PATTERN = /\s*(?:&|\+|with|and|on|配|和)\s*/i;
@@ -695,7 +702,7 @@ footerColorButtons.forEach((button) => {
   });
 });
 
-searchInput?.addEventListener('input', () => rerender());
+searchInput?.addEventListener('input', debounce(() => rerender(), 200));
 biasInput?.addEventListener('input', () => rerender());
 
 modebar?.addEventListener('click', (event) => {

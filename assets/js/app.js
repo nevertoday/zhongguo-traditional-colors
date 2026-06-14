@@ -154,6 +154,13 @@ const HARMONY_RELATION_KEYS = [
 const HARMONY_RELATION_TYPES = HARMONY_RELATION_KEYS
   .map((key) => ({ key, ...(harmonyUsage[key] || {}) }))
   .filter((type) => type.label);
+const debounce = window.ZH_UTILS?.debounce || ((fn, delay) => {
+  let timer;
+  return (...args) => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => fn(...args), delay);
+  };
+});
 
 const STYLE_LAB_ROLES = [
   { key: 'background', label: '背景色', use: '大面积铺底', ratio: '60%' },
@@ -2608,14 +2615,6 @@ function setTemporaryLabel(node, label, duration = 1200) {
   }, duration);
 }
 
-function debounce(fn, delay) {
-  let timer;
-  return (...args) => {
-    window.clearTimeout(timer);
-    timer = window.setTimeout(() => fn(...args), delay);
-  };
-}
-
 async function copyHex(button) {
   const image = images.find((item) => item.id === button.dataset.copyColor);
   if (!image) return;
@@ -2941,7 +2940,7 @@ styleFormatSelect?.addEventListener('change', () => {
   updateCopyControls();
   setStyleLabStatus(`复制格式：${colorValueLabel()}`);
 });
-styleColorPickerSearch?.addEventListener('input', renderStyleColorPicker);
+styleColorPickerSearch?.addEventListener('input', debounce(renderStyleColorPicker, 200));
 styleColorHueButtons.forEach((button) => {
   button.addEventListener('click', () => {
     styleColorPickerHue = button.dataset.styleColorHue || 'all';

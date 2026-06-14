@@ -29,6 +29,13 @@
     name: colorName(item),
     cleanHex: normalizeHex(item.hex),
   })).filter((item) => item.cleanHex);
+  const debounce = window.ZH_UTILS?.debounce || ((fn, delay) => {
+    let timer;
+    return (...args) => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => fn(...args), delay);
+    };
+  });
 
   const colorById = new Map(colors.map((item) => [item.id, item]));
   const colorByHex = new Map(colors.map((item) => [item.cleanHex, item]));
@@ -104,7 +111,7 @@
       hideSearchSuggestions();
     });
 
-    colorDialogSearch?.addEventListener('input', renderColorDialog);
+    colorDialogSearch?.addEventListener('input', debounce(renderColorDialog, 200));
 
     exportDialog?.addEventListener('click', (event) => {
       const button = event.target.closest('[data-export-kind]');

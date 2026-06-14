@@ -2,6 +2,13 @@
   const images = window.TRADITIONAL_COLOR_IMAGES || [];
   const colorHarmonies = window.TRADITIONAL_COLOR_HARMONIES || {};
   const imagesById = new Map(images.map((image) => [image.id, image]));
+  const debounce = window.ZH_UTILS?.debounce || ((fn, delay) => {
+    let timer;
+    return (...args) => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => fn(...args), delay);
+    };
+  });
 
   const dictionaryGrid = document.querySelector('[data-dictionary-grid]');
   const dictionarySearch = document.querySelector('[data-dictionary-search]');
@@ -594,7 +601,7 @@
       }, 1000);
     });
   });
-  dictionarySearch?.addEventListener('input', renderDictionary);
+  dictionarySearch?.addEventListener('input', debounce(renderDictionary, 200));
   dictionaryHue?.addEventListener('change', renderDictionary);
   dictionaryRandom?.addEventListener('click', openRandomColor);
 
