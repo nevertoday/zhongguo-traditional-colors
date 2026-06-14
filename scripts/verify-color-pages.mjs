@@ -85,7 +85,7 @@ if (!existsSync(path.join(ROOT, 'sitemap.xml'))) {
     fail('sitemap.xml: wrong/missing urlset namespace');
   }
   const locCount = (sitemap.match(/<loc>/g) || []).length;
-  const expected = images.length + 9; // 9 indexable main pages (favorites excluded)
+  const expected = images.length + 10; // 10 indexable main pages (favorites excluded)
   if (locCount !== expected) {
     fail(`sitemap.xml: expected ${expected} <loc> entries, found ${locCount}`);
   }
