@@ -39,6 +39,7 @@ const MAIN_PAGES = [
   { path: 'dictionary.html', priority: '0.9', changefreq: 'weekly' },
   { path: 'palettes.html', priority: '0.8', changefreq: 'weekly' },
   { path: 'generator.html', priority: '0.8', changefreq: 'weekly' },
+  { path: 'theme-forge.html', priority: '0.8', changefreq: 'weekly' },
   { path: 'style-lab.html', priority: '0.8', changefreq: 'weekly' },
   { path: 'gradients.html', priority: '0.7', changefreq: 'weekly' },
   { path: 'uses.html', priority: '0.7', changefreq: 'weekly' },
