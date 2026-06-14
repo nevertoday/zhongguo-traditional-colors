@@ -15,6 +15,8 @@ if (!existsSync('gradients.html')) {
     'data-gradient-grid',
     'data-gradient-search',
     'data-color-suggest',
+    'data-gradient-type',
+    'data-gradient-detail',
     'data-gradient-load-more',
     'assets/css/gradients.css',
     'assets/js/gradients.js',
@@ -33,6 +35,11 @@ if (!existsSync('assets/js/gradients.js')) {
   const script = readFileSync('assets/js/gradients.js', 'utf8');
   [
     'function gradientLogic',
+    'const GRADIENT_TYPES',
+    'function gradientSet',
+    'function renderDetailFromUrl',
+    'data-gradient-card-type',
+    'data-gradient-copy-detail',
     "relatedColor(anchor, ['lighter', 'grayTone', 'neutral']",
     "relatedColor(anchor, ['same', 'analogous', 'secondary']",
     "relatedColor(anchor, ['darker', 'accent', 'complementary']",
@@ -56,6 +63,9 @@ if (!existsSync('assets/css/gradients.css')) {
     '.gradient-tone-swatch',
     '.gradient-path-track',
     '.gradient-pair span',
+    '.gradient-multi-track',
+    '.gradient-detail',
+    '.gradient-detail-stops',
     '@media (max-width: 480px)',
   ].forEach((token) => {
     if (!css.includes(token)) fail(`assets/css/gradients.css: missing ${token}`);

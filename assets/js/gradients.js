@@ -11,8 +11,10 @@
   });
 
   const grid = document.querySelector('[data-gradient-grid]');
+  const detail = document.querySelector('[data-gradient-detail]');
   const searchInput = document.querySelector('[data-gradient-search]');
   const hueFilter = document.querySelector('[data-gradient-hue]');
+  const typeFilter = document.querySelector('[data-gradient-type]');
   const countLabel = document.querySelector('[data-gradient-count]');
   const randomButton = document.querySelector('[data-gradient-random]');
   const loadMoreButton = document.querySelector('[data-gradient-load-more]');
@@ -29,6 +31,51 @@
 
   const INITIAL_VISIBLE = 18;
   const BATCH_SIZE = 18;
+  const GRADIENT_TYPES = [
+    {
+      key: 'tonal',
+      label: '单色阶',
+      deck: '4 color tonal',
+      relationKeys: ['lighter', 'same', 'analogous', 'darker'],
+      copyHint: '适合背景、按钮状态、信息层级',
+    },
+    {
+      key: 'analogous',
+      label: '邻近多色',
+      deck: '5 color analogous',
+      relationKeys: ['lighter', 'analogous', 'same', 'secondary', 'darker'],
+      copyHint: '适合海报、横幅、柔和品牌视觉',
+    },
+    {
+      key: 'split',
+      label: '分裂互补',
+      deck: '5 color split',
+      relationKeys: ['lighter', 'splitComplementary', 'analogous', 'accent', 'darker'],
+      copyHint: '适合强对比但不刺眼的主视觉',
+    },
+    {
+      key: 'triadic',
+      label: '三角色',
+      deck: '4 color triadic',
+      relationKeys: ['lighter', 'triadic', 'same', 'accent'],
+      copyHint: '适合插画、数据分组、活动页',
+    },
+    {
+      key: 'tetradic',
+      label: '四角色',
+      deck: '5 color tetradic',
+      relationKeys: ['lighter', 'tetradic', 'same', 'accent', 'darker'],
+      copyHint: '适合复杂界面、系列卡片、专题页',
+    },
+    {
+      key: 'temperature',
+      label: '冷暖对照',
+      deck: '5 color temperature',
+      relationKeys: ['lighter', 'temperatureContrast', 'same', 'neutral', 'darker'],
+      copyHint: '适合季节、材质、空间氛围切换',
+    },
+  ];
+  const TYPE_BY_KEY = new Map(GRADIENT_TYPES.map((type) => [type.key, type]));
 
   const HUE_LABELS = {
     all: '全部色系',
@@ -41,6 +88,7 @@
     purple: '紫色系',
     neutral: '中性色',
   };
+  const TYPE_LABELS = Object.fromEntries([['all', '全部渐变'], ...GRADIENT_TYPES.map((type) => [type.key, type.label])]);
 
   let visibleCount = INITIAL_VISIBLE;
   let renderedItems = [];
@@ -166,6 +214,22 @@
     return null;
   }
 
+  function relatedColors(anchor, relationKeys, excludedIds = new Set(), limit = 1) {
+    const harmony = harmonies[anchor.id] || {};
+    const colors = [];
+    for (const key of relationKeys) {
+      for (const id of harmony[key] || []) {
+        if (id === anchor.id || excludedIds.has(id)) continue;
+        const color = lookupColor(id);
+        if (!color?.hex) continue;
+        excludedIds.add(color.id);
+        colors.push(color);
+        if (colors.length >= limit) return colors;
+      }
+    }
+    return colors;
+  }
+
   function fallbackColor(anchor, label, hex, suffix) {
     return {
       id: `${anchor.id}-${suffix}`,
@@ -215,7 +279,59 @@
       [tones[0], tones[1]],
     ];
 
-    return { anchor, tones, paths, pairs, hsl };
+    const type = TYPE_BY_KEY.get('tonal');
+    const stops = tones.map((tone, index) => ({ ...tone, stop: Math.round((index / (tones.length - 1)) * 100) }));
+    const css = `linear-gradient(90deg, ${stops.map((tone) => `${tone.hex} ${tone.stop}%`).join(', ')})`;
+    return { anchor, tones, stops, paths, pairs, hsl, type, css };
+  }
+
+  function fallbackTone(anchor, role, index, total) {
+    const ratio = total <= 1 ? 0 : index / (total - 1);
+    if (ratio < 0.5) return fallbackColor(anchor, role, mixHex(anchor.hex, '#FFFFFF', 0.58 - ratio * 0.38), `fallback-${index}`);
+    return fallbackColor(anchor, role, mixHex(anchor.hex, '#000000', (ratio - 0.45) * 0.48), `fallback-${index}`);
+  }
+
+  function gradientSet(image, typeKey = 'tonal') {
+    if (typeKey === 'tonal') return gradientLogic(image);
+
+    const type = TYPE_BY_KEY.get(typeKey) || TYPE_BY_KEY.get('analogous');
+    const anchor = {
+      id: image.id,
+      name: colorName(image),
+      hex: cleanHex(image.hex),
+    };
+    const hsl = harmonies[image.id]?.hsl || hslFromRgb(rgbFromHex(anchor.hex));
+    const excluded = new Set([anchor.id]);
+    const targetCount = type.key === 'triadic' ? 4 : 5;
+    const picked = relatedColors(anchor, type.relationKeys, excluded, targetCount - 1);
+    const rawStops = [anchor, ...picked];
+
+    while (rawStops.length < targetCount) {
+      rawStops.push(fallbackTone(anchor, type.label, rawStops.length, targetCount));
+    }
+
+    const anchorSlot = type.key === 'triadic' ? 1 : 2;
+    const ordered = [...rawStops.slice(1, anchorSlot + 1), anchor, ...rawStops.slice(anchorSlot + 1)]
+      .slice(0, targetCount);
+    const stops = ordered.map((tone, index) => ({
+      ...tone,
+      role: index === anchorSlot ? '本色' : `${type.label} ${index + 1}`,
+      stop: Math.round((index / (ordered.length - 1)) * 100),
+    }));
+    const paths = stops.slice(0, -1).map((tone, index) => ({
+      from: tone,
+      to: stops[index + 1],
+      label: `${tone.name} -> ${stops[index + 1].name}`,
+    }));
+    const pairs = [
+      [stops[0], stops[1]],
+      [stops[Math.max(0, anchorSlot - 1)], stops[anchorSlot]],
+      [stops[anchorSlot], stops[Math.min(stops.length - 1, anchorSlot + 1)]],
+      [stops[0], stops[stops.length - 1]],
+    ];
+    const css = `linear-gradient(90deg, ${stops.map((tone) => `${tone.hex} ${tone.stop}%`).join(', ')})`;
+
+    return { anchor, tones: stops.slice(0, 4), stops, paths, pairs, hsl, type, css };
   }
 
   function imageMatches(image, query, hue) {
@@ -235,6 +351,16 @@
       ? window.ZH_COLOR_SEARCH.rankedImages(query, images.length)
       : images;
     return source.filter((image) => imageMatches(image, query, hue));
+  }
+
+  function filteredGradientItems() {
+    const type = typeFilter?.value || 'all';
+    const types = type === 'all' ? GRADIENT_TYPES : [TYPE_BY_KEY.get(type)].filter(Boolean);
+    return filteredImages().flatMap((image) => types.map((gradientType) => ({
+      id: `${image.id}-${gradientType.key}`,
+      image,
+      type: gradientType,
+    })));
   }
 
   function toneMarkup(tone, index) {
@@ -267,18 +393,33 @@
     `;
   }
 
+  function multiStopTrackMarkup(logic, compact = false) {
+    const labels = logic.stops.map((tone) => `<small>${escapeHtml(tone.hex.replace('#', ''))}</small>`).join('');
+    return `
+      <span class="gradient-multi-track${compact ? ' gradient-multi-track-compact' : ''}" style="--gradient-css: ${escapeAttribute(logic.css)}" aria-label="${escapeAttribute(logic.type.label)} 多色渐变">
+        ${labels}
+      </span>
+    `;
+  }
+
   function copyTextFor(logic) {
-    const toneLines = logic.tones.map((tone) => `${tone.role}: ${tone.name} ${tone.hex}`);
+    const toneLines = logic.stops.map((tone) => `${tone.role}: ${tone.name} ${tone.hex} ${tone.stop}%`);
     const pathLines = logic.paths.map((path) => `${path.label}: ${path.from.hex} -> ${path.to.hex}`);
     return [
-      `${logic.anchor.name} 渐变逻辑`,
+      `${logic.anchor.name} ${logic.type.label} 渐变逻辑`,
       ...toneLines,
       ...pathLines,
+      `CSS: ${logic.css}`,
     ].join('\n');
   }
 
-  function cardMarkup(image) {
-    const logic = gradientLogic(image);
+  function detailUrlFor(image, typeKey) {
+    return `gradients.html?color=${encodeURIComponent(image.id)}&type=${encodeURIComponent(typeKey)}`;
+  }
+
+  function cardMarkup(item) {
+    const { image, type } = item;
+    const logic = gradientSet(image, type.key);
     const hue = hueFromHex(logic.anchor.hex);
     const hslLabel = `H${logic.hsl.h} S${logic.hsl.s} L${logic.hsl.l}`;
     const style = [
@@ -287,15 +428,17 @@
       `--card-close: ${logic.tones[2].hex}`,
       `--card-deep: ${logic.tones[3].hex}`,
       `--card-ink: ${textColorFor(logic.anchor.hex)}`,
+      `--gradient-css: ${logic.css}`,
     ].join('; ');
 
     return `
-      <article class="gradient-card" role="button" tabindex="0" data-gradient-card="${escapeAttribute(image.id)}" style="${escapeAttribute(style)}" aria-label="复制 ${escapeAttribute(logic.anchor.name)} 的渐变逻辑">
+      <article class="gradient-card" role="button" tabindex="0" data-gradient-card="${escapeAttribute(item.id)}" data-gradient-color="${escapeAttribute(image.id)}" data-gradient-card-type="${escapeAttribute(type.key)}" style="${escapeAttribute(style)}" aria-label="复制 ${escapeAttribute(logic.anchor.name)} ${escapeAttribute(type.label)} 的渐变逻辑">
         <div class="gradient-card-head">
-          <span>4 color palette</span>
-          <h3>${escapeHtml(logic.anchor.name)}的渐变逻辑</h3>
+          <span>${escapeHtml(type.deck)}</span>
+          <h3><a href="${escapeAttribute(detailUrlFor(image, type.key))}">${escapeHtml(logic.anchor.name)} · ${escapeHtml(type.label)}</a></h3>
           <small>${escapeHtml(image.id)} · ${escapeHtml(logic.anchor.hex)} · ${escapeHtml(HUE_LABELS[hue] || '传统色')} · ${escapeHtml(hslLabel)}</small>
         </div>
+        ${multiStopTrackMarkup(logic, true)}
         <div class="gradient-tone-grid" aria-label="${escapeAttribute(logic.anchor.name)} 的四个渐变节点">
           ${logic.tones.map(toneMarkup).join('')}
         </div>
@@ -317,7 +460,8 @@
   function updateMeta(total, visible) {
     if (countLabel) {
       const hue = hueFilter?.value || 'all';
-      countLabel.textContent = `已显示 ${visible} / ${total} 张 · ${HUE_LABELS[hue] || '全部色系'}`;
+      const type = typeFilter?.value || 'all';
+      countLabel.textContent = `已显示 ${visible} / ${total} 张 · ${HUE_LABELS[hue] || '全部色系'} · ${TYPE_LABELS[type] || '全部渐变'}`;
     }
     if (loadMoreButton) {
       loadMoreButton.hidden = visible >= total;
@@ -327,7 +471,7 @@
 
   function render({ reset = false } = {}) {
     if (!grid) return;
-    const items = filteredImages();
+    const items = filteredGradientItems();
     renderedItems = items;
     if (reset) visibleCount = INITIAL_VISIBLE;
 
@@ -364,11 +508,11 @@
   }
 
   async function copyCard(id) {
-    const image = imagesById.get(id);
-    if (!image) return;
-    const logic = gradientLogic(image);
+    const item = renderedItems.find((renderedItem) => renderedItem.id === id);
+    if (!item) return;
+    const logic = gradientSet(item.image, item.type.key);
     await writeClipboard(copyTextFor(logic));
-    showToast(`已复制 ${logic.anchor.name} 的渐变逻辑`);
+    showToast(`已复制 ${logic.anchor.name} · ${logic.type.label}`);
   }
 
   function focusCard(id) {
@@ -382,13 +526,67 @@
   function randomColor() {
     const pool = renderedItems.length ? renderedItems : filteredImages();
     if (!pool.length) return;
-    const image = pool[Math.floor(Math.random() * pool.length)];
-    const index = renderedItems.findIndex((item) => item.id === image.id);
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    const image = picked.image || picked;
+    const targetId = picked.id || renderedItems.find((item) => item.image.id === image.id)?.id;
+    const index = targetId ? renderedItems.findIndex((item) => item.id === targetId) : -1;
     if (index >= visibleCount) {
       visibleCount = Math.min(renderedItems.length, index + 1);
       render();
     }
-    focusCard(image.id);
+    if (targetId) focusCard(targetId);
+  }
+
+  function renderDetailFromUrl() {
+    if (!detail) return;
+    const params = new URLSearchParams(window.location.search);
+    const colorId = params.get('color');
+    if (!colorId) {
+      detail.innerHTML = '';
+      return;
+    }
+
+    const image = imagesById.get(colorId);
+    if (!image) {
+      detail.innerHTML = '<section class="gradient-detail gradient-empty"><strong>没有找到这张渐变色板</strong><span>可以回到列表重新选择。</span></section>';
+      return;
+    }
+
+    const typeKey = TYPE_BY_KEY.has(params.get('type')) ? params.get('type') : 'analogous';
+    const logic = gradientSet(image, typeKey);
+    const alternatives = GRADIENT_TYPES
+      .filter((type) => type.key !== typeKey)
+      .map((type) => `<a href="${escapeAttribute(detailUrlFor(image, type.key))}">${escapeHtml(type.label)}</a>`)
+      .join('');
+
+    detail.innerHTML = `
+      <section class="gradient-detail" style="--detail-anchor: ${escapeAttribute(logic.anchor.hex)}; --gradient-css: ${escapeAttribute(logic.css)}" aria-label="${escapeAttribute(logic.anchor.name)} ${escapeAttribute(logic.type.label)} 详情">
+        <div class="gradient-detail-copy">
+          <span class="section-kicker">Gradient Detail</span>
+          <h2>${escapeHtml(logic.anchor.name)} · ${escapeHtml(logic.type.label)}</h2>
+          <p>${escapeHtml(logic.type.copyHint)}。这张色板由 ${logic.stops.length} 个传统色节点组成，可以直接复制为 CSS 多色渐变。</p>
+          <div class="gradient-detail-actions">
+            <button class="gradient-action" type="button" data-gradient-copy-detail="${escapeAttribute(image.id)}" data-gradient-copy-type="${escapeAttribute(typeKey)}">
+              <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
+              复制详情
+            </button>
+            <a class="gradient-detail-link" href="colors/${escapeAttribute(image.file.replace(/\.png$/, '.html'))}">查看颜色详情</a>
+            <a class="gradient-detail-link" href="gradients.html">返回全部渐变</a>
+          </div>
+        </div>
+        ${multiStopTrackMarkup(logic)}
+        <div class="gradient-detail-stops">
+          ${logic.stops.map((tone) => `
+            <a href="colors/${escapeAttribute((imagesById.get(tone.id)?.file || `${tone.id}.png`).replace(/\.png$/, '.html'))}" class="gradient-detail-stop" style="--tone: ${escapeAttribute(tone.hex)}; --tone-ink: ${textColorFor(tone.hex)}">
+              <span aria-hidden="true"></span>
+              <strong>${escapeHtml(tone.name)}</strong>
+              <small>${escapeHtml(tone.hex)} · ${escapeHtml(String(tone.stop))}%</small>
+            </a>
+          `).join('')}
+        </div>
+        <div class="gradient-detail-alt" aria-label="其他渐变类型">${alternatives}</div>
+      </section>
+    `;
   }
 
   function loadMore() {
@@ -466,6 +664,7 @@
   }
 
   grid?.addEventListener('click', (event) => {
+    if (event.target.closest('a, button')) return;
     const card = event.target.closest('[data-gradient-card]');
     if (!card) return;
     copyCard(card.dataset.gradientCard);
@@ -473,6 +672,7 @@
 
   grid?.addEventListener('keydown', (event) => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
+    if (event.target.closest('a, button')) return;
     const card = event.target.closest('[data-gradient-card]');
     if (!card) return;
     event.preventDefault();
@@ -481,6 +681,16 @@
 
   searchInput?.addEventListener('input', debounce(() => render({ reset: true }), 200));
   hueFilter?.addEventListener('change', () => render({ reset: true }));
+  typeFilter?.addEventListener('change', () => render({ reset: true }));
+  detail?.addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-gradient-copy-detail]');
+    if (!button) return;
+    const image = imagesById.get(button.dataset.gradientCopyDetail);
+    if (!image) return;
+    const logic = gradientSet(image, button.dataset.gradientCopyType);
+    await writeClipboard(copyTextFor(logic));
+    showToast(`已复制 ${logic.anchor.name} · ${logic.type.label}`);
+  });
   randomButton?.addEventListener('click', randomColor);
   loadMoreButton?.addEventListener('click', loadMore);
   themeToggle?.addEventListener('click', () => {
@@ -520,5 +730,6 @@
 
   setTheme(currentTheme());
   buildFooterSpectrum();
+  renderDetailFromUrl();
   render({ reset: true });
 })();

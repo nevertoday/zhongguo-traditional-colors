@@ -16,7 +16,7 @@
 
 .gradient-toolbar {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(180px, auto) auto;
+  grid-template-columns: minmax(260px, 1fr) minmax(170px, auto) minmax(170px, auto) auto;
   gap: 12px;
   align-items: center;
   margin-bottom: 16px;
@@ -133,7 +133,7 @@
 .gradient-card {
   position: relative;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
   gap: clamp(10px, 1.1vw, 14px);
   aspect-ratio: 3 / 4;
   min-width: 0;
@@ -191,6 +191,20 @@
   line-height: 1.35;
 }
 
+.gradient-card-head h3 a {
+  color: inherit;
+  text-decoration: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.gradient-card-head h3 a:hover,
+.gradient-card-head h3 a:focus-visible {
+  color: color-mix(in srgb, var(--card-anchor) 72%, var(--ink));
+  outline: none;
+  text-decoration: underline;
+}
+
 .gradient-card-head small {
   max-width: 100%;
   overflow: hidden;
@@ -210,6 +224,37 @@
   justify-items: center;
 }
 
+.gradient-multi-track {
+  display: flex;
+  min-height: 84px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px;
+  overflow: hidden;
+  background: var(--gradient-css);
+  border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+.gradient-multi-track-compact {
+  min-height: 36px;
+  padding: 6px;
+}
+
+.gradient-multi-track small {
+  max-width: 72px;
+  padding: 3px 7px;
+  overflow: hidden;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--panel) 72%, transparent);
+  border-radius: 999px;
+  font-family: var(--font-rounded);
+  font-size: 0.62rem;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .gradient-tone {
   display: grid;
   width: 100%;
@@ -221,7 +266,7 @@
 
 .gradient-tone-swatch {
   display: grid;
-  width: min(92px, 70%);
+  width: min(72px, 62%);
   aspect-ratio: 1;
   place-items: center;
   background: var(--tone);
@@ -360,6 +405,131 @@
   font-size: 1.2rem;
 }
 
+.gradient-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(280px, 1.2fr);
+  gap: clamp(18px, 2.6vw, 34px);
+  align-items: stretch;
+  margin: 0 0 clamp(22px, 3vw, 36px);
+  padding: clamp(18px, 2.4vw, 30px);
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--detail-anchor) 12%, transparent), transparent 56%),
+    var(--panel);
+  border: 1px solid color-mix(in srgb, var(--detail-anchor) 28%, var(--line));
+}
+
+.gradient-detail-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.gradient-detail-copy h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-title);
+  font-size: clamp(1.8rem, 4vw, 3.8rem);
+  line-height: 1.05;
+}
+
+.gradient-detail-copy p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.8;
+}
+
+.gradient-detail-actions,
+.gradient-detail-alt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.gradient-detail-link,
+.gradient-detail-alt a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  padding: 0 12px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font-family: var(--font-rounded);
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.gradient-detail-link:hover,
+.gradient-detail-link:focus-visible,
+.gradient-detail-alt a:hover,
+.gradient-detail-alt a:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  border-color: var(--hover-bg);
+  outline: none;
+}
+
+.gradient-detail > .gradient-multi-track {
+  min-height: 100%;
+}
+
+.gradient-detail-stops {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.gradient-detail-stop {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 10px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--panel) 76%, var(--tone));
+  border: 1px solid color-mix(in srgb, var(--tone) 36%, var(--line));
+  text-decoration: none;
+}
+
+.gradient-detail-stop span {
+  grid-row: span 2;
+  width: 38px;
+  aspect-ratio: 1;
+  background: var(--tone);
+  border-radius: 50%;
+}
+
+.gradient-detail-stop strong,
+.gradient-detail-stop small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gradient-detail-stop strong {
+  font-family: var(--font-title);
+  font-size: 0.98rem;
+}
+
+.gradient-detail-stop small {
+  color: var(--muted);
+  font-family: var(--font-rounded);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.gradient-detail-alt {
+  grid-column: 1 / -1;
+}
+
 .gradient-more {
   display: flex;
   justify-content: center;
@@ -402,6 +572,14 @@
     width: 100%;
   }
 
+  .gradient-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .gradient-detail > .gradient-multi-track {
+    min-height: 180px;
+  }
+
   .gradient-card-lower {
     grid-template-columns: 0.72fr 1.28fr;
   }
@@ -437,7 +615,21 @@
   }
 
   .gradient-tone-swatch {
-    width: min(82px, 70%);
+    width: min(62px, 62%);
+  }
+
+  .gradient-multi-track {
+    min-height: 72px;
+  }
+
+  .gradient-multi-track-compact {
+    min-height: 34px;
+  }
+
+  .gradient-multi-track small {
+    max-width: 54px;
+    padding: 2px 5px;
+    font-size: 0.56rem;
   }
 
   .gradient-pairs > div {
