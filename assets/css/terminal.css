@@ -73,8 +73,13 @@
 .term-root .term-body ::selection{background:var(--term-sel,#345)}
 .term-root .pane{font-family:var(--mono);font-size:12.5px;line-height:1.62;padding:18px 20px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--term-fg,#ddd)}
 .term-root .pane[hidden]{display:none}
-.term-root .pane.code{white-space:pre;font-size:12px;line-height:1.55}
 .term-root .pane.md{white-space:normal;font-family:var(--mono)}
+/* 代码：bat 风格行号栏 */
+.term-root .pane.code{padding:14px 0;font-size:12px;line-height:1.6}
+.term-root .cl{display:flex;align-items:baseline;padding:0 20px 0 0}
+.term-root .cl i{flex:none;width:52px;text-align:right;padding-right:16px;font-style:normal;color:var(--ansi-bright_black);opacity:.55;user-select:none;-webkit-user-select:none}
+.term-root .cl code{flex:1;white-space:pre;font-family:inherit;min-width:0}
+.term-root .cl:hover{background:rgba(255,255,255,.035)}
 
 /* 会话 ANSI 文本类 */
 .term-root .a-red{color:var(--ansi-red)} .term-root .a-grn{color:var(--ansi-green)}

@@ -10,8 +10,10 @@
   const $ = s => root.querySelector(s);
   const ALL = T.ALL(), REC = T.REC;
   const term = $('[data-term]');
-  let state = { id: null, mode: 'dark', tab: 'session', fmt: 'ghostty' };
+  let state = { id: null, mode: 'dark', tab: 'code', fmt: 'ghostty' };
   let current = null;
+  // 窗口标题随标签变（真实感）
+  const TITLES = { code: 'build-color-pages.mjs — bat', session: 'guanxing@studio — zsh', markdown: 'README.md — glow' };
 
   /* ── 假终端「会话」标本（静态 HTML，靠 CSS 变量重染）── */
   const SESSION =
@@ -36,10 +38,12 @@
 
   // 代码 / Markdown 标本：构建期预切分，注入一次，之后只靠 CSS 变量重染。
   $('[data-pane="session"]').innerHTML = SESSION;
-  if (SYN) {
-    $('[data-pane="code"]').innerHTML = SYN.code ? SYN.code.html : '// preview-syntax.js 缺失';
-    $('[data-pane="markdown"]').innerHTML = SYN.markdown ? SYN.markdown.html : '';
-  }
+  if (SYN && SYN.code) {
+    // bat 风格行号栏：每行 一个行号 + 一段代码
+    $('[data-pane="code"]').innerHTML = SYN.code.lines
+      .map((h, i) => `<div class="cl"><i>${i + 1}</i><code>${h || ''}</code></div>`).join('');
+  } else { $('[data-pane="code"]').textContent = '// preview-syntax.js 缺失'; }
+  if (SYN && SYN.markdown) $('[data-pane="markdown"]').innerHTML = SYN.markdown.html;
 
   /* ── 渲染调色板 ── */
   function render() {
@@ -104,11 +108,13 @@
   });
 
   /* ── 终端标签切换 ── */
-  root.querySelectorAll('.term-chrome [data-tab]').forEach(b => b.addEventListener('click', () => {
-    state.tab = b.dataset.tab;
-    root.querySelectorAll('.term-chrome [data-tab]').forEach(x => x.setAttribute('aria-selected', x === b));
+  function applyTab() {
+    root.querySelectorAll('.term-chrome [data-tab]').forEach(x => x.setAttribute('aria-selected', x.dataset.tab === state.tab));
     root.querySelectorAll('[data-pane]').forEach(pane => { pane.hidden = pane.dataset.pane !== state.tab; });
-  }));
+    $('[data-term-title]').textContent = TITLES[state.tab] || TITLES.session;
+    $('[data-term-body]').scrollTop = 0;
+  }
+  root.querySelectorAll('.term-chrome [data-tab]').forEach(b => b.addEventListener('click', () => { state.tab = b.dataset.tab; applyTab(); }));
 
   /* ── 锚色交互 ── */
   function setAnchor(id) { if (REC(id)) { state.id = id; render(); } }
@@ -153,5 +159,17 @@
   });
 
   const startId = byName['竹青'] || (qWrap.querySelector('button') || {}).dataset?.qid || ALL[0].id;
-  setAnchor(startId); syncQuick(startId);
+  setAnchor(startId); syncQuick(startId); applyTab();
+
+  /* ── 高度自适应：让整台装置（含 16 色板带）恰好落在视口内 ──
+     CSS 的 calc(100vh - 24px) 没算上头部导航 + 引言的高度，会把色板带顶出视口。
+     这里按 term-root 的真实顶距收口；窄屏（≤1080，堆叠布局）则交还给 CSS auto。 */
+  function fitHeight() {
+    if (window.innerWidth <= 1080) { root.style.height = ''; return; }
+    const top = root.getBoundingClientRect().top;
+    root.style.height = Math.max(620, Math.round(window.innerHeight - top - 16)) + 'px';
+  }
+  fitHeight();
+  window.addEventListener('resize', fitHeight);
+  window.addEventListener('load', fitHeight);   // 字体加载后引言高度可能微变，再收一次
 })();
