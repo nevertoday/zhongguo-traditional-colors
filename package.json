@@ -13,8 +13,10 @@
     "harmony:uses": "node scripts/build-harmony-use-cases.mjs",
     "colorpages": "node scripts/build-color-pages.mjs",
     "verify:colorpages": "node scripts/verify-color-pages.mjs",
+    "preview:syntax": "node scripts/build-preview-syntax.mjs",
+    "terminal:audit": "node scripts/verify-terminal-palette.mjs",
     "package:images": "node scripts/package-images.mjs",
-    "prepare:release": "npm run manifest && npm run harmonies && npm run harmony:uses && npm run harmony:audit && npm run colorpages && npm run verify:colorpages && npm run readme && npm run package:images"
+    "prepare:release": "npm run manifest && npm run harmonies && npm run harmony:uses && npm run harmony:audit && npm run preview:syntax && npm run colorpages && npm run verify:colorpages && npm run terminal:audit && npm run readme && npm run package:images"
   },
   "keywords": [
     "traditional-colors",
