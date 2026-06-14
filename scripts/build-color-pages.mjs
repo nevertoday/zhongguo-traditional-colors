@@ -40,6 +40,7 @@ const MAIN_PAGES = [
   { path: 'palettes.html', priority: '0.8', changefreq: 'weekly' },
   { path: 'generator.html', priority: '0.8', changefreq: 'weekly' },
   { path: 'style-lab.html', priority: '0.8', changefreq: 'weekly' },
+  { path: 'gradients.html', priority: '0.7', changefreq: 'weekly' },
   { path: 'uses.html', priority: '0.7', changefreq: 'weekly' },
   { path: 'skills.html', priority: '0.7', changefreq: 'monthly' },
   // favorites.html is intentionally excluded: its content is per-visitor
