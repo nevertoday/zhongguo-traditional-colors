@@ -8,13 +8,13 @@
 
 ## クイックリンク
 
-- [オンラインギャラリーを見る](https://nevertoday.github.io/zhongguo-traditional-colors/)
-- [シーン試色ワークベンチを見る](https://nevertoday.github.io/zhongguo-traditional-colors/style-lab.html)
-- [配色ジェネレーターを見る](https://nevertoday.github.io/zhongguo-traditional-colors/generator.html)
-- [中国色パレットボードを見る](https://nevertoday.github.io/zhongguo-traditional-colors/palettes.html)
-- [用途カードを見る](https://nevertoday.github.io/zhongguo-traditional-colors/uses.html)
-- [ローカルお気に入りを見る](https://nevertoday.github.io/zhongguo-traditional-colors/favorites.html)
-- [Studio Skills を見る](https://nevertoday.github.io/zhongguo-traditional-colors/skills.html)
+- [オンラインギャラリーを見る](https://colors.xiaoxiaodong.ai/)
+- [シーン試色ワークベンチを見る](https://colors.xiaoxiaodong.ai/style-lab.html)
+- [配色ジェネレーターを見る](https://colors.xiaoxiaodong.ai/generator.html)
+- [中国色パレットボードを見る](https://colors.xiaoxiaodong.ai/palettes.html)
+- [用途カードを見る](https://colors.xiaoxiaodong.ai/uses.html)
+- [ローカルお気に入りを見る](https://colors.xiaoxiaodong.ai/favorites.html)
+- [Studio Skills を見る](https://colors.xiaoxiaodong.ai/skills.html)
 - [完全 ZIP をダウンロード](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip)
 - [Release を見る](https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0)
 - [元の 742 色リスト](docs/chinese-color-master-list.md)
@@ -42,58 +42,58 @@
 
 ## 機能スクリーンショット
 
-### [色カードを閲覧](https://nevertoday.github.io/zhongguo-traditional-colors/#gallery)
+### [色カードを閲覧](https://colors.xiaoxiaodong.ai/#gallery)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/#gallery"><img src="docs/screenshots/home-gallery.png" alt="色カードギャラリーのスクリーンショット"></a>
+  <a href="https://colors.xiaoxiaodong.ai/#gallery"><img src="docs/screenshots/home-gallery.png" alt="色カードギャラリーのスクリーンショット"></a>
 </p>
 
 742 枚の色カードを番号、色名、HEX、色相で検索できます。各カードは詳細プレビュー、色値コピー、原寸 PNG ダウンロード、ローカル保存に対応しています。
 
-### [シーン試色](https://nevertoday.github.io/zhongguo-traditional-colors/style-lab.html)
+### [シーン試色](https://colors.xiaoxiaodong.ai/style-lab.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/style-lab.html"><img src="docs/screenshots/style-lab.png" alt="シーン試色ワークベンチのスクリーンショット"></a>
+  <a href="https://colors.xiaoxiaodong.ai/style-lab.html"><img src="docs/screenshots/style-lab.png" alt="シーン試色ワークベンチのスクリーンショット"></a>
 </p>
 
 伝統色を 1 つ選び、Web、スライド、表紙、ポスター、ブランドボードの背景、タイトル、本文、ボタン、アクセントでの使い方を確認できます。
 
-### [配色ジェネレーター](https://nevertoday.github.io/zhongguo-traditional-colors/generator.html)
+### [配色ジェネレーター](https://colors.xiaoxiaodong.ai/generator.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/generator.html"><img src="docs/screenshots/generator.png" alt="配色ジェネレーターのスクリーンショット"></a>
+  <a href="https://colors.xiaoxiaodong.ai/generator.html"><img src="docs/screenshots/generator.png" alt="配色ジェネレーターのスクリーンショット"></a>
 </p>
 
 アンカー色や生成方式から 5 色の配色を作成し、固定、差し替え、回転、反転、コピー、お気に入り、書き出しができます。
 
-### [配色インスピレーション](https://nevertoday.github.io/zhongguo-traditional-colors/palettes.html)
+### [配色インスピレーション](https://colors.xiaoxiaodong.ai/palettes.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/palettes.html"><img src="docs/screenshots/palettes.png" alt="配色インスピレーションボードのスクリーンショット"></a>
+  <a href="https://colors.xiaoxiaodong.ai/palettes.html"><img src="docs/screenshots/palettes.png" alt="配色インスピレーションボードのスクリーンショット"></a>
 </p>
 
 同系、隣接、補色、三角、寒暖、明暗、灰調、中性など 8,904 組の配色関係を閲覧し、コピー、保存、ランダム切り替えができます。
 
-### [用途カード](https://nevertoday.github.io/zhongguo-traditional-colors/uses.html)
+### [用途カード](https://colors.xiaoxiaodong.ai/uses.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/uses.html"><img src="docs/screenshots/uses.png" alt="用途カードのスクリーンショット"></a>
+  <a href="https://colors.xiaoxiaodong.ai/uses.html"><img src="docs/screenshots/uses.png" alt="用途カードのスクリーンショット"></a>
 </p>
 
 背景色と文字色の 2 色カードを作り、レイアウトプレビュー、コントラスト確認、2 色目検索、コピー、再生成、保存ができます。
 
-### [ローカルお気に入り](https://nevertoday.github.io/zhongguo-traditional-colors/favorites.html)
+### [ローカルお気に入り](https://colors.xiaoxiaodong.ai/favorites.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/favorites.html"><img src="docs/screenshots/favorites.png" alt="ローカルお気に入りパネルのスクリーンショット"></a>
+  <a href="https://colors.xiaoxiaodong.ai/favorites.html"><img src="docs/screenshots/favorites.png" alt="ローカルお気に入りパネルのスクリーンショット"></a>
 </p>
 
 保存した色カード、配色、用途カード、生成スキーム、シーン試色をまとめて確認し、種類別フィルター、コピー、オープン、削除ができます。
 
-### [Studio Skills](https://nevertoday.github.io/zhongguo-traditional-colors/skills.html)
+### [Studio Skills](https://colors.xiaoxiaodong.ai/skills.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/skills.html"><img src="docs/screenshots/skills.png" alt="Studio Skills のスクリーンショット"></a>
+  <a href="https://colors.xiaoxiaodong.ai/skills.html"><img src="docs/screenshots/skills.png" alt="Studio Skills のスクリーンショット"></a>
 </p>
 
 742 色リストと配色関係を、方向決め、色板作成、レイアウト配置、token、可読性、ブランド、図表、旧稿修正、シリーズ、印刷生産の実務フローに変換します。
@@ -119,7 +119,7 @@
 
 ## 代表色カードプレビュー
 
-README ではページを読みやすく保つため、代表的な 24 枚だけを掲載しています。完全な 742 枚は [オンラインギャラリー](https://nevertoday.github.io/zhongguo-traditional-colors/#gallery)、`images/` ディレクトリ、または Release ZIP から確認・ダウンロードできます。
+README ではページを読みやすく保つため、代表的な 24 枚だけを掲載しています。完全な 742 枚は [オンラインギャラリー](https://colors.xiaoxiaodong.ai/#gallery)、`images/` ディレクトリ、または Release ZIP から確認・ダウンロードできます。
 
 <!-- gallery:start -->
 <p align="center">

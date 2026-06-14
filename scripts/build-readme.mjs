@@ -13,7 +13,7 @@ const featuredColorIds = [
   "677", "695", "705", "720",
   "729", "735", "741", "742",
 ];
-const siteUrl = "https://nevertoday.github.io/zhongguo-traditional-colors/";
+const siteUrl = "https://colors.xiaoxiaodong.ai/";
 const styleLabUrl = `${siteUrl}style-lab.html`;
 const generatorUrl = `${siteUrl}generator.html`;
 const paletteUrl = `${siteUrl}palettes.html`;

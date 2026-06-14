@@ -8,13 +8,13 @@
 
 ## 快速入口
 
-- [在线浏览色卡](https://nevertoday.github.io/zhongguo-traditional-colors/)
-- [场景试色工作台](https://nevertoday.github.io/zhongguo-traditional-colors/style-lab.html)
-- [中国色配色生成](https://nevertoday.github.io/zhongguo-traditional-colors/generator.html)
-- [中国色配色灵感](https://nevertoday.github.io/zhongguo-traditional-colors/palettes.html)
-- [用途卡片](https://nevertoday.github.io/zhongguo-traditional-colors/uses.html)
-- [本机收藏面板](https://nevertoday.github.io/zhongguo-traditional-colors/favorites.html)
-- [中国传统色 Studio Skills](https://nevertoday.github.io/zhongguo-traditional-colors/skills.html)
+- [在线浏览色卡](https://colors.xiaoxiaodong.ai/)
+- [场景试色工作台](https://colors.xiaoxiaodong.ai/style-lab.html)
+- [中国色配色生成](https://colors.xiaoxiaodong.ai/generator.html)
+- [中国色配色灵感](https://colors.xiaoxiaodong.ai/palettes.html)
+- [用途卡片](https://colors.xiaoxiaodong.ai/uses.html)
+- [本机收藏面板](https://colors.xiaoxiaodong.ai/favorites.html)
+- [中国传统色 Studio Skills](https://colors.xiaoxiaodong.ai/skills.html)
 - [直接下载完整 ZIP](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip)
 - [查看 Release](https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0)
 - [原始 742 色清单](docs/chinese-color-master-list.md)
@@ -42,58 +42,58 @@
 
 ## 功能截图导览
 
-### [浏览色卡](https://nevertoday.github.io/zhongguo-traditional-colors/#gallery)
+### [浏览色卡](https://colors.xiaoxiaodong.ai/#gallery)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/#gallery"><img src="docs/screenshots/home-gallery.png" alt="色卡资料库页面截图"></a>
+  <a href="https://colors.xiaoxiaodong.ai/#gallery"><img src="docs/screenshots/home-gallery.png" alt="色卡资料库页面截图"></a>
 </p>
 
 按编号、色名、HEX 或色相快速筛选 742 张色卡；每张卡都能预览细节、复制色值、下载原图和加入收藏。
 
-### [场景试色](https://nevertoday.github.io/zhongguo-traditional-colors/style-lab.html)
+### [场景试色](https://colors.xiaoxiaodong.ai/style-lab.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/style-lab.html"><img src="docs/screenshots/style-lab.png" alt="场景试色工作台页面截图"></a>
+  <a href="https://colors.xiaoxiaodong.ai/style-lab.html"><img src="docs/screenshots/style-lab.png" alt="场景试色工作台页面截图"></a>
 </p>
 
 选择一个传统色后，直接查看它在网页、PPT、封面、海报和品牌板里的背景、标题、正文、按钮和点缀落位。
 
-### [配色生成](https://nevertoday.github.io/zhongguo-traditional-colors/generator.html)
+### [配色生成](https://colors.xiaoxiaodong.ai/generator.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/generator.html"><img src="docs/screenshots/generator.png" alt="配色生成器页面截图"></a>
+  <a href="https://colors.xiaoxiaodong.ai/generator.html"><img src="docs/screenshots/generator.png" alt="配色生成器页面截图"></a>
 </p>
 
 从锚点色或生成方式出发生成五色方案，支持锁定、替换、轮换、反转、复制整组、收藏和导出。
 
-### [配色灵感](https://nevertoday.github.io/zhongguo-traditional-colors/palettes.html)
+### [配色灵感](https://colors.xiaoxiaodong.ai/palettes.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/palettes.html"><img src="docs/screenshots/palettes.png" alt="配色灵感页面截图"></a>
+  <a href="https://colors.xiaoxiaodong.ai/palettes.html"><img src="docs/screenshots/palettes.png" alt="配色灵感页面截图"></a>
 </p>
 
 按同类、邻近、互补、三角、冷暖、明暗、灰调和中性等关系浏览 8,904 组配色，并可复制、收藏、随机换组。
 
-### [用途卡片](https://nevertoday.github.io/zhongguo-traditional-colors/uses.html)
+### [用途卡片](https://colors.xiaoxiaodong.ai/uses.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/uses.html"><img src="docs/screenshots/uses.png" alt="用途卡片页面截图"></a>
+  <a href="https://colors.xiaoxiaodong.ai/uses.html"><img src="docs/screenshots/uses.png" alt="用途卡片页面截图"></a>
 </p>
 
 把传统色组合成背景与文字双色卡片，提供字号/版式预览、对比度判断、搜索第二色、复制、换相近和收藏。
 
-### [收藏](https://nevertoday.github.io/zhongguo-traditional-colors/favorites.html)
+### [收藏](https://colors.xiaoxiaodong.ai/favorites.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/favorites.html"><img src="docs/screenshots/favorites.png" alt="收藏面板页面截图"></a>
+  <a href="https://colors.xiaoxiaodong.ai/favorites.html"><img src="docs/screenshots/favorites.png" alt="收藏面板页面截图"></a>
 </p>
 
 集中查看本机保存的色卡、配色、用途卡片、生成方案和场景试色；支持按类型筛选、复制、打开和移除。
 
-### [Studio Skills](https://nevertoday.github.io/zhongguo-traditional-colors/skills.html)
+### [Studio Skills](https://colors.xiaoxiaodong.ai/skills.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/skills.html"><img src="docs/screenshots/skills.png" alt="Studio Skills 页面截图"></a>
+  <a href="https://colors.xiaoxiaodong.ai/skills.html"><img src="docs/screenshots/skills.png" alt="Studio Skills 页面截图"></a>
 </p>
 
 把 742 色清单和配色关系变成实战工作流：定方向、组色板、放版面、交 token、查可读、定品牌、做图表、修旧稿、做系列和进生产。
@@ -355,7 +355,7 @@
 
 ## 精选色卡预览
 
-README 只展示 24 张代表性色卡，避免页面过长。完整 742 张可以在 [在线色卡资料库](https://nevertoday.github.io/zhongguo-traditional-colors/#gallery)、`images/` 目录或 Release ZIP 中查看和下载。
+README 只展示 24 张代表性色卡，避免页面过长。完整 742 张可以在 [在线色卡资料库](https://colors.xiaoxiaodong.ai/#gallery)、`images/` 目录或 Release ZIP 中查看和下载。
 
 <!-- gallery:start -->
 <p align="center">
