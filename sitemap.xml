@@ -26,6 +26,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://colors.xiaoxiaodong.ai/theme-forge.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://colors.xiaoxiaodong.ai/style-lab.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
