@@ -210,6 +210,8 @@ const STYLE_LAB_SCENES = [
     short: '首页 / 产品页',
     scene: '官网首页、产品页、作品集、工具首屏',
     size: '桌面首屏 / 1440x900',
+    aspect: '16 / 10',
+    frame: 'desktop',
     layout: '顶栏 / 左侧主张 / 右侧视觉 / CTA / 功能卡',
     structure: '先保证首屏层级，行动色只给 CTA 和关键入口。',
     relationKeys: ['neutral', 'lighter', 'darker', 'analogous'],
@@ -225,6 +227,8 @@ const STYLE_LAB_SCENES = [
     short: '标题页 / 课件',
     scene: '汇报封面、课程课件、方案演示、知识卡片',
     size: '16:9 / 1920x1080',
+    aspect: '16 / 9',
+    frame: 'wide',
     layout: '章节号 / 大标题 / 右侧视觉 / 页脚信息',
     structure: '一页只服务一个结论，辅助色承担图形和页脚。',
     relationKeys: ['same', 'neutral', 'grayTone', 'lighter', 'darker'],
@@ -240,6 +244,8 @@ const STYLE_LAB_SCENES = [
     short: '书封 / 课程',
     scene: '书籍封面、课程封面、作品集封面、系列专栏封面',
     size: '竖版封面 / 1080x1440',
+    aspect: '3 / 4',
+    frame: 'cover',
     layout: '系列名 / 主标题 / 副标题 / 作者或期数',
     structure: '标题居中压住识别，点缀色只做系列记忆点。',
     relationKeys: ['analogous', 'grayTone', 'neutral', 'complementary'],
@@ -255,6 +261,8 @@ const STYLE_LAB_SCENES = [
     short: '活动 / 宣传',
     scene: '活动海报、直播预告、展览视觉、公开课宣传',
     size: '移动端海报 / 1080x1920',
+    aspect: '9 / 16',
+    frame: 'poster',
     layout: '日期 / 活动名 / 卖点 / 时间地点 / 报名入口',
     structure: '日期和标题先抢视线，行动色给报名入口。',
     relationKeys: ['complementary', 'splitComplementary', 'temperatureContrast', 'triadic'],
@@ -270,6 +278,8 @@ const STYLE_LAB_SCENES = [
     short: '识别 / 系统',
     scene: '品牌色板、视觉规范、名片、包装起稿',
     size: '品牌板 / 1920x1080',
+    aspect: '16 / 9',
+    frame: 'brand',
     layout: '标志 / 品牌名 / 标语 / 色板 / 应用触点',
     structure: '主色负责识别，辅助色拆给物料、按钮和系统底色。',
     relationKeys: ['neutral', 'grayTone', 'same', 'analogous', 'darker'],
@@ -285,6 +295,8 @@ const STYLE_LAB_SCENES = [
     short: '小红书 / 封面',
     scene: '小红书封面、社媒长图首屏、诗句短卡、公众号配图',
     size: '小红书封面 / 1242x1660',
+    aspect: '621 / 830',
+    frame: 'social',
     layout: '系列标签 / 封面标题 / 一句解释 / 作者或栏目',
     structure: '标题必须能在信息流缩略图里读清楚，背景只承载气质。',
     relationKeys: ['analogous', 'complementary', 'neutral', 'lighter', 'grayTone'],
@@ -299,6 +311,7 @@ const STYLE_LAB_SCENES = [
 let currentStyleLabScheme;
 let currentStyleAnchorImage = styleLabInitialColorImage();
 let currentStyleSceneKey = 'web';
+let currentStyleSceneFilter = 'all';
 let currentStyleIntentKey = 'safe';
 let currentStyleRoleOverrides = {};
 let styleRoleReplacementKey = '';
@@ -329,7 +342,7 @@ function colorTitle(image) {
 }
 
 function colorName(image) {
-  return colorTitle(image).replace(/^\d{3}-/, '');
+  return colorTitle(image).replace(/^\d+-/, '');
 }
 
 function escapeHtml(value) {
@@ -1078,12 +1091,23 @@ function renderStyleAnchor(scheme) {
 }
 
 function styleLabSceneMarkup(scene) {
-  const selected = scene.key === currentStyleSceneKey;
+  const selected = scene.key === currentStyleSceneFilter;
 
   return `
     <button class="style-mode-button" type="button" data-style-scene="${escapeHtml(scene.key)}" aria-pressed="${selected ? 'true' : 'false'}">
       <strong>${escapeHtml(scene.label)}</strong>
       <span>${escapeHtml(scene.short)}</span>
+    </button>
+  `;
+}
+
+function styleLabAllSceneMarkup() {
+  const selected = currentStyleSceneFilter === 'all';
+
+  return `
+    <button class="style-mode-button" type="button" data-style-scene="all" aria-pressed="${selected ? 'true' : 'false'}">
+      <strong>全部</strong>
+      <span>所有用途</span>
     </button>
   `;
 }
@@ -1100,13 +1124,17 @@ function styleLabIntentMarkup(intent) {
 
 function renderStyleLabModes(scheme = currentStyleLabScheme) {
   if (styleSceneList) {
-    styleSceneList.innerHTML = STYLE_LAB_SCENES.map(styleLabSceneMarkup).join('');
+    styleSceneList.innerHTML = [
+      styleLabAllSceneMarkup(),
+      ...STYLE_LAB_SCENES.map(styleLabSceneMarkup),
+    ].join('');
   }
 
   const scene = styleLabScene();
   const intent = styleLabIntent();
   if (styleSceneSummary) {
-    styleSceneSummary.textContent = `${scene.label} · ${intent.label}`;
+    const sceneLabel = currentStyleSceneFilter === 'all' ? '全部用途' : scene.label;
+    styleSceneSummary.textContent = `${sceneLabel} · ${intent.label}`;
   }
 
   if (styleIntentList) {
@@ -1255,6 +1283,7 @@ function styleTemplateMarkup(scene, scheme) {
     `--sample-support: ${roles.support.hex}`,
     `--sample-accent: ${roles.accent.hex}`,
     `--sample-action-text: ${scheme.actionText.hex}`,
+    `--scene-preview-aspect: ${scene.aspect}`,
   ].join('; ');
 
   return `
@@ -1262,6 +1291,7 @@ function styleTemplateMarkup(scene, scheme) {
       <header class="style-template-meta">
         <span>${escapeHtml(scheme.intent.label)}</span>
         <strong>${escapeHtml(scene.label)}场景预览</strong>
+        <small>${escapeHtml(scene.size)}</small>
         <button type="button" data-style-copy="${escapeHtml(scene.key)}" aria-label="复制 ${escapeHtml(scene.label)} 场景配色方案" title="复制 ${escapeHtml(scene.label)} 场景配色方案">
           <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
           <span class="sr-only">复制</span>
@@ -1431,14 +1461,19 @@ function renderStyleLab(statusMessage = '', options = {}) {
     styleReadiness.innerHTML = styleLabReadinessMarkup(scheme);
   }
   renderStyleLabModes(scheme);
-  styleLab.innerHTML = STYLE_LAB_SCENES
+  const visibleScenes = currentStyleSceneFilter === 'all'
+    ? STYLE_LAB_SCENES
+    : STYLE_LAB_SCENES.filter((scene) => scene.key === currentStyleSceneFilter);
+
+  styleLab.innerHTML = visibleScenes
     .map((scene) => {
       const sceneScheme = styleLabSchemeForScene(scene.key);
       return sceneScheme ? styleTemplateMarkup(scene, sceneScheme) : '';
     })
     .join('');
   updateStyleSchemeFavoriteButton(scheme);
-  setStyleLabStatus(statusMessage || `${scheme.anchor.name} · ${scheme.scene.label} · ${scheme.intent.label}`);
+  const sceneStatus = currentStyleSceneFilter === 'all' ? '全部用途' : scheme.scene.label;
+  setStyleLabStatus(statusMessage || `${scheme.anchor.name} · ${sceneStatus} · ${scheme.intent.label}`);
 }
 
 function applyStyleAnchor(image, statusMessage = '') {
@@ -2484,9 +2519,9 @@ function openHeroPreview(id) {
 function cardMarkup(image) {
   const url = encodedPath(image.path);
   const thumbnailUrl = encodedPath(thumbnailPath(image));
-  const title = colorTitle(image);
+  const title = colorName(image);
   const hex = image.hex || '';
-  const displayTitle = hex ? `${title} · ${hex}` : title;
+  const displayTitle = title;
   const copyValue = colorValue(image);
   const favoriteItem = colorFavoriteItem(image);
   const favoriteActive = window.ZH_FAVORITES?.has(favoriteItem.id);
@@ -3017,8 +3052,11 @@ styleSceneList?.addEventListener('click', (event) => {
   const sceneButton = event.target.closest('[data-style-scene]');
   if (!sceneButton) return;
 
-  currentStyleSceneKey = sceneButton.dataset.styleScene;
-  renderStyleLab(`场景：${styleLabScene().label}`);
+  currentStyleSceneFilter = sceneButton.dataset.styleScene;
+  if (currentStyleSceneFilter !== 'all') {
+    currentStyleSceneKey = currentStyleSceneFilter;
+  }
+  renderStyleLab(`用途：${currentStyleSceneFilter === 'all' ? '全部' : styleLabScene().label}`);
 });
 styleIntentList?.addEventListener('click', (event) => {
   const intentButton = event.target.closest('[data-style-intent]');
@@ -3055,6 +3093,7 @@ styleLab?.addEventListener('click', (event) => {
   const sceneCard = event.target.closest('[data-style-template-id]');
   if (sceneCard && sceneCard.dataset.styleTemplateId !== currentStyleSceneKey) {
     currentStyleSceneKey = sceneCard.dataset.styleTemplateId;
+    currentStyleSceneFilter = sceneCard.dataset.styleTemplateId;
     renderStyleLab(`场景：${styleLabScene().label}`);
   }
 });

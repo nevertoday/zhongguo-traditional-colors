@@ -1,6 +1,7 @@
 (() => {
   const pages = [
     { key: 'home', label: '浏览色卡', href: 'index.html#gallery' },
+    { key: 'explorer', label: '中国色浏览器', href: 'explorer.html' },
     { key: 'dictionary', label: '色彩字典', href: 'dictionary.html' },
     { key: 'style-lab', label: '场景试色', href: 'style-lab.html' },
     { key: 'generator', label: '配色生成', href: 'generator.html' },
@@ -50,6 +51,7 @@
 
   function pageKeyFromPath() {
     const path = window.location.pathname.split('/').pop() || 'index.html';
+    if (path === 'explorer.html') return 'explorer';
     if (path === 'dictionary.html') return 'dictionary';
     if (path === 'style-lab.html') return 'style-lab';
     if (path === 'generator.html') return 'generator';

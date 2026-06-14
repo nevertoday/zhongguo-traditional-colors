@@ -96,7 +96,7 @@
   }
 
   function colorName(image) {
-    return colorTitle(image).replace(/^\d{3}-/, '');
+    return colorTitle(image).replace(/^\d+-/, '');
   }
 
   function encodedPath(path) {

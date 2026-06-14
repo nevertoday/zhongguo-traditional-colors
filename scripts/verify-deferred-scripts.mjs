@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const pages = [
   'index.html',
+  'explorer.html',
   'dictionary.html',
   'style-lab.html',
   'generator.html',

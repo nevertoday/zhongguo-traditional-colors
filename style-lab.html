@@ -35,7 +35,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260614-4">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260614-5">
     <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260614-1">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
@@ -58,7 +58,7 @@
 
           <aside class="style-lab-control style-lab-dock" aria-label="底部配色操作栏">
             <div class="style-anchor-panel">
-              <span class="style-lab-label">01 选择中国色</span>
+              <span class="style-lab-label">主色</span>
               <button class="style-anchor-card" type="button" data-style-anchor-button aria-label="切换当前中国色">
                 <span class="style-anchor-swatch" data-style-anchor-swatch aria-hidden="true"></span>
                 <span class="style-anchor-copy">
@@ -86,39 +86,39 @@
                   <option value="cmyk">CMYK</option>
                 </select>
               </label>
-              <div class="style-lab-actions">
-                <button class="button button-primary" type="button" data-style-refresh>
-                  <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
-                  换主色
-                </button>
-                <button class="button button-secondary" type="button" data-style-copy-all>
-                  <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
-                  复制方案
-                </button>
-                <button class="button button-secondary style-scheme-favorite" type="button" data-style-scheme-favorite aria-pressed="false" aria-label="收藏当前试色方案" title="收藏当前试色方案">
-                  <iconify-icon icon="lucide:heart" aria-hidden="true"></iconify-icon>
-                  <span data-style-scheme-favorite-label>收藏方案</span>
-                </button>
-                <button class="button button-secondary" type="button" data-style-copy-css>
-                  <iconify-icon icon="lucide:braces" aria-hidden="true"></iconify-icon>
-                  CSS 变量
-                </button>
-              </div>
             </div>
             <div class="style-lab-mode">
-              <span class="style-lab-label">02 选择使用场景</span>
+              <span class="style-lab-label">使用场景</span>
               <div class="style-mode-grid" data-style-scene-list aria-label="选择使用场景"></div>
               <p class="style-mode-summary" data-style-scene-summary></p>
               <div class="style-intent-grid" data-style-intent-list aria-label="选择方案倾向"></div>
             </div>
             <div class="style-lab-meter-panel">
-              <span class="style-lab-label">03 当前方案</span>
+              <span class="style-lab-label">方案状态</span>
               <div class="style-lab-readiness" data-style-readiness aria-label="当前配色可用性"></div>
               <p class="style-lab-status" data-style-status aria-live="polite"></p>
             </div>
             <div class="style-lab-role-panel">
-              <span class="style-lab-label style-palette-label">04 替换角色色</span>
+              <span class="style-lab-label style-palette-label">角色色</span>
               <div class="style-lab-palette" data-style-palette aria-label="当前样式配色色值"></div>
+            </div>
+            <div class="style-lab-actions" aria-label="方案操作">
+              <button class="button button-primary" type="button" data-style-refresh>
+                <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
+                换主色
+              </button>
+              <button class="button button-secondary" type="button" data-style-copy-all>
+                <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
+                复制方案
+              </button>
+              <button class="button button-secondary style-scheme-favorite" type="button" data-style-scheme-favorite aria-pressed="false" aria-label="收藏当前试色方案" title="收藏当前试色方案">
+                <iconify-icon icon="lucide:heart" aria-hidden="true"></iconify-icon>
+                <span data-style-scheme-favorite-label>收藏方案</span>
+              </button>
+              <button class="button button-secondary" type="button" data-style-copy-css>
+                <iconify-icon icon="lucide:braces" aria-hidden="true"></iconify-icon>
+                CSS 变量
+              </button>
             </div>
           </aside>
         </div>
@@ -175,12 +175,12 @@
       </div>
     </dialog>
 
-    <script src="assets/js/shared-chrome.js?v=20260614-4" defer></script>
+    <script src="assets/js/shared-chrome.js?v=20260614-5" defer></script>
     <script src="assets/js/favorites-store.js?v=20260612-1" defer></script>
     <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
     <script src="assets/js/color-search-suggestions.js?v=20260614-1" defer></script>
     <script src="assets/data/harmony-usage.js?v=20260610-6" defer></script>
-    <script src="assets/js/app.js?v=20260614-4" defer></script>
+    <script src="assets/js/app.js?v=20260614-5" defer></script>
   </body>
 </html>
