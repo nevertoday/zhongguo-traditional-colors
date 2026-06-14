@@ -46,7 +46,6 @@
   align-items: flex-end;
   min-height: 280px;
   padding: 24px;
-  border-radius: 18px;
   background: var(--swatch);
   color: var(--swatch-ink);
   box-shadow: var(--shadow-card);
@@ -99,7 +98,6 @@
 
 .color-chip {
   padding: 5px 12px;
-  border-radius: 999px;
   background: var(--panel-soft);
   border: 1px solid var(--line-soft);
   font-size: 0.82rem;
@@ -144,7 +142,6 @@
   flex-direction: column;
   gap: 4px;
   padding: 16px 18px;
-  border-radius: 14px;
   border: 1px solid var(--line);
   background: var(--panel);
   cursor: pointer;
@@ -224,7 +221,6 @@
   justify-content: flex-end;
   min-height: 96px;
   padding: 12px 14px;
-  border-radius: 14px;
   background: var(--swatch);
   color: var(--swatch-ink);
   text-decoration: none;
@@ -265,7 +261,6 @@
   color: var(--hover-text);
   background: var(--hover-bg);
   border: 1px solid var(--hover-bg);
-  border-radius: 12px;
   box-shadow: var(--shadow-soft);
   font-size: 0.9rem;
   font-weight: 750;

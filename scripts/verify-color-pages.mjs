@@ -111,6 +111,14 @@ for (const page of indexablePages) {
 if (read('index.html').indexOf('"@type":"WebSite"') === -1) fail('index.html: missing WebSite JSON-LD');
 if (!read('favorites.html').includes('content="noindex')) fail('favorites.html: should be noindex');
 
+// Color pages follow the site's sharp-corner design language: no rounded
+// rectangles (50% circles are allowed, matching styles.css).
+const colorCss = read('assets/css/color-page.css');
+const roundedRects = (colorCss.match(/border-radius:\s*[^;]+/gi) || []).filter((rule) => !/:\s*50%/.test(rule));
+if (roundedRects.length) {
+  fail(`color-page.css: rounded corners violate the sharp-corner design (${roundedRects.join('; ')})`);
+}
+
 if (failures.length) {
   console.error('Color page SEO verification failed:\n' + failures.join('\n'));
   process.exitCode = 1;

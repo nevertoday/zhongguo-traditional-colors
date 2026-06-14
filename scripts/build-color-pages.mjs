@@ -30,7 +30,7 @@ const CARDS_DIR = path.join(COLORS_DIR, 'cards');
 const SITEMAP_FILE = path.join(ROOT, 'sitemap.xml');
 
 const SITE = 'https://colors.xiaoxiaodong.ai';
-const ASSET_VERSION = '20260614-seo2';
+const ASSET_VERSION = '20260614-seo3';
 
 // Root-level pages that also belong in the sitemap, with crawl priority hints.
 const MAIN_PAGES = [
