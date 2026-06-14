@@ -591,8 +591,6 @@ h3::before {
 }
 
 .palette-stack {
-  --palette-radius: 0px;
-  --palette-inner-radius: 0px;
   container-type: inline-size;
   position: relative;
   display: grid;
@@ -602,15 +600,12 @@ h3::before {
   overflow: hidden;
   background: var(--panel);
   border: 1px solid color-mix(in srgb, var(--line) 46%, transparent);
-  border-radius: var(--palette-radius);
   box-shadow: none;
-  transition: border-color 220ms ease, border-radius 320ms var(--ease-out-expo), transform 220ms var(--ease-out-quart), box-shadow 200ms ease;
+  transition: border-color 220ms ease, transform 220ms var(--ease-out-quart), box-shadow 200ms ease;
 }
 
 .palette-card:hover .palette-stack,
 .palette-card:focus-within .palette-stack {
-  --palette-radius: 8px;
-  --palette-inner-radius: 7px;
   border-color: color-mix(in srgb, var(--line) 72%, transparent);
   box-shadow: var(--shadow-soft);
   transform: translateY(-2px);
@@ -629,25 +624,6 @@ h3::before {
   border: 0;
   cursor: pointer;
   text-align: left;
-  transition: border-radius 260ms var(--ease-out-expo);
-}
-
-.palette-swatch:first-child {
-  border-radius: var(--palette-inner-radius) var(--palette-inner-radius) 0 0;
-}
-
-.palette-swatch:has(+ .palette-color-list) {
-  border-radius: 0 0 var(--palette-inner-radius) var(--palette-inner-radius);
-}
-
-.palette-card:hover .palette-swatch:first-child,
-.palette-card:focus-within .palette-swatch:first-child {
-  border-radius: 7px 7px 0 0;
-}
-
-.palette-card:hover .palette-swatch:has(+ .palette-color-list),
-.palette-card:focus-within .palette-swatch:has(+ .palette-color-list) {
-  border-radius: 0 0 7px 7px;
 }
 
 .palette-color-list {
@@ -656,10 +632,9 @@ h3::before {
   display: grid;
   grid-template-rows: var(--stack-0, 41fr) var(--stack-1, 26fr) var(--stack-2, 18fr) var(--stack-3, 15fr);
   overflow: hidden;
-  border-radius: var(--palette-inner-radius);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 220ms ease, border-radius 260ms var(--ease-out-expo);
+  transition: opacity 220ms ease;
 }
 
 .palette-color-label {
@@ -701,7 +676,6 @@ h3::before {
 
 .palette-card:hover .palette-color-list,
 .palette-card:focus-within .palette-color-list {
-  border-radius: 7px;
   opacity: 1;
 }
 

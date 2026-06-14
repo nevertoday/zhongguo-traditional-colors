@@ -7,6 +7,10 @@ const html = readFileSync('style-lab.html', 'utf8');
 const requiredAppSnippets = [
   "size: '桌面首屏 / 1440x900'",
   "layout: '顶栏 / 左侧主张 / 右侧视觉 / CTA / 功能卡'",
+  'function styleLabSchemeForScene',
+  'STYLE_LAB_SCENES',
+  'styleTemplateMarkup(scene, sceneScheme)',
+  'data-active="${selected ? \'true\' : \'false\'}"',
   'style-sample-web-hero',
   'style-sample-slide-layout',
   'style-sample-poster-info',
@@ -19,6 +23,12 @@ const requiredCssSnippets = [
   '--scene-preview-aspect: 16 / 9',
   '--scene-preview-aspect: 3 / 4',
   '--scene-preview-aspect: 9 / 16',
+  'position: fixed;',
+  'bottom: 12px;',
+  'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
+  '.style-lab-meter-panel',
+  '.style-lab-role-panel',
+  '.style-template-card--scene[data-active="true"]',
   '.style-sample-web-hero',
   '.style-sample-slide-layout',
   '.style-sample-brand-board',
@@ -27,8 +37,10 @@ const requiredCssSnippets = [
 ];
 
 const requiredHtmlPatterns = [
-  /<h1 id="style-lab-title">选中国色，看场景效果<\/h1>/,
-  /选一个主色，切换网页、PPT、封面、海报和品牌预览。/,
+  /class="style-lab-control style-lab-dock"/,
+  /class="style-lab-meter-panel"/,
+  /class="style-lab-role-panel"/,
+  /<div class="style-template-grid" data-style-lab aria-label="传统色配色应用实验预览"><\/div>\s*<aside class="style-lab-control style-lab-dock"/,
   /assets\/css\/styles\.css\?v=\d{8}-\d+/,
   /assets\/js\/app\.js\?v=\d{8}-\d+/,
 ];

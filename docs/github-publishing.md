@@ -50,6 +50,31 @@ Folder: /root
 
 保存后，GitHub 会提供一个 Pages 地址。页面入口就是仓库根目录下的 `index.html`。
 
+如果使用自定义域名：
+
+```text
+Custom domain: colors.xiaoxiaodong.ai
+Enforce HTTPS: enabled
+```
+
+仓库根目录保留 `CNAME` 文件，内容为：
+
+```text
+colors.xiaoxiaodong.ai
+```
+
+Cloudflare DNS 中为 `xiaoxiaodong.ai` 添加一条记录：
+
+```text
+Type: CNAME
+Name: colors
+Target: nevertoday.github.io
+Proxy status: DNS only
+TTL: Auto
+```
+
+先用 `DNS only` 等 GitHub Pages 签发证书并显示可用，再按需评估是否开启 Cloudflare 代理。
+
 ## 4. 发布完整图片下载包
 
 本地生成 ZIP：
@@ -94,7 +119,7 @@ npm run start
 确认页面正常后提交：
 
 ```bash
-git add images assets/data/images.js README.md
+git add images assets/data/images.js README.md README.en.md README.zh-CN.md README.ja.md
 git commit -m "Add more traditional color cards"
 git push
 ```

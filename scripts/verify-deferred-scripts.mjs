@@ -9,6 +9,7 @@ const pages = [
   'style-lab.html',
   'generator.html',
   'palettes.html',
+  'gradients.html',
   'uses.html',
   'favorites.html',
   'skills.html',

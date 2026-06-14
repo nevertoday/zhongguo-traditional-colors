@@ -954,6 +954,17 @@ function applyStyleLabRoleOverrides(scheme) {
   };
 }
 
+function styleLabSchemeForScene(sceneKey = currentStyleSceneKey) {
+  let scheme = createStyleLabScheme(currentStyleAnchorImage, sceneKey, currentStyleIntentKey);
+  if (!scheme) return null;
+
+  if (Object.keys(currentStyleRoleOverrides).length) {
+    scheme = applyStyleLabRoleOverrides(scheme);
+  }
+
+  return scheme;
+}
+
 function styleSceneCopyText(scene, scheme) {
   return [
     `场景：${scene.label}（${scene.scene}）`,
@@ -1236,6 +1247,7 @@ function styleTemplateMarkup(scene, scheme) {
   const roles = scheme.roles;
   const favoriteId = styleFavoriteId(scene, scheme);
   const favoriteActive = window.ZH_FAVORITES?.has(favoriteId);
+  const selected = scene.key === currentStyleSceneKey;
   const customProperties = [
     `--sample-bg: ${roles.background.hex}`,
     `--sample-title: ${roles.title.hex}`,
@@ -1246,7 +1258,7 @@ function styleTemplateMarkup(scene, scheme) {
   ].join('; ');
 
   return `
-    <article class="style-template-card style-template-card--scene style-template-card--${escapeHtml(scene.key)}" data-style-template-id="${escapeHtml(scene.key)}" style="${escapeHtml(customProperties)}">
+    <article class="style-template-card style-template-card--scene style-template-card--${escapeHtml(scene.key)}" data-style-template-id="${escapeHtml(scene.key)}" data-active="${selected ? 'true' : 'false'}" aria-current="${selected ? 'true' : 'false'}" style="${escapeHtml(customProperties)}">
       <header class="style-template-meta">
         <span>${escapeHtml(scheme.intent.label)}</span>
         <strong>${escapeHtml(scene.label)}场景预览</strong>
@@ -1299,6 +1311,12 @@ function styleFavoriteId(scene, scheme = currentStyleLabScheme) {
 }
 
 function styleFavoriteItem(scene, scheme = currentStyleLabScheme) {
+  if (!scene) return null;
+  if (!scheme || scheme.scene?.key !== scene.key) {
+    scheme = styleLabSchemeForScene(scene.key);
+  }
+  if (!scheme) return null;
+
   const colors = STYLE_LAB_ROLES.map((role) => scheme.roles[role.key]).filter(Boolean);
   return {
     id: styleFavoriteId(scene, scheme),
@@ -1395,15 +1413,12 @@ function renderStyleLab(statusMessage = '', options = {}) {
     currentStyleAnchorImage = randomColorItems(1)[0] || images.find((image) => image.hex);
   }
 
-  let scheme = createStyleLabScheme(currentStyleAnchorImage, currentStyleSceneKey, currentStyleIntentKey);
+  const scheme = styleLabSchemeForScene(currentStyleSceneKey);
   if (!scheme) {
     styleLab.innerHTML = '<div class="empty-state"><strong>配色应用暂时无法生成</strong><span>没有读取到可用色值。</span></div>';
     return;
   }
 
-  if (Object.keys(currentStyleRoleOverrides).length) {
-    scheme = applyStyleLabRoleOverrides(scheme);
-  }
   currentStyleLabScheme = scheme;
   currentStyleAnchorImage = scheme.anchorImage;
   renderStyleAnchor(scheme);
@@ -1416,7 +1431,12 @@ function renderStyleLab(statusMessage = '', options = {}) {
     styleReadiness.innerHTML = styleLabReadinessMarkup(scheme);
   }
   renderStyleLabModes(scheme);
-  styleLab.innerHTML = styleTemplateMarkup(scheme.scene, scheme);
+  styleLab.innerHTML = STYLE_LAB_SCENES
+    .map((scene) => {
+      const sceneScheme = styleLabSchemeForScene(scene.key);
+      return sceneScheme ? styleTemplateMarkup(scene, sceneScheme) : '';
+    })
+    .join('');
   updateStyleSchemeFavoriteButton(scheme);
   setStyleLabStatus(statusMessage || `${scheme.anchor.name} · ${scheme.scene.label} · ${scheme.intent.label}`);
 }
@@ -1670,9 +1690,10 @@ function applyStyleColorChoice(id, closeDialog = true) {
 
 async function copyStyleTemplate(sceneKey) {
   const scene = STYLE_LAB_SCENES.find((item) => item.key === sceneKey) || currentStyleLabScheme?.scene;
-  if (!scene || !currentStyleLabScheme) return;
+  const scheme = styleLabSchemeForScene(scene?.key) || currentStyleLabScheme;
+  if (!scene || !scheme) return;
 
-  await writeClipboard(styleSceneCopyText(scene, currentStyleLabScheme));
+  await writeClipboard(styleSceneCopyText(scene, scheme));
   setStyleLabStatus(`已复制：${scene.label}方案`);
   return scene;
 }
@@ -3023,9 +3044,18 @@ styleLab?.addEventListener('click', (event) => {
   if (favoriteButton) {
     const scene = STYLE_LAB_SCENES.find((item) => item.key === favoriteButton.dataset.styleFavorite);
     if (!scene || !currentStyleLabScheme || !window.ZH_FAVORITES) return;
-    const result = window.ZH_FAVORITES.toggle(styleFavoriteItem(scene));
+    const item = styleFavoriteItem(scene);
+    if (!item) return;
+    const result = window.ZH_FAVORITES.toggle(item);
     setStyleTemplateFavoriteState(favoriteButton, result.active, scene);
     setStyleLabStatus(result.active ? `已收藏：${scene.label}场景` : `已取消收藏：${scene.label}场景`);
+    return;
+  }
+
+  const sceneCard = event.target.closest('[data-style-template-id]');
+  if (sceneCard && sceneCard.dataset.styleTemplateId !== currentStyleSceneKey) {
+    currentStyleSceneKey = sceneCard.dataset.styleTemplateId;
+    renderStyleLab(`场景：${styleLabScene().label}`);
   }
 });
 

@@ -1,10 +1,10 @@
 # Chinese Traditional Colors
 
-[简体中文](README.md) | English | [日本語](README.ja.md)
+[简体中文](README.zh-CN.md) | English | [日本語](README.ja.md)
 
-This repository is a practical Chinese color workbench for designers, educators, writers, front-end developers, and anyone who needs reliable colors that can move from reference to real layouts.
+If you design interfaces, write visual content, build course material, or put together a cultural website, you often need Chinese colors that look good and can survive a real layout. This repository was organized for that moment.
 
-It contains 742 high-resolution Chinese traditional color cards, aligned with the original 742-color list. Each card preserves the color name, HEX, RGB, CMYK, palette guidance, and mood keywords. The site now goes beyond an archive: you can browse cards, test colors in real layout scenes, generate palettes, explore harmony relationships, build usage cards, and save favorite colors or full schemes locally.
+It collects 742 high-resolution Chinese traditional color cards, mapped one by one to the original 742-color list. Each card keeps the color name, HEX, RGB, CMYK, palette notes, and mood keywords. The website is more than an image archive: you can search colors, test them in real scenes, generate palettes, browse harmony relationships, inspect gradient logic, build background/text usage cards, and save the colors or schemes you want to keep.
 
 ## Quick Links
 
@@ -12,6 +12,7 @@ It contains 742 high-resolution Chinese traditional color cards, aligned with th
 - [Open the scene testing workbench](https://colors.xiaoxiaodong.ai/style-lab.html)
 - [Open the palette generator](https://colors.xiaoxiaodong.ai/generator.html)
 - [Open the Chinese color palette board](https://colors.xiaoxiaodong.ai/palettes.html)
+- [Open gradient logic cards](https://colors.xiaoxiaodong.ai/gradients.html)
 - [Open usage cards](https://colors.xiaoxiaodong.ai/uses.html)
 - [Open local favorites](https://colors.xiaoxiaodong.ai/favorites.html)
 - [Open Studio Skills](https://colors.xiaoxiaodong.ai/skills.html)
@@ -23,20 +24,21 @@ It contains 742 high-resolution Chinese traditional color cards, aligned with th
 - [Practical Chinese color skills](#practical-chinese-color-skills)
 - [Author on X](https://x.com/xiaoxiaodong01)
 
-## What This Project Gives You
+## What You Can Do With It
 
-| Need | Provided here |
+| If you need to | You can use |
 | --- | --- |
-| A fast Chinese color reference | 742 high-resolution PNG color cards |
-| Visual material for design and content | Preview, copy, download, and favorite individual cards |
-| A local color asset library | Filenames aligned with the 742-color source list |
-| Web, slide, cover, poster, and brand scenes | Scene testing maps an anchor color into background, title, body, button, and accent roles |
-| Fast usable palette generation | The generator supports locking, replacing, rotating, copying, exporting, and favoriting complete schemes |
-| Harmony exploration | Browse 8,904 palettes across same, analogous, complementary, triadic, temperature, light/dark, gray-tone, and neutral relationships |
-| Background/text usage cards | Usage cards check contrast and support copying, remixing, and favoriting two-color schemes |
-| Keeping useful choices | The favorites panel collects cards, palettes, usage cards, generated schemes, and scene tests |
-| Color name and value checking | Centralized names, HEX, RGB, and CMYK references |
-| Turning colors into real project decisions | 10 agent skills for practical design workflows |
+| Find a Chinese color reference fast | 742 high-resolution PNG color cards |
+| Make visuals for design or content | Preview, copy, download, and favorite individual cards |
+| Build a local color library | Filenames matched to the 742-color source list |
+| Try colors in websites, slides, covers, posters, or brand boards | Scene testing maps one anchor color into background, title, body, button, and accent roles |
+| Produce a usable palette quickly | The generator lets you lock, replace, rotate, copy, export, and favorite full schemes |
+| Look for harmony and inspiration | Browse 8,904 palettes across same-color, analogous, complementary, triadic, warm/cool, light/dark, gray-tone, and neutral relationships |
+| Understand one color as a gradient system | Each traditional color becomes light, anchor, nearby, deep, two-tone, and gradient-path cards |
+| Test background/text/button use | Usage cards check contrast and support copy, remix, nearby-color replacement, and favorites |
+| Keep the combinations that work | Favorites collect color cards, palettes, usage cards, generated schemes, and scene tests |
+| Check names and values | Centralized color names, HEX, RGB, and CMYK references |
+| Use traditional colors in a real project | 10 agent skills for practical design workflows |
 
 The original image set is about 998 MB. The ZIP is distributed as a GitHub Release asset instead of being committed to the repository.
 
@@ -100,9 +102,9 @@ Turn the 742-color list and harmony data into practical workflows for briefs, pa
 
 ## Practical Chinese Color Skills
 
-These skills turn the 742-color list and harmony CSV into practical design workflows. Each skill targets a distinct design blocker: fuzzy direction, too many palette choices, unclear placement, token handoff, readability, brand drift, chart encoding, legacy palette repair, content-series fatigue, and print uncertainty.
+These skills are not another explanation of color theory. They turn the 742-color list and harmony CSV into workflows a designer or builder can use right away. Each skill answers a real blocker: vague art direction, too many palette options, unclear layout placement, token handoff, readability checks, brand governance, chart encoding, legacy color cleanup, long-running content series, and print production.
 
-Every `xxd-*` skill folder bundles the full `references/chinese-color-master-list.md`, `references/chinese-color-harmony.md`, and `references/chinese-color-harmony.csv`, so a single skill can still access the complete 742-color list and per-color harmony relationships on its own.
+Every `xxd-*` skill folder bundles the full `references/chinese-color-master-list.md`, `references/chinese-color-harmony.md`, and `references/chinese-color-harmony.csv`. You can take one skill into another project and still have the complete 742-color list plus every color's harmony relationships.
 
 | Skill | Use it for |
 | --- | --- |
@@ -116,6 +118,10 @@ Every `xxd-*` skill folder bundles the full `references/chinese-color-master-lis
 | [`xxd-existing-design-audit`](skills/xxd-existing-design-audit/SKILL.md) | Inventory legacy screenshots, CSS, Figma styles, or HEX lists and decide what to keep, merge, replace, or remove |
 | [`xxd-content-series`](skills/xxd-content-series/SKILL.md) | Build fixed, variable, template, and rotation layers for social, editorial, course, and video series |
 | [`xxd-print-packaging`](skills/xxd-print-packaging/SKILL.md) | Plan packaging, books, cultural goods, labels, and physical materials with CMYK, substrate, and proofing risks |
+
+### How to choose a skill
+
+If the direction is still vague, start with `xxd-color-brief`. If you already have a main color or a shortlist, use `xxd-palette-builder` to narrow it into a role-based palette, then use `xxd-palette-applier` to place it in a real layout. When the colors need to move into development, a team system, or production, continue with `xxd-ui-token`, `xxd-brand-system`, `xxd-data-viz`, or `xxd-print-packaging`. If you are dealing with old screenshots, CSS, or scattered HEX values, start with `xxd-existing-design-audit`. For long-running content series, start with `xxd-content-series`.
 
 ## Featured Color Preview
 
