@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="选一个中国传统色作锚色，自动点名出一整套终端配色：16 色 ANSI + 背景/前景/光标/选区，正本清源每色皆有名有姓，过 WCAG 对比度，实时假终端预览，一键复制 Ghostty / Alacritty / kitty 配置。">
+    <meta name="theme-color" content="#f7f7f4" data-theme-color>
+    <title>终端配色 - 中国传统配色</title>
+    <link rel="canonical" href="https://colors.xiaoxiaodong.ai/terminal.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="中国传统配色">
+    <meta property="og:title" content="终端配色 - 中国传统配色">
+    <meta property="og:description" content="一个中国传统色 → 一整套终端调色板（16 ANSI + UI），Ghostty / Alacritty / kitty 一键复制，每色皆有名有姓。">
+    <meta property="og:url" content="https://colors.xiaoxiaodong.ai/terminal.html">
+    <meta property="og:image" content="https://colors.xiaoxiaodong.ai/docs/screenshots/home-gallery.png">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@xiaoxiaodong01">
+    <meta name="twitter:title" content="终端配色 - 中国传统配色">
+    <meta name="twitter:description" content="一个中国传统色 → 一整套终端调色板（16 ANSI + UI），Ghostty / Alacritty / kitty 一键复制，每色皆有名有姓。">
+    <meta name="twitter:image" content="https://colors.xiaoxiaodong.ai/docs/screenshots/home-gallery.png">
+    <link rel="icon" href="favicon.svg?v=20260611-1" type="image/svg+xml">
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('theme');
+          if (theme === 'dark' || theme === 'light') {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch (error) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260614-4">
+    <link rel="stylesheet" href="assets/css/terminal.css?v=20260614-1">
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
+    <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
+  </head>
+  <body data-current-page="terminal">
+    <a class="skip-link" href="#terminal">跳到终端配色生成器</a>
+
+    <div data-shared-header></div>
+
+    <main class="terminal-page">
+      <section aria-labelledby="terminal-title">
+        <div class="style-lab-intro">
+          <h1 class="sr-only" id="terminal-title">终端配色</h1>
+          <span class="section-kicker">终端配色</span>
+          <p>选一个中国传统色作锚色，点名出一整套终端调色板（16 ANSI + 背景/前景/光标/选区），假终端实时预览，一键复制 <code>Ghostty / Alacritty / kitty</code> 配置。</p>
+        </div>
+
+      <!-- ── 终端配色工作台（作用域 .term-root） ── -->
+      <div class="term-root" id="terminal">
+        <header class="bar">
+          <span class="brand"><span class="cn">敷色</span><span class="en">Terminal</span></span>
+          <span class="tag">正本清源 · 每色有名</span>
+          <span class="sp"></span>
+          <div class="quick" data-quick></div>
+          <label class="tm-search">
+            <svg width="13" height="13"><use href="#tm-i-search"/></svg>
+            <input type="search" name="anchor-search" data-search list="tm-names" placeholder="色名 / 编号 / HEX" aria-label="搜索锚色">
+            <datalist id="tm-names"></datalist>
+          </label>
+          <button class="ghost" data-random>随机</button>
+          <div class="seg" role="group" aria-label="预览模式">
+            <button data-mode="dark" aria-pressed="true">夜间</button>
+            <button data-mode="light" aria-pressed="false">日间</button>
+          </div>
+        </header>
+
+        <div class="work">
+          <div class="stage">
+            <!-- 假终端装置 -->
+            <div class="term" data-term>
+              <div class="term-chrome">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span class="ttl" data-term-title>guanxing@studio — zsh</span>
+                <span class="tabs" role="tablist">
+                  <button role="tab" data-tab="session" aria-selected="true">会话</button>
+                  <button role="tab" data-tab="code" aria-selected="false">代码</button>
+                  <button role="tab" data-tab="markdown" aria-selected="false">Markdown</button>
+                </span>
+              </div>
+              <div class="term-body" data-term-body>
+                <pre class="pane" data-pane="session"></pre>
+                <pre class="pane code" data-pane="code" hidden></pre>
+                <div class="pane md" data-pane="markdown" hidden></div>
+              </div>
+            </div>
+            <!-- 16 色板带 -->
+            <div class="strip" data-strip aria-label="16 色 ANSI 板带"></div>
+          </div>
+
+          <aside class="spec" aria-label="生成的调色板与导出">
+            <div class="anchor">
+              <span class="sw" data-anchor-swatch></span>
+              <div class="meta">
+                <div class="k">锚色 ANCHOR · <span data-anchor-slot>—</span></div>
+                <div class="nm" data-anchor-name>—</div>
+                <div class="hex"><span data-anchor-id>NO.—</span> · <span data-anchor-hex>#—</span></div>
+                <div class="ok" data-anchor-oklch>oklch()</div>
+              </div>
+            </div>
+            <div class="scroll">
+              <div class="sec-h"><b>调色板标本 / Palette</b><span class="ln"></span></div>
+              <div data-specimen></div>
+            </div>
+            <div class="export">
+              <div class="exp-tabs" role="tablist" data-fmt-tabs></div>
+              <div class="hd"><b data-fmt-name>—</b><span class="stat" data-stat></span></div>
+              <pre data-css></pre>
+              <div class="exp-act">
+                <button class="copy" data-copy><svg width="14" height="14"><use href="#tm-i-copy"/></svg><span data-copy-label>复制配置</span></button>
+                <button class="dl" data-download aria-label="下载配置文件"><svg width="14" height="14"><use href="#tm-i-download"/></svg></button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+      </section>
+    </main>
+
+    <div data-shared-footer></div>
+
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+      <symbol id="tm-i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+      <symbol id="tm-i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11"/><path d="M5 15H4V4h11v1"/></symbol>
+      <symbol id="tm-i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/></symbol>
+    </defs></svg>
+
+    <script src="assets/js/shared-chrome.js?v=20260614-6" defer></script>
+    <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
+    <script src="assets/data/preview-syntax.js?v=20260614-1" defer></script>
+    <script src="assets/js/color-core.js?v=20260614-1" defer></script>
+    <script src="assets/js/terminal-tokens.js?v=20260614-1" defer></script>
+    <script src="assets/js/terminal-serialize.js?v=20260614-1" defer></script>
+    <script src="assets/js/terminal.js?v=20260614-1" defer></script>
+  </body>
+</html>
