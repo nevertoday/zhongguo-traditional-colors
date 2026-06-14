@@ -353,33 +353,22 @@
   opacity: 0.56;
 }
 
-.generator-role {
-  position: absolute;
-  right: 18px;
-  bottom: 78px;
-  left: 18px;
-  display: flex;
-  justify-content: flex-start;
-  color: currentColor;
-  font-size: 0.78rem;
-  font-weight: 850;
-  opacity: 0.56;
-}
-
 .generator-color-tools {
   position: absolute;
   top: 18px;
   right: 18px;
-  display: flex;
+  display: none;
   gap: 6px;
-  opacity: 0.72;
-  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-4px);
   transition: opacity 180ms ease, transform 220ms var(--ease-out-expo), background 160ms ease;
 }
 
 .generator-color:hover .generator-color-tools,
-.generator-color:focus-within .generator-color-tools {
-  opacity: 1;
+.generator-color:focus-within .generator-color-tools,
+.generator-color[data-tools-visible="true"] .generator-color-tools {
+  display: flex;
   transform: translateY(-1px);
 }
 
@@ -710,7 +699,6 @@
   .generator-color-tools {
     right: auto;
     left: 18px;
-    opacity: 1;
     transform: none;
   }
 
@@ -718,12 +706,6 @@
     right: 18px;
     left: auto;
     transform: none;
-  }
-
-  .generator-role {
-    bottom: 24px;
-    left: auto;
-    justify-content: flex-end;
   }
 
   .generator-suggestions {
@@ -809,5 +791,19 @@
   .generator-search-effect {
     width: 38px;
     height: 38px;
+  }
+}
+
+.generator-color:hover .generator-color-tools,
+.generator-color:focus-within .generator-color-tools,
+.generator-color[data-tools-visible="true"] .generator-color-tools {
+  display: flex;
+  transform: translateY(-1px);
+}
+
+@media (hover: none) {
+  .generator-color-tools {
+    display: flex;
+    transform: none;
   }
 }

@@ -15,7 +15,7 @@
   const exportDialog = document.querySelector('[data-export-dialog]');
   const methodButtons = [...document.querySelectorAll('[data-method]')];
   const recommendTabs = [...document.querySelectorAll('[data-recommend-tab]')];
-  const roles = ['主色', '辅助', '过渡', '沉稳', '文字'];
+  const paletteSize = 5;
   const methodLabels = {
     auto: '自动',
     analogous: '近似',
@@ -176,9 +176,12 @@
             <button type="button" style="background:${suggestion.cleanHex}" data-suggest-color="${suggestion.id}" data-suggest-index="${index}" aria-label="替换为 ${escapeHtml(suggestion.name)}"></button>
           `).join('')}
         </div>
-        <span class="generator-role">${roles[index]}</span>
       </article>
     `;
+  }
+
+  function paletteLabel(index) {
+    return `色 ${String(index + 1).padStart(2, '0')}`;
   }
 
   function generate(anchorId = anchorFromSearch()) {
@@ -212,7 +215,7 @@
       .filter((id) => !lockedIds.has(id));
     let cursor = 0;
 
-    return roles.map((_, index) => {
+    return Array.from({ length: paletteSize }, (_, index) => {
       if (lockedState[index] && previous[index]) return previous[index];
       const id = sequence[cursor] || randomColor().id;
       cursor += 1;
@@ -232,7 +235,7 @@
     const selected = new Set();
     let cursor = 0;
 
-    return roles.map(() => {
+    return Array.from({ length: paletteSize }, () => {
       while (cursor < sequence.length && selected.has(sequence[cursor])) cursor += 1;
       const id = sequence[cursor] || randomColorNotIn(new Set([...excludedIds, ...selected])).id;
       selected.add(id);
@@ -400,7 +403,7 @@
         <div class="generator-view-row">
           <span class="generator-view-swatch" style="background:${color.cleanHex}"></span>
           <span>
-            <strong>${roles[index]} · ${escapeHtml(color.name)}</strong>
+            <strong>${paletteLabel(index)} · ${escapeHtml(color.name)}</strong>
             <span>${color.id} / ${color.cleanHex} / RGB ${rgb.r}, ${rgb.g}, ${rgb.b} / HSL ${hsl.h}, ${hsl.s}, ${hsl.l}</span>
           </span>
         </div>
@@ -479,7 +482,8 @@
     }
     if (kind === 'json') {
       return JSON.stringify(palette.map((color, index) => ({
-        role: roles[index],
+        order: index + 1,
+        label: paletteLabel(index),
         id: color.id,
         name: color.name,
         hex: color.cleanHex,
@@ -488,7 +492,7 @@
     if (kind === 'url') {
       return `${location.origin}${location.pathname}?colors=${hexes.map((hex) => hex.replace('#', '')).join('-')}&method=${method}`;
     }
-    return palette.map((color, index) => `${roles[index]}：${color.name} ${color.cleanHex}`).join('\n');
+    return palette.map((color, index) => `${paletteLabel(index)}：${color.name} ${color.cleanHex}`).join('\n');
   }
 
   function paletteFromUrl() {
@@ -502,7 +506,7 @@
     const rawColors = (params.get('colors') || '').split('-').map((item) => normalizeHex(item)).filter(Boolean);
     const matched = rawColors.map((hex) => colorByHex.get(hex)).filter(Boolean);
     if (!matched.length) return null;
-    return roles.map((_, index) => matched[index] || buildPalette(matched[0].id, method)[index]);
+    return Array.from({ length: paletteSize }, (_, index) => matched[index] || buildPalette(matched[0].id, method)[index]);
   }
 
   function updateUrl() {
