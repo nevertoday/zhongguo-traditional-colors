@@ -8,13 +8,13 @@ It contains 742 high-resolution Chinese traditional color cards, aligned with th
 
 ## Quick Links
 
-- [Browse the online gallery](https://nevertoday.github.io/zhongguo-traditional-colors/)
-- [Open the scene testing workbench](https://nevertoday.github.io/zhongguo-traditional-colors/style-lab.html)
-- [Open the palette generator](https://nevertoday.github.io/zhongguo-traditional-colors/generator.html)
-- [Open the Chinese color palette board](https://nevertoday.github.io/zhongguo-traditional-colors/palettes.html)
-- [Open usage cards](https://nevertoday.github.io/zhongguo-traditional-colors/uses.html)
-- [Open local favorites](https://nevertoday.github.io/zhongguo-traditional-colors/favorites.html)
-- [Open Studio Skills](https://nevertoday.github.io/zhongguo-traditional-colors/skills.html)
+- [Browse the online gallery](https://colors.xiaoxiaodong.ai/)
+- [Open the scene testing workbench](https://colors.xiaoxiaodong.ai/style-lab.html)
+- [Open the palette generator](https://colors.xiaoxiaodong.ai/generator.html)
+- [Open the Chinese color palette board](https://colors.xiaoxiaodong.ai/palettes.html)
+- [Open usage cards](https://colors.xiaoxiaodong.ai/uses.html)
+- [Open local favorites](https://colors.xiaoxiaodong.ai/favorites.html)
+- [Open Studio Skills](https://colors.xiaoxiaodong.ai/skills.html)
 - [Download the complete ZIP](https://github.com/nevertoday/zhongguo-traditional-colors/releases/latest/download/zhongguo-traditional-colors-images.zip)
 - [View the Release](https://github.com/nevertoday/zhongguo-traditional-colors/releases/tag/v0.1.0)
 - [Original 742-color list](docs/chinese-color-master-list.md)
@@ -42,58 +42,58 @@ The original image set is about 998 MB. The ZIP is distributed as a GitHub Relea
 
 ## Feature Screenshots
 
-### [Browse Color Cards](https://nevertoday.github.io/zhongguo-traditional-colors/#gallery)
+### [Browse Color Cards](https://colors.xiaoxiaodong.ai/#gallery)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/#gallery"><img src="docs/screenshots/home-gallery.png" alt="Screenshot of the color-card gallery"></a>
+  <a href="https://colors.xiaoxiaodong.ai/#gallery"><img src="docs/screenshots/home-gallery.png" alt="Screenshot of the color-card gallery"></a>
 </p>
 
 Search all 742 cards by number, name, HEX, or hue. Each card supports previewing details, copying values, downloading the original PNG, and saving it locally.
 
-### [Scene Testing](https://nevertoday.github.io/zhongguo-traditional-colors/style-lab.html)
+### [Scene Testing](https://colors.xiaoxiaodong.ai/style-lab.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/style-lab.html"><img src="docs/screenshots/style-lab.png" alt="Screenshot of the scene testing workbench"></a>
+  <a href="https://colors.xiaoxiaodong.ai/style-lab.html"><img src="docs/screenshots/style-lab.png" alt="Screenshot of the scene testing workbench"></a>
 </p>
 
 Pick one traditional color and see how it works across web, slide, cover, poster, and brand-board scenes as background, title, body, button, and accent roles.
 
-### [Palette Generator](https://nevertoday.github.io/zhongguo-traditional-colors/generator.html)
+### [Palette Generator](https://colors.xiaoxiaodong.ai/generator.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/generator.html"><img src="docs/screenshots/generator.png" alt="Screenshot of the palette generator"></a>
+  <a href="https://colors.xiaoxiaodong.ai/generator.html"><img src="docs/screenshots/generator.png" alt="Screenshot of the palette generator"></a>
 </p>
 
 Generate five-color schemes from an anchor color or generation mode, then lock, replace, rotate, reverse, copy, favorite, or export the full set.
 
-### [Palette Inspiration](https://nevertoday.github.io/zhongguo-traditional-colors/palettes.html)
+### [Palette Inspiration](https://colors.xiaoxiaodong.ai/palettes.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/palettes.html"><img src="docs/screenshots/palettes.png" alt="Screenshot of the palette inspiration board"></a>
+  <a href="https://colors.xiaoxiaodong.ai/palettes.html"><img src="docs/screenshots/palettes.png" alt="Screenshot of the palette inspiration board"></a>
 </p>
 
 Explore 8,904 harmony sets across same, analogous, complementary, triadic, temperature, light/dark, gray-tone, and neutral relationships, with copy, favorite, and shuffle actions.
 
-### [Usage Cards](https://nevertoday.github.io/zhongguo-traditional-colors/uses.html)
+### [Usage Cards](https://colors.xiaoxiaodong.ai/uses.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/uses.html"><img src="docs/screenshots/uses.png" alt="Screenshot of usage cards"></a>
+  <a href="https://colors.xiaoxiaodong.ai/uses.html"><img src="docs/screenshots/uses.png" alt="Screenshot of usage cards"></a>
 </p>
 
 Build background/text two-color cards with layout previews, contrast checks, second-color search, copy, remix, and favorite actions.
 
-### [Local Favorites](https://nevertoday.github.io/zhongguo-traditional-colors/favorites.html)
+### [Local Favorites](https://colors.xiaoxiaodong.ai/favorites.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/favorites.html"><img src="docs/screenshots/favorites.png" alt="Screenshot of the local favorites panel"></a>
+  <a href="https://colors.xiaoxiaodong.ai/favorites.html"><img src="docs/screenshots/favorites.png" alt="Screenshot of the local favorites panel"></a>
 </p>
 
 Review locally saved color cards, palettes, usage cards, generated schemes, and scene tests, with type filters, copy, open, and remove controls.
 
-### [Studio Skills](https://nevertoday.github.io/zhongguo-traditional-colors/skills.html)
+### [Studio Skills](https://colors.xiaoxiaodong.ai/skills.html)
 
 <p align="center">
-  <a href="https://nevertoday.github.io/zhongguo-traditional-colors/skills.html"><img src="docs/screenshots/skills.png" alt="Screenshot of Studio Skills"></a>
+  <a href="https://colors.xiaoxiaodong.ai/skills.html"><img src="docs/screenshots/skills.png" alt="Screenshot of Studio Skills"></a>
 </p>
 
 Turn the 742-color list and harmony data into practical workflows for briefs, palettes, layout placement, tokens, accessibility, brand systems, charts, legacy audits, content series, and print production.
@@ -119,7 +119,7 @@ Every `xxd-*` skill folder bundles the full `references/chinese-color-master-lis
 
 ## Featured Color Preview
 
-The README shows 24 representative cards so the page stays readable. Browse or download the complete 742-card archive through the [online gallery](https://nevertoday.github.io/zhongguo-traditional-colors/#gallery), the `images/` directory, or the Release ZIP.
+The README shows 24 representative cards so the page stays readable. Browse or download the complete 742-card archive through the [online gallery](https://colors.xiaoxiaodong.ai/#gallery), the `images/` directory, or the Release ZIP.
 
 <!-- gallery:start -->
 <p align="center">
