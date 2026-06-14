@@ -39,6 +39,7 @@
     saturation: document.querySelector('[data-explorer-saturation]'),
     status: document.querySelector('[data-explorer-status]'),
     dictionary: document.querySelector('[data-explorer-dictionary]'),
+    page: document.querySelector('.explorer-page'),
   };
 
   const HUE_LABELS = {
@@ -148,6 +149,10 @@
     els.stage?.style.setProperty('--active-color', color.cleanHex);
     els.stage?.style.setProperty('--active-ink', textColor);
     els.stage?.style.setProperty('--active-soft', colorMixText(textColor));
+    els.stage?.setAttribute('data-active-id', color.id);
+    els.page?.style.setProperty('--active-color', color.cleanHex);
+    els.page?.style.setProperty('--active-ink', textColor);
+    els.page?.style.setProperty('--active-soft', colorMixText(textColor));
     if (els.name) els.name.textContent = color.name;
     if (els.note) els.note.textContent = `${color.id} 号传统色 · ${HUE_LABELS[color.hueGroup]} · 在色谱中快速定位、复制和比较。`;
     if (els.hex) els.hex.textContent = color.cleanHex;
