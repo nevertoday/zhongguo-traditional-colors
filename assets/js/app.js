@@ -27,6 +27,9 @@ const styleColorOptions = document.querySelector('[data-style-color-options]');
 const styleAnchorMeta = document.querySelector('[data-style-anchor-meta]');
 const styleAnchorSwatch = document.querySelector('[data-style-anchor-swatch]');
 const styleAnchorButton = document.querySelector('[data-style-anchor-button]');
+const styleDock = document.querySelector('[data-style-dock]');
+const styleDockToggle = document.querySelector('[data-style-dock-toggle]');
+const styleDockToggleLabel = document.querySelector('[data-style-dock-toggle-label]');
 const styleFormatSelect = document.querySelector('[data-style-format]');
 const styleColorDialog = document.querySelector('[data-style-color-dialog]');
 const styleColorDialogKicker = document.querySelector('[data-style-color-dialog-kicker]');
@@ -1140,6 +1143,16 @@ function renderStyleLabModes(scheme = currentStyleLabScheme) {
   if (styleIntentList) {
     styleIntentList.innerHTML = STYLE_LAB_INTENTS.map(styleLabIntentMarkup).join('');
   }
+}
+
+function setStyleDockCollapsed(collapsed) {
+  if (!styleDock || !styleDockToggle) return;
+
+  document.body.dataset.styleDockCollapsed = collapsed ? 'true' : 'false';
+  styleDockToggle.setAttribute('aria-expanded', String(!collapsed));
+  styleDockToggle.setAttribute('aria-label', collapsed ? '展开底部操作栏' : '收起底部操作栏');
+  styleDockToggle.querySelector('iconify-icon')?.setAttribute('icon', collapsed ? 'lucide:chevron-up' : 'lucide:chevron-down');
+  if (styleDockToggleLabel) styleDockToggleLabel.textContent = collapsed ? '展开' : '收起';
 }
 
 function styleLabCanvasMarkup(scene, scheme) {
@@ -2954,6 +2967,7 @@ setTheme(currentTheme());
 buildHero();
 buildFooterSpectrum();
 renderStyleColorOptions();
+setStyleDockCollapsed(false);
 renderStyleLab();
 renderStyleColorPicker();
 initializeGallery();
@@ -3041,6 +3055,9 @@ styleCopyAllButton?.addEventListener('click', async () => {
   setStyleLabStatus('已复制整组方案');
 });
 styleCopyCssButton?.addEventListener('click', copyStyleCssVariables);
+styleDockToggle?.addEventListener('click', () => {
+  setStyleDockCollapsed(document.body.dataset.styleDockCollapsed !== 'true');
+});
 styleSchemeFavoriteButton?.addEventListener('click', () => {
   if (!currentStyleLabScheme || !window.ZH_FAVORITES) return;
   const result = window.ZH_FAVORITES.toggle(styleSchemeFavoriteItem(currentStyleLabScheme));
