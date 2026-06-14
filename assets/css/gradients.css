@@ -16,10 +16,44 @@
 
 .gradient-toolbar {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) minmax(170px, auto) minmax(170px, auto) auto;
+  grid-template-columns: minmax(220px, 0.74fr) minmax(360px, 1.18fr) minmax(170px, auto) auto;
   gap: 12px;
   align-items: center;
   margin-bottom: 16px;
+}
+
+.gradient-filter.gradient-filter--hidden {
+  display: none;
+}
+
+.gradient-huebar {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 1px;
+  min-height: 48px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.gradient-huebar button {
+  min-width: 0;
+  color: var(--ink);
+  background: var(--panel);
+  border: 0;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.gradient-huebar button[aria-pressed="true"] {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+}
+
+.gradient-huebar button:hover,
+.gradient-huebar button:focus-visible {
+  background: var(--panel-soft);
+  outline: none;
 }
 
 .gradient-search,
@@ -261,7 +295,18 @@
   min-width: 0;
   justify-items: center;
   gap: 4px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: copy;
   text-align: center;
+}
+
+.gradient-tone:hover .gradient-tone-swatch,
+.gradient-tone:focus-visible .gradient-tone-swatch {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 34%, transparent);
+  transform: translateY(-1px);
 }
 
 .gradient-tone-swatch {
@@ -273,6 +318,7 @@
   border: 0;
   border-radius: 50%;
   box-shadow: none;
+  transition: transform 160ms linear, box-shadow 160ms linear;
 }
 
 .gradient-tone strong {

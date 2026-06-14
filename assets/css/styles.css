@@ -8614,8 +8614,7 @@ body[data-no-gradient-logic] .skills-list::before {
   align-items: stretch;
   max-height: none;
   padding: 10px clamp(14px, 2.4vw, 34px);
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: visible;
   background: color-mix(in srgb, var(--paper) 96%, transparent);
   border-width: 1px 0 0;
   box-shadow: 0 -14px 42px rgb(0 0 0 / 13%);
@@ -8624,24 +8623,35 @@ body[data-no-gradient-logic] .skills-list::before {
 
 .style-dock-toggle {
   position: absolute;
-  top: 6px;
-  right: clamp(14px, 2.4vw, 34px);
+  top: -30px;
+  right: clamp(18px, 3vw, 44px);
   z-index: 2;
   display: inline-flex;
   gap: 6px;
   align-items: center;
   justify-content: center;
-  min-width: 84px;
-  height: 34px;
-  padding: 0 10px;
+  min-width: 72px;
+  height: 30px;
+  padding: 0 9px;
   color: var(--ink);
-  background: color-mix(in srgb, var(--paper) 96%, transparent);
+  background: color-mix(in srgb, var(--paper) 98%, transparent);
   border: 1px solid var(--line-strong);
+  border-bottom: 0;
   cursor: pointer;
   font-size: 0.72rem;
   font-weight: 850;
   line-height: 1;
-  box-shadow: 0 -8px 24px rgb(0 0 0 / 10%);
+  opacity: 0;
+  box-shadow: 0 -8px 22px rgb(0 0 0 / 10%);
+  transform: translateY(8px);
+  transition: opacity 160ms linear, transform 180ms linear, background 160ms ease, color 160ms ease;
+}
+
+.style-lab-dock:hover .style-dock-toggle,
+.style-lab-dock:focus-within .style-dock-toggle,
+body[data-style-dock-collapsed="true"] .style-dock-toggle {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .style-dock-toggle:hover,

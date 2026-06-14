@@ -14,6 +14,7 @@
   const detail = document.querySelector('[data-gradient-detail]');
   const searchInput = document.querySelector('[data-gradient-search]');
   const hueFilter = document.querySelector('[data-gradient-hue]');
+  const hueList = document.querySelector('[data-gradient-hue-list]');
   const typeFilter = document.querySelector('[data-gradient-type]');
   const countLabel = document.querySelector('[data-gradient-count]');
   const randomButton = document.querySelector('[data-gradient-random]');
@@ -89,6 +90,17 @@
     neutral: '中性色',
   };
   const TYPE_LABELS = Object.fromEntries([['all', '全部渐变'], ...GRADIENT_TYPES.map((type) => [type.key, type.label])]);
+  const HUE_OPTIONS = [
+    ['all', '全部'],
+    ['red', '红'],
+    ['orange', '橙'],
+    ['yellow', '黄'],
+    ['green', '绿'],
+    ['cyan', '青'],
+    ['blue', '蓝'],
+    ['purple', '紫'],
+    ['neutral', '灰'],
+  ];
 
   let visibleCount = INITIAL_VISIBLE;
   let renderedItems = [];
@@ -365,11 +377,11 @@
 
   function toneMarkup(tone, index) {
     return `
-      <span class="gradient-tone gradient-tone-${index + 1}" style="--tone: ${escapeAttribute(tone.hex)}; --tone-ink: ${textColorFor(tone.hex)}">
+      <button class="gradient-tone gradient-tone-${index + 1}" type="button" data-gradient-copy-stop="${escapeAttribute(tone.name)} ${escapeAttribute(tone.hex)}" style="--tone: ${escapeAttribute(tone.hex)}; --tone-ink: ${textColorFor(tone.hex)}" aria-label="复制 ${escapeAttribute(tone.name)} ${escapeAttribute(tone.hex)}">
         <span class="gradient-tone-swatch" aria-hidden="true"></span>
         <strong>${escapeHtml(tone.hex.replace('#', ''))}</strong>
-        <small>${escapeHtml(tone.role)} · ${escapeHtml(tone.name)}</small>
-      </span>
+        <small>${escapeHtml(tone.name)}</small>
+      </button>
     `;
   }
 
@@ -434,9 +446,9 @@
     return `
       <article class="gradient-card" role="button" tabindex="0" data-gradient-card="${escapeAttribute(item.id)}" data-gradient-color="${escapeAttribute(image.id)}" data-gradient-card-type="${escapeAttribute(type.key)}" style="${escapeAttribute(style)}" aria-label="复制 ${escapeAttribute(logic.anchor.name)} ${escapeAttribute(type.label)} 的渐变逻辑">
         <div class="gradient-card-head">
-          <span>${escapeHtml(type.deck)}</span>
+          <span>${escapeHtml(type.label)}渐变</span>
           <h3><a href="${escapeAttribute(detailUrlFor(image, type.key))}">${escapeHtml(logic.anchor.name)} · ${escapeHtml(type.label)}</a></h3>
-          <small>${escapeHtml(image.id)} · ${escapeHtml(logic.anchor.hex)} · ${escapeHtml(HUE_LABELS[hue] || '传统色')} · ${escapeHtml(hslLabel)}</small>
+          <small>${escapeHtml(logic.anchor.hex)} · ${escapeHtml(HUE_LABELS[hue] || '传统色')} · 点击色点可单独复制</small>
         </div>
         ${multiStopTrackMarkup(logic, true)}
         <div class="gradient-tone-grid" aria-label="${escapeAttribute(logic.anchor.name)} 的四个渐变节点">
@@ -481,6 +493,14 @@
       : '<div class="gradient-empty"><strong>没有找到颜色</strong><span>换一个色名、编号或 HEX。</span></div>';
 
     updateMeta(items.length, visibleItems.length);
+  }
+
+  function renderHueButtons() {
+    if (!hueList) return;
+    const current = hueFilter?.value || 'all';
+    hueList.innerHTML = HUE_OPTIONS.map(([key, label]) => `
+      <button type="button" data-gradient-hue-button="${escapeAttribute(key)}" aria-pressed="${String(key === current)}">${escapeHtml(label)}</button>
+    `).join('');
   }
 
   async function writeClipboard(text) {
@@ -664,6 +684,11 @@
   }
 
   grid?.addEventListener('click', (event) => {
+    const stopButton = event.target.closest('[data-gradient-copy-stop]');
+    if (stopButton) {
+      writeClipboard(stopButton.dataset.gradientCopyStop).then(() => showToast(`已复制 ${stopButton.dataset.gradientCopyStop}`));
+      return;
+    }
     if (event.target.closest('a, button')) return;
     const card = event.target.closest('[data-gradient-card]');
     if (!card) return;
@@ -680,7 +705,17 @@
   });
 
   searchInput?.addEventListener('input', debounce(() => render({ reset: true }), 200));
-  hueFilter?.addEventListener('change', () => render({ reset: true }));
+  hueFilter?.addEventListener('change', () => {
+    renderHueButtons();
+    render({ reset: true });
+  });
+  hueList?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-gradient-hue-button]');
+    if (!button || !hueFilter) return;
+    hueFilter.value = button.dataset.gradientHueButton || 'all';
+    renderHueButtons();
+    render({ reset: true });
+  });
   typeFilter?.addEventListener('change', () => render({ reset: true }));
   detail?.addEventListener('click', async (event) => {
     const button = event.target.closest('[data-gradient-copy-detail]');
@@ -730,6 +765,7 @@
 
   setTheme(currentTheme());
   buildFooterSpectrum();
+  renderHueButtons();
   renderDetailFromUrl();
   render({ reset: true });
 })();

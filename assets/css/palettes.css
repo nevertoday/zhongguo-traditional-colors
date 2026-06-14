@@ -646,8 +646,8 @@ h3::before {
   color: var(--label-text);
   overflow: visible;
   opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 260ms ease, transform 300ms var(--ease-out-expo);
+  transform: translateY(-18px);
+  transition: opacity 220ms linear, transform 280ms linear;
   transition-delay: 0ms;
 }
 
@@ -683,7 +683,7 @@ h3::before {
 .palette-card:focus-within .palette-color-label {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: calc(var(--label-index) * 55ms);
+  transition-delay: calc(var(--label-index) * 72ms);
 }
 
 @media (hover: none) {
@@ -1520,7 +1520,7 @@ h3::before {
 }
 
 .use-searchbar .palette-search {
-  flex: 1 1 340px;
+  flex: 1 1 280px;
 }
 
 .use-modebar button {
@@ -1549,7 +1549,7 @@ h3::before {
 
 .use-huebar {
   display: inline-flex;
-  flex: 1 1 360px;
+  flex: 0 1 330px;
   flex-wrap: wrap;
   align-items: center;
   min-height: 48px;
@@ -1583,7 +1583,7 @@ h3::before {
   grid-template-columns: auto minmax(0, 1fr);
   gap: 10px;
   align-items: center;
-  flex: 0 1 230px;
+  flex: 0 1 210px;
   min-height: 48px;
   padding: 0 12px;
   color: var(--ink-soft);

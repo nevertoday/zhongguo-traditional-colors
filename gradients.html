@@ -37,7 +37,7 @@
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css?v=20260614-4">
     <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260614-1">
-    <link rel="stylesheet" href="assets/css/gradients.css?v=20260614-2">
+    <link rel="stylesheet" href="assets/css/gradients.css?v=20260614-3">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
   </head>
@@ -60,7 +60,7 @@
             <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
             <input type="search" data-gradient-search data-color-suggest placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
           </label>
-          <label class="gradient-filter">
+          <label class="gradient-filter gradient-filter--hidden">
             <span class="sr-only">按色系筛选</span>
             <select data-gradient-hue aria-label="按色系筛选">
               <option value="all">全部色系</option>
@@ -74,6 +74,7 @@
               <option value="neutral">中性色</option>
             </select>
           </label>
+          <div class="gradient-huebar" data-gradient-hue-list aria-label="按色相筛选"></div>
           <label class="gradient-filter">
             <span class="sr-only">按渐变类型筛选</span>
             <select data-gradient-type aria-label="按渐变类型筛选">
@@ -116,6 +117,6 @@
     <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
     <script src="assets/js/color-search-suggestions.js?v=20260614-1" defer></script>
-    <script src="assets/js/gradients.js?v=20260614-2" defer></script>
+    <script src="assets/js/gradients.js?v=20260614-3" defer></script>
   </body>
 </html>

@@ -16,6 +16,7 @@ const modebar = document.querySelector('[data-use-modebar]');
 const huebar = document.querySelector('[data-use-huebar]');
 const biasInput = document.querySelector('[data-use-bias]');
 const shuffleButton = document.querySelector('[data-use-shuffle]');
+const exploreLabel = document.querySelector('[data-use-explore-label]');
 const grid = document.querySelector('[data-use-grid]');
 const resultCount = document.querySelector('[data-use-count]');
 const loadMoreButton = document.querySelector('[data-use-load-more]');
@@ -47,6 +48,16 @@ const HUE_FILTERS = [
   { key: 'blue', label: '蓝' },
   { key: 'purple', label: '紫' },
   { key: 'neutral', label: '灰' },
+];
+const EXPLORE_PRESETS = [
+  { name: '古籍封面', mode: 'type', hue: 'neutral', bias: 76, query: '浅色 & 深色' },
+  { name: '展览海报', mode: 'split', hue: 'red', bias: 30, query: '深色 & 浅色' },
+  { name: '茶席图像', mode: 'image', hue: 'green', bias: 70, query: '浅色 & 深色' },
+  { name: '夜间界面', mode: 'type', hue: 'blue', bias: 24, query: '深色 & 浅色' },
+  { name: '器物色板', mode: 'palette', hue: 'orange', bias: 62, query: '暖色 & 深色' },
+  { name: '礼盒腰封', mode: 'split', hue: 'purple', bias: 40, query: '深色 & 浅色' },
+  { name: '山水留白', mode: 'image', hue: 'cyan', bias: 80, query: '浅色 & 深色' },
+  { name: '节气层级', mode: 'scale', hue: 'yellow', bias: 66, query: '浅色 & 深色' },
 ];
 const TYPE_TESTS = {
   all: () => true,
@@ -99,6 +110,7 @@ let colorPoolCache;
 let cardCacheKey = '';
 let cardCache = [];
 let randomVersion = 0;
+let exploreIndex = -1;
 
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) => ({
@@ -511,6 +523,26 @@ function rerender(resetVisible = true) {
   renderGrid();
 }
 
+function resetExploreCue() {
+  exploreIndex = -1;
+  if (exploreLabel) exploreLabel.textContent = '场景漫游';
+}
+
+function exploreUseSet() {
+  exploreIndex = (exploreIndex + 1) % EXPLORE_PRESETS.length;
+  const preset = EXPLORE_PRESETS[exploreIndex];
+  currentMode = preset.mode;
+  currentHue = preset.hue;
+  if (searchInput) searchInput.value = preset.query;
+  if (biasInput) {
+    biasInput.value = String(preset.bias);
+  }
+  if (exploreLabel) exploreLabel.textContent = preset.name;
+  shuffleOrder();
+  rerender();
+  showToast(`场景：${preset.name} · ${HUE_FILTERS.find((filter) => filter.key === currentHue)?.label || '全部'}`);
+}
+
 function cardText(card) {
   return [
     `中国传统色用途卡片：${card.background.name} & ${card.text.name}`,
@@ -710,12 +742,19 @@ footerColorButtons.forEach((button) => {
   });
 });
 
-searchInput?.addEventListener('input', debounce(() => rerender(), 200));
-biasInput?.addEventListener('input', () => rerender());
+searchInput?.addEventListener('input', debounce(() => {
+  resetExploreCue();
+  rerender();
+}, 200));
+biasInput?.addEventListener('input', () => {
+  resetExploreCue();
+  rerender();
+});
 
 modebar?.addEventListener('click', (event) => {
   const button = event.target.closest('[data-use-mode]');
   if (!button) return;
+  resetExploreCue();
   currentMode = button.dataset.useMode;
   rerender(false);
 });
@@ -723,13 +762,13 @@ modebar?.addEventListener('click', (event) => {
 huebar?.addEventListener('click', (event) => {
   const button = event.target.closest('[data-use-hue]');
   if (!button) return;
+  resetExploreCue();
   currentHue = button.dataset.useHue || 'all';
   rerender();
 });
 
 shuffleButton?.addEventListener('click', () => {
-  shuffleOrder();
-  rerender();
+  exploreUseSet();
 });
 
 loadMoreButton?.addEventListener('click', () => {

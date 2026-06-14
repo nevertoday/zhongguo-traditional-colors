@@ -649,7 +649,7 @@ function paletteText(palette) {
 }
 
 function paletteStackWeights(palette) {
-  return STACK_PATTERNS[hashString(`${palette.id}-${palette.colors.map((color) => color.hex).join('-')}`) % STACK_PATTERNS.length];
+  return [40, 28, 20, 12];
 }
 
 function paletteStackStyle(palette) {
