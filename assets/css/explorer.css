@@ -435,3 +435,266 @@
     min-height: 92px;
   }
 }
+
+/* Immersive color browser: the active color owns the whole surface. */
+.explorer-page {
+  --active-color: #f9f4dc;
+  --active-ink: #111111;
+  --active-soft: rgba(17, 17, 17, 0.72);
+  min-height: calc(100svh - 58px);
+  color: var(--active-ink);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--active-color) 92%, var(--paper)) 0%, color-mix(in srgb, var(--active-color) 48%, var(--paper)) 62%, var(--paper) 100%),
+    var(--active-color);
+  transition: background 360ms var(--ease-out-quart), color 220ms ease;
+}
+
+.explorer-workspace {
+  grid-template-columns: minmax(0, 1fr) minmax(400px, 460px);
+  gap: 0;
+  min-height: calc(100svh - 58px);
+  padding: 0;
+}
+
+.explorer-stage {
+  position: relative;
+  min-height: calc(100svh - 58px);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--active-color) 96%, white) 0%, var(--active-color) 58%, color-mix(in srgb, var(--active-color) 78%, var(--ink)) 100%);
+  border: 0;
+}
+
+.explorer-stage::before {
+  position: absolute;
+  top: clamp(28px, 6vw, 76px);
+  right: clamp(22px, 5vw, 72px);
+  color: color-mix(in srgb, var(--active-ink) 10%, transparent);
+  font-family: var(--font-rounded);
+  font-size: clamp(7rem, 18vw, 22rem);
+  font-weight: 900;
+  line-height: 0.8;
+  content: attr(data-active-id);
+  pointer-events: none;
+}
+
+.explorer-stage::after {
+  position: absolute;
+  right: clamp(28px, 6vw, 88px);
+  bottom: clamp(32px, 7vw, 96px);
+  width: min(38vw, 520px);
+  height: 1px;
+  background: color-mix(in srgb, currentColor 28%, transparent);
+  content: "";
+}
+
+.explorer-stage-inner {
+  position: relative;
+  z-index: 1;
+  align-content: end;
+  min-height: inherit;
+  max-width: 1120px;
+  padding: clamp(42px, 7vw, 108px);
+}
+
+.explorer-kicker {
+  margin-bottom: clamp(28px, 4vw, 52px);
+  color: var(--active-soft);
+  font-size: 0.76rem;
+  letter-spacing: 0.22em;
+}
+
+.explorer-stage h1 {
+  max-width: none;
+  margin-bottom: clamp(16px, 2.4vw, 28px);
+  color: inherit;
+  font-size: clamp(7rem, 17vw, 20rem);
+  line-height: 0.78;
+  text-shadow: 0 1px 0 color-mix(in srgb, white 16%, transparent);
+}
+
+.explorer-note {
+  max-width: 680px;
+  margin-bottom: clamp(28px, 4vw, 52px);
+  color: var(--active-soft);
+  font-size: clamp(0.92rem, 1.1vw, 1.1rem);
+  font-weight: 750;
+}
+
+.explorer-primary-values {
+  max-width: min(760px, 72vw);
+  border-color: color-mix(in srgb, currentColor 24%, transparent);
+}
+
+.explorer-primary-values button {
+  padding: clamp(12px, 1.25vw, 18px);
+}
+
+.explorer-primary-values span {
+  color: var(--active-soft);
+}
+
+.explorer-panel {
+  position: sticky;
+  top: 58px;
+  grid-template-rows: auto auto auto auto auto minmax(0, 1fr) auto;
+  gap: 12px;
+  min-height: calc(100svh - 58px);
+  max-height: calc(100svh - 58px);
+  padding: 20px;
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--paper) 94%, var(--active-color)) 0%, color-mix(in srgb, var(--paper) 86%, var(--active-color)) 100%);
+  border-width: 0 0 0 1px;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.explorer-panel-head {
+  min-height: 42px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+.explorer-panel-head span,
+.explorer-spectrum-head span,
+.explorer-actions span {
+  font-size: 0.78rem;
+}
+
+.explorer-controls {
+  grid-template-columns: 38px minmax(0, 1fr) 38px;
+}
+
+.explorer-controls button,
+.explorer-hues button,
+.explorer-search,
+.explorer-reading,
+.explorer-spectrum button {
+  background: color-mix(in srgb, var(--solid) 58%, transparent);
+  border-color: color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+.explorer-controls button,
+.explorer-hues button {
+  min-height: 38px;
+}
+
+.explorer-controls button:hover,
+.explorer-controls button:focus-visible,
+.explorer-hues button:hover,
+.explorer-hues button:focus-visible {
+  background: color-mix(in srgb, var(--active-color) 36%, var(--solid));
+}
+
+.explorer-search {
+  min-height: 42px;
+  padding: 0 12px;
+}
+
+.explorer-hues {
+  border: 0;
+}
+
+.explorer-hues button[aria-pressed="true"] {
+  color: var(--active-ink);
+  background: var(--active-color);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--active-ink) 44%, transparent);
+}
+
+.explorer-reading {
+  padding: 12px;
+}
+
+.explorer-reading dl {
+  gap: 10px;
+}
+
+.explorer-spectrum-head {
+  align-items: baseline;
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+
+.explorer-spectrum {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 8px;
+  padding: 0;
+  overflow: auto;
+}
+
+.explorer-spectrum button {
+  min-height: 86px;
+  padding: 8px;
+  border: 0;
+}
+
+.explorer-spectrum button::before {
+  background: linear-gradient(180deg, transparent 24%, rgba(0, 0, 0, 0.22));
+}
+
+.explorer-spectrum button[aria-pressed="true"] {
+  outline: 3px solid var(--ink);
+  outline-offset: -3px;
+}
+
+.explorer-spectrum span {
+  font-size: 0.78rem;
+}
+
+.explorer-spectrum small {
+  font-size: 0.66rem;
+}
+
+.explorer-actions {
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+}
+
+@media (max-width: 1100px) {
+  .explorer-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .explorer-stage {
+    min-height: 62svh;
+  }
+
+  .explorer-stage-inner {
+    min-height: 62svh;
+  }
+
+  .explorer-panel {
+    position: relative;
+    top: auto;
+    min-height: auto;
+    max-height: none;
+    border-width: 1px 0 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .explorer-workspace {
+    padding: 0;
+  }
+
+  .explorer-stage {
+    min-height: 58svh;
+  }
+
+  .explorer-stage-inner {
+    min-height: 58svh;
+    padding: 28px;
+  }
+
+  .explorer-stage h1 {
+    font-size: clamp(5.2rem, 30vw, 9rem);
+  }
+
+  .explorer-primary-values {
+    max-width: none;
+  }
+
+  .explorer-panel {
+    padding: 14px;
+  }
+}
