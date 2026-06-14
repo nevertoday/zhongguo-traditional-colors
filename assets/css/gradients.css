@@ -16,8 +16,8 @@
 
 .gradient-toolbar {
   display: grid;
-  grid-template-columns: minmax(220px, 0.74fr) minmax(360px, 1.18fr) minmax(170px, auto) auto;
-  gap: 12px;
+  grid-template-columns: minmax(190px, 0.52fr) minmax(420px, 1fr) minmax(156px, auto) auto;
+  gap: 10px;
   align-items: center;
   margin-bottom: 16px;
 }
@@ -30,12 +30,16 @@
   display: grid;
   grid-template-columns: repeat(9, minmax(0, 1fr));
   gap: 1px;
-  min-height: 48px;
+  min-height: 46px;
   background: var(--line);
   border: 1px solid var(--line);
 }
 
 .gradient-huebar button {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
   min-width: 0;
   color: var(--ink);
   background: var(--panel);
@@ -43,6 +47,14 @@
   cursor: pointer;
   font-size: 0.82rem;
   font-weight: 800;
+}
+
+.gradient-huebar button::before {
+  display: block;
+  width: 12px;
+  aspect-ratio: 1;
+  background: var(--hue-color);
+  content: "";
 }
 
 .gradient-huebar button[aria-pressed="true"] {
@@ -61,7 +73,7 @@
   display: flex;
   align-items: center;
   min-width: 0;
-  min-height: 48px;
+  min-height: 46px;
   color: var(--muted);
   background: var(--panel);
   border: 1px solid var(--line);
@@ -69,7 +81,7 @@
 
 .gradient-search {
   gap: 10px;
-  padding: 0 14px;
+  padding: 0 12px;
 }
 
 .gradient-search:focus-within,
@@ -88,7 +100,7 @@
 .gradient-filter select {
   width: 100%;
   min-width: 0;
-  height: 46px;
+  height: 44px;
   color: var(--ink);
   background: transparent;
   border: 0;
@@ -100,7 +112,7 @@
 }
 
 .gradient-filter select {
-  min-width: 176px;
+  min-width: 148px;
   padding: 0 38px 0 14px;
   cursor: pointer;
   appearance: none;
@@ -125,8 +137,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 48px;
-  padding: 0 16px;
+  min-height: 46px;
+  padding: 0 14px;
   color: var(--hover-text);
   background: var(--hover-bg);
   border: 1px solid var(--hover-bg);
@@ -160,18 +172,18 @@
 
 .gradient-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
 }
 
 .gradient-card {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
-  gap: clamp(10px, 1.1vw, 14px);
-  aspect-ratio: 3 / 4;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 12px;
+  aspect-ratio: 1.08 / 1;
   min-width: 0;
-  padding: clamp(18px, 1.7vw, 24px);
+  padding: clamp(16px, 1.5vw, 22px);
   overflow: hidden;
   color: var(--ink);
   background:
@@ -204,9 +216,7 @@
   text-align: center;
 }
 
-.gradient-card-head span,
-.gradient-pairs h4,
-.gradient-paths h4 {
+.gradient-card-head span {
   margin: 0;
   color: var(--muted);
   font-family: var(--font-rounded);
@@ -250,12 +260,21 @@
   white-space: nowrap;
 }
 
+.gradient-card-logic {
+  max-width: 32ch;
+  margin: 0 auto;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  text-align: center;
+}
+
 .gradient-tone-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 18px;
-  align-content: center;
-  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+  gap: 10px;
+  align-content: end;
+  justify-items: stretch;
 }
 
 .gradient-multi-track {
@@ -271,8 +290,8 @@
 }
 
 .gradient-multi-track-compact {
-  min-height: 36px;
-  padding: 6px;
+  min-height: 58px;
+  padding: 0;
 }
 
 .gradient-multi-track small {
@@ -291,27 +310,38 @@
 
 .gradient-tone {
   display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
   width: 100%;
   min-width: 0;
-  justify-items: center;
-  gap: 4px;
-  padding: 0;
+  gap: 7px;
+  align-items: center;
+  justify-items: start;
+  padding: 6px;
   color: inherit;
-  background: transparent;
-  border: 0;
+  background: color-mix(in srgb, var(--tone) 12%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--tone) 34%, var(--line));
   cursor: copy;
-  text-align: center;
+  text-align: left;
+  transition: background 160ms linear, border-color 160ms linear, transform 160ms linear;
+}
+
+.gradient-tone:hover,
+.gradient-tone:focus-visible {
+  background: color-mix(in srgb, var(--tone) 18%, var(--panel));
+  border-color: color-mix(in srgb, var(--tone) 64%, var(--line-strong));
+  outline: none;
+  transform: translateY(-1px);
 }
 
 .gradient-tone:hover .gradient-tone-swatch,
 .gradient-tone:focus-visible .gradient-tone-swatch {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 34%, transparent);
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 30%, transparent);
 }
 
 .gradient-tone-swatch {
   display: grid;
-  width: min(72px, 62%);
+  grid-row: span 2;
+  width: 28px;
   aspect-ratio: 1;
   place-items: center;
   background: var(--tone);
@@ -321,17 +351,22 @@
   transition: transform 160ms linear, box-shadow 160ms linear;
 }
 
+.gradient-tone strong,
+.gradient-tone small {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .gradient-tone strong {
   color: color-mix(in srgb, var(--ink) 82%, var(--tone));
   font-family: var(--font-rounded);
   font-size: 0.76rem;
-  font-weight: 650;
+  font-weight: 850;
   font-variant-numeric: tabular-nums;
 }
 
 .gradient-tone small {
   display: -webkit-box;
-  max-width: 100%;
   overflow: hidden;
   color: var(--muted);
   font-size: 0.66rem;
@@ -344,93 +379,6 @@
 .gradient-card-rule {
   height: 1px;
   background: color-mix(in srgb, var(--ink) 22%, transparent);
-}
-
-.gradient-card-lower {
-  display: grid;
-  grid-template-columns: 0.72fr 1.28fr;
-  gap: clamp(12px, 1.2vw, 18px);
-  align-items: stretch;
-}
-
-.gradient-pairs,
-.gradient-paths {
-  min-width: 0;
-}
-
-.gradient-pairs {
-  padding-right: clamp(10px, 1vw, 16px);
-  border-right: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
-}
-
-.gradient-pairs h4,
-.gradient-paths h4 {
-  margin-bottom: 8px;
-  color: var(--ink-soft);
-}
-
-.gradient-pairs > div {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 32px));
-  gap: 8px 10px;
-  align-items: center;
-}
-
-.gradient-pair {
-  display: block;
-  width: 32px;
-  aspect-ratio: 1;
-  overflow: hidden;
-  border: 0;
-  border-radius: 50%;
-}
-
-.gradient-pair span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, var(--pair-a) 0 50%, var(--pair-b) 50% 100%);
-}
-
-.gradient-paths > div {
-  display: grid;
-  gap: 6px;
-}
-
-.gradient-path {
-  display: grid;
-  gap: 0;
-}
-
-.gradient-path-track {
-  display: flex;
-  min-height: 22px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 0 8px;
-  overflow: hidden;
-  background: linear-gradient(90deg, var(--path-a), var(--path-b));
-  border: 0;
-  border-radius: 999px;
-}
-
-.gradient-path-track small {
-  max-width: 48%;
-  padding: 2px 6px;
-  overflow: hidden;
-  color: var(--ink);
-  background: color-mix(in srgb, var(--panel) 58%, transparent);
-  border-radius: 999px;
-  font-family: var(--font-rounded);
-  font-size: 0.62rem;
-  font-weight: 700;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.gradient-path-label {
-  display: none;
 }
 
 .gradient-empty {
@@ -613,6 +561,10 @@
     grid-template-columns: 1fr;
   }
 
+  .gradient-huebar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .gradient-filter select,
   .gradient-action {
     width: 100%;
@@ -624,21 +576,6 @@
 
   .gradient-detail > .gradient-multi-track {
     min-height: 180px;
-  }
-
-  .gradient-card-lower {
-    grid-template-columns: 0.72fr 1.28fr;
-  }
-
-  .gradient-pairs {
-    padding-right: 10px;
-    padding-bottom: 0;
-    border-right: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
-    border-bottom: 0;
-  }
-
-  .gradient-pairs > div {
-    grid-template-columns: repeat(2, minmax(0, 32px));
   }
 }
 
@@ -657,11 +594,12 @@
   }
 
   .gradient-tone-grid {
-    gap: 9px 12px;
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .gradient-tone-swatch {
-    width: min(62px, 62%);
+    width: 28px;
   }
 
   .gradient-multi-track {
@@ -669,26 +607,13 @@
   }
 
   .gradient-multi-track-compact {
-    min-height: 34px;
+    min-height: 50px;
   }
 
   .gradient-multi-track small {
     max-width: 54px;
     padding: 2px 5px;
     font-size: 0.56rem;
-  }
-
-  .gradient-pairs > div {
-    grid-template-columns: repeat(2, minmax(0, 28px));
-    gap: 8px;
-  }
-
-  .gradient-pair {
-    width: 28px;
-  }
-
-  .gradient-path-track small {
-    font-size: 0.62rem;
   }
 
   .gradient-toast {

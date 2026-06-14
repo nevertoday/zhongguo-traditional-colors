@@ -91,15 +91,15 @@
   };
   const TYPE_LABELS = Object.fromEntries([['all', '全部渐变'], ...GRADIENT_TYPES.map((type) => [type.key, type.label])]);
   const HUE_OPTIONS = [
-    ['all', '全部'],
-    ['red', '红'],
-    ['orange', '橙'],
-    ['yellow', '黄'],
-    ['green', '绿'],
-    ['cyan', '青'],
-    ['blue', '蓝'],
-    ['purple', '紫'],
-    ['neutral', '灰'],
+    ['all', '全部', '#111111'],
+    ['red', '红', '#B13B2E'],
+    ['orange', '橙', '#D47A2F'],
+    ['yellow', '黄', '#D8B947'],
+    ['green', '绿', '#4F8A54'],
+    ['cyan', '青', '#3D8F93'],
+    ['blue', '蓝', '#3F69A8'],
+    ['purple', '紫', '#73518A'],
+    ['neutral', '灰', '#8A8780'],
   ];
 
   let visibleCount = INITIAL_VISIBLE;
@@ -303,6 +303,20 @@
     return fallbackColor(anchor, role, mixHex(anchor.hex, '#000000', (ratio - 0.45) * 0.48), `fallback-${index}`);
   }
 
+  function stopRoleFor(type, index, anchorSlot, total) {
+    if (index === anchorSlot) return '本色';
+    if (index === 0) return '起点';
+    if (index === total - 1) return '收束';
+    const relationLabels = {
+      analogous: '邻近',
+      split: '互补',
+      triadic: '三角',
+      tetradic: '四角',
+      temperature: '冷暖',
+    };
+    return relationLabels[type.key] || type.label;
+  }
+
   function gradientSet(image, typeKey = 'tonal') {
     if (typeKey === 'tonal') return gradientLogic(image);
 
@@ -327,7 +341,7 @@
       .slice(0, targetCount);
     const stops = ordered.map((tone, index) => ({
       ...tone,
-      role: index === anchorSlot ? '本色' : `${type.label} ${index + 1}`,
+      role: stopRoleFor(type, index, anchorSlot, ordered.length),
       stop: Math.round((index / (ordered.length - 1)) * 100),
     }));
     const paths = stops.slice(0, -1).map((tone, index) => ({
@@ -379,34 +393,16 @@
     return `
       <button class="gradient-tone gradient-tone-${index + 1}" type="button" data-gradient-copy-stop="${escapeAttribute(tone.name)} ${escapeAttribute(tone.hex)}" style="--tone: ${escapeAttribute(tone.hex)}; --tone-ink: ${textColorFor(tone.hex)}" aria-label="复制 ${escapeAttribute(tone.name)} ${escapeAttribute(tone.hex)}">
         <span class="gradient-tone-swatch" aria-hidden="true"></span>
-        <strong>${escapeHtml(tone.hex.replace('#', ''))}</strong>
-        <small>${escapeHtml(tone.name)}</small>
+        <strong>${escapeHtml(tone.role)}</strong>
+        <small>${escapeHtml(tone.name)} · ${escapeHtml(tone.hex)}</small>
       </button>
     `;
   }
 
-  function pairMarkup(pair) {
-    return `
-      <span class="gradient-pair" style="--pair-a: ${escapeAttribute(pair[0].hex)}; --pair-b: ${escapeAttribute(pair[1].hex)}" aria-label="${escapeAttribute(pair[0].name)} 到 ${escapeAttribute(pair[1].name)}">
-        <span aria-hidden="true"></span>
-      </span>
-    `;
-  }
-
-  function pathMarkup(path) {
-    return `
-      <span class="gradient-path">
-        <span class="gradient-path-track" style="--path-a: ${escapeAttribute(path.from.hex)}; --path-b: ${escapeAttribute(path.to.hex)}">
-          <small>${escapeHtml(path.from.hex.replace('#', ''))}</small>
-          <small>${escapeHtml(path.to.hex.replace('#', ''))}</small>
-        </span>
-        <span class="gradient-path-label">${escapeHtml(path.label)}</span>
-      </span>
-    `;
-  }
-
-  function multiStopTrackMarkup(logic, compact = false) {
-    const labels = logic.stops.map((tone) => `<small>${escapeHtml(tone.hex.replace('#', ''))}</small>`).join('');
+  function multiStopTrackMarkup(logic, compact = false, showLabels = true) {
+    const labels = showLabels
+      ? logic.stops.map((tone) => `<small>${escapeHtml(tone.role)}</small>`).join('')
+      : '';
     return `
       <span class="gradient-multi-track${compact ? ' gradient-multi-track-compact' : ''}" style="--gradient-css: ${escapeAttribute(logic.css)}" aria-label="${escapeAttribute(logic.type.label)} 多色渐变">
         ${labels}
@@ -446,24 +442,14 @@
     return `
       <article class="gradient-card" role="button" tabindex="0" data-gradient-card="${escapeAttribute(item.id)}" data-gradient-color="${escapeAttribute(image.id)}" data-gradient-card-type="${escapeAttribute(type.key)}" style="${escapeAttribute(style)}" aria-label="复制 ${escapeAttribute(logic.anchor.name)} ${escapeAttribute(type.label)} 的渐变逻辑">
         <div class="gradient-card-head">
-          <span>${escapeHtml(type.label)}渐变</span>
-          <h3><a href="${escapeAttribute(detailUrlFor(image, type.key))}">${escapeHtml(logic.anchor.name)} · ${escapeHtml(type.label)}</a></h3>
-          <small>${escapeHtml(logic.anchor.hex)} · ${escapeHtml(HUE_LABELS[hue] || '传统色')} · 点击色点可单独复制</small>
+          <span>${escapeHtml(type.label)}</span>
+          <h3><a href="${escapeAttribute(detailUrlFor(image, type.key))}">${escapeHtml(logic.anchor.name)}</a></h3>
+          <small>${escapeHtml(HUE_LABELS[hue] || '传统色')} · ${escapeHtml(logic.stops.length)} 个节点渐变</small>
         </div>
-        ${multiStopTrackMarkup(logic, true)}
+        <p class="gradient-card-logic">以 ${escapeHtml(logic.anchor.name)} 为本色，按${escapeHtml(type.label)}配色生成渐变。</p>
+        ${multiStopTrackMarkup(logic, true, false)}
         <div class="gradient-tone-grid" aria-label="${escapeAttribute(logic.anchor.name)} 的四个渐变节点">
-          ${logic.tones.map(toneMarkup).join('')}
-        </div>
-        <div class="gradient-card-rule" aria-hidden="true"></div>
-        <div class="gradient-card-lower">
-          <section class="gradient-pairs" aria-label="双色切片">
-            <h4>2 tone</h4>
-            <div>${logic.pairs.map(pairMarkup).join('')}</div>
-          </section>
-          <section class="gradient-paths" aria-label="渐变路径">
-            <h4>Gradation</h4>
-            <div>${logic.paths.map(pathMarkup).join('')}</div>
-          </section>
+          ${logic.stops.map(toneMarkup).join('')}
         </div>
       </article>
     `;
@@ -498,8 +484,8 @@
   function renderHueButtons() {
     if (!hueList) return;
     const current = hueFilter?.value || 'all';
-    hueList.innerHTML = HUE_OPTIONS.map(([key, label]) => `
-      <button type="button" data-gradient-hue-button="${escapeAttribute(key)}" aria-pressed="${String(key === current)}">${escapeHtml(label)}</button>
+    hueList.innerHTML = HUE_OPTIONS.map(([key, label, color]) => `
+      <button type="button" data-gradient-hue-button="${escapeAttribute(key)}" aria-pressed="${String(key === current)}" style="--hue-color: ${escapeAttribute(color)}">${escapeHtml(label)}</button>
     `).join('');
   }
 
