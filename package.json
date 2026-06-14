@@ -2,7 +2,7 @@
   "name": "zhongguo-traditional-colors",
   "version": "0.1.0",
   "private": false,
-  "description": "中华传统色演示、色卡浏览、配色灵感与素材下载项目。",
+  "description": "Chinese traditional color cards, palette inspiration, and interactive design tools.",
   "type": "module",
   "scripts": {
     "start": "python3 -m http.server 5173",

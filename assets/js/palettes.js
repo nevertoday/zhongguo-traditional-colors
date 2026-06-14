@@ -924,7 +924,7 @@ function paletteCardMarkup(palette) {
         </button>
       </div>
       <footer class="palette-card-footer">
-        <span>${escapeHtml(palette.anchor.name)} · ${escapeHtml(palette.relationLabel)}</span>
+        <span>${escapeHtml(palette.anchor.name)}${escapeHtml(palette.relationLabel)}配色</span>
         <button class="copy-palette-button" type="button" data-copy-palette="${escapeHtml(palette.id)}">
           <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
           整组
