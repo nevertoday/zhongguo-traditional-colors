@@ -35,6 +35,7 @@ const ASSET_VERSION = '20260614-seo3';
 // Root-level pages that also belong in the sitemap, with crawl priority hints.
 const MAIN_PAGES = [
   { path: '', priority: '1.0', changefreq: 'weekly' },
+  { path: 'explorer.html', priority: '0.9', changefreq: 'weekly' },
   { path: 'dictionary.html', priority: '0.9', changefreq: 'weekly' },
   { path: 'palettes.html', priority: '0.8', changefreq: 'weekly' },
   { path: 'generator.html', priority: '0.8', changefreq: 'weekly' },

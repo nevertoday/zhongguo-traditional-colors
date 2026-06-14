@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const pages = [
   'index.html',
+  'explorer.html',
   'dictionary.html',
   'palettes.html',
   'gradients.html',
@@ -17,6 +18,7 @@ const pages = [
 
 const genericAssetPages = [
   'index.html',
+  'explorer.html',
   'dictionary.html',
   'palettes.html',
   'gradients.html',

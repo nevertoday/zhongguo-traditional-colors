@@ -85,7 +85,7 @@ if (!existsSync(path.join(ROOT, 'sitemap.xml'))) {
     fail('sitemap.xml: wrong/missing urlset namespace');
   }
   const locCount = (sitemap.match(/<loc>/g) || []).length;
-  const expected = images.length + 7; // 7 indexable main pages (favorites excluded)
+  const expected = images.length + 8; // 8 indexable main pages (favorites excluded)
   if (locCount !== expected) {
     fail(`sitemap.xml: expected ${expected} <loc> entries, found ${locCount}`);
   }
@@ -101,7 +101,7 @@ if (!existsSync(path.join(ROOT, 'robots.txt'))) {
 }
 
 // 4. Main pages carry canonical + Open Graph; favorites is noindex.
-const indexablePages = ['index.html', 'dictionary.html', 'palettes.html', 'generator.html', 'style-lab.html', 'uses.html', 'skills.html'];
+const indexablePages = ['index.html', 'explorer.html', 'dictionary.html', 'palettes.html', 'generator.html', 'style-lab.html', 'uses.html', 'skills.html'];
 for (const page of indexablePages) {
   const source = read(page);
   if (!source.includes('<link rel="canonical"')) fail(`${page}: missing canonical`);

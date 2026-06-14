@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="沉浸式浏览 742 个中国传统色，查看色名、色值、色系，并快速复制 HEX、RGB、HSL。">
+    <meta name="theme-color" content="#f7f7f4" data-theme-color>
+    <title>中国色浏览器 - 中国传统配色</title>
+    <link rel="canonical" href="https://colors.xiaoxiaodong.ai/explorer.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="中国传统配色">
+    <meta property="og:title" content="中国色浏览器 - 中国传统配色">
+    <meta property="og:description" content="沉浸式浏览 742 个中国传统色，查看色名、色值、色系，并快速复制 HEX、RGB、HSL。">
+    <meta property="og:url" content="https://colors.xiaoxiaodong.ai/explorer.html">
+    <meta property="og:image" content="https://colors.xiaoxiaodong.ai/docs/screenshots/home-gallery.png">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@xiaoxiaodong01">
+    <meta name="twitter:title" content="中国色浏览器 - 中国传统配色">
+    <meta name="twitter:description" content="沉浸式浏览 742 个中国传统色，查看色名、色值、色系，并快速复制 HEX、RGB、HSL。">
+    <meta name="twitter:image" content="https://colors.xiaoxiaodong.ai/docs/screenshots/home-gallery.png">
+    <link rel="icon" href="favicon.svg?v=20260610-6" type="image/svg+xml">
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('theme');
+          if (theme === 'dark' || theme === 'light') {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch (error) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260614-4">
+    <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260614-1">
+    <link rel="stylesheet" href="assets/css/explorer.css?v=20260614-1">
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
+    <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
+  </head>
+  <body data-current-page="explorer">
+    <a class="skip-link" href="#explorer-workspace">跳到中国色浏览器</a>
+
+    <div data-shared-header></div>
+
+    <main class="explorer-page">
+      <section class="explorer-workspace" id="explorer-workspace" aria-labelledby="explorer-title">
+        <div class="explorer-stage" data-explorer-stage>
+          <div class="explorer-stage-inner">
+            <p class="explorer-kicker">中国色浏览器</p>
+            <h1 id="explorer-title" data-explorer-name>正在读取色库</h1>
+            <p class="explorer-note" data-explorer-note>选择一个传统色，查看它在整套色谱中的位置。</p>
+            <div class="explorer-primary-values" aria-label="当前传统色色值">
+              <button type="button" data-copy-value="hex">
+                <span>HEX</span>
+                <strong data-explorer-hex>--</strong>
+              </button>
+              <button type="button" data-copy-value="rgb">
+                <span>RGB</span>
+                <strong data-explorer-rgb>--</strong>
+              </button>
+              <button type="button" data-copy-value="hsl">
+                <span>HSL</span>
+                <strong data-explorer-hsl>--</strong>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="explorer-panel" aria-label="中国色浏览器控制面板">
+          <div class="explorer-panel-head">
+            <span data-explorer-count>742 色</span>
+            <strong data-explorer-index>-- / 742</strong>
+          </div>
+
+          <div class="explorer-controls" aria-label="浏览操作">
+            <button type="button" data-explorer-prev aria-label="上一个颜色" title="上一个颜色">
+              <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+            </button>
+            <button type="button" data-explorer-random>
+              <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
+              随机
+            </button>
+            <button type="button" data-explorer-next aria-label="下一个颜色" title="下一个颜色">
+              <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
+            </button>
+          </div>
+
+          <label class="explorer-search">
+            <span class="sr-only">搜索中国传统色</span>
+            <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
+            <input type="search" data-explorer-search data-color-suggest placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
+          </label>
+
+          <div class="explorer-hues" role="group" aria-label="按色系筛选">
+            <button type="button" data-explorer-hue="all" aria-pressed="true">全部</button>
+            <button type="button" data-explorer-hue="red" aria-pressed="false">红</button>
+            <button type="button" data-explorer-hue="orange" aria-pressed="false">橙</button>
+            <button type="button" data-explorer-hue="yellow" aria-pressed="false">黄</button>
+            <button type="button" data-explorer-hue="green" aria-pressed="false">绿</button>
+            <button type="button" data-explorer-hue="cyan" aria-pressed="false">青</button>
+            <button type="button" data-explorer-hue="blue" aria-pressed="false">蓝</button>
+            <button type="button" data-explorer-hue="purple" aria-pressed="false">紫</button>
+            <button type="button" data-explorer-hue="neutral" aria-pressed="false">灰</button>
+          </div>
+
+          <div class="explorer-reading">
+            <dl>
+              <div>
+                <dt>色系</dt>
+                <dd data-explorer-hue-label>--</dd>
+              </div>
+              <div>
+                <dt>明度</dt>
+                <dd data-explorer-lightness>--</dd>
+              </div>
+              <div>
+                <dt>饱和</dt>
+                <dd data-explorer-saturation>--</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="explorer-spectrum-head">
+            <strong>色谱</strong>
+            <span data-explorer-filter-count>正在读取</span>
+          </div>
+          <div class="explorer-spectrum" data-explorer-spectrum aria-label="传统色色谱"></div>
+
+          <div class="explorer-actions">
+            <span data-explorer-status aria-live="polite">点击色值可复制</span>
+            <a href="dictionary.html" data-explorer-dictionary>
+              字典详情
+              <iconify-icon icon="lucide:arrow-up-right" aria-hidden="true"></iconify-icon>
+            </a>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <div data-shared-footer></div>
+
+    <script src="assets/js/shared-chrome.js?v=20260614-5" defer></script>
+    <script src="assets/data/images.js?v=20260610-6" defer></script>
+    <script src="assets/js/color-search-suggestions.js?v=20260614-1" defer></script>
+    <script src="assets/js/explorer.js?v=20260614-1" defer></script>
+  </body>
+</html>

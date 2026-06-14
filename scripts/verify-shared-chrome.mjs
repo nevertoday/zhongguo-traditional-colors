@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs';
 
-const pages = ['index.html', 'dictionary.html', 'style-lab.html', 'generator.html', 'palettes.html', 'gradients.html', 'uses.html', 'favorites.html', 'skills.html'];
+const pages = ['index.html', 'explorer.html', 'dictionary.html', 'style-lab.html', 'generator.html', 'palettes.html', 'gradients.html', 'uses.html', 'favorites.html', 'skills.html'];
 const pageKeys = {
   'index.html': 'home',
+  'explorer.html': 'explorer',
   'dictionary.html': 'dictionary',
   'style-lab.html': 'style-lab',
   'generator.html': 'generator',
@@ -14,6 +15,7 @@ const pageKeys = {
 };
 const pageScripts = {
   'index.html': 'assets/js/app.js',
+  'explorer.html': 'assets/js/explorer.js',
   'dictionary.html': 'assets/js/dictionary.js',
   'style-lab.html': 'assets/js/app.js',
   'generator.html': 'assets/js/generator.js',
@@ -23,7 +25,7 @@ const pageScripts = {
   'favorites.html': 'assets/js/favorites.js',
   'skills.html': 'assets/js/app.js',
 };
-const expectedNavLabels = ['浏览色卡', '色彩字典', '场景试色', '配色生成', '配色灵感', '渐变逻辑', '用途卡片', '收藏', 'Skills'];
+const expectedNavLabels = ['浏览色卡', '中国色浏览器', '色彩字典', '场景试色', '配色生成', '配色灵感', '渐变逻辑', '用途卡片', '收藏', 'Skills'];
 const sharedChrome = readFileSync('assets/js/shared-chrome.js', 'utf8');
 const oldPaletteChrome = [
   'palette-header',
