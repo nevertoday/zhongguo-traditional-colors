@@ -29,6 +29,10 @@
   ];
 
   const currentPage = document.body?.dataset.currentPage || pageKeyFromPath();
+  // Pages served from a sub-directory (e.g. /colors/) set data-base="../" so the
+  // shared header/footer links resolve back to the site root. Defaults to '' so
+  // root-level pages render exactly as before.
+  const base = document.body?.dataset.base || '';
   const sharedUtils = window.ZH_UTILS || {};
 
   sharedUtils.debounce ||= function debounce(fn, delay) {
@@ -38,6 +42,9 @@
       timer = window.setTimeout(() => fn(...args), delay);
     };
   };
+  // Expose the brand palette so sub-pages (e.g. /colors/) can reuse it for the
+  // footer spectrum instead of hard-coding their own divergent copy.
+  sharedUtils.brandColors ||= brandHoverColors;
   window.ZH_UTILS = sharedUtils;
 
   function pageKeyFromPath() {
@@ -54,7 +61,7 @@
 
   function navHref(page) {
     if (currentPage === 'home' && page.key === 'home') return '#gallery';
-    return page.href;
+    return base + page.href;
   }
 
   function navMarkup() {
@@ -73,7 +80,7 @@
   function headerMarkup() {
     return `
     <header class="site-header">
-      <a class="brand-mark" href="index.html" aria-label="返回中国传统配色首页">
+      <a class="brand-mark" href="${base}index.html" aria-label="返回中国传统配色首页">
         <span>色</span>
         <strong>中国传统配色</strong>
       </a>
@@ -98,7 +105,7 @@
     return `
     <footer class="site-footer">
       <div class="footer-main">
-        <a class="footer-mark" href="index.html" aria-label="返回中国传统配色首页">
+        <a class="footer-mark" href="${base}index.html" aria-label="返回中国传统配色首页">
           <span>色</span>
           <strong>中国传统配色</strong>
         </a>

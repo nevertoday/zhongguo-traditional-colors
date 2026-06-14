@@ -5083,7 +5083,7 @@ body[data-no-gradient-logic] .skills-list::before {
 
 .color-detail-actions {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) repeat(3, auto);
   gap: 12px;
   align-items: center;
   padding: 14px clamp(20px, 3.4vw, 34px);

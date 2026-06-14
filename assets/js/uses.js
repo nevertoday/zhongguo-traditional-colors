@@ -665,6 +665,14 @@ function buildFooterSpectrum() {
 setTheme(currentTheme());
 shuffleOrder();
 buildFooterSpectrum();
+
+// Honor a ?q= search param so deep-links (e.g. from a color detail page) land
+// on pairings anchored to that color name.
+const initialQuery = new URLSearchParams(window.location.search).get('q');
+if (initialQuery && searchInput) {
+  searchInput.value = initialQuery;
+}
+
 rerender();
 
 themeToggle?.addEventListener('click', () => {

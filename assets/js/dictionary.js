@@ -26,6 +26,7 @@
   const detailRelated = document.querySelector('[data-color-detail-related]');
   const detailStatus = document.querySelector('[data-color-detail-status]');
   const detailDownload = document.querySelector('[data-color-detail-download]');
+  const detailPage = document.querySelector('[data-color-detail-page]');
   const detailStyle = document.querySelector('[data-color-detail-style]');
   const themeToggle = document.querySelector('[data-theme-toggle]');
   const themeIcon = document.querySelector('[data-theme-icon]');
@@ -505,6 +506,10 @@
       detailDownload.setAttribute('download', image.file);
       detailDownload.setAttribute('aria-label', `下载 ${name} 色卡`);
     }
+    if (detailPage) {
+      detailPage.href = `colors/${encodeURIComponent(`${image.id}-${name}`)}.html`;
+      detailPage.setAttribute('aria-label', `打开 ${name} 的独立详情页`);
+    }
     if (detailStyle) {
       detailStyle.href = `style-lab.html?color=${encodeURIComponent(image.id)}`;
       detailStyle.setAttribute('aria-label', `用 ${name} 进入场景试色`);
@@ -607,5 +612,13 @@
 
   setTheme(currentTheme());
   buildFooterSpectrum();
+
+  // Honor a ?q= search param so the homepage SearchAction (sitelinks searchbox)
+  // and shared links land on a pre-filtered dictionary view.
+  const initialQuery = new URLSearchParams(window.location.search).get('q');
+  if (initialQuery && dictionarySearch) {
+    dictionarySearch.value = initialQuery;
+  }
+
   renderDictionary();
 })();
