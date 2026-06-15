@@ -153,12 +153,14 @@ for (const [nm, id] of cases) {
 }
 
 /* ── 全库压力扫描 ── */
-let sweepErr = 0, slotN = 0, nud = 0, contractFail = 0;
+// 三态：点名（精确库色）/ 微调（可溯源到某传统色、为可读性改了 hex）/ 无名兜底（凭空算出，无来源）。
+// 闸门只卡「无名兜底」——这才是「每色有名」失守；微调仍是有名色，单独报告。
+let sweepErr = 0, slotN = 0, fab = 0, adj = 0, contractFail = 0;
 for (const c of T.ALL()) for (const mode of ['dark', 'light']) {
   let p; try { p = T.build(c.id, mode); } catch (e) { sweepErr++; continue; }
   const bg = p.ui.background.hex;
   for (const s of p.slots) {
-    slotN++; if (s.nudged) nud++;
+    slotN++; if (s.nudged) { adj++; if (!s.name) fab++; }
     if (s.group === 'ui' && s.key === 'selection') continue;
     const fl = T.floorFor(s.key, mode);
     if (fl && CC.contrast(s.hex, bg) < fl - 0.01) contractFail++;
@@ -167,12 +169,12 @@ for (const c of T.ALL()) for (const mode of ['dark', 'light']) {
 }
 if (sweepErr) fail(`全库扫描: ${sweepErr} 例抛错`);
 if (contractFail) fail(`全库扫描: ${contractFail} 处契约违例`);
-const nudRate = nud / slotN;
-if (nudRate > 0.08) fail(`全库兜底率 ${(nudRate * 100).toFixed(2)}% 超过 8% 阈值`);
+const fabRate = fab / slotN, adjRate = adj / slotN;
+if (fabRate > 0.08) fail(`全库「无名兜底」率 ${(fabRate * 100).toFixed(2)}% 超过 8% 阈值`);
 
 if (failures.length) {
   console.error('终端配色校验失败:\n' + failures.slice(0, 40).map(f => '  ✗ ' + f).join('\n'));
   process.exitCode = 1;
 } else {
-  console.log(`终端配色校验通过：4 命名样例 × 暗/亮 契约+三格式解析，全库 ${T.ALL().length}×2 扫描 0 抛错 0 违例，兜底率 ${(nudRate * 100).toFixed(2)}%。`);
+  console.log(`终端配色校验通过：4 命名样例 × 暗/亮 契约+六格式解析，全库 ${T.ALL().length}×2 扫描 0 抛错 0 违例；无名兜底 ${(fabRate * 100).toFixed(2)}%（含其内的微调共 ${(adjRate * 100).toFixed(2)}% 为可读性改过 hex 但仍有名）。`);
 }
