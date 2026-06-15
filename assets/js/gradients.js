@@ -42,35 +42,35 @@
     },
     {
       key: 'analogous',
-      label: '邻近多色',
+      label: '邻近组',
       deck: '5 color analogous',
       relationKeys: ['lighter', 'analogous', 'same', 'secondary', 'darker'],
       copyHint: '适合海报、横幅、柔和品牌视觉',
     },
     {
       key: 'split',
-      label: '分裂互补',
+      label: '互补组',
       deck: '5 color split',
       relationKeys: ['lighter', 'splitComplementary', 'analogous', 'accent', 'darker'],
       copyHint: '适合强对比但不刺眼的主视觉',
     },
     {
       key: 'triadic',
-      label: '三角色',
+      label: '三色组',
       deck: '4 color triadic',
       relationKeys: ['lighter', 'triadic', 'same', 'accent'],
       copyHint: '适合插画、数据分组、活动页',
     },
     {
       key: 'tetradic',
-      label: '四角色',
+      label: '四色组',
       deck: '5 color tetradic',
       relationKeys: ['lighter', 'tetradic', 'same', 'accent', 'darker'],
       copyHint: '适合复杂界面、系列卡片、专题页',
     },
     {
       key: 'temperature',
-      label: '冷暖对照',
+      label: '冷暖组',
       deck: '5 color temperature',
       relationKeys: ['lighter', 'temperatureContrast', 'same', 'neutral', 'darker'],
       copyHint: '适合季节、材质、空间氛围切换',
@@ -278,23 +278,17 @@
       { ...close, role: '邻近' },
       { ...deep, role: '深阶' },
     ];
-    const paths = [
-      { from: tones[0], to: tones[1], label: '浅阶 -> 本色' },
-      { from: tones[1], to: tones[2], label: '本色 -> 邻近' },
-      { from: tones[1], to: tones[3], label: '本色 -> 深阶' },
-      { from: tones[0], to: tones[3], label: '浅阶 -> 深阶' },
-    ];
     const pairs = [
-      [tones[0], tones[2]],
-      [tones[1], tones[3]],
-      [tones[2], tones[3]],
-      [tones[0], tones[1]],
-    ];
+      { from: tones[0], to: tones[3], label: '浅阶 -> 深阶' },
+      { from: tones[1], to: tones[2], label: '本色 -> 邻近' },
+      { from: tones[3], to: tones[2], label: '深阶 -> 邻近' },
+      { from: tones[0], to: tones[1], label: '浅阶 -> 本色' },
+    ].map(pairWithCss);
 
     const type = TYPE_BY_KEY.get('tonal');
     const stops = tones.map((tone, index) => ({ ...tone, stop: Math.round((index / (tones.length - 1)) * 100) }));
-    const css = `linear-gradient(90deg, ${stops.map((tone) => `${tone.hex} ${tone.stop}%`).join(', ')})`;
-    return { anchor, tones, stops, paths, pairs, hsl, type, css };
+    const css = pairs[0].css;
+    return { anchor, tones, stops, paths: pairs, pairs, hsl, type, css };
   }
 
   function fallbackTone(anchor, role, index, total) {
@@ -328,7 +322,7 @@
     };
     const hsl = harmonies[image.id]?.hsl || hslFromRgb(rgbFromHex(anchor.hex));
     const excluded = new Set([anchor.id]);
-    const targetCount = type.key === 'triadic' ? 4 : 5;
+    const targetCount = 4;
     const picked = relatedColors(anchor, type.relationKeys, excluded, targetCount - 1);
     const rawStops = [anchor, ...picked];
 
@@ -336,7 +330,7 @@
       rawStops.push(fallbackTone(anchor, type.label, rawStops.length, targetCount));
     }
 
-    const anchorSlot = type.key === 'triadic' ? 1 : 2;
+    const anchorSlot = 1;
     const ordered = [...rawStops.slice(1, anchorSlot + 1), anchor, ...rawStops.slice(anchorSlot + 1)]
       .slice(0, targetCount);
     const stops = ordered.map((tone, index) => ({
@@ -344,20 +338,22 @@
       role: stopRoleFor(type, index, anchorSlot, ordered.length),
       stop: Math.round((index / (ordered.length - 1)) * 100),
     }));
-    const paths = stops.slice(0, -1).map((tone, index) => ({
-      from: tone,
-      to: stops[index + 1],
-      label: `${tone.name} -> ${stops[index + 1].name}`,
-    }));
     const pairs = [
-      [stops[0], stops[1]],
-      [stops[Math.max(0, anchorSlot - 1)], stops[anchorSlot]],
-      [stops[anchorSlot], stops[Math.min(stops.length - 1, anchorSlot + 1)]],
-      [stops[0], stops[stops.length - 1]],
-    ];
-    const css = `linear-gradient(90deg, ${stops.map((tone) => `${tone.hex} ${tone.stop}%`).join(', ')})`;
+      { from: stops[0], to: stops[3], label: `${stops[0].name} -> ${stops[3].name}` },
+      { from: stops[1], to: stops[2], label: `${stops[1].name} -> ${stops[2].name}` },
+      { from: stops[3], to: stops[2], label: `${stops[3].name} -> ${stops[2].name}` },
+      { from: stops[0], to: stops[1], label: `${stops[0].name} -> ${stops[1].name}` },
+    ].map(pairWithCss);
+    const css = pairs[0].css;
 
-    return { anchor, tones: stops.slice(0, 4), stops, paths, pairs, hsl, type, css };
+    return { anchor, tones: stops.slice(0, 4), stops, paths: pairs, pairs, hsl, type, css };
+  }
+
+  function pairWithCss(pair) {
+    return {
+      ...pair,
+      css: `linear-gradient(90deg, ${pair.from.hex} 0%, ${pair.to.hex} 100%)`,
+    };
   }
 
   function imageMatches(image, query, hue) {
@@ -399,25 +395,31 @@
     `;
   }
 
-  function multiStopTrackMarkup(logic, compact = false, showLabels = true) {
-    const labels = showLabels
-      ? logic.stops.map((tone) => `<small>${escapeHtml(tone.role)}</small>`).join('')
-      : '';
+  function pairMarkup(pair, index, compact = false) {
     return `
-      <span class="gradient-multi-track${compact ? ' gradient-multi-track-compact' : ''}" style="--gradient-css: ${escapeAttribute(logic.css)}" aria-label="${escapeAttribute(logic.type.label)} 多色渐变">
-        ${labels}
-      </span>
+      <button class="gradient-pair${compact ? ' gradient-pair-compact' : ''}" type="button" data-gradient-copy-pair="${escapeAttribute(`${pair.label}: ${pair.css}`)}" style="--pair-from: ${escapeAttribute(pair.from.hex)}; --pair-to: ${escapeAttribute(pair.to.hex)}" aria-label="复制双色渐变 ${escapeAttribute(pair.label)}">
+        <span class="gradient-path-track" aria-hidden="true"></span>
+        <small>${escapeHtml(pair.from.hex.replace('#', ''))}</small>
+        <small>${escapeHtml(pair.to.hex.replace('#', ''))}</small>
+      </button>
+    `;
+  }
+
+  function pairListMarkup(logic, compact = false) {
+    return `
+      <div class="gradient-pair-list${compact ? ' gradient-pair-list-compact' : ''}" aria-label="${escapeAttribute(logic.type.label)} 双色渐变组合">
+        ${logic.pairs.map((pair, index) => pairMarkup(pair, index, compact)).join('')}
+      </div>
     `;
   }
 
   function copyTextFor(logic) {
     const toneLines = logic.stops.map((tone) => `${tone.role}: ${tone.name} ${tone.hex} ${tone.stop}%`);
-    const pathLines = logic.paths.map((path) => `${path.label}: ${path.from.hex} -> ${path.to.hex}`);
+    const pathLines = logic.pairs.map((path) => `${path.label}: ${path.from.hex} -> ${path.to.hex}\nCSS: ${path.css}`);
     return [
-      `${logic.anchor.name} ${logic.type.label} 渐变逻辑`,
+      `${logic.anchor.name} ${logic.type.label} 双色渐变组`,
       ...toneLines,
       ...pathLines,
-      `CSS: ${logic.css}`,
     ].join('\n');
   }
 
@@ -444,13 +446,13 @@
         <div class="gradient-card-head">
           <span>${escapeHtml(type.label)}</span>
           <h3><a href="${escapeAttribute(detailUrlFor(image, type.key))}">${escapeHtml(logic.anchor.name)}</a></h3>
-          <small>${escapeHtml(HUE_LABELS[hue] || '传统色')} · ${escapeHtml(logic.stops.length)} 个节点渐变</small>
+          <small>${escapeHtml(HUE_LABELS[hue] || '传统色')} · 4 色 / ${escapeHtml(String(logic.pairs.length))} 条双色渐变</small>
         </div>
-        <p class="gradient-card-logic">以 ${escapeHtml(logic.anchor.name)} 为本色，按${escapeHtml(type.label)}配色生成渐变。</p>
-        ${multiStopTrackMarkup(logic, true, false)}
         <div class="gradient-tone-grid" aria-label="${escapeAttribute(logic.anchor.name)} 的四个渐变节点">
           ${logic.stops.map(toneMarkup).join('')}
         </div>
+        <div class="gradient-card-rule"></div>
+        ${pairListMarkup(logic, true)}
       </article>
     `;
   }
@@ -570,7 +572,7 @@
         <div class="gradient-detail-copy">
           <span class="section-kicker">Gradient Detail</span>
           <h2>${escapeHtml(logic.anchor.name)} · ${escapeHtml(logic.type.label)}</h2>
-          <p>${escapeHtml(logic.type.copyHint)}。这张色板由 ${logic.stops.length} 个传统色节点组成，可以直接复制为 CSS 多色渐变。</p>
+          <p>${escapeHtml(logic.type.copyHint)}。这张色板由 4 个传统色组成，下方每一条都是独立的 2 色渐变。</p>
           <div class="gradient-detail-actions">
             <button class="gradient-action" type="button" data-gradient-copy-detail="${escapeAttribute(image.id)}" data-gradient-copy-type="${escapeAttribute(typeKey)}">
               <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
@@ -580,7 +582,7 @@
             <a class="gradient-detail-link" href="gradients.html">返回全部渐变</a>
           </div>
         </div>
-        ${multiStopTrackMarkup(logic)}
+        ${pairListMarkup(logic)}
         <div class="gradient-detail-stops">
           ${logic.stops.map((tone) => `
             <a href="colors/${escapeAttribute((imagesById.get(tone.id)?.file || `${tone.id}.png`).replace(/\.png$/, '.html'))}" class="gradient-detail-stop" style="--tone: ${escapeAttribute(tone.hex)}; --tone-ink: ${textColorFor(tone.hex)}">
@@ -673,6 +675,11 @@
     const stopButton = event.target.closest('[data-gradient-copy-stop]');
     if (stopButton) {
       writeClipboard(stopButton.dataset.gradientCopyStop).then(() => showToast(`已复制 ${stopButton.dataset.gradientCopyStop}`));
+      return;
+    }
+    const pairButton = event.target.closest('[data-gradient-copy-pair]');
+    if (pairButton) {
+      writeClipboard(pairButton.dataset.gradientCopyPair).then(() => showToast('已复制双色渐变'));
       return;
     }
     if (event.target.closest('a, button')) return;

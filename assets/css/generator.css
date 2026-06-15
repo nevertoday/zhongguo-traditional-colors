@@ -344,13 +344,39 @@
 }
 
 .generator-value {
-  display: block;
   color: currentColor;
   font-family: var(--font-rounded);
   font-size: 0.74rem;
   font-weight: 850;
   line-height: 1.25;
   opacity: 0.56;
+}
+
+.generator-copy-value {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  color: currentColor;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: opacity 160ms ease, transform 180ms var(--ease-out-expo), text-decoration-color 160ms ease;
+}
+
+.generator-copy-value:hover,
+.generator-copy-value:focus-visible {
+  opacity: 1;
+  outline: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transform: translateY(-1px);
 }
 
 .generator-color-tools {

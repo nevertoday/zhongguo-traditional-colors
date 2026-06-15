@@ -4611,90 +4611,10 @@ body[data-no-gradient-logic] .skills-list::before {
   min-height: 100vh;
 }
 
-.dictionary-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
-  gap: clamp(28px, 5vw, 72px);
-  align-items: end;
-  width: min(var(--content), calc(100% - 40px));
-  margin: 0 auto;
-  padding: clamp(72px, 10vw, 132px) 0 clamp(48px, 7vw, 92px);
-}
-
-.dictionary-hero-copy {
-  min-width: 0;
-}
-
-.dictionary-hero h1 {
-  margin-bottom: 20px;
-}
-
-.dictionary-hero p {
-  max-width: 620px;
-  margin-bottom: 30px;
-  color: var(--ink-soft);
-  font-size: clamp(1rem, 1.4vw, 1.16rem);
-}
-
-.dictionary-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-width: 620px;
-  margin: 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.dictionary-stats div {
-  padding: 16px clamp(12px, 2vw, 20px);
-  border-left: 1px solid var(--line);
-}
-
-.dictionary-stats div:first-child {
-  border-left: 0;
-  padding-left: 0;
-}
-
-.dictionary-stats dt,
-.dictionary-stats dd {
-  margin: 0;
-}
-
-.dictionary-stats dt {
-  font-family: var(--font-title);
-  font-size: clamp(1.8rem, 4vw, 3.2rem);
-  font-weight: 900;
-  line-height: 1;
-}
-
-.dictionary-stats dd {
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 0.84rem;
-  font-weight: 650;
-}
-
-.dictionary-hero-spectrum {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(12px, 1.8vw, 22px);
-  align-self: stretch;
-  align-content: end;
-  padding-bottom: 8px;
-}
-
-.dictionary-hero-spectrum span {
-  aspect-ratio: 1;
-  background: var(--swatch);
-  border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 8px color-mix(in srgb, var(--solid) 24%, transparent);
-}
-
 .dictionary-section {
   width: min(var(--content), calc(100% - 40px));
   margin: 0 auto;
-  padding: 0 0 clamp(72px, 9vw, 118px);
+  padding: clamp(42px, 6vw, 74px) 0 clamp(72px, 9vw, 118px);
 }
 
 .dictionary-toolbar {
@@ -6588,18 +6508,6 @@ body[data-no-gradient-logic] .skills-list::before {
     padding-top: 58px;
   }
 
-  .dictionary-hero {
-    grid-template-columns: 1fr;
-    align-items: start;
-    padding-top: 58px;
-  }
-
-  .dictionary-hero-spectrum {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    max-width: 620px;
-    padding-bottom: 0;
-  }
-
   .color-detail-body {
     grid-template-columns: 1fr;
   }
@@ -6883,33 +6791,8 @@ body[data-no-gradient-logic] .skills-list::before {
     border-bottom: 0;
   }
 
-  .dictionary-hero,
   .dictionary-section {
     width: calc(100% - 40px);
-  }
-
-  .dictionary-hero {
-    padding-top: 42px;
-    padding-bottom: 52px;
-  }
-
-  .dictionary-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .dictionary-stats div,
-  .dictionary-stats div:first-child {
-    padding: 14px 0;
-    border-left: 0;
-    border-top: 1px solid var(--line);
-  }
-
-  .dictionary-stats div:first-child {
-    border-top: 0;
-  }
-
-  .dictionary-hero-spectrum {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .dictionary-toolbar {
@@ -6976,7 +6859,6 @@ body[data-no-gradient-logic] .skills-list::before {
 
   .hero-section,
   .studio-hero,
-  .dictionary-hero,
   .dictionary-section,
   .intro-band,
   .section-shell,
@@ -7724,19 +7606,10 @@ body[data-no-gradient-logic] .skills-list::before {
     padding-bottom: 46px;
   }
 
-  .dictionary-hero {
-    width: 100%;
-    padding-top: 30px;
-    padding-bottom: 44px;
-  }
-
   .dictionary-section {
     width: 100%;
+    padding-top: 30px;
     padding-bottom: 64px;
-  }
-
-  .dictionary-hero-spectrum {
-    gap: 10px;
   }
 
   .dictionary-card {

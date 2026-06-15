@@ -134,6 +134,9 @@
     board.querySelectorAll('[data-copy-color]').forEach((button) => {
       button.addEventListener('click', () => copyColor(Number(button.dataset.copyColor)));
     });
+    board.querySelectorAll('[data-copy-color-value]').forEach((button) => {
+      button.addEventListener('click', () => copyColorValue(Number(button.dataset.copyColorValue), button.dataset.copyValueKind));
+    });
     board.querySelectorAll('[data-lock-color]').forEach((button) => {
       button.addEventListener('click', () => toggleLock(Number(button.dataset.lockColor)));
     });
@@ -166,10 +169,16 @@
           </button>
         </div>
         <div class="generator-color-main">
-          <strong class="generator-hex">${color.cleanHex.replace('#', '')}</strong>
+          <button type="button" class="generator-hex generator-copy-value" data-copy-color-value="${index}" data-copy-value-kind="hex" aria-label="复制 ${escapeHtml(color.name)} HEX ${color.cleanHex}">
+            ${color.cleanHex.replace('#', '')}
+          </button>
           <span class="generator-name">${escapeHtml(color.name)}</span>
-          <span class="generator-value">RGB ${rgb.r} ${rgb.g} ${rgb.b}</span>
-          <span class="generator-value">HSL ${hsl.h} ${hsl.s} ${hsl.l}</span>
+          <button type="button" class="generator-value generator-copy-value" data-copy-color-value="${index}" data-copy-value-kind="rgb" aria-label="复制 ${escapeHtml(color.name)} RGB ${rgb.r} ${rgb.g} ${rgb.b}">
+            RGB ${rgb.r} ${rgb.g} ${rgb.b}
+          </button>
+          <button type="button" class="generator-value generator-copy-value" data-copy-color-value="${index}" data-copy-value-kind="hsl" aria-label="复制 ${escapeHtml(color.name)} HSL ${hsl.h} ${hsl.s} ${hsl.l}">
+            HSL ${hsl.h} ${hsl.s} ${hsl.l}
+          </button>
         </div>
         <div class="generator-suggestions" aria-label="${escapeHtml(color.name)} 推荐替换">
           ${suggestions.map((suggestion) => `
@@ -416,6 +425,27 @@
     const color = palette[index];
     copyText(`${color.name} ${color.cleanHex}`);
     showToast(`已复制 ${color.name}`);
+  }
+
+  function copyColorValue(index, kind = 'hex') {
+    const color = palette[index];
+    if (!color) return;
+    const value = colorValue(color, kind);
+    copyText(value);
+    showToast(`已复制 ${color.name} ${kind.toUpperCase()}`);
+  }
+
+  function colorValue(color, kind) {
+    if (kind === 'rgb') {
+      const rgb = hexToRgb(color.cleanHex);
+      return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    }
+    if (kind === 'hsl') {
+      const rgb = hexToRgb(color.cleanHex);
+      const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+      return `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+    }
+    return color.cleanHex;
   }
 
   function toggleLock(index) {

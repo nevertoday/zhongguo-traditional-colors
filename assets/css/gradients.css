@@ -64,7 +64,8 @@
 
 .gradient-huebar button:hover,
 .gradient-huebar button:focus-visible {
-  background: var(--panel-soft);
+  color: var(--hover-text);
+  background: var(--hover-bg);
   outline: none;
 }
 
@@ -172,16 +173,16 @@
 
 .gradient-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
   gap: 16px;
 }
 
 .gradient-card {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto auto 1fr;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
   gap: 12px;
-  aspect-ratio: 1.08 / 1;
+  aspect-ratio: 3 / 4;
   min-width: 0;
   padding: clamp(16px, 1.5vw, 22px);
   overflow: hidden;
@@ -271,10 +272,10 @@
 
 .gradient-tone-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
-  gap: 10px;
-  align-content: end;
-  justify-items: stretch;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 18px);
+  align-content: center;
+  justify-items: center;
 }
 
 .gradient-multi-track {
@@ -310,25 +311,22 @@
 
 .gradient-tone {
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  width: 100%;
+  width: min(100%, 88px);
   min-width: 0;
   gap: 7px;
   align-items: center;
-  justify-items: start;
-  padding: 6px;
+  justify-items: center;
+  padding: 0;
   color: inherit;
-  background: color-mix(in srgb, var(--tone) 12%, var(--panel));
-  border: 1px solid color-mix(in srgb, var(--tone) 34%, var(--line));
+  background: transparent;
+  border: 0;
   cursor: copy;
-  text-align: left;
+  text-align: center;
   transition: background 160ms linear, border-color 160ms linear, transform 160ms linear;
 }
 
 .gradient-tone:hover,
 .gradient-tone:focus-visible {
-  background: color-mix(in srgb, var(--tone) 18%, var(--panel));
-  border-color: color-mix(in srgb, var(--tone) 64%, var(--line-strong));
   outline: none;
   transform: translateY(-1px);
 }
@@ -340,12 +338,11 @@
 
 .gradient-tone-swatch {
   display: grid;
-  grid-row: span 2;
-  width: 28px;
+  width: min(100%, 70px);
   aspect-ratio: 1;
   place-items: center;
   background: var(--tone);
-  border: 0;
+  border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
   border-radius: 50%;
   box-shadow: none;
   transition: transform 160ms linear, box-shadow 160ms linear;
@@ -358,7 +355,7 @@
 }
 
 .gradient-tone strong {
-  color: color-mix(in srgb, var(--ink) 82%, var(--tone));
+  color: var(--ink);
   font-family: var(--font-rounded);
   font-size: 0.76rem;
   font-weight: 850;
@@ -379,6 +376,59 @@
 .gradient-card-rule {
   height: 1px;
   background: color-mix(in srgb, var(--ink) 22%, transparent);
+}
+
+.gradient-pair-list {
+  display: grid;
+  gap: 6px;
+}
+
+.gradient-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding: 0;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  cursor: copy;
+  font-family: var(--font-rounded);
+  font-size: 0.68rem;
+  font-weight: 750;
+  text-align: left;
+}
+
+.gradient-path-track {
+  display: block;
+  width: 100%;
+  height: 18px;
+  background: linear-gradient(90deg, var(--pair-from) 0%, var(--pair-to) 100%);
+  border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  border-radius: 999px;
+}
+
+.gradient-pair:hover,
+.gradient-pair:focus-visible {
+  color: var(--ink);
+  outline: none;
+}
+
+.gradient-pair:hover .gradient-path-track,
+.gradient-pair:focus-visible .gradient-path-track {
+  border-color: color-mix(in srgb, var(--ink) 34%, transparent);
+  transform: translateY(-1px);
+}
+
+.gradient-pair small {
+  min-width: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.gradient-pair span {
+  min-width: 0;
 }
 
 .gradient-empty {
@@ -594,12 +644,12 @@
   }
 
   .gradient-tone-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
 
   .gradient-tone-swatch {
-    width: 28px;
+    width: 74px;
   }
 
   .gradient-multi-track {
