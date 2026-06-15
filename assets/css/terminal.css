@@ -161,6 +161,7 @@
 .term-root .sp .src{flex:1;font-size:11px}
 .term-root .sp .src .nm{font-family:var(--cn);color:var(--ash)}
 .term-root .sp .src .algo{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:#e8a04b;border:1px solid rgba(232,160,75,.4);padding:1px 5px;text-transform:uppercase}
+.term-root .sp .src .adj{font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;color:var(--ash2);border:1px solid var(--line2);padding:0 4px;margin-left:7px;white-space:nowrap}
 .term-root .sp .right{display:flex;align-items:center;gap:8px}
 .term-root .sp .ok{font-family:var(--mono);font-size:10px;color:var(--ash2)}
 .term-root .sp .aa{font-family:var(--mono);font-size:9px;padding:1px 4px;letter-spacing:.04em}

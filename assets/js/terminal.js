@@ -98,16 +98,22 @@
     $('[data-anchor-oklch]').textContent = window.ZH_COLOR_CORE.oklchStr(p.anchor.hex);
     $('[data-anchor-slot]').textContent = '占 ' + p.anchorSlot + ' 槽';
 
-    // 16 色板带
+    // 三态：点名（精确库色）/ 微调（有名色，为可读性改过 hex）/ 兜底（无名，凭空算出）
+    const adjusted = s => s.nudged && s.name, fabricated = s => s.nudged && !s.name;
+
+    // 16 色板带（角标只标真·无名兜底；微调仍是有名色，不打标记保持整洁）
     $('[data-strip]').innerHTML = p.order.map((k, i) => {
       const t = p.ansi[k];
-      return `<span class="chip${t.nudged ? ' nud' : ''}" title="${k} · ${t.name || '算法兜底'} ${t.hex.toUpperCase()}">`
+      const tag = t.nudged ? (t.name ? '微调' : '算法兜底') : '点名';
+      return `<span class="chip${fabricated(t) ? ' nud' : ''}" title="${k} · ${t.name || '算法兜底'}（${tag}） ${t.hex.toUpperCase()}">`
         + `<i style="background:${t.hex}"></i><b>${i}</b></span>`;
     }).join('');
 
     // 标本（16 ANSI + 4 UI）
     $('[data-specimen]').innerHTML = p.slots.map(s => {
-      const src = s.nudged ? `<span class="algo">算法兜底</span>` : `<span class="nm">${s.name || '—'}</span>`;
+      const src = fabricated(s) ? `<span class="algo">算法兜底</span>`
+        : adjusted(s) ? `<span class="nm">${s.name}</span><span class="adj" title="可溯源到该传统色，为可读性微调了色值">微调</span>`
+        : `<span class="nm">${s.name || '—'}</span>`;
       const fl = T.floorFor(s.key, state.mode);
       const aa = fl ? `<span class="aa ${s.contrast >= fl ? 'ok' : 'no'}">${s.contrast.toFixed(1)}</span>` : '';
       return `<div class="sp"><i style="background:${s.hex}"></i>`
@@ -116,11 +122,13 @@
         + `<span class="right"><span class="ok">${s.hex.toUpperCase()}</span>${aa}</span></div>`;
     }).join('');
 
-    const named = p.slots.filter(s => !s.nudged).length, nud = p.slots.length - named;
-    $('[data-stat]').textContent = `${p.slots.length} 槽 · 点名 ${named} / 兜底 ${nud}`;
+    const exact = p.slots.filter(s => !s.nudged).length;
+    const adj = p.slots.filter(adjusted).length, fab = p.slots.filter(fabricated).length;
+    const prov = `点名 ${exact}` + (adj ? ` · 微调 ${adj}` : '') + (fab ? ` · 兜底 ${fab}` : '');
+    $('[data-stat]').textContent = `${p.slots.length} 槽 · ${prov}`;
     // fetch 屏的动态信息
     const ft = $('[data-fetch-theme]'); if (ft) ft.textContent = `${p.anchor.name} · NO.${p.anchor.id} · ${state.mode === 'dark' ? '暗色' : '亮色'}`;
-    const fp = $('[data-fetch-prov]'); if (fp) fp.textContent = `16 ANSI + 4 UI · 点名 ${named} / 兜底 ${nud}`;
+    const fp = $('[data-fetch-prov]'); if (fp) fp.textContent = `16 ANSI + 4 UI · ${prov}`;
 
     renderExport();
     // 换锚色只重染 CSS 变量，不重放入场动画 —— 切换瞬时、顺滑。

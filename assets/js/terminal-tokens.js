@@ -19,17 +19,21 @@
   'use strict';
   const CC = window.ZH_COLOR_CORE;
   if (!CC) { console.error('[Terminal] 需要先加载 assets/js/color-core.js'); return; }
-  const { hexOklab, oklabHex, contrast, ensure, hueOf, chromaOf, hueDist, pickNeutral, REC } = CC;
+  const { hexOklab, oklabHex, contrast, ensure, boostChroma, hueOf, chromaOf, hueDist, pickNeutral, REC } = CC;
   const ALL = CC.ALL();
 
   /* ── 可读性契约（性格旋钮）── */
   const LEGIBILITY = {
-    fgBg: 7,          // foreground vs background（终端长时阅读，逼近 AAA）
-    chromatic: 4.5,   // 6 彩色 + 亮端 white/bright_white（暗底上必须跳得出来）
-    dimGray: 3.0,     // bright_black 注释灰：Claude Code 的副文本主力，盯一天需略提到 3.0（仍偏暗但更耐读）
-    cursor: 3.5,      // 光标块必须看得见
-    selection: 4,     // 选中条上的正文（foreground）要可读
-    redGreenHue: 25,  // red 槽与 green 槽的最小 OKLab 色相分离（diff/git + 色盲）
+    fgBg: 7,            // foreground vs background（终端长时阅读，逼近 AAA）
+    chromatic: 4.5,     // 6 彩色 + 亮端 white/bright_white（暗底上必须跳得出来）
+    chromaFloor: 0.06,  // 增彩兜底只救「接近中性」的彩色槽（如亮色青常掉到 0.04）；更跳靠打分优先真实饱和色（保名）
+    dimGray: 3.0,       // bright_black 注释灰：Claude Code 的副文本主力，盯一天需略提到 3.0（仍偏暗但更耐读）
+    cursor: 3.5,        // 光标块必须看得见
+    selection: 4,       // 选中条上的正文（foreground）要可读
+    selVisible: 1.9,    // 选区相对背景的最小对比：让高亮带本身看得见，不只是其上正文可读
+    brightStep: 0.05,   // bright_X 相对常规色的最小 OKLab 明度提升：bright 必须「更亮」而非偏色
+    anchorAvoid: 18,    // 非锚色彩色槽与锚色色相的最小间隔：锚色占一槽时把邻槽推开，防青绿/黄绿拥挤
+    redGreenHue: 25,    // red 槽与 green 槽的最小 OKLab 色相分离（diff/git + 色盲）
   };
 
   /* ── 各槽目标 OKLab 明度（暗色优先；只有 bg/fg/彩色窗 随模式翻转，黑白端不翻转）── */
@@ -50,7 +54,6 @@
   // 预算全库的 OKLab 明度/彩度/色相，避免每槽重算。
   const LAB = ALL.map(c => ({ rec: c, L: hexOklab(c.hex).L, C: chromaOf(c.hex), h: hueOf(c.hex) }));
 
-  const labL = hex => hexOklab(hex).L;
   const named = rec => ({ hex: rec.hex, name: rec.name, id: rec.id, nudged: false });
 
   // 每个槽对 background 的对比度下限（亮端中性只在暗色模式下要求；暗端 black 永不要求）。
@@ -65,24 +68,44 @@
     return LEGIBILITY.chromatic;                                // 6 彩色（含 bright_*）
   }
 
+  /* ── 选定真实色后的收口：太灰则 OKLab 增彩、再保对比度。
+     改了 hex 就标 nudged（微调）并清 id，但保留来源色名 —— 它仍可溯源到这支传统色，不是凭空兜底。 ── */
+  function finishChromatic(rec, bgHex, targetHue) {
+    let hex = rec.hex;
+    const colorless = chromaOf(hex) < 1e-3;                     // 近乎纯灰：没有色相可放大，直接增彩只会得到灰色的「红/绿…」
+    if (colorless) {                                           // → 在目标色相上合成最低彩度（中性家族锚色如「黑」才会走到）
+      const o = hexOklab(hex), rad = targetHue * Math.PI / 180, c0 = LEGIBILITY.chromaFloor;
+      hex = oklabHex({ L: o.L, a: c0 * Math.cos(rad), b: c0 * Math.sin(rad) });
+    }
+    const b = boostChroma(hex, LEGIBILITY.chromaFloor);        // 太灰（但有色相）→ 推到彩度下限（保色相/明度）
+    const c = contrast(b.hex, bgHex) >= LEGIBILITY.chromatic ? { hex: b.hex, nudged: false } : ensure(b.hex, bgHex, LEGIBILITY.chromatic);
+    const tweaked = colorless || b.boosted || c.nudged;
+    // 合成了色相 → 不再是来源色，诚实去名（兜底）；仅增彩/提亮 → 保名（微调）
+    return { hex: c.hex, name: colorless ? null : rec.name, id: tweaked ? null : rec.id, nudged: tweaked };
+  }
+
   /* ── 从全库为某色相槽点名一个真实色 ── */
   function pickChromatic(targetHue, anchorHue, anchorTemp, family, bgHex, mode) {
     const [lo, hi] = TSURF[mode].colorWin;
+    const floor = LEGIBILITY.chromaFloor;
     const scored = LAB.map(x => {
       let s = hueDist(x.h, targetHue);                          // 色相最近为主
-      if (x.C < 0.06) s += (0.06 - x.C) * 700;                  // 太灰的不要（终端要跳）
+      s -= Math.min(x.C, 0.2) * 55;                             // 奖励饱和：同窗内优先更跳的（治品红/青发灰）
+      if (x.C < floor) s += (floor - x.C) * 900;                // 太灰强罚
       if (x.L < lo) s += (lo - x.L) * 130;                      // 落在明度窗外受罚
       if (x.L > hi) s += (x.L - hi) * 130;
+      const da = hueDist(x.h, anchorHue);                       // 远离锚色色相：锚色占一槽，邻槽别挤上去（治青绿/黄绿拥挤）
+      if (da < LEGIBILITY.anchorAvoid) s += (LEGIBILITY.anchorAvoid - da) * 9;
       if (family.has(x.rec.id)) s -= 16;                        // 锚色族加成：让一家人优先
       if (x.rec.temperature === anchorTemp) s -= 4;             // 冷暖对齐微加成
       return { x, s };
     }).filter(o => hueDist(o.x.h, targetHue) < 38)              // 锁死色相窗，绝不跑偏到别的色相
       .sort((a, b) => a.s - b.s);
-    // 色相窗内，取过对比度的最优分；都不过则取最优分再 OKLab 兜底。
-    for (const o of scored) if (contrast(o.x.rec.hex, bgHex) >= LEGIBILITY.chromatic) return named(o.x.rec);
     if (!scored.length) return null;
-    const e = ensure(scored[0].x.rec.hex, bgHex, LEGIBILITY.chromatic);
-    return { hex: e.hex, name: scored[0].x.rec.name, id: scored[0].x.rec.id, nudged: e.nudged };
+    // 色相窗内取过对比度的最优分；都不过取最优分。再统一收口（增彩 + 对比度兜底）。
+    let chosen = null;
+    for (const o of scored) if (contrast(o.x.rec.hex, bgHex) >= LEGIBILITY.chromatic) { chosen = o.x.rec; break; }
+    return finishChromatic(chosen || scored[0].x.rec, bgHex, targetHue);
   }
 
   /* ── 锚色占自己的同色相槽（露脸契约）── */
@@ -99,19 +122,21 @@
   /* ── bright_X：常规色 → 更亮但「保色」的真实色 → OKLab 提亮兜底 ──
      关键：bright 要更亮/更跳，但必须仍是同一个颜色 —— 不能褪成粉白（明度设上限、饱和度设下限）。
      候选取自全库同色相更亮色，并对锚色族的 lighter 给一点偏好；按「贴近目标明度 + 偏饱和」打分。 */
-  function brighten(normal, bgHex, mode) {
+  function brighten(normal, bgHex) {
     const o = hexOklab(normal.hex), nL = o.L, nHue = hueOf(normal.hex), nC = Math.hypot(o.a, o.b);
-    const wantL = Math.min(0.88, nL + 0.14), minC = Math.max(0.05, nC * 0.5);
+    const step = LEGIBILITY.brightStep;
+    const wantL = Math.min(0.9, nL + 0.16), minC = Math.max(0.05, nC * 0.5);
     const src = normal.id != null ? REC(normal.id) : null;
     const prefer = new Set(src && src.lighter ? src.lighter : []);
+    // 候选必须真·更亮（ΔL≥step）且仍同色相（<18°，防 bright 偏色），否则不算
     const cand = LAB
-      .filter(x => x.L > nL + 0.015 && x.L <= 0.9 && x.C >= minC && hueDist(x.h, nHue) < 26 && contrast(x.rec.hex, bgHex) >= LEGIBILITY.chromatic)
-      .map(x => ({ x, s: Math.abs(x.L - wantL) + hueDist(x.h, nHue) * 0.012 - Math.min(x.C, 0.15) * 0.25 - (prefer.has(x.rec.id) ? 0.06 : 0) }))
+      .filter(x => x.L >= nL + step && x.L <= 0.92 && x.C >= minC && hueDist(x.h, nHue) < 20 && contrast(x.rec.hex, bgHex) >= LEGIBILITY.chromatic)
+      .map(x => ({ x, s: Math.abs(x.L - wantL) + hueDist(x.h, nHue) * 0.02 - Math.min(x.C, 0.15) * 0.25 - (prefer.has(x.rec.id) ? 0.06 : 0) }))
       .sort((a, b) => a.s - b.s)[0];
     if (cand) return named(cand.x.rec);
-    const hex = oklabHex({ ...o, L: Math.min(0.86, nL + 0.16) });   // 兜底：提亮但保色保色相
+    const hex = oklabHex({ ...o, L: Math.min(0.9, nL + Math.max(step, 0.16)) });   // 兜底：纯提亮（精确保色相，保证更亮）
     const e = ensure(hex, bgHex, LEGIBILITY.chromatic);
-    return { hex: e.hex, name: null, id: null, nudged: true };
+    return { hex: e.hex, name: normal.name || null, id: null, nudged: true };       // 保留常规色名：bright 是「该色的亮版」，可溯源
   }
 
   // 中性槽点名 + 按 floor 兜底。
@@ -120,7 +145,7 @@
     const floor = floorFor(key, mode);
     if (floor && contrast(n.hex, bgHex) < floor) {
       const e = ensure(n.hex, bgHex, floor);
-      return { hex: e.hex, name: e.nudged ? null : n.name, id: e.nudged ? null : n.id, nudged: e.nudged };
+      return { hex: e.hex, name: n.name, id: e.nudged ? null : n.id, nudged: e.nudged };   // 保留来源中性色名
     }
     return named(n);
   }
@@ -138,7 +163,7 @@
     const fgE = ensure(fgN.hex, bgHex, LEGIBILITY.fgBg);
     const ui = {
       background: named(bg),
-      foreground: { hex: fgE.hex, name: fgE.nudged ? null : fgN.name, id: fgE.nudged ? null : fgN.id, nudged: fgE.nudged },
+      foreground: { hex: fgE.hex, name: fgN.name, id: fgE.nudged ? null : fgN.id, nudged: fgE.nudged },
     };
 
     // 2. 锚色族（用于补色加成）
@@ -161,18 +186,24 @@
     ansi.bright_black = neutralSlot('bright_black', S.brightBlack, aHue, bgHex, mode);
     ansi.bright_white = neutralSlot('bright_white', S.brightWhite, aHue, bgHex, mode);
     // 6. bright 彩色 = 常规彩色的更亮真实色
-    for (const k of CHROMA) ansi['bright_' + k] = brighten(ansi[k], bgHex, mode);
+    for (const k of CHROMA) ansi['bright_' + k] = brighten(ansi[k], bgHex);
 
     // 7. 锚色露脸：cursor 用锚色槽的色（保证可见）；selection 取锚色暗/亮调，校验正文可读
     ui.cursor = { ...ansi[anchorSlot] };
     {
       const selN = pickNeutral(S.sel, aHue);                    // 锚色染过的中性条
-      let selHex = selN.hex, selName = selN.name, selId = selN.id, nud = false;
+      let selHex = selN.hex, nud = false;
+      // 先让高亮带相对背景可见（不止「其上正文可读」）
+      if (contrast(selHex, bgHex) < LEGIBILITY.selVisible) {
+        const e = ensure(selHex, bgHex, LEGIBILITY.selVisible);
+        selHex = e.hex; if (e.nudged) nud = true;
+      }
+      // 再保证选中的正文（foreground）在其上可读
       if (contrast(ui.foreground.hex, selHex) < LEGIBILITY.selection) {
         const e = ensure(selHex, ui.foreground.hex, LEGIBILITY.selection);
-        selHex = e.hex; nud = e.nudged; if (e.nudged) { selName = null; selId = null; }
+        selHex = e.hex; if (e.nudged) nud = true;
       }
-      ui.selection = { hex: selHex, name: selName, id: selId, nudged: nud };
+      ui.selection = { hex: selHex, name: selN.name, id: nud ? null : selN.id, nudged: nud };   // 保留来源色名
     }
 
     // 汇总 provenance（16 ANSI + 4 UI）
