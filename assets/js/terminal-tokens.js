@@ -26,7 +26,7 @@
   const LEGIBILITY = {
     fgBg: 7,          // foreground vs background（终端长时阅读，逼近 AAA）
     chromatic: 4.5,   // 6 彩色 + 亮端 white/bright_white（暗底上必须跳得出来）
-    dimGray: 2.5,     // bright_black 注释灰：暗但可辨
+    dimGray: 3.0,     // bright_black 注释灰：Claude Code 的副文本主力，盯一天需略提到 3.0（仍偏暗但更耐读）
     cursor: 3.5,      // 光标块必须看得见
     selection: 4,     // 选中条上的正文（foreground）要可读
     redGreenHue: 25,  // red 槽与 green 槽的最小 OKLab 色相分离（diff/git + 色盲）
