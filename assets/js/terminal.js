@@ -1,6 +1,6 @@
 /* 终端配色页面脚本 —— 消费 window.ZH_TERMINAL（terminal-tokens.js）、
    window.ZH_TERMINAL_SERIALIZE（三格式序列化）、window.ZH_PREVIEW_SYNTAX（构建期预切分的代码/md）。
-   负责：把调色板灌成 CSS 变量驱动假终端、渲染色板带与标本、切标签与格式、复制/下载。 */
+   负责：把调色板灌成 CSS 变量驱动的「一页连续假终端会话」、渲染色板带与标本、切格式、复制/下载。 */
 (function () {
   'use strict';
   const T = window.ZH_TERMINAL, SER = window.ZH_TERMINAL_SERIALIZE, SYN = window.ZH_PREVIEW_SYNTAX;
@@ -10,52 +10,21 @@
   const $ = s => root.querySelector(s);
   const ALL = T.ALL(), REC = T.REC;
   const term = $('[data-term]');
-  let state = { id: null, mode: 'dark', tab: 'fetch', fmt: 'ghostty' };
+  let state = { id: null, mode: 'dark', fmt: 'ghostty' };
   let current = null;
-  // 窗口标题随标签变（真实感）。代码屏诚实标注 --theme=ansi：唯有 16 色 ANSI 高亮才真的走这套板子。
-  const TITLES = {
-    fetch: 'fastfetch — guanxing@studio',
-    code: 'build-color-pages.mjs — bat --theme=ansi',
-    session: 'guanxing@studio — zsh',
-    markdown: 'README.md — glow',
-  };
 
-  /* ── 假终端「会话」标本（静态 HTML，靠 CSS 变量重染）── */
-  const SESSION =
-    `<span class="a-grn">guanxing</span><span class="a-dim">@</span><span class="a-blu">studio</span> <span class="a-cyn">~/works/zhongguo</span> <span class="a-dim">on</span> <span class="a-yel">main</span>\n` +
-    `<span class="a-dim">$</span> ls --color\n` +
-    `<span class="a-blu">assets</span>      <span class="a-blu">scripts</span>     <span class="a-cyn">README.md</span><span class="a-dim"> → readme.en.md</span>\n` +
-    `<span class="a-blu">colors</span>      <span class="a-grn">build.sh</span>    <span class="a-red">images.zip</span>\n` +
-    `<span class="a-blu">docs</span>        <span class="a-grn">serve</span>       <span class="a-mag">banner.png</span>\n` +
-    `<span class="a-dim">$</span> git status -s\n` +
-    `<span class="a-grn"> M</span> assets/js/terminal.js\n` +
-    `<span class="a-grn">A </span>terminal.html\n` +
-    `<span class="a-red"> D</span> legacy/old-theme.css\n` +
-    `<span class="a-dim">$</span> git diff\n` +
-    `<span class="a-cyn">@@ -14,7 +14,9 @@</span> <span class="a-mag">build</span>(anchorId, mode)\n` +
-    `<span class="a-grn">+  const palette = ZH_TERMINAL.build(id, 'dark');</span>\n` +
-    `<span class="a-red">-  const palette = legacyBuild(id);</span>\n` +
-    `<span class="a-dim">$</span> npm run build\n` +
-    `<span class="a-grn">✓</span> 16 ANSI + 4 UI 槽全部点名\n` +
-    `<span class="a-yel">warning</span> bright_blue 微调以过对比度\n` +
-    `<span class="a-red">error</span> 找不到模块 './ghost'  <span class="a-dim">(demo)</span>\n` +
-    `<span class="a-dim">$</span> <span class="curs"> </span>`;
-
-  /* ── fetch 主屏：fastfetch 风格（logo + 信息）+ 经典 ANSI 色块。──
-     这一屏 100% 忠实于 Ghostty 逐格渲染：色块/会话用的就是导出的 16 色，
-     fetch 工具本来就是直接打印 ANSI 转义序列。色块用 CSS 变量，换锚色自动重染。 */
+  /* ── 一页连续的「真终端会话」：fastfetch → ls → git → bat → glow，一路下滚，无 tab。──
+     锚色在每行提示符 ❯ 上发光、贯穿全程；fetch 色块 + ls + git 把整套 16 色摊开，不再一片绿。
+     fastfetch/ls/git 是终端逐格真渲染的东西（程序直接打 ANSI），1:1 忠实于导出的调色板；
+     代码段诚实标注 bat --theme=ansi（唯有 16 色 ANSI 高亮才真的走这套板子）。全靠 CSS 变量重染。 */
   const LOGO = [
-    ' ▄▄▄▄▄▄▄▄ ',
-    '█        █',
-    '█  ▄▄▄▄  █',
-    '█  █  █  █',
-    '█  █  █  █',
-    '█  ▀▀▀▀  █',
-    '█        █',
-    ' ▀▀▀▀▀▀▀▀ ',
+    ' ▄▄▄▄▄▄▄▄ ', '█        █', '█  ▄▄▄▄  █', '█  █  █  █',
+    '█  █  █  █', '█  ▀▀▀▀  █', '█        █', ' ▀▀▀▀▀▀▀▀ ',
   ].join('\n');
-  const blockRow = from => T.ANSI_ORDER.slice(from, from + 8)
-    .map(k => `<span style="background:var(--ansi-${k})"></span>`).join('');
+  const blockRow = from => T.ANSI_ORDER.slice(from, from + 8).map(k => `<span style="background:var(--ansi-${k})"></span>`).join('');
+  const PR = `<span class="a-grn">guanxing</span><span class="a-dim">@</span><span class="a-blu">studio</span> <span class="a-cyn">~/works/zhongguo</span> <span class="pr">❯</span> `;
+  const cmd = c => `<div class="cmd">${PR}${c}</div>`;
+
   const FETCH =
     `<div class="fetch">` +
       `<pre class="logo">${LOGO}</pre>` +
@@ -63,7 +32,6 @@
         `<div class="fhdr"><span class="a-grn">guanxing</span><span class="a-dim">@</span><span class="a-blu">studio</span></div>` +
         `<div class="frule">───────────────────────────</div>` +
         `<div class="frow"><span class="fk">OS</span>macOS 15.5 Sequoia</div>` +
-        `<div class="frow"><span class="fk">Kernel</span>Darwin 24.5.0</div>` +
         `<div class="frow"><span class="fk">Shell</span>zsh 5.9</div>` +
         `<div class="frow"><span class="fk">Terminal</span>Ghostty 1.0</div>` +
         `<div class="frow"><span class="fk">Theme</span><span data-fetch-theme>—</span></div>` +
@@ -71,21 +39,26 @@
         `<div class="frow"><span class="fk">Font</span>Space Mono · 12pt</div>` +
         `<div class="fblocks"><div class="fbrow">${blockRow(0)}</div><div class="fbrow">${blockRow(8)}</div></div>` +
       `</div>` +
-    `</div>` +
-    `<div class="ansitest">` +
-      `<div class="atttl"><span class="a-dim"># </span>ANSI 16 色自检 —— 终端按这 16 个槽位逐格上色</div>` +
-      T.ANSI_ORDER.map((k, i) => `<span class="atc"><i style="background:var(--ansi-${k})"></i><b>${i}</b><em>${k.replace('bright_', '*')}</em></span>`).join('') +
     `</div>`;
-  $('[data-pane="fetch"]').innerHTML = FETCH;
+  // bat 代码片段：取真实文件中段、带真实行号；只展示一屏量，不做 480 行长滚。
+  const cs = 17, cn = 44;
+  const CODE = (SYN && SYN.code)
+    ? `<div class="codeblk">` + SYN.code.lines.slice(cs, cs + cn).map((h, i) => `<div class="cl"><i>${cs + i + 1}</i><code>${h || ''}</code></div>`).join('') + `</div>`
+    : '';
+  const MD = (SYN && SYN.markdown) ? `<div class="md">${SYN.markdown.html}</div>` : '';
 
-  // 代码 / Markdown 标本：构建期预切分，注入一次，之后只靠 CSS 变量重染。
-  $('[data-pane="session"]').innerHTML = SESSION;
-  if (SYN && SYN.code) {
-    // bat 风格行号栏：每行 一个行号 + 一段代码
-    $('[data-pane="code"]').innerHTML = SYN.code.lines
-      .map((h, i) => `<div class="cl"><i>${i + 1}</i><code>${h || ''}</code></div>`).join('');
-  } else { $('[data-pane="code"]').textContent = '// preview-syntax.js 缺失'; }
-  if (SYN && SYN.markdown) $('[data-pane="markdown"]').innerHTML = SYN.markdown.html;
+  $('[data-term-scroll]').innerHTML = [
+    cmd('fastfetch'), FETCH,
+    cmd('ls --color'),
+    `<div class="out"><span class="a-blu">assets</span>   <span class="a-blu">colors</span>   <span class="a-blu">docs</span>   <span class="a-blu">scripts</span>   <span class="a-grn">build.sh</span>   <span class="a-grn">serve</span>\n<span class="a-cyn">README.md</span><span class="a-dim"> → readme.en.md</span>   <span class="a-red">images.zip</span>   <span class="a-mag">banner.png</span></div>`,
+    cmd('git status -s'),
+    `<div class="out"><span class="a-grn"> M</span> assets/js/terminal.js\n<span class="a-grn">A </span>terminal.html\n<span class="a-red"> D</span> legacy/old-theme.css</div>`,
+    cmd('git diff'),
+    `<div class="out"><span class="a-cyn">@@ -14,7 +14,9 @@</span> <span class="a-mag">build</span>(anchorId, mode)\n<span class="a-grn">+  const palette = ZH_TERMINAL.build(id, mode);</span>\n<span class="a-red">-  const palette = legacyBuild(id);</span></div>`,
+    cmd('bat scripts/build-color-pages.mjs <span class="a-dim">--theme=ansi</span>'), CODE,
+    cmd('glow README.md'), MD,
+    cmd('<span class="curs"> </span>'),
+  ].join('\n');
 
   /* ── 渲染调色板 ── */
   function render() {
@@ -134,7 +107,7 @@
     const fp = $('[data-fetch-prov]'); if (fp) fp.textContent = `16 ANSI + 4 UI · 点名 ${named} / 兜底 ${nud}`;
 
     renderExport();
-    term.style.animation = 'none'; void term.offsetWidth; term.style.animation = '';
+    // 换锚色只重染 CSS 变量，不重放入场动画 —— 切换瞬时、顺滑。
   }
 
   /* ── 导出区 ── */
@@ -153,15 +126,6 @@
     $('[data-fmt-tabs]').querySelectorAll('[data-fmt]').forEach(x => x.setAttribute('aria-selected', x === b));
     renderExport();
   });
-
-  /* ── 终端标签切换 ── */
-  function applyTab() {
-    root.querySelectorAll('.term-chrome [data-tab]').forEach(x => x.setAttribute('aria-selected', x.dataset.tab === state.tab));
-    root.querySelectorAll('[data-pane]').forEach(pane => { pane.hidden = pane.dataset.pane !== state.tab; });
-    $('[data-term-title]').textContent = TITLES[state.tab] || TITLES.session;
-    $('[data-term-body]').scrollTop = 0;
-  }
-  root.querySelectorAll('.term-chrome [data-tab]').forEach(b => b.addEventListener('click', () => { state.tab = b.dataset.tab; applyTab(); }));
 
   /* ── 锚色交互 ── */
   function setAnchor(id) { if (REC(id)) { state.id = id; render(); } }
@@ -206,7 +170,7 @@
   });
 
   const startId = byName['竹青'] || (qWrap.querySelector('button') || {}).dataset?.qid || ALL[0].id;
-  setAnchor(startId); syncQuick(startId); applyTab();
+  setAnchor(startId); syncQuick(startId);
 
   /* ── 高度自适应：让整台装置（含 16 色板带）恰好落在视口内 ──
      CSS 的 calc(100vh - 24px) 没算上头部导航 + 引言的高度，会把色板带顶出视口。

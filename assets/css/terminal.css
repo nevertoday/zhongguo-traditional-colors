@@ -65,43 +65,37 @@
 .term-root .term-chrome .dots i:nth-child(1){background:var(--ansi-red,#e36)}
 .term-root .term-chrome .dots i:nth-child(2){background:var(--ansi-yellow,#ec5)}
 .term-root .term-chrome .dots i:nth-child(3){background:var(--ansi-green,#5c6)}
-.term-root .term-chrome .ttl{font-family:var(--mono);font-size:11px;color:var(--ash);letter-spacing:.04em;white-space:nowrap}
-.term-root .term-chrome .tabs{margin-left:auto;display:flex;gap:2px}
-.term-root .term-chrome .tabs button{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ash2);padding:6px 12px;border-bottom:2px solid transparent}
-.term-root .term-chrome .tabs button:hover{color:var(--bone)}
-.term-root .term-chrome .tabs button[aria-selected=true]{color:var(--bone);border-bottom-color:var(--term-anchor-vivid,var(--bone))}
+.term-root .term-chrome .ttl{font-family:var(--mono);font-size:11px;color:var(--ash);letter-spacing:.04em;white-space:nowrap;margin:0 auto}
+.term-root .term-chrome .chrome-tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ash2);text-transform:uppercase;white-space:nowrap}
 
 .term-root .term-body{flex:1;overflow:auto;background:var(--term-bg,#111);color:var(--term-fg,#ddd);
   transition:background-color .5s ease,color .5s ease}
 .term-root .term-body ::selection{background:var(--term-sel,#345)}
-.term-root .pane{font-family:var(--mono);font-size:12.5px;line-height:1.62;padding:18px 20px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--term-fg,#ddd)}
-.term-root .pane[hidden]{display:none}
-.term-root .pane.md{white-space:normal;font-family:var(--mono)}
-/* 代码：bat 风格行号栏 */
-.term-root .pane.code{padding:14px 0;font-size:12px;line-height:1.6}
-.term-root .cl{display:flex;align-items:baseline;padding:0 20px 0 0}
-.term-root .cl i{flex:none;width:52px;text-align:right;padding-right:16px;font-style:normal;color:var(--ansi-bright_black);opacity:.55;user-select:none;-webkit-user-select:none}
-.term-root .cl code{flex:1;white-space:pre;font-family:inherit;min-width:0}
+/* 一页连续会话：命令行提示符 + 程序输出 */
+.term-root .term-scroll{font-family:var(--mono);font-size:12.5px;line-height:1.62;padding:14px 20px 22px;color:var(--term-fg,#ddd)}
+.term-root .cmd{margin:17px 0 6px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--term-fg)}
+.term-root .cmd:first-child{margin-top:2px}
+.term-root .pr{color:var(--term-anchor-vivid,var(--term-fg));font-weight:700}
+.term-root .out{white-space:pre;overflow-x:auto;color:var(--term-fg);margin-bottom:2px}
+.term-root .md{white-space:normal;margin:2px 0 4px}
+/* bat 风格行号栏 */
+.term-root .codeblk{margin:4px 0;font-size:12px;line-height:1.6}
+.term-root .cl{display:flex;align-items:baseline}
+.term-root .cl i{flex:none;width:42px;text-align:right;padding-right:16px;font-style:normal;color:var(--ansi-bright_black);opacity:.5;user-select:none;-webkit-user-select:none}
+.term-root .cl code{flex:1;white-space:pre;font-family:inherit;min-width:0;overflow-x:auto}
 .term-root .cl:hover{background:rgba(255,255,255,.035)}
 
-/* fetch 主屏：fastfetch 风格 + ANSI 自检 */
-.term-root .pane.fp{padding:0;white-space:normal}
-.term-root .fetch{display:flex;gap:30px;padding:24px 26px 6px;align-items:flex-start}
+/* fastfetch 风格：logo + 信息 + 经典 16 色块 */
+.term-root .fetch{display:flex;gap:30px;padding:8px 2px 12px;align-items:flex-start}
 .term-root .fetch .logo{flex:none;color:var(--term-anchor-vivid,var(--term-fg));font-size:13px;line-height:1.18;white-space:pre;text-shadow:0 0 18px color-mix(in srgb,var(--term-anchor-vivid) 45%,transparent)}
 .term-root .finfo{font-size:12.5px;line-height:1.72;min-width:0}
 .term-root .fhdr{font-weight:700;margin-bottom:2px}
 .term-root .frule{color:var(--ansi-bright_black)}
 .term-root .frow{color:var(--term-fg)}
-.term-root .frow .fk{display:inline-block;min-width:90px;color:var(--ansi-cyan);font-weight:700}
+.term-root .frow .fk{display:inline-block;min-width:84px;color:var(--ansi-cyan);font-weight:700}
 .term-root .fblocks{margin-top:14px;display:flex;flex-direction:column;gap:5px}
 .term-root .fbrow{display:flex;gap:5px}
 .term-root .fbrow span{width:26px;height:15px;display:block}
-.term-root .ansitest{padding:8px 26px 20px;border-top:1px solid rgba(255,255,255,.06);margin-top:6px}
-.term-root .atttl{font-size:11px;color:var(--term-fg);opacity:.8;margin-bottom:12px}
-.term-root .ansitest .atc{display:inline-flex;flex-direction:column;align-items:center;gap:3px;width:5.7%;min-width:42px;margin:0 .3% 6px}
-.term-root .ansitest .atc i{width:100%;height:30px;display:block;outline:1px solid rgba(255,255,255,.08)}
-.term-root .ansitest .atc b{font-size:10px;color:var(--term-fg);font-weight:400}
-.term-root .ansitest .atc em{font-size:9px;font-style:normal;color:var(--ansi-bright_black);white-space:nowrap;overflow:hidden;max-width:100%;text-overflow:ellipsis}
 
 /* 会话 ANSI 文本类 */
 .term-root .a-red{color:var(--ansi-red)} .term-root .a-grn{color:var(--ansi-green)}
