@@ -6,6 +6,7 @@
     { key: 'style-lab', label: '场景试色', href: 'style-lab.html' },
     { key: 'generator', label: '配色生成', href: 'generator.html' },
     { key: 'theme-forge', label: '主题生成', href: 'theme-forge.html' },
+    { key: 'terminal', label: '终端配色', href: 'terminal.html' },
     { key: 'palettes', label: '配色灵感', href: 'palettes.html' },
     { key: 'gradients', label: '渐变逻辑', href: 'gradients.html' },
     { key: 'uses', label: '用途卡片', href: 'uses.html' },
@@ -57,6 +58,7 @@
     if (path === 'style-lab.html') return 'style-lab';
     if (path === 'generator.html') return 'generator';
     if (path === 'theme-forge.html') return 'theme-forge';
+    if (path === 'terminal.html') return 'terminal';
     if (path === 'palettes.html') return 'palettes';
     if (path === 'gradients.html') return 'gradients';
     if (path === 'uses.html') return 'uses';
