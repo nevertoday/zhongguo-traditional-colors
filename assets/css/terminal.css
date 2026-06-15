@@ -128,6 +128,11 @@
 .term-root .md-codeblock{font-family:var(--mono);font-size:12px;line-height:1.55;white-space:pre;background:rgba(0,0,0,.28);padding:12px 14px;margin:8px 0;border-left:2px solid var(--ansi-bright_black);overflow-x:auto}
 .term-root .md-gap{height:8px}
 
+/* 预览旁的 Claude Code 用法提示 */
+.term-root .stage-note{flex:none;font-family:var(--mono);font-size:10px;line-height:1.5;letter-spacing:.01em;color:var(--ash2);text-align:center}
+.term-root .stage-note code{font-family:var(--mono);font-size:9.5px;color:var(--ash)}
+.term-root .stage-note b{color:var(--ash);font-weight:700}
+
 /* 16 色板带 */
 .term-root .strip{flex:none;display:grid;grid-template-columns:repeat(16,1fr);gap:4px}
 .term-root .strip .chip{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:3px;cursor:default}
@@ -156,6 +161,7 @@
 .term-root .sp .src{flex:1;font-size:11px}
 .term-root .sp .src .nm{font-family:var(--cn);color:var(--ash)}
 .term-root .sp .src .algo{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:#e8a04b;border:1px solid rgba(232,160,75,.4);padding:1px 5px;text-transform:uppercase}
+.term-root .sp .src .adj{font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;color:var(--ash2);border:1px solid var(--line2);padding:0 4px;margin-left:7px;white-space:nowrap}
 .term-root .sp .right{display:flex;align-items:center;gap:8px}
 .term-root .sp .ok{font-family:var(--mono);font-size:10px;color:var(--ash2)}
 .term-root .sp .aa{font-family:var(--mono);font-size:9px;padding:1px 4px;letter-spacing:.04em}
@@ -164,12 +170,26 @@
 
 /* 导出 */
 .term-root .export{flex:none;border-top:1px solid var(--line2);background:rgba(0,0,0,.28);padding:12px 16px 14px;display:flex;flex-direction:column;gap:9px}
-.term-root .exp-tabs{display:flex;gap:2px}
-.term-root .exp-tabs button{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ash2);padding:6px 12px;border:1px solid transparent;border-bottom:0}
-.term-root .exp-tabs button[aria-selected=true]{color:var(--bone);background:var(--ink);border-color:var(--line2)}
+/* 格式选择器（下拉 combobox） */
+.term-root .fmt-select{position:relative}
+.term-root .fmt-trigger{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--bone);
+  border:1px solid var(--line2);background:var(--ink);padding:8px 11px;transition:border-color .15s}
+.term-root .fmt-trigger:hover{border-color:var(--bone)}
+.term-root .fmt-trigger svg{color:var(--ash);flex:none;transition:transform .18s}
+.term-root .fmt-select.open .fmt-trigger svg{transform:rotate(180deg)}
+.term-root .fmt-menu{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:20;list-style:none;
+  background:var(--ink2);border:1px solid var(--line2);box-shadow:0 22px 48px -18px rgba(0,0,0,.85);
+  max-height:300px;overflow-y:auto}
+.term-root .fmt-menu[hidden]{display:none}
+.term-root .fmt-menu li{display:flex;flex-direction:column;gap:2px;padding:9px 12px;cursor:pointer;border-left:2px solid transparent}
+.term-root .fmt-menu li:hover,.term-root .fmt-menu li:focus-visible,.term-root .fmt-menu li:focus{background:rgba(236,231,218,.07);outline:none}
+.term-root .fmt-menu li[aria-selected=true]{border-left-color:var(--term-anchor-vivid,var(--bone))}
+.term-root .fmt-menu .fmt-lbl{font-family:var(--mono);font-size:11.5px;color:var(--bone);letter-spacing:.02em}
+.term-root .fmt-menu .fmt-hint{font-size:9.5px;color:var(--ash2);line-height:1.4}
 .term-root .export .hd{display:flex;align-items:baseline;gap:10px}
-.term-root .export .hd b{font-family:var(--serif);font-weight:600;font-size:13px;letter-spacing:.04em}
-.term-root .export .hd .stat{font-family:var(--mono);font-size:9px;letter-spacing:.04em;color:var(--ash2);margin-left:auto}
+.term-root .export .hd .fmt-tip{font-family:var(--mono);font-size:10px;letter-spacing:.02em;color:var(--ash);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.term-root .export .hd .stat{font-family:var(--mono);font-size:9px;letter-spacing:.04em;color:var(--ash2);margin-left:auto;flex:none}
 .term-root .export pre{max-height:clamp(180px,28vh,320px);overflow-y:auto;overflow-x:hidden;white-space:pre-wrap;overflow-wrap:anywhere;
   font-family:var(--mono);font-size:10.5px;line-height:1.62;color:var(--ash);background:var(--ink);border:1px solid var(--line);padding:11px 13px}
 .term-root .exp-act{display:flex;gap:8px}
@@ -181,7 +201,7 @@
 .term-root .export .dl svg{width:15px;height:15px}
 
 /* 统一细淡滚动条 */
-.term-root .term-body,.term-root .scroll,.term-root .export pre,.term-root .md-codeblock{scrollbar-width:thin;scrollbar-color:rgba(236,231,218,.22) transparent}
+.term-root .term-body,.term-root .scroll,.term-root .export pre,.term-root .md-codeblock,.term-root .fmt-menu{scrollbar-width:thin;scrollbar-color:rgba(236,231,218,.22) transparent}
 .term-root .term-body::-webkit-scrollbar,.term-root .scroll::-webkit-scrollbar,.term-root .export pre::-webkit-scrollbar,.term-root .md-codeblock::-webkit-scrollbar{width:8px;height:8px}
 .term-root .term-body::-webkit-scrollbar-thumb,.term-root .scroll::-webkit-scrollbar-thumb,.term-root .export pre::-webkit-scrollbar-thumb,.term-root .md-codeblock::-webkit-scrollbar-thumb{background:rgba(236,231,218,.18);border-radius:0}
 .term-root .term-body::-webkit-scrollbar-track,.term-root .scroll::-webkit-scrollbar-track,.term-root .export pre::-webkit-scrollbar-track{background:transparent}

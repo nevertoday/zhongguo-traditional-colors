@@ -64,6 +64,15 @@
     return { hex: best.hex, nudged: true };
   }
 
+  // 把颜色彩度推到至少 minC（保持 OKLab 明度与色相）——「太灰的彩色槽」用它增彩。
+  // 出界由 oklabHex 逐通道截断（可能轻微偏色/达不到目标），调用方据 boosted 标记诚实标注。
+  function boostChroma(hex, minC) {
+    const o = hexOklab(hex), C = Math.hypot(o.a, o.b);
+    if (C >= minC || C < 1e-6) return { hex, boosted: false };
+    const k = Math.min(minC / C, 3);                   // 限幅：近灰色放大过猛会严重出界，截断后反而偏色
+    return { hex: oklabHex({ L: o.L, a: o.a * k, b: o.b * k }), boosted: true };
+  }
+
   /* ── 全库「真中性池」：低彩度命名色（月白/象牙白/镍灰/玄黑…），可按明度点名 ── */
   const NEUTRALS = ALL.map(c => { const o = hexOklab(c.hex); const C = Math.hypot(o.a, o.b);
       let h = Math.atan2(o.b, o.a) * 180 / Math.PI; if (h < 0) h += 360; return { ...c, L: o.L, C, h }; })
@@ -78,7 +87,7 @@
 
   window.ZH_COLOR_CORE = {
     hexRgb, hexOklab, oklabHex, oklchStr, hueOf, chromaOf,
-    relLum, contrast, ensure, hueDist, NEUTRALS, pickNeutral,
+    relLum, contrast, ensure, boostChroma, hueDist, NEUTRALS, pickNeutral,
     REC, ALL: () => ALL,
   };
 })();

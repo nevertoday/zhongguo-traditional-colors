@@ -46,6 +46,21 @@
     ? `<div class="codeblk">` + SYN.code.lines.slice(cs, cs + cn).map((h, i) => `<div class="cl"><i>${cs + i + 1}</i><code>${h || ''}</code></div>`).join('') + `</div>`
     : '';
   const MD = (SYN && SYN.markdown) ? `<div class="md">${SYN.markdown.html}</div>` : '';
+  // Claude Code 会话片段 —— 这才是本工具的主战场：满屏的「暗灰副文本 + 青/蓝路径 + 红绿 diff + 品红关键字」。
+  // 用真实 Claude Code 的着色习惯摆一遍，让人当场判断这套板子盯一天累不累、diff 分不分得清。
+  const CLAUDE =
+    `<div class="out">` +
+      `<span class="a-grn">●</span> 摸完依赖：色名作<span class="a-yel">行尾注释</span>会被 <span class="a-cyn">Ghostty</span> 并进取值 —— <span class="a-blu">terminal-serialize.js:29</span>\n` +
+      `<span class="a-dim">  ⎿ 已确认 ghostty / kitty 都不支持行尾注释；alacritty(TOML) 支持。</span>\n` +
+      `\n` +
+      `<span class="a-grn">●</span> 把色名移到独立注释行。<span class="a-dim">Updated terminal-serialize.js · ↓ 1.8k tokens</span>\n` +
+      `<span class="a-cyn">@@ -27,2 +28,4 @@</span> <span class="a-mag">function</span> <span class="a-blu">ghostty</span>(p)\n` +
+      `<span class="a-red">-   palette = 0=#30161c  # 卵石紫</span>\n` +
+      `<span class="a-grn">+   # 0 black · 卵石紫</span>\n` +
+      `<span class="a-grn">+   palette = 0=#30161c</span>\n` +
+      `\n` +
+      `<span class="a-mag">✻</span> <span class="a-dim">Reticulating…  (12s · ↑ 2.1k tokens · esc to interrupt)</span>` +
+    `</div>`;
 
   $('[data-term-scroll]').innerHTML = [
     cmd('fastfetch'), FETCH,
@@ -57,6 +72,7 @@
     `<div class="out"><span class="a-cyn">@@ -14,7 +14,9 @@</span> <span class="a-mag">build</span>(anchorId, mode)\n<span class="a-grn">+  const palette = ZH_TERMINAL.build(id, mode);</span>\n<span class="a-red">-  const palette = legacyBuild(id);</span></div>`,
     cmd('bat scripts/build-color-pages.mjs <span class="a-dim">--theme=ansi</span>'), CODE,
     cmd('glow README.md'), MD,
+    cmd('claude <span class="a-dim">"修复 Ghostty 配置导出"</span>'), CLAUDE,
     cmd('<span class="curs"> </span>'),
   ].join('\n');
 
@@ -82,16 +98,22 @@
     $('[data-anchor-oklch]').textContent = window.ZH_COLOR_CORE.oklchStr(p.anchor.hex);
     $('[data-anchor-slot]').textContent = '占 ' + p.anchorSlot + ' 槽';
 
-    // 16 色板带
+    // 三态：点名（精确库色）/ 微调（有名色，为可读性改过 hex）/ 兜底（无名，凭空算出）
+    const adjusted = s => s.nudged && s.name, fabricated = s => s.nudged && !s.name;
+
+    // 16 色板带（角标只标真·无名兜底；微调仍是有名色，不打标记保持整洁）
     $('[data-strip]').innerHTML = p.order.map((k, i) => {
       const t = p.ansi[k];
-      return `<span class="chip${t.nudged ? ' nud' : ''}" title="${k} · ${t.name || '算法兜底'} ${t.hex.toUpperCase()}">`
+      const tag = t.nudged ? (t.name ? '微调' : '算法兜底') : '点名';
+      return `<span class="chip${fabricated(t) ? ' nud' : ''}" title="${k} · ${t.name || '算法兜底'}（${tag}） ${t.hex.toUpperCase()}">`
         + `<i style="background:${t.hex}"></i><b>${i}</b></span>`;
     }).join('');
 
     // 标本（16 ANSI + 4 UI）
     $('[data-specimen]').innerHTML = p.slots.map(s => {
-      const src = s.nudged ? `<span class="algo">算法兜底</span>` : `<span class="nm">${s.name || '—'}</span>`;
+      const src = fabricated(s) ? `<span class="algo">算法兜底</span>`
+        : adjusted(s) ? `<span class="nm">${s.name}</span><span class="adj" title="可溯源到该传统色，为可读性微调了色值">微调</span>`
+        : `<span class="nm">${s.name || '—'}</span>`;
       const fl = T.floorFor(s.key, state.mode);
       const aa = fl ? `<span class="aa ${s.contrast >= fl ? 'ok' : 'no'}">${s.contrast.toFixed(1)}</span>` : '';
       return `<div class="sp"><i style="background:${s.hex}"></i>`
@@ -100,11 +122,13 @@
         + `<span class="right"><span class="ok">${s.hex.toUpperCase()}</span>${aa}</span></div>`;
     }).join('');
 
-    const named = p.slots.filter(s => !s.nudged).length, nud = p.slots.length - named;
-    $('[data-stat]').textContent = `${p.slots.length} 槽 · 点名 ${named} / 兜底 ${nud}`;
+    const exact = p.slots.filter(s => !s.nudged).length;
+    const adj = p.slots.filter(adjusted).length, fab = p.slots.filter(fabricated).length;
+    const prov = `点名 ${exact}` + (adj ? ` · 微调 ${adj}` : '') + (fab ? ` · 兜底 ${fab}` : '');
+    $('[data-stat]').textContent = `${p.slots.length} 槽 · ${prov}`;
     // fetch 屏的动态信息
     const ft = $('[data-fetch-theme]'); if (ft) ft.textContent = `${p.anchor.name} · NO.${p.anchor.id} · ${state.mode === 'dark' ? '暗色' : '亮色'}`;
-    const fp = $('[data-fetch-prov]'); if (fp) fp.textContent = `16 ANSI + 4 UI · 点名 ${named} / 兜底 ${nud}`;
+    const fp = $('[data-fetch-prov]'); if (fp) fp.textContent = `16 ANSI + 4 UI · ${prov}`;
 
     renderExport();
     // 换锚色只重染 CSS 变量，不重放入场动画 —— 切换瞬时、顺滑。
@@ -114,18 +138,48 @@
   function renderExport() {
     const out = SER.serialize(state.fmt, current);
     $('[data-css]').textContent = out.text;
-    $('[data-fmt-name]').textContent = SER.FORMATS.find(f => f.key === state.fmt).label;
+    const f = SER.FORMATS.find(x => x.key === state.fmt);
+    const cur = $('[data-fmt-current]'); if (cur) cur.textContent = f.label;     // 触发器已显示格式名
+    const tip = $('[data-fmt-hint]'); if (tip) tip.textContent = f.hint || '';   // hd 行改显该格式的落地提示，不再重复格式名
     term.dataset.dl = out.filename;
   }
-  // 格式标签
-  $('[data-fmt-tabs]').innerHTML = SER.FORMATS.map(f =>
-    `<button role="tab" data-fmt="${f.key}" aria-selected="${f.key === state.fmt}">${f.label}</button>`).join('');
-  $('[data-fmt-tabs]').addEventListener('click', e => {
-    const b = e.target.closest('[data-fmt]'); if (!b) return;
-    state.fmt = b.dataset.fmt;
-    $('[data-fmt-tabs]').querySelectorAll('[data-fmt]').forEach(x => x.setAttribute('aria-selected', x === b));
+
+  /* ── 格式选择器：下拉 combobox（不平铺 tab；6 种格式 + 落地提示，全键盘可达）── */
+  const fmtSelect = $('[data-fmt-select]'), fmtTrigger = $('[data-fmt-trigger]'), fmtMenu = $('[data-fmt-menu]');
+  fmtMenu.innerHTML = SER.FORMATS.map(f =>
+    `<li role="option" data-fmt="${f.key}" aria-selected="${f.key === state.fmt}" tabindex="-1">`
+    + `<span class="fmt-lbl">${f.label}</span><span class="fmt-hint">${f.hint || ''}</span></li>`).join('');
+  const fmtItems = () => [...fmtMenu.querySelectorAll('[role=option]')];
+  function openFmt(open) {
+    fmtMenu.hidden = !open;
+    fmtTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    fmtSelect.classList.toggle('open', open);
+    if (open) { (fmtMenu.querySelector('[aria-selected=true]') || fmtItems()[0]).focus(); }
+  }
+  function pickFmt(key) {
+    state.fmt = key;
+    fmtItems().forEach(x => x.setAttribute('aria-selected', String(x.dataset.fmt === key)));
     renderExport();
+  }
+  fmtTrigger.addEventListener('click', () => openFmt(fmtMenu.hidden));
+  fmtTrigger.addEventListener('keydown', e => {
+    if (['ArrowDown', 'Enter', ' '].includes(e.key)) { e.preventDefault(); openFmt(true); }
   });
+  fmtMenu.addEventListener('click', e => {
+    const li = e.target.closest('[role=option]'); if (!li) return;
+    pickFmt(li.dataset.fmt); openFmt(false); fmtTrigger.focus();
+  });
+  fmtMenu.addEventListener('keydown', e => {
+    const items = fmtItems(), i = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); items[Math.min(items.length - 1, i + 1)].focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); items[Math.max(0, i - 1)].focus(); }
+    else if (e.key === 'Home') { e.preventDefault(); items[0].focus(); }
+    else if (e.key === 'End') { e.preventDefault(); items[items.length - 1].focus(); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickFmt(document.activeElement.dataset.fmt); openFmt(false); fmtTrigger.focus(); }
+    else if (e.key === 'Escape') { e.preventDefault(); openFmt(false); fmtTrigger.focus(); }
+  });
+  document.addEventListener('click', e => { if (!fmtSelect.contains(e.target)) openFmt(false); });
+  fmtSelect.addEventListener('focusout', e => { if (!fmtSelect.contains(e.relatedTarget)) openFmt(false); });   // Tab 出去也收起
 
   /* ── 锚色交互 ── */
   function setAnchor(id) { if (REC(id)) { state.id = id; render(); } }
@@ -146,12 +200,28 @@
   }));
   $('[data-random]').addEventListener('click', () => { const c = ALL[Math.floor(Math.random() * ALL.length)]; setAnchor(c.id); syncQuick(c.id); });
 
-  // 复制 / 下载
-  $('[data-copy]').addEventListener('click', function () {
-    navigator.clipboard.writeText($('[data-css]').textContent);
-    const label = this.querySelector('[data-copy-label]'); const prev = label.textContent;
-    label.textContent = '已复制 ✓'; this.classList.add('done');
-    setTimeout(() => { label.textContent = prev; this.classList.remove('done'); }, 1400);
+  // 复制 / 下载 —— 只在真正写入成功后才报「已复制」；
+  // navigator.clipboard 在非 HTTPS / 旧浏览器下可能缺失或被拒，回退到 execCommand。
+  async function copyText(text) {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(text); return true; }
+    } catch (_) { /* 落到下面的兜底 */ }
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.top = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy'); ta.remove(); return ok;
+    } catch (_) { return false; }
+  }
+  const copyBtn = $('[data-copy]'), copyLabel = copyBtn.querySelector('[data-copy-label]');
+  const COPY_LABEL = copyLabel.textContent;        // 固定默认文案，避免连点时把临时态当默认态回填
+  let copyTimer = null;
+  copyBtn.addEventListener('click', async () => {
+    const ok = await copyText($('[data-css]').textContent);
+    copyLabel.textContent = ok ? '已复制 ✓' : '复制失败 · 请手动选择';
+    copyBtn.classList.toggle('done', ok);
+    clearTimeout(copyTimer);                        // 连点时取消上一次的回填，状态不会被卡住
+    copyTimer = setTimeout(() => { copyLabel.textContent = COPY_LABEL; copyBtn.classList.remove('done'); }, 1500);
   });
   $('[data-download]').addEventListener('click', () => {
     const blob = new Blob([$('[data-css]').textContent], { type: 'text/plain;charset=utf-8' });
