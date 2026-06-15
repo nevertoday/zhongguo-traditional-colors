@@ -1,12 +1,14 @@
 import { readFileSync } from 'node:fs';
 
-const pages = ['index.html', 'explorer.html', 'dictionary.html', 'style-lab.html', 'generator.html', 'palettes.html', 'gradients.html', 'uses.html', 'favorites.html', 'skills.html'];
+const pages = ['index.html', 'explorer.html', 'dictionary.html', 'style-lab.html', 'generator.html', 'theme-forge.html', 'terminal.html', 'palettes.html', 'gradients.html', 'uses.html', 'favorites.html', 'skills.html'];
 const pageKeys = {
   'index.html': 'home',
   'explorer.html': 'explorer',
   'dictionary.html': 'dictionary',
   'style-lab.html': 'style-lab',
   'generator.html': 'generator',
+  'theme-forge.html': 'theme-forge',
+  'terminal.html': 'terminal',
   'palettes.html': 'palettes',
   'gradients.html': 'gradients',
   'uses.html': 'uses',
@@ -19,13 +21,15 @@ const pageScripts = {
   'dictionary.html': 'assets/js/dictionary.js',
   'style-lab.html': 'assets/js/app.js',
   'generator.html': 'assets/js/generator.js',
+  'theme-forge.html': 'assets/js/theme-forge.js',
+  'terminal.html': 'assets/js/terminal.js',
   'palettes.html': 'assets/js/palettes.js',
   'gradients.html': 'assets/js/gradients.js',
   'uses.html': 'assets/js/uses.js',
   'favorites.html': 'assets/js/favorites.js',
   'skills.html': 'assets/js/app.js',
 };
-const expectedNavLabels = ['浏览色卡', '中国色浏览器', '色彩字典', '场景试色', '配色生成', '配色灵感', '渐变逻辑', '用途卡片', '收藏', 'Skills'];
+const expectedNavLabels = ['浏览色卡', '中国色浏览器', '色彩字典', '场景试色', '配色生成', '主题生成', '终端配色', '配色灵感', '渐变逻辑', '用途卡片', '收藏', 'Skills'];
 const sharedChrome = readFileSync('assets/js/shared-chrome.js', 'utf8');
 const oldPaletteChrome = [
   'palette-header',
@@ -95,6 +99,12 @@ if (!sharedChrome.includes('class="site-footer"')) {
 }
 if (!sharedChrome.includes('Array.from({ length: 12 }')) {
   fail('shared chrome footer spectrum should render 12 color buttons');
+}
+if (!sharedChrome.includes('function buildSharedFooterSpectrum()')) {
+  fail('shared chrome should own footer spectrum data binding');
+}
+if (!sharedChrome.includes('function bindSharedFooter()')) {
+  fail('shared chrome should own footer copy interactions');
 }
 
 if (!process.exitCode) {

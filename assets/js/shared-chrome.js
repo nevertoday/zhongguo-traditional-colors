@@ -38,6 +38,7 @@
   // root-level pages render exactly as before.
   const base = document.body?.dataset.base || '';
   const sharedUtils = window.ZH_UTILS || {};
+  let footerCopyTimer;
 
   sharedUtils.debounce ||= function debounce(fn, delay) {
     let timer;
@@ -49,6 +50,7 @@
   // Expose the brand palette so sub-pages (e.g. /colors/) can reuse it for the
   // footer spectrum instead of hard-coding their own divergent copy.
   sharedUtils.brandColors ||= brandHoverColors;
+  sharedUtils.copyText ||= writeClipboard;
   window.ZH_UTILS = sharedUtils;
 
   function pageKeyFromPath() {
@@ -134,6 +136,12 @@
   document.querySelector('[data-shared-header]')?.replaceWith(template(headerMarkup()));
   document.querySelector('[data-shared-footer]')?.replaceWith(template(footerMarkup()));
   bindBrandColorHover(document.querySelector('.brand-mark'));
+  bindSharedFooter();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildSharedFooterSpectrum, { once: true });
+  } else {
+    buildSharedFooterSpectrum();
+  }
 
   function template(markup) {
     const element = document.createElement('template');
@@ -186,5 +194,90 @@
     setBrandHoverColors(brand);
     brand.addEventListener('pointerenter', () => setBrandHoverColors(brand));
     brand.addEventListener('focus', () => setBrandHoverColors(brand));
+  }
+
+  function colorName(color) {
+    return color?.name || color?.zh || color?.title || color?.file?.replace(/^\d+-/, '').replace(/\.[^.]+$/, '') || '传统色';
+  }
+
+  function footerColors() {
+    const colors = Array.isArray(window.TRADITIONAL_COLOR_IMAGES)
+      ? window.TRADITIONAL_COLOR_IMAGES.filter((color) => color?.hex)
+      : [];
+    return colors.length ? colors : brandHoverColors;
+  }
+
+  function randomItems(items, count) {
+    const pool = [...items];
+    for (let index = pool.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
+    }
+    return pool.slice(0, count);
+  }
+
+  function buildSharedFooterSpectrum() {
+    const buttons = [...document.querySelectorAll('[data-footer-color]')];
+    if (!buttons.length) return;
+
+    const colors = randomItems(footerColors(), buttons.length);
+    buttons.forEach((button, index) => {
+      const color = colors[index % colors.length];
+      const name = colorName(color);
+      const hex = color.hex;
+      const copyText = `${name} ${hex}`;
+      button.style.setProperty('--spectrum-color', hex);
+      button.style.setProperty('--spectrum-index', String((index % 9) + 1));
+      button.dataset.footerCopyValue = copyText;
+      button.title = `复制 ${copyText}`;
+      button.setAttribute('aria-label', `复制 ${name} 色值 ${hex}`);
+    });
+  }
+
+  async function writeClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (error) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.append(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+  }
+
+  function bindSharedFooter() {
+    const footer = document.querySelector('.site-footer');
+    if (!footer) return;
+
+    footer.addEventListener('click', async (event) => {
+      const button = event.target.closest('[data-footer-color]');
+      if (!button) return;
+
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      const copyText = button.dataset.footerCopyValue;
+      if (!copyText) return;
+
+      await writeClipboard(copyText);
+      button.dataset.copied = 'true';
+      const status = footer.querySelector('[data-footer-copy-status]');
+      if (status) {
+        window.clearTimeout(footerCopyTimer);
+        status.textContent = `已复制：${copyText}`;
+        status.dataset.visible = 'true';
+        footerCopyTimer = window.setTimeout(() => {
+          status.dataset.visible = 'false';
+        }, 1600);
+      }
+      window.setTimeout(() => {
+        delete button.dataset.copied;
+      }, 1000);
+    }, { capture: true });
   }
 })();
