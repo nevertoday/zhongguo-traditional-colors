@@ -20,6 +20,9 @@
 .term-root *{margin:0;padding:0}
 .term-root button,.term-root input{font:inherit;color:inherit;border-radius:0;border:0;background:none}
 .term-root button{cursor:pointer}
+/* 站点 styles.css 给全局 <code> 配了浅色药丸底（背景/边框/内距）——在终端装置内一律清掉，
+   否则会盖住假终端的深色底。pre 同理。各自的专用样式（.export pre / .md-code …）特异性更高，不受影响。 */
+.term-root code,.term-root pre{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;border-radius:0}
 .term-root::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.04;mix-blend-mode:screen;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
@@ -66,7 +69,7 @@
 .term-root .term-chrome .tabs{margin-left:auto;display:flex;gap:2px}
 .term-root .term-chrome .tabs button{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ash2);padding:6px 12px;border-bottom:2px solid transparent}
 .term-root .term-chrome .tabs button:hover{color:var(--bone)}
-.term-root .term-chrome .tabs button[aria-selected=true]{color:var(--bone);border-bottom-color:var(--term-anchor,var(--bone))}
+.term-root .term-chrome .tabs button[aria-selected=true]{color:var(--bone);border-bottom-color:var(--term-anchor-vivid,var(--bone))}
 
 .term-root .term-body{flex:1;overflow:auto;background:var(--term-bg,#111);color:var(--term-fg,#ddd);
   transition:background-color .5s ease,color .5s ease}
@@ -80,6 +83,25 @@
 .term-root .cl i{flex:none;width:52px;text-align:right;padding-right:16px;font-style:normal;color:var(--ansi-bright_black);opacity:.55;user-select:none;-webkit-user-select:none}
 .term-root .cl code{flex:1;white-space:pre;font-family:inherit;min-width:0}
 .term-root .cl:hover{background:rgba(255,255,255,.035)}
+
+/* fetch 主屏：fastfetch 风格 + ANSI 自检 */
+.term-root .pane.fp{padding:0;white-space:normal}
+.term-root .fetch{display:flex;gap:30px;padding:24px 26px 6px;align-items:flex-start}
+.term-root .fetch .logo{flex:none;color:var(--term-anchor-vivid,var(--term-fg));font-size:13px;line-height:1.18;white-space:pre;text-shadow:0 0 18px color-mix(in srgb,var(--term-anchor-vivid) 45%,transparent)}
+.term-root .finfo{font-size:12.5px;line-height:1.72;min-width:0}
+.term-root .fhdr{font-weight:700;margin-bottom:2px}
+.term-root .frule{color:var(--ansi-bright_black)}
+.term-root .frow{color:var(--term-fg)}
+.term-root .frow .fk{display:inline-block;min-width:90px;color:var(--ansi-cyan);font-weight:700}
+.term-root .fblocks{margin-top:14px;display:flex;flex-direction:column;gap:5px}
+.term-root .fbrow{display:flex;gap:5px}
+.term-root .fbrow span{width:26px;height:15px;display:block}
+.term-root .ansitest{padding:8px 26px 20px;border-top:1px solid rgba(255,255,255,.06);margin-top:6px}
+.term-root .atttl{font-size:11px;color:var(--term-fg);opacity:.8;margin-bottom:12px}
+.term-root .ansitest .atc{display:inline-flex;flex-direction:column;align-items:center;gap:3px;width:5.7%;min-width:42px;margin:0 .3% 6px}
+.term-root .ansitest .atc i{width:100%;height:30px;display:block;outline:1px solid rgba(255,255,255,.08)}
+.term-root .ansitest .atc b{font-size:10px;color:var(--term-fg);font-weight:400}
+.term-root .ansitest .atc em{font-size:9px;font-style:normal;color:var(--ansi-bright_black);white-space:nowrap;overflow:hidden;max-width:100%;text-overflow:ellipsis}
 
 /* 会话 ANSI 文本类 */
 .term-root .a-red{color:var(--ansi-red)} .term-root .a-grn{color:var(--ansi-green)}
@@ -99,8 +121,8 @@
 
 /* Markdown → ANSI（glow 约定）*/
 .term-root .md{padding:18px 22px;line-height:1.6;font-size:13px}
-.term-root .md-h1{font-family:var(--cn);font-weight:900;font-size:19px;color:var(--term-anchor);margin:2px 0 6px}
-.term-root .md-h2{font-family:var(--cn);font-weight:700;font-size:15px;color:var(--term-anchor);margin:14px 0 4px}
+.term-root .md-h1{font-family:var(--cn);font-weight:900;font-size:19px;color:var(--term-anchor-vivid);margin:2px 0 6px}
+.term-root .md-h2{font-family:var(--cn);font-weight:700;font-size:15px;color:var(--term-anchor-vivid);margin:14px 0 4px}
 .term-root .md-p{color:var(--term-fg);margin:3px 0}
 .term-root .md-strong{color:var(--ansi-bright_white);font-weight:700}
 .term-root .md-em{color:var(--ansi-yellow);font-style:italic}
@@ -159,7 +181,7 @@
 .term-root .exp-act{display:flex;gap:8px}
 .term-root .export .copy{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;background:var(--bone);color:var(--ink);font-weight:700;font-size:12px;letter-spacing:.04em;padding:11px;transition:background .2s}
 .term-root .export .copy svg{width:14px;height:14px}
-.term-root .export .copy.done{background:var(--term-anchor,#1ba784);color:#fff}
+.term-root .export .copy.done{background:var(--term-anchor-vivid,#1ba784);color:#fff}
 .term-root .export .dl{flex:none;width:44px;display:grid;place-items:center;border:1px solid var(--line2);color:var(--bone);transition:background .15s}
 .term-root .export .dl:hover{background:rgba(236,231,218,.08)}
 .term-root .export .dl svg{width:15px;height:15px}

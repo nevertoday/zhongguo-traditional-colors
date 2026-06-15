@@ -10,10 +10,15 @@
   const $ = s => root.querySelector(s);
   const ALL = T.ALL(), REC = T.REC;
   const term = $('[data-term]');
-  let state = { id: null, mode: 'dark', tab: 'code', fmt: 'ghostty' };
+  let state = { id: null, mode: 'dark', tab: 'fetch', fmt: 'ghostty' };
   let current = null;
-  // 窗口标题随标签变（真实感）
-  const TITLES = { code: 'build-color-pages.mjs — bat', session: 'guanxing@studio — zsh', markdown: 'README.md — glow' };
+  // 窗口标题随标签变（真实感）。代码屏诚实标注 --theme=ansi：唯有 16 色 ANSI 高亮才真的走这套板子。
+  const TITLES = {
+    fetch: 'fastfetch — guanxing@studio',
+    code: 'build-color-pages.mjs — bat --theme=ansi',
+    session: 'guanxing@studio — zsh',
+    markdown: 'README.md — glow',
+  };
 
   /* ── 假终端「会话」标本（静态 HTML，靠 CSS 变量重染）── */
   const SESSION =
@@ -36,6 +41,43 @@
     `<span class="a-red">error</span> 找不到模块 './ghost'  <span class="a-dim">(demo)</span>\n` +
     `<span class="a-dim">$</span> <span class="curs"> </span>`;
 
+  /* ── fetch 主屏：fastfetch 风格（logo + 信息）+ 经典 ANSI 色块。──
+     这一屏 100% 忠实于 Ghostty 逐格渲染：色块/会话用的就是导出的 16 色，
+     fetch 工具本来就是直接打印 ANSI 转义序列。色块用 CSS 变量，换锚色自动重染。 */
+  const LOGO = [
+    ' ▄▄▄▄▄▄▄▄ ',
+    '█        █',
+    '█  ▄▄▄▄  █',
+    '█  █  █  █',
+    '█  █  █  █',
+    '█  ▀▀▀▀  █',
+    '█        █',
+    ' ▀▀▀▀▀▀▀▀ ',
+  ].join('\n');
+  const blockRow = from => T.ANSI_ORDER.slice(from, from + 8)
+    .map(k => `<span style="background:var(--ansi-${k})"></span>`).join('');
+  const FETCH =
+    `<div class="fetch">` +
+      `<pre class="logo">${LOGO}</pre>` +
+      `<div class="finfo">` +
+        `<div class="fhdr"><span class="a-grn">guanxing</span><span class="a-dim">@</span><span class="a-blu">studio</span></div>` +
+        `<div class="frule">───────────────────────────</div>` +
+        `<div class="frow"><span class="fk">OS</span>macOS 15.5 Sequoia</div>` +
+        `<div class="frow"><span class="fk">Kernel</span>Darwin 24.5.0</div>` +
+        `<div class="frow"><span class="fk">Shell</span>zsh 5.9</div>` +
+        `<div class="frow"><span class="fk">Terminal</span>Ghostty 1.0</div>` +
+        `<div class="frow"><span class="fk">Theme</span><span data-fetch-theme>—</span></div>` +
+        `<div class="frow"><span class="fk">Palette</span><span data-fetch-prov>—</span></div>` +
+        `<div class="frow"><span class="fk">Font</span>Space Mono · 12pt</div>` +
+        `<div class="fblocks"><div class="fbrow">${blockRow(0)}</div><div class="fbrow">${blockRow(8)}</div></div>` +
+      `</div>` +
+    `</div>` +
+    `<div class="ansitest">` +
+      `<div class="atttl"><span class="a-dim"># </span>ANSI 16 色自检 —— 终端按这 16 个槽位逐格上色</div>` +
+      T.ANSI_ORDER.map((k, i) => `<span class="atc"><i style="background:var(--ansi-${k})"></i><b>${i}</b><em>${k.replace('bright_', '*')}</em></span>`).join('') +
+    `</div>`;
+  $('[data-pane="fetch"]').innerHTML = FETCH;
+
   // 代码 / Markdown 标本：构建期预切分，注入一次，之后只靠 CSS 变量重染。
   $('[data-pane="session"]').innerHTML = SESSION;
   if (SYN && SYN.code) {
@@ -55,6 +97,8 @@
     term.style.setProperty('--term-cursor', p.ui.cursor.hex);
     term.style.setProperty('--term-sel', p.ui.selection.hex);
     term.style.setProperty('--term-anchor', p.anchor.hex);
+    // 锚色的「可见版」= 锚色占的那个 ANSI 槽（保证过对比度），给标题/logo/md 标题用，避免暗锚色糊进底色。
+    term.style.setProperty('--term-anchor-vivid', p.ansi[p.anchorSlot].hex);
     for (const k of T.ANSI_ORDER) term.style.setProperty('--ansi-' + k, p.ansi[k].hex);
 
     // 锚色卡
@@ -85,6 +129,9 @@
 
     const named = p.slots.filter(s => !s.nudged).length, nud = p.slots.length - named;
     $('[data-stat]').textContent = `${p.slots.length} 槽 · 点名 ${named} / 兜底 ${nud}`;
+    // fetch 屏的动态信息
+    const ft = $('[data-fetch-theme]'); if (ft) ft.textContent = `${p.anchor.name} · NO.${p.anchor.id} · ${state.mode === 'dark' ? '暗色' : '亮色'}`;
+    const fp = $('[data-fetch-prov]'); if (fp) fp.textContent = `16 ANSI + 4 UI · 点名 ${named} / 兜底 ${nud}`;
 
     renderExport();
     term.style.animation = 'none'; void term.offsetWidth; term.style.animation = '';
