@@ -36,7 +36,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css?v=20260614-4">
-    <link rel="stylesheet" href="assets/css/terminal.css?v=20260615-4">
+    <link rel="stylesheet" href="assets/css/terminal.css?v=20260615-8">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
   </head>
@@ -87,6 +87,7 @@
             </div>
             <!-- 16 色板带 -->
             <div class="strip" data-strip aria-label="16 色 ANSI 板带"></div>
+            <p class="stage-note">上面这段 Claude Code 会话要染上本配色，需在 Claude Code 内 <code>/theme</code> → <b>Dark mode (ANSI colors only)</b>。</p>
           </div>
 
           <aside class="spec" aria-label="生成的调色板与导出">
@@ -104,11 +105,17 @@
               <div data-specimen></div>
             </div>
             <div class="export">
-              <div class="exp-tabs" role="tablist" data-fmt-tabs></div>
-              <div class="hd"><b data-fmt-name>—</b><span class="stat" data-stat></span></div>
+              <div class="fmt-select" data-fmt-select>
+                <button type="button" class="fmt-trigger" data-fmt-trigger aria-haspopup="listbox" aria-expanded="false" aria-label="选择终端格式">
+                  <span class="fmt-cur" data-fmt-current>Ghostty</span>
+                  <svg width="11" height="11" aria-hidden="true"><use href="#tm-i-chevron"/></svg>
+                </button>
+                <ul class="fmt-menu" role="listbox" data-fmt-menu aria-label="终端格式" hidden></ul>
+              </div>
+              <div class="hd"><span class="fmt-tip" data-fmt-hint></span><span class="stat" data-stat></span></div>
               <pre data-css></pre>
               <div class="exp-act">
-                <button class="copy" data-copy><svg width="14" height="14"><use href="#tm-i-copy"/></svg><span data-copy-label>复制配置</span></button>
+                <button class="copy" data-copy><svg width="14" height="14"><use href="#tm-i-copy"/></svg><span data-copy-label aria-live="polite">复制配置</span></button>
                 <button class="dl" data-download aria-label="下载配置文件"><svg width="14" height="14"><use href="#tm-i-download"/></svg></button>
               </div>
             </div>
@@ -124,14 +131,15 @@
       <symbol id="tm-i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
       <symbol id="tm-i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11"/><path d="M5 15H4V4h11v1"/></symbol>
       <symbol id="tm-i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/></symbol>
+      <symbol id="tm-i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></symbol>
     </defs></svg>
 
     <script src="assets/js/shared-chrome.js?v=20260615-1" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
     <script src="assets/data/preview-syntax.js?v=20260615-1" defer></script>
-    <script src="assets/js/color-core.js?v=20260614-1" defer></script>
-    <script src="assets/js/terminal-tokens.js?v=20260614-1" defer></script>
-    <script src="assets/js/terminal-serialize.js?v=20260614-1" defer></script>
-    <script src="assets/js/terminal.js?v=20260615-4" defer></script>
+    <script src="assets/js/color-core.js?v=20260615-9" defer></script>
+    <script src="assets/js/terminal-tokens.js?v=20260615-9" defer></script>
+    <script src="assets/js/terminal-serialize.js?v=20260615-10" defer></script>
+    <script src="assets/js/terminal.js?v=20260615-8" defer></script>
   </body>
 </html>
