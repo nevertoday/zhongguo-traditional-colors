@@ -182,7 +182,95 @@
     return JSON.stringify(obj, null, 2) + '\n';
   }
 
-  const IMPL = { ghostty, alacritty, kitty, iterm2, wezterm, 'windows-terminal': windowsTerminal };
+  /* ── Vim / Neovim colorscheme（同一套调色板 → 编辑器高亮）──
+     双写 gui（真彩 hex）+ cterm（0-15 ANSI 索引），所以开 termguicolors 用精确 hex、
+     16 色终端下复用你导出的终端调色板 —— 终端与编辑器一致。vim 8 / Neovim 通用。 */
+  const vimName = p => `zhongguo-${p.anchor.id}-${p.mode === 'dark' ? 'dark' : 'light'}`;
+  function vim(p) {
+    const CC = window.ZH_COLOR_CORE;
+    const A = p.ansi, dark = p.mode === 'dark', name = vimName(p);
+    const idx = {}; p.order.forEach((k, i) => { idx[k] = i; });      // ANSI role → 0-15
+    const FG = hx(p.ui.foreground), BG = hx(p.ui.background), SEL = hx(p.ui.selection);
+    // 抬升面（CursorLine/Pmenu 等）：在 bg 上沿 OKLab 明度微调一档
+    const surf = (() => { const o = CC.hexOklab(BG); return CC.oklabHex({ ...o, L: dark ? Math.min(1, o.L + 0.055) : Math.max(0, o.L - 0.05) }).toLowerCase(); })();
+    const res = spec => {
+      if (spec == null) return null;
+      if (spec === 'FG') return { gui: FG, cterm: 'NONE' };
+      if (spec === 'BG') return { gui: BG, cterm: 'NONE' };
+      if (spec === 'SEL') return { gui: SEL, cterm: 8 };
+      if (spec === 'SURF') return { gui: surf, cterm: 'NONE' };
+      if (spec === 'SURF8') return { gui: surf, cterm: 8 };
+      if (spec === 'CUR') return { gui: hx(p.ui.cursor), cterm: idx[p.anchorSlot] };   // 光标用锚色，与终端导出的 cursor 一致
+      return { gui: hx(A[spec]), cterm: idx[spec] };                 // ANSI role
+    };
+    const hl = (g, f, b, a) => {
+      const F = res(f), B = res(b), attr = a || 'NONE';
+      return `hi ${g} guifg=${F ? F.gui : 'NONE'} guibg=${B ? B.gui : 'NONE'} gui=${attr} ctermfg=${F ? F.cterm : 'NONE'} ctermbg=${B ? B.cterm : 'NONE'} cterm=${attr}`;
+    };
+    // [组, 前景, 背景, 属性]；前景/背景可为 ANSI 键 / 'FG' 'BG' 'SEL' 'SURF' 'SURF8' / null
+    const T = [
+      ['Normal', 'FG', 'BG', null], ['NormalNC', 'FG', 'BG', null], ['NormalFloat', 'FG', 'SURF', null],
+      ['Comment', 'bright_black', null, 'italic'],
+      ['Constant', 'green', null, null], ['String', 'green', null, null], ['Character', 'green', null, null],
+      ['Number', 'yellow', null, null], ['Boolean', 'yellow', null, null], ['Float', 'yellow', null, null],
+      ['Identifier', 'cyan', null, null], ['Function', 'blue', null, null],
+      ['Statement', 'magenta', null, null], ['Conditional', 'magenta', null, null], ['Repeat', 'magenta', null, null],
+      ['Label', 'magenta', null, null], ['Operator', 'FG', null, null], ['Keyword', 'magenta', null, null], ['Exception', 'red', null, null],
+      ['PreProc', 'yellow', null, null], ['Include', 'magenta', null, null], ['Define', 'magenta', null, null], ['Macro', 'magenta', null, null], ['PreCondit', 'yellow', null, null],
+      ['Type', 'cyan', null, null], ['StorageClass', 'cyan', null, null], ['Structure', 'cyan', null, null], ['Typedef', 'cyan', null, null],
+      ['Special', 'cyan', null, null], ['SpecialChar', 'red', null, null], ['Tag', 'cyan', null, null], ['Delimiter', 'FG', null, null], ['SpecialComment', 'bright_black', null, 'italic'], ['Debug', 'red', null, null],
+      ['Underlined', 'blue', null, 'underline'], ['Ignore', 'bright_black', null, null], ['Error', 'bright_red', null, 'bold'], ['Todo', 'black', 'yellow', 'bold'],
+      ['LineNr', 'bright_black', null, null], ['CursorLineNr', 'yellow', 'SURF', 'bold'], ['CursorLine', null, 'SURF', null], ['CursorColumn', null, 'SURF', null], ['ColorColumn', null, 'SURF8', null],
+      ['Cursor', 'BG', 'CUR', null], ['lCursor', 'BG', 'CUR', null], ['TermCursor', 'BG', 'CUR', null], ['Visual', null, 'SEL', null], ['VisualNOS', null, 'SEL', null],
+      ['Search', 'black', 'yellow', null], ['IncSearch', 'black', 'bright_yellow', 'bold'], ['CurSearch', 'black', 'bright_yellow', 'bold'], ['MatchParen', 'cyan', 'SURF8', 'bold'],
+      ['Pmenu', 'FG', 'SURF8', null], ['PmenuSel', 'black', 'cyan', 'bold'], ['PmenuSbar', null, 'SURF8', null], ['PmenuThumb', null, 'bright_black', null], ['WildMenu', 'black', 'cyan', null],
+      ['StatusLine', 'FG', 'SURF8', 'bold'], ['StatusLineNC', 'bright_black', 'SURF8', null], ['TabLine', 'bright_black', 'SURF8', null], ['TabLineSel', 'FG', 'SURF', 'bold'], ['TabLineFill', null, 'SURF8', null],
+      ['VertSplit', 'bright_black', null, null], ['WinSeparator', 'bright_black', null, null], ['Folded', 'bright_black', 'SURF', 'italic'], ['FoldColumn', 'bright_black', null, null], ['SignColumn', 'bright_black', null, null],
+      ['Title', 'blue', null, 'bold'], ['Directory', 'blue', null, null], ['NonText', 'bright_black', null, null], ['SpecialKey', 'bright_black', null, null], ['EndOfBuffer', 'bright_black', null, null],
+      ['ErrorMsg', 'red', null, null], ['WarningMsg', 'yellow', null, null], ['ModeMsg', 'green', null, null], ['MoreMsg', 'green', null, null], ['Question', 'green', null, null], ['Conceal', 'bright_black', null, null],
+      ['DiffAdd', 'green', 'SURF', null], ['DiffChange', 'yellow', 'SURF', null], ['DiffDelete', 'red', 'SURF', null], ['DiffText', 'blue', 'SURF8', 'bold'],
+      ['diffAdded', 'green', null, null], ['diffRemoved', 'red', null, null], ['diffChanged', 'yellow', null, null],
+      ['DiagnosticError', 'red', null, null], ['DiagnosticWarn', 'yellow', null, null], ['DiagnosticInfo', 'blue', null, null], ['DiagnosticHint', 'cyan', null, null], ['DiagnosticOk', 'green', null, null],
+      ['GitSignsAdd', 'green', null, null], ['GitSignsChange', 'yellow', null, null], ['GitSignsDelete', 'red', null, null],
+    ];
+    // Treesitter / LSP：链接到上面的基础组，一套映射两边都好看
+    const LINKS = [
+      ['@comment', 'Comment'], ['@string', 'String'], ['@character', 'Character'], ['@number', 'Number'], ['@boolean', 'Boolean'], ['@float', 'Float'],
+      ['@keyword', 'Keyword'], ['@conditional', 'Conditional'], ['@repeat', 'Repeat'], ['@operator', 'Operator'], ['@exception', 'Exception'],
+      ['@function', 'Function'], ['@function.call', 'Function'], ['@method', 'Function'], ['@constructor', 'Special'],
+      ['@variable', 'Identifier'], ['@variable.builtin', 'Special'], ['@property', 'Identifier'], ['@field', 'Identifier'], ['@parameter', 'Identifier'],
+      ['@type', 'Type'], ['@type.builtin', 'Type'], ['@namespace', 'Type'], ['@constant', 'Constant'], ['@constant.builtin', 'Number'],
+      ['@preproc', 'PreProc'], ['@include', 'Include'], ['@punctuation', 'Delimiter'], ['@tag', 'Tag'], ['@attribute', 'PreProc'],
+      ['@lsp.type.class', 'Type'], ['@lsp.type.function', 'Function'], ['@lsp.type.variable', 'Identifier'], ['@lsp.type.keyword', 'Keyword'],
+    ];
+    const body = T.map(([g, f, b, a]) => hl(g, f, b, a)).join('\n');
+    const links = LINKS.map(([a, b]) => `hi! link ${a} ${b}`).join('\n');
+    const italics = T.filter(r => r[3] === 'italic').map(r => r[0]);   // 可一键关斜体的组
+    return [
+      `" 中国传统色 编辑器主题 · 锚色「${p.anchor.name}」 ${p.anchor.hex.toUpperCase()} · NO.${p.anchor.id} · ${dark ? '暗色' : '亮色'}`,
+      `" 由 colors.xiaoxiaodong.ai 生成 —— gui(真彩 hex) + cterm(16 色 ANSI)，vim 8 / Neovim 通用。`,
+      `" 装法：存为 ~/.vim/colors/${name}.vim 或 ~/.config/nvim/colors/${name}.vim，再 :colorscheme ${name}`,
+      `" 16 色终端下请同时套用本工具导出的同名终端配色，cterm 部分才与真彩一致。`,
+      '',
+      `set background=${dark ? 'dark' : 'light'}`,
+      'hi clear',
+      'if exists("syntax_on") | syntax reset | endif',
+      `let g:colors_name = "${name}"`,
+      '',
+      body,
+      '',
+      '" ── Treesitter / LSP ──',
+      links,
+      '',
+      '" 关斜体：在 :colorscheme 之前 let g:zhongguo_italic = 0',
+      "if !get(g:, 'zhongguo_italic', 1)",
+      italics.map(g => `  hi ${g} cterm=NONE gui=NONE`).join('\n'),
+      'endif',
+      '',
+    ].join('\n');
+  }
+
+  const IMPL = { ghostty, alacritty, kitty, iterm2, wezterm, 'windows-terminal': windowsTerminal, vim };
   const FORMATS = [
     { key: 'ghostty', label: 'Ghostty', lang: 'ini', ext: 'conf', hint: '存为 theme 文件，config 里写 theme =' },
     { key: 'alacritty', label: 'Alacritty', lang: 'toml', ext: 'toml', hint: '导入 alacritty.toml（v0.13+）' },
@@ -190,11 +278,14 @@
     { key: 'iterm2', label: 'iTerm2', lang: 'xml', ext: 'itermcolors', hint: 'Preferences → Profiles → Colors 导入' },
     { key: 'wezterm', label: 'WezTerm', lang: 'toml', ext: 'toml', hint: '存到 colors/，color_scheme =' },
     { key: 'windows-terminal', label: 'Windows Terminal', lang: 'json', ext: 'json', hint: '粘进 settings.json 的 schemes 数组' },
+    { key: 'vim', label: 'Vim / Neovim', lang: 'vim', ext: 'vim', hint: '编辑器主题 · 存到 colors/，:colorscheme', file: p => `${vimName(p)}.vim` },
   ];
   function serialize(format, palette) {
     const f = FORMATS.find(x => x.key === format);
     if (!f || !IMPL[format]) return null;
-    return { text: IMPL[format](palette), filename: `${slug(palette)}-${format}.${f.ext}`, lang: f.lang };
+    // colorscheme 文件名须与 :colorscheme 名一致（ASCII），故 vim 自带 file()；其余沿用中文 slug。
+    const filename = f.file ? f.file(palette) : `${slug(palette)}-${format}.${f.ext}`;
+    return { text: IMPL[format](palette), filename, lang: f.lang };
   }
 
   window.ZH_TERMINAL_SERIALIZE = { FORMATS, serialize };

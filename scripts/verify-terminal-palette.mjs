@@ -138,6 +138,19 @@ function checkFormats(label, p) {
     const comps = (t.match(/<real>([0-9.]+)<\/real>/g) || []).map(m => parseFloat(m.replace(/<\/?real>/g, '')));
     if (comps.some(v => v < 0 || v > 1)) fail(`${label}/iterm2: 颜色分量越界（应在 0–1）`);
   }
+  // Vim / Neovim（结构 + gui hex 合法 + cterm 索引 0-15/NONE）
+  {
+    const t = SER.serialize('vim', p).text;
+    if (!/let g:colors_name = "/.test(t)) fail(`${label}/vim: 缺 colors_name`);
+    if (!/^\s*hi clear/m.test(t)) fail(`${label}/vim: 缺 hi clear`);
+    for (const g of ['Normal', 'Comment', 'String', 'Function', 'Statement', 'Type', 'Visual', 'CursorLine', 'DiffAdd', 'DiagnosticError']) if (!new RegExp(`hi ${g} `).test(t)) fail(`${label}/vim: 缺高亮组 ${g}`);
+    for (const m of (t.match(/(?:gui|cterm)(?:fg|bg)=\S+/g) || [])) {
+      const [key, v] = m.split('=');
+      if (v === 'NONE') continue;
+      if (key.startsWith('gui')) { if (!/^#[0-9a-f]{6}$/i.test(v)) fail(`${label}/vim: 非法 gui 值 ${m}`); }
+      else if (!(/^\d+$/.test(v) && +v <= 15)) fail(`${label}/vim: 非法 cterm 索引 ${m}`);
+    }
+  }
 }
 
 /* ── 命名样例（朱砂在库中不存在，用最近正色 朱红 替代）── */
