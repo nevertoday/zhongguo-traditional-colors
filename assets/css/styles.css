@@ -1020,6 +1020,10 @@ body[data-no-gradient-logic] .studio-direction:focus-visible {
   border-bottom: 1px solid var(--line);
 }
 
+.gallery-section {
+  padding-top: clamp(30px, 4vw, 52px);
+}
+
 .section-heading {
   display: block;
   max-width: 760px;
