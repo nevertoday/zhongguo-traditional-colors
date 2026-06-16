@@ -454,7 +454,7 @@
 
   function storySwatchMarkup(color) {
     return `
-      <a class="dictionary-story-chip" href="dictionary.html?q=${encodeURIComponent(color.name)}" style="--swatch: ${escapeAttribute(color.hex)}" aria-label="查看 ${escapeAttribute(color.name)} 详情">
+      <a class="dictionary-story-chip" href="colors/${encodeURIComponent(`${color.id}-${color.name}`)}.html" style="--swatch: ${escapeAttribute(color.hex)}" aria-label="查看 ${escapeAttribute(color.name)} 详情">
         <span aria-hidden="true"></span>
         <strong>${escapeHtml(color.name)}</strong>
         <small>${escapeHtml(color.hex)}</small>
@@ -654,7 +654,7 @@
       detailDownload.setAttribute('aria-label', `下载 ${name} 色卡`);
     }
     if (detailPage) {
-      detailPage.href = `dictionary.html?q=${encodeURIComponent(name)}`;
+      detailPage.href = `colors/${encodeURIComponent(`${image.id}-${name}`)}.html`;
       detailPage.setAttribute('aria-label', `打开 ${name} 的字典详情页`);
     }
     if (detailStyle) {
