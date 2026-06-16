@@ -7,27 +7,27 @@
 
 .tf-root{
   --ink:#f5efe2; --ink2:#fffaf0; --bone:#15130f; --ash:#655f53; --ash2:#847b6c;
-  --line:rgba(21,19,15,.12); --line2:rgba(21,19,15,.22);
+  --line:rgba(21,19,15,.12); --line2:rgba(21,19,15,.22); --frame-line:rgba(21,19,15,.12);
   --serif:'Fraunces',serif; --sans:'Noto Sans SC',system-ui,sans-serif;
   --cn:'Noto Serif SC',serif; --mono:'Space Mono','SFMono-Regular',monospace;
   --warn:#9a5c18;
   position:relative; height:min(1500px,calc(100vh - 24px)); min-height:760px;
   display:grid; grid-template-rows:auto 1fr;
   background:var(--ink); color:var(--bone); font-family:var(--sans);
-  width:100%; border:1px solid var(--line2); border-right:0; border-left:0; overflow:hidden;
+  width:100%; border-top:1px solid var(--line2); border-bottom:1px solid var(--line2); overflow:hidden;
   -webkit-font-smoothing:antialiased;
   transition:background-color .5s ease,color .5s ease,border-color .5s ease;
 }
 
 .tf-root[data-mode="light"]{
   --ink:#f5efe2; --ink2:#fffaf0; --bone:#15130f; --ash:#655f53; --ash2:#847b6c;
-  --line:rgba(21,19,15,.12); --line2:rgba(21,19,15,.22);
+  --line:rgba(21,19,15,.12); --line2:rgba(21,19,15,.22); --frame-line:rgba(21,19,15,.12);
   --warn:#9a5c18;
 }
 
 .tf-root[data-mode="dark"]{
   --ink:#0d0d0b; --ink2:#15150f; --bone:#ece7da; --ash:#88847a; --ash2:#6a675f;
-  --line:rgba(236,231,218,.13); --line2:rgba(236,231,218,.26);
+  --line:rgba(236,231,218,.13); --line2:rgba(236,231,218,.26); --frame-line:rgba(236,231,218,.14);
   --warn:#e8a04b;
 }
 .tf-root *,.tf-root *::before,.tf-root *::after{box-sizing:border-box}
@@ -66,10 +66,10 @@
     radial-gradient(120% 90% at 50% -10%,color-mix(in srgb,var(--bone) 8%,transparent),transparent 60%),
     color-mix(in srgb,var(--ink2) 70%,var(--ink))}
 .tf-root .device{width:100%;max-width:none;background:var(--background);color:var(--foreground);
-  border:1px solid rgba(0,0,0,.5);box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(236,231,218,.08);
+  border:1px solid var(--border,var(--frame-line));box-shadow:0 32px 76px -34px color-mix(in srgb,var(--bone) 22%,transparent);
   min-height:100%;display:grid;grid-template-columns:208px 1fr;font-family:var(--sans);
   transition:background-color .5s ease,color .5s ease;animation:tf-rise .6s cubic-bezier(.2,.7,.2,1) both}
-.tf-root[data-mode="light"] .device{border-color:color-mix(in srgb,var(--bone) 16%,transparent);box-shadow:0 30px 70px -36px rgba(21,19,15,.26),0 0 0 1px rgba(21,19,15,.08)}
+.tf-root[data-mode="light"] .device{border-color:var(--border,var(--frame-line));box-shadow:0 28px 64px -36px rgba(21,19,15,.24)}
 .tf-root .device *{transition:background-color .5s ease,color .5s ease,border-color .5s ease,fill .5s ease,stroke .5s ease}
 @keyframes tf-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 

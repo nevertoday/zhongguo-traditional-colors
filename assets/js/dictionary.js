@@ -13,6 +13,7 @@
   const dictionaryGrid = document.querySelector('[data-dictionary-grid]');
   const dictionarySearch = document.querySelector('[data-dictionary-search]');
   const dictionaryHue = document.querySelector('[data-dictionary-hue]');
+  const dictionaryHueList = document.querySelector('[data-dictionary-hue-list]');
   const dictionaryCount = document.querySelector('[data-dictionary-count]');
   const dictionaryRandom = document.querySelector('[data-dictionary-random]');
   const dictionaryColorStory = document.querySelector('[data-dictionary-color-story]');
@@ -53,6 +54,18 @@
     purple: '紫色系',
     neutral: '中性色',
   };
+
+  const HUE_OPTIONS = [
+    ['all', '全部', 'linear-gradient(135deg,#f23e23 0 14%,#f28e16 14% 28%,#f8c648 28% 42%,#43b244 42% 56%,#16a6a8 56% 70%,#2f72d6 70% 84%,#7b4bc4 84% 100%)'],
+    ['red', '红', '#f23e23'],
+    ['orange', '橙', '#f28e16'],
+    ['yellow', '黄', '#f8c648'],
+    ['green', '绿', '#43b244'],
+    ['cyan', '青', '#16a6a8'],
+    ['blue', '蓝', '#2f72d6'],
+    ['purple', '紫', '#7b4bc4'],
+    ['neutral', '灰', '#8f8a82'],
+  ];
 
   const RELATION_TYPES = [
     { key: 'same', label: '同类', hint: '统一、系列、低风险延展' },
@@ -410,6 +423,7 @@
     if (!dictionaryGrid) return;
 
     const items = filteredImages();
+    renderHueButtons();
     renderColorStory(colorByQuery(dictionarySearch?.value || ''));
     dictionaryGrid.innerHTML = items.length
       ? items.map(dictionaryCardMarkup).join('')
@@ -419,6 +433,15 @@
       const hue = dictionaryHue?.value || 'all';
       dictionaryCount.textContent = `${items.length} / ${images.length} 色 · ${HUE_LABELS[hue] || '全部色系'}`;
     }
+  }
+
+  function renderHueButtons() {
+    if (!dictionaryHueList) return;
+
+    const current = dictionaryHue?.value || 'all';
+    dictionaryHueList.innerHTML = HUE_OPTIONS.map(([key, label, color]) => `
+      <button type="button" data-dictionary-hue-button="${escapeAttribute(key)}" aria-pressed="${String(key === current)}" style="--hue-color: ${escapeAttribute(color)}">${escapeHtml(label)}</button>
+    `).join('');
   }
 
   function relatedColorsForStory(harmony, keys, limit = 6) {
@@ -515,7 +538,7 @@
           <div class="dictionary-story-chips">${contrastMatches.length ? contrastMatches.map(storySwatchMarkup).join('') : '<span class="dictionary-story-empty">暂无强调搭配</span>'}</div>
         </section>
         <section class="dictionary-story-panel dictionary-story-panel-wide">
-          <h4>中性承托</h4>
+          <h4>中性辅助</h4>
           <div class="dictionary-story-chips">${neutralMatches.length ? neutralMatches.map(storySwatchMarkup).join('') : '<span class="dictionary-story-empty">暂无中性搭配</span>'}</div>
         </section>
         <section class="dictionary-story-panel dictionary-story-panel-wide">
@@ -732,6 +755,13 @@
   });
   dictionarySearch?.addEventListener('input', debounce(renderDictionary, 200));
   dictionaryHue?.addEventListener('change', renderDictionary);
+  dictionaryHueList?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-dictionary-hue-button]');
+    if (!button || !dictionaryHue) return;
+
+    dictionaryHue.value = button.dataset.dictionaryHueButton || 'all';
+    renderDictionary();
+  });
   dictionaryRandom?.addEventListener('click', openRandomColor);
 
   setTheme(currentTheme());

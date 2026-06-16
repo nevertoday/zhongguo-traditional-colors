@@ -11,10 +11,10 @@
   z-index: 80;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 1px;
+  gap: 0;
   max-height: min(390px, calc(100vh - 170px));
   overflow: auto;
-  background: var(--line, rgba(24, 24, 24, 0.12));
+  background: var(--panel, #ffffff);
   border: 1px solid var(--line, rgba(24, 24, 24, 0.12));
   box-shadow: var(--shadow-soft, 0 18px 40px rgba(0, 0, 0, 0.16));
   scrollbar-width: thin;
@@ -31,6 +31,8 @@
   min-width: 0;
   color: var(--ink, #171510);
   background: var(--panel, #f7f7f4);
+  border-right: 1px solid var(--line, rgba(24, 24, 24, 0.12));
+  border-bottom: 1px solid var(--line, rgba(24, 24, 24, 0.12));
 }
 
 .color-suggest-option {
@@ -65,8 +67,9 @@
   width: 42px;
   height: 42px;
   background: var(--suggest-color);
-  border: 0;
+  border: 0 !important;
   border-radius: 0;
+  outline: 0;
   box-shadow: none;
   transition: border-radius 180ms var(--ease-out-quart, ease), transform 180ms var(--ease-out-quart, ease);
 }
