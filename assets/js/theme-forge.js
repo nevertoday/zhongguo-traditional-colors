@@ -11,12 +11,41 @@
   if (!root) return;
   const $ = s => root.querySelector(s);
   const dev = $('[data-device]');
-  let state = { id: null, mode: 'light', view: 'overview' };
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  const themeIcon = document.querySelector('[data-theme-icon]');
+  const themeLabel = document.querySelector('[data-theme-label]');
+  const themeColorMeta = document.querySelector('[data-theme-color]');
+  let state = { id: null, mode: currentTheme(), view: 'overview' };
+
+  function currentTheme() {
+    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  }
+
+  function syncThemeButton(theme) {
+    themeToggle?.setAttribute('aria-pressed', String(theme === 'dark'));
+    themeToggle?.setAttribute('aria-label', theme === 'dark' ? '切换到亮色模式' : '切换到暗色模式');
+    if (themeLabel) themeLabel.textContent = theme === 'dark' ? '亮色' : '暗色';
+    themeIcon?.setAttribute('icon', theme === 'dark' ? 'lucide:sun' : 'lucide:moon');
+    themeColorMeta?.setAttribute('content', theme === 'dark' ? '#11100e' : '#f7f7f4');
+  }
+
+  function setSiteTheme(theme) {
+    const nextTheme = theme === 'dark' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = nextTheme;
+    try {
+      localStorage.setItem('theme', nextTheme);
+    } catch (error) {
+      // The page can still follow the selected theme for the current session.
+    }
+    syncThemeButton(nextTheme);
+  }
 
   /* ── 渲染主题 ── */
   function render() {
+    state.mode = currentTheme();
     const { anchor, tokens } = build(state.id, state.mode);
     root.dataset.mode = state.mode;
+    syncThemeButton(state.mode);
     for (const k in tokens) dev.style.setProperty('--' + k, tokens[k].hex);
 
     $('[data-anchor-swatch]').style.background = anchor.hex;
@@ -108,11 +137,8 @@
       || (ALL.find(c => c.name.includes(v)) || {}).id;
     if (hit) { setAnchor(hit); syncQuick(hit); }
   });
-  root.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => {
-    state.mode = b.dataset.mode;
-    root.querySelectorAll('[data-mode]').forEach(x => x.setAttribute('aria-pressed', x === b));
-    render();
-  }));
+  themeToggle?.addEventListener('click', () => setSiteTheme(currentTheme() === 'dark' ? 'light' : 'dark'));
+  new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   $('[data-random]').addEventListener('click', () => { const c = ALL[Math.floor(Math.random() * ALL.length)]; setAnchor(c.id); syncQuick(c.id); });
   $('[data-copy]').addEventListener('click', function () {
     navigator.clipboard.writeText($('[data-css]').textContent);
@@ -131,5 +157,6 @@
   });
 
   const startId = byName['竹青'] || (qWrap.querySelector('button') || {}).dataset?.qid || ALL[0].id;
+  setSiteTheme(currentTheme());
   setAnchor(startId); syncQuick(startId); setView('overview');
 })();
