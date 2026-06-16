@@ -12,12 +12,16 @@ function fail(message) {
 if (!html.includes('data-generator-search-suggestions')) {
   fail('generator.html: missing search suggestion container');
 }
+if (!html.includes('class="generator-more"')) {
+  fail('generator.html: missing compact more menu');
+}
 
 for (const token of [
   'rankedColorMatches',
   'renderSearchSuggestions',
   'data-generator-search-pick',
   'searchEffectLabel',
+  'dictionary.html?q=',
 ]) {
   if (!js.includes(token)) fail(`assets/js/generator.js: missing ${token}`);
 }
@@ -35,13 +39,15 @@ for (const token of [
   '.generator-search-suggestions',
   '.generator-search-option',
   '.generator-search-effect',
+  '.generator-search-detail',
+  '.generator-more-menu',
 ]) {
   if (!css.includes(token)) fail(`assets/css/generator.css: missing ${token}`);
 }
 
 const mobileRule = css.match(/@media\s*\(max-width:\s*720px\)\s*\{[\s\S]+?@media/s)?.[0] || '';
-if (!/\.generator-actions\s*\{[\s\S]+grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/.test(mobileRule)) {
-  fail('assets/css/generator.css: mobile generator actions should use two columns');
+if (!/\.generator-actions\s*\{[\s\S]+gap:\s*4px\s*;/.test(mobileRule)) {
+  fail('assets/css/generator.css: mobile generator actions should stay compact');
 }
 
 if (!process.exitCode) {

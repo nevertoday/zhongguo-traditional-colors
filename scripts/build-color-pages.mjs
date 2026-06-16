@@ -30,7 +30,9 @@ const CARDS_DIR = path.join(COLORS_DIR, 'cards');
 const SITEMAP_FILE = path.join(ROOT, 'sitemap.xml');
 
 const SITE = 'https://colors.xiaoxiaodong.ai';
-const ASSET_VERSION = '20260614-seo3';
+const ASSET_VERSION = '20260616-1';
+const SHARED_STYLE_VERSION = '20260616-1';
+const SHARED_CHROME_VERSION = '20260616-1';
 
 // Root-level pages that also belong in the sitemap, with crawl priority hints.
 const MAIN_PAGES = [
@@ -334,7 +336,7 @@ function renderColorPage(image, harmony, context) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/styles.css?v=20260613-4">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=${SHARED_STYLE_VERSION}">
     <link rel="stylesheet" href="../assets/css/color-page.css?v=${ASSET_VERSION}">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
@@ -394,7 +396,7 @@ function renderColorPage(image, harmony, context) {
     <div data-shared-footer></div>
     <div class="color-toast" data-toast role="status" aria-live="polite"></div>
 
-    <script src="../assets/js/shared-chrome.js?v=20260614-4" defer></script>
+    <script src="../assets/js/shared-chrome.js?v=${SHARED_CHROME_VERSION}" defer></script>
     <script src="../assets/js/color-page.js?v=${ASSET_VERSION}" defer></script>
   </body>
 </html>

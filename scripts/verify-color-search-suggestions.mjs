@@ -25,6 +25,8 @@ const genericAssetPages = [
   'uses.html',
   'style-lab.html',
   'generator.html',
+  'terminal.html',
+  'theme-forge.html',
 ];
 
 const failures = [];
@@ -56,10 +58,10 @@ for (const page of pages) {
 
 for (const page of genericAssetPages) {
   const html = read(page);
-  if (!html.includes('assets/css/color-suggestions.css?v=20260614-1')) {
+  if (!html.includes('assets/css/color-suggestions.css?v=20260616-2')) {
     fail(`${page}: missing color suggestions stylesheet`);
   }
-  if (!html.includes('assets/js/color-search-suggestions.js?v=20260614-1')) {
+  if (!html.includes('assets/js/color-search-suggestions.js?v=20260616-2')) {
     fail(`${page}: missing color suggestions script`);
   }
 
@@ -77,6 +79,7 @@ const helperJs = read('assets/js/color-search-suggestions.js');
   'function matchesImage',
   'function matchesText',
   'color-suggestion-pick',
+  'dictionary.html?q=',
 ].forEach((snippet) => {
   if (!helperJs.includes(snippet)) fail(`color-search-suggestions.js: missing ${snippet}`);
 });
@@ -86,6 +89,7 @@ const helperCss = read('assets/css/color-suggestions.css');
   '.color-suggest-panel',
   '.color-suggest-option',
   '.color-suggest-effect',
+  '.color-suggest-detail',
   '.color-suggest-empty',
 ].forEach((snippet) => {
   if (!helperCss.includes(snippet)) fail(`color-suggestions.css: missing ${snippet}`);

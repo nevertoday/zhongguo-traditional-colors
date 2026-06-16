@@ -15,6 +15,7 @@
   const dictionaryHue = document.querySelector('[data-dictionary-hue]');
   const dictionaryCount = document.querySelector('[data-dictionary-count]');
   const dictionaryRandom = document.querySelector('[data-dictionary-random]');
+  const dictionaryColorStory = document.querySelector('[data-dictionary-color-story]');
   const detailDialog = document.querySelector('[data-color-detail-dialog]');
   const detailClose = document.querySelector('[data-color-detail-close]');
   const detailSwatch = document.querySelector('[data-color-detail-swatch]');
@@ -368,6 +369,19 @@
     return matchesQuery && matchesHue;
   }
 
+  function colorByQuery(query) {
+    const normalized = normalize(query).replace(/^#/, '');
+    if (!normalized) return null;
+
+    return images.find((image) => {
+      const name = normalize(colorName(image));
+      const title = normalize(colorTitle(image));
+      const id = normalize(image.id);
+      const hex = normalize(image.hex).replace(/^#/, '');
+      return normalized === name || normalized === title || normalized === id || normalized === hex;
+    }) || null;
+  }
+
   function filteredImages() {
     const query = normalize(dictionarySearch?.value);
     const hue = dictionaryHue?.value || 'all';
@@ -396,6 +410,7 @@
     if (!dictionaryGrid) return;
 
     const items = filteredImages();
+    renderColorStory(colorByQuery(dictionarySearch?.value || ''));
     dictionaryGrid.innerHTML = items.length
       ? items.map(dictionaryCardMarkup).join('')
       : '<div class="dictionary-empty"><strong>没有找到颜色</strong><span>换一个色名、编号或 HEX。</span></div>';
@@ -404,6 +419,116 @@
       const hue = dictionaryHue?.value || 'all';
       dictionaryCount.textContent = `${items.length} / ${images.length} 色 · ${HUE_LABELS[hue] || '全部色系'}`;
     }
+  }
+
+  function relatedColorsForStory(harmony, keys, limit = 6) {
+    return keys
+      .flatMap((key) => harmony?.[key] || [])
+      .map(lookupColor)
+      .filter(Boolean)
+      .slice(0, limit);
+  }
+
+  function storySwatchMarkup(color) {
+    return `
+      <a class="dictionary-story-chip" href="dictionary.html?q=${encodeURIComponent(color.name)}" style="--swatch: ${escapeAttribute(color.hex)}" aria-label="查看 ${escapeAttribute(color.name)} 详情">
+        <span aria-hidden="true"></span>
+        <strong>${escapeHtml(color.name)}</strong>
+        <small>${escapeHtml(color.hex)}</small>
+      </a>
+    `;
+  }
+
+  function storyToolMarkup(label, href, icon, text) {
+    return `
+      <a class="dictionary-story-tool" href="${href}">
+        <iconify-icon icon="${icon}" aria-hidden="true"></iconify-icon>
+        <span>
+          <strong>${escapeHtml(label)}</strong>
+          <small>${escapeHtml(text)}</small>
+        </span>
+      </a>
+    `;
+  }
+
+  function renderColorStory(image) {
+    if (!dictionaryColorStory) return;
+    if (!image) {
+      dictionaryColorStory.hidden = true;
+      dictionaryColorStory.innerHTML = '';
+      return;
+    }
+
+    const name = colorName(image);
+    const hex = image.hex || '';
+    const rgb = rgbFromHex(hex);
+    const harmony = colorHarmonies[image.id] || {};
+    const hsl = harmony.hsl || (rgb ? hslFromRgb(rgb) : null);
+    const hue = hueFromHex(hex);
+    const hueFamily = harmony.hueFamily || HUE_LABELS[hue] || '传统色';
+    const temperature = harmony.temperature || temperatureFromHue(hue);
+    const textColor = textColorFor(hex);
+    const softMatches = relatedColorsForStory(harmony, ['same', 'analogous', 'lighter'], 6);
+    const contrastMatches = relatedColorsForStory(harmony, ['complementary', 'splitComplementary', 'triadic', 'accent'], 6);
+    const neutralMatches = relatedColorsForStory(harmony, ['neutral', 'grayTone', 'darker'], 6);
+    const generatorHref = `generator.html?colors=${hex.replace('#', '')}&method=auto`;
+    const queryHref = encodeURIComponent(name);
+
+    dictionaryColorStory.hidden = false;
+    dictionaryColorStory.style.setProperty('--story-color', hex);
+    dictionaryColorStory.style.setProperty('--story-ink', textColor);
+    dictionaryColorStory.innerHTML = `
+      <div class="dictionary-story-hero">
+        <span class="dictionary-story-swatch" aria-hidden="true"></span>
+        <div class="dictionary-story-copy">
+          <span class="section-kicker">${escapeHtml(image.id)} · ${escapeHtml(hex)}</span>
+          <h3>${escapeHtml(name)}</h3>
+          <p>${escapeHtml(toneNote(hsl, temperature))}</p>
+        </div>
+      </div>
+      <div class="dictionary-story-grid">
+        <section class="dictionary-story-panel">
+          <h4>色彩性格</h4>
+          <dl>
+            ${[
+              ['色系', hueFamily],
+              ['冷暖', temperature],
+              ['明度', hsl ? `${lightnessLabel(hsl.l)} · L${hsl.l}` : '未知'],
+              ['饱和', hsl ? `${saturationLabel(hsl.s)} · S${hsl.s}` : '未知'],
+            ].map(([label, value]) => profileRowMarkup(label, value)).join('')}
+          </dl>
+        </section>
+        <section class="dictionary-story-panel dictionary-story-demo" style="--demo-color: ${escapeAttribute(hex)}; --demo-ink: ${textColor}">
+          <h4>界面演示</h4>
+          <div>
+            <strong>${escapeHtml(name)} 主标题</strong>
+            <p>适合用于按钮、提示、封面块或信息层级中的关键色。</p>
+            <button type="button">行动入口</button>
+          </div>
+        </section>
+        <section class="dictionary-story-panel dictionary-story-panel-wide">
+          <h4>柔和搭配</h4>
+          <div class="dictionary-story-chips">${softMatches.length ? softMatches.map(storySwatchMarkup).join('') : '<span class="dictionary-story-empty">暂无同类搭配</span>'}</div>
+        </section>
+        <section class="dictionary-story-panel dictionary-story-panel-wide">
+          <h4>强调搭配</h4>
+          <div class="dictionary-story-chips">${contrastMatches.length ? contrastMatches.map(storySwatchMarkup).join('') : '<span class="dictionary-story-empty">暂无强调搭配</span>'}</div>
+        </section>
+        <section class="dictionary-story-panel dictionary-story-panel-wide">
+          <h4>中性承托</h4>
+          <div class="dictionary-story-chips">${neutralMatches.length ? neutralMatches.map(storySwatchMarkup).join('') : '<span class="dictionary-story-empty">暂无中性搭配</span>'}</div>
+        </section>
+        <section class="dictionary-story-panel dictionary-story-panel-wide">
+          <h4>带到工具里</h4>
+          <div class="dictionary-story-tools">
+            ${storyToolMarkup('生成配色', generatorHref, 'lucide:sparkles', `以 ${name} 为起点生成整组方案`)}
+            ${storyToolMarkup('场景试色', `style-lab.html?color=${encodeURIComponent(image.id)}`, 'lucide:panel-top', '查看网页、海报、仪表盘效果')}
+            ${storyToolMarkup('用途卡片', `uses.html?q=${queryHref}`, 'lucide:layout-template', '生成背景与文字组合')}
+            ${storyToolMarkup('渐变逻辑', `gradients.html?q=${queryHref}`, 'lucide:blend', '寻找渐变和过渡关系')}
+          </div>
+        </section>
+      </div>
+    `;
   }
 
   function colorValueRowMarkup(format) {
@@ -494,7 +619,6 @@
         ['冷暖', temperature],
         ['明度', hsl ? `${lightnessLabel(hsl.l)} · L${hsl.l}` : '未知'],
         ['饱和', hsl ? `${saturationLabel(hsl.s)} · S${hsl.s}` : '未知'],
-        ['文件', image.file],
         ['原图', formatBytes(image.size)],
       ].map(([label, value]) => profileRowMarkup(label, value)).join('');
     }
@@ -507,8 +631,8 @@
       detailDownload.setAttribute('aria-label', `下载 ${name} 色卡`);
     }
     if (detailPage) {
-      detailPage.href = `colors/${encodeURIComponent(`${image.id}-${name}`)}.html`;
-      detailPage.setAttribute('aria-label', `打开 ${name} 的独立详情页`);
+      detailPage.href = `dictionary.html?q=${encodeURIComponent(name)}`;
+      detailPage.setAttribute('aria-label', `打开 ${name} 的字典详情页`);
     }
     if (detailStyle) {
       detailStyle.href = `style-lab.html?color=${encodeURIComponent(image.id)}`;

@@ -81,7 +81,6 @@ const heroPreviewContent = document.querySelector('.hero-preview-content');
 const heroPreviewTitle = document.querySelector('[data-hero-preview-title]');
 const heroPreviewHex = document.querySelector('[data-hero-preview-hex]');
 const heroPreviewHue = document.querySelector('[data-hero-preview-hue]');
-const heroPreviewFile = document.querySelector('[data-hero-preview-file]');
 const heroPreviewSize = document.querySelector('[data-hero-preview-size]');
 const heroPreviewDownload = document.querySelector('[data-hero-preview-download]');
 const heroPreviewStatus = document.querySelector('[data-hero-preview-status]');
@@ -1150,8 +1149,8 @@ function setStyleDockCollapsed(collapsed) {
 
   document.body.dataset.styleDockCollapsed = collapsed ? 'true' : 'false';
   styleDockToggle.setAttribute('aria-expanded', String(!collapsed));
-  styleDockToggle.setAttribute('aria-label', collapsed ? '展开底部操作栏' : '收起底部操作栏');
-  styleDockToggle.querySelector('iconify-icon')?.setAttribute('icon', collapsed ? 'lucide:chevron-up' : 'lucide:chevron-down');
+  styleDockToggle.setAttribute('aria-label', collapsed ? '展开侧边操作栏' : '侧向收起操作栏');
+  styleDockToggle.querySelector('iconify-icon')?.setAttribute('icon', collapsed ? 'lucide:chevron-left' : 'lucide:chevron-right');
   if (styleDockToggleLabel) styleDockToggleLabel.textContent = collapsed ? '展开' : '收起';
 }
 
@@ -2511,7 +2510,6 @@ function openHeroPreview(id) {
   }
   if (heroPreviewTitle) heroPreviewTitle.textContent = colorTitle(image);
   if (heroPreviewHex) heroPreviewHex.textContent = image.hex || '未记录';
-  if (heroPreviewFile) heroPreviewFile.textContent = image.file;
   if (heroPreviewSize) heroPreviewSize.textContent = formatBytes(image.size);
   if (heroPreviewFormat) heroPreviewFormat.value = selectedColorValueType;
   renderHeroPreviewHarmony(image);

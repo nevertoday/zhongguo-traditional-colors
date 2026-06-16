@@ -16,6 +16,7 @@
   /* ── 渲染主题 ── */
   function render() {
     const { anchor, tokens } = build(state.id, state.mode);
+    root.dataset.mode = state.mode;
     for (const k in tokens) dev.style.setProperty('--' + k, tokens[k].hex);
 
     $('[data-anchor-swatch]').style.background = anchor.hex;
