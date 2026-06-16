@@ -22,7 +22,7 @@
   const RED = (function () {
     let best = null, score = 1e9;
     for (const c of ALL) { const { h, s, l } = c.hsl; if (s < 55) continue;
-      const dh = Math.min(Math.abs(h - 12), Math.abs(h - 360 + 12)); const d = dh + Math.abs(l - 46) * 0.6;
+      const dh = Math.min(Math.abs(h - 12), 360 - Math.abs(h - 12)); const d = dh + Math.abs(l - 46) * 0.6;
       if (l >= 36 && l <= 58 && d < score) { score = d; best = c; } }
     return best || ALL[0];
   })();
