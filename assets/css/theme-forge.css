@@ -1,8 +1,9 @@
 /* Theme Forge 工作台样式 —— 全部作用域化到 .tf-root，避免污染站点 styles.css。
    「画廊展墙」美学：炭黑底 + 骨色字 + 编辑感衬线/等宽，中央一台 token 驱动的产品装置。 */
 
-/* 页面层（站点浅色区，不作用域化）—— 全宽 + clamp 内边距，与 gradients 等页一致 */
-.theme-forge-page{max-width:none;padding:clamp(16px,2vw,26px) clamp(16px,2.4vw,36px) clamp(40px,5vw,64px)}
+/* 页面层（站点浅色区，不作用域化）—— 工作台全宽，介绍文字保留站点节奏 */
+.theme-forge-page{max-width:none;padding:clamp(16px,2vw,26px) 0 clamp(40px,5vw,64px)}
+.theme-forge-page .style-lab-intro{padding-right:clamp(16px,2.4vw,36px);padding-left:clamp(16px,2.4vw,36px)}
 
 .tf-root{
   --ink:#0d0d0b; --ink2:#15150f; --bone:#ece7da; --ash:#88847a; --ash2:#6a675f;
@@ -13,15 +14,29 @@
   position:relative; height:min(1500px,calc(100vh - 24px)); min-height:760px;
   display:grid; grid-template-rows:auto 1fr;
   background:var(--ink); color:var(--bone); font-family:var(--sans);
-  border:1px solid var(--line2); overflow:hidden;
+  width:100%; border:1px solid var(--line2); border-right:0; border-left:0; overflow:hidden;
   -webkit-font-smoothing:antialiased;
+  transition:background-color .5s ease,color .5s ease,border-color .5s ease;
+}
+
+.tf-root[data-mode="light"]{
+  --ink:#f5efe2; --ink2:#fffaf0; --bone:#15130f; --ash:#655f53; --ash2:#847b6c;
+  --line:rgba(21,19,15,.12); --line2:rgba(21,19,15,.22);
+  --warn:#9a5c18;
+}
+
+.tf-root[data-mode="dark"]{
+  --ink:#0d0d0b; --ink2:#15150f; --bone:#ece7da; --ash:#88847a; --ash2:#6a675f;
+  --line:rgba(236,231,218,.13); --line2:rgba(236,231,218,.26);
+  --warn:#e8a04b;
 }
 .tf-root *,.tf-root *::before,.tf-root *::after{box-sizing:border-box}
 .tf-root *{margin:0;padding:0}
 .tf-root button,.tf-root input,.tf-root select,.tf-root textarea{font:inherit;color:inherit;border-radius:0;border:0;background:none}
 .tf-root button{cursor:pointer}
-.tf-root::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.04;mix-blend-mode:screen;
+.tf-root::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.035;mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.tf-root[data-mode="dark"]::before{opacity:.04;mix-blend-mode:screen}
 
 /* 顶栏 */
 .tf-root .bar{display:flex;align-items:center;gap:24px;padding:0 22px;height:58px;border-bottom:1px solid var(--line2);background:linear-gradient(180deg,var(--ink2),var(--ink));flex-wrap:wrap}
@@ -31,27 +46,30 @@
 .tf-root .bar .tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ash2);border:1px solid var(--line2);padding:3px 8px;text-transform:uppercase}
 .tf-root .bar .sp{flex:1}
 .tf-root .quick{display:flex;gap:5px}
-.tf-root .quick button{width:22px;height:22px;border:1px solid rgba(236,231,218,.25);transition:transform .15s,outline-color .15s;outline:2px solid transparent;outline-offset:2px}
+.tf-root .quick button{width:22px;height:22px;border:1px solid var(--line2);transition:transform .15s,outline-color .15s;outline:2px solid transparent;outline-offset:2px}
 .tf-root .quick button:hover{transform:translateY(-2px)}
 .tf-root .quick button[aria-pressed=true]{outline-color:var(--bone)}
-.tf-root .tf-search{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);padding:7px 11px;width:210px;background:rgba(0,0,0,.25)}
+.tf-root .tf-search{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);padding:7px 11px;width:210px;background:color-mix(in srgb,var(--bone) 5%,transparent)}
 .tf-root .tf-search svg{width:13px;height:13px;color:var(--ash);flex:none}
 .tf-root .tf-search input{width:100%;font-family:var(--mono);font-size:12px;letter-spacing:.02em}
 .tf-root .tf-search input::placeholder{color:var(--ash2)}
 .tf-root .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line2);padding:7px 12px;color:var(--bone);transition:background .15s}
-.tf-root .ghost:hover{background:rgba(236,231,218,.08)}
+.tf-root .ghost:hover{background:color-mix(in srgb,var(--bone) 8%,transparent)}
 .tf-root .seg{display:flex;border:1px solid var(--line2)}
 .tf-root .seg button{font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:7px 13px;color:var(--ash)}
 .tf-root .seg button[aria-pressed=true]{background:var(--bone);color:var(--ink)}
 
 /* 工作区：装置 + 标本 */
-.tf-root .work{display:grid;grid-template-columns:1fr 360px;min-height:0}
-.tf-root .stage{overflow:auto;padding:22px 28px 30px;display:flex;justify-content:center;align-items:flex-start;
-  background:radial-gradient(120% 90% at 50% -10%,rgba(236,231,218,.05),transparent 60%)}
-.tf-root .device{width:100%;max-width:1080px;background:var(--background);color:var(--foreground);
+.tf-root .work{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:0}
+.tf-root .stage{overflow:auto;padding:0;display:flex;justify-content:stretch;align-items:stretch;
+  background:
+    radial-gradient(120% 90% at 50% -10%,color-mix(in srgb,var(--bone) 8%,transparent),transparent 60%),
+    color-mix(in srgb,var(--ink2) 70%,var(--ink))}
+.tf-root .device{width:100%;max-width:none;background:var(--background);color:var(--foreground);
   border:1px solid rgba(0,0,0,.5);box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(236,231,218,.08);
-  display:grid;grid-template-columns:208px 1fr;font-family:var(--sans);
+  min-height:100%;display:grid;grid-template-columns:208px 1fr;font-family:var(--sans);
   transition:background-color .5s ease,color .5s ease;animation:tf-rise .6s cubic-bezier(.2,.7,.2,1) both}
+.tf-root[data-mode="light"] .device{border-color:color-mix(in srgb,var(--bone) 16%,transparent);box-shadow:0 30px 70px -36px rgba(21,19,15,.26),0 0 0 1px rgba(21,19,15,.08)}
 .tf-root .device *{transition:background-color .5s ease,color .5s ease,border-color .5s ease,fill .5s ease,stroke .5s ease}
 @keyframes tf-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
@@ -212,7 +230,7 @@
 .tf-root .spec .sec-h b{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash)}
 .tf-root .spec .sec-h .ln{flex:1;height:1px;background:var(--line)}
 .tf-root .sp{display:grid;grid-template-columns:16px 86px minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 22px;font-size:12px}
-.tf-root .sp i{width:16px;height:16px;border:1px solid rgba(236,231,218,.18);transition:background .5s}
+.tf-root .sp i{width:16px;height:16px;border:1px solid color-mix(in srgb,var(--bone) 18%,transparent);transition:background .5s}
 .tf-root .sp .role{font-family:var(--mono);font-size:10.5px;color:var(--ash);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tf-root .sp .src{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tf-root .sp .src .nm{font-family:var(--cn);font-weight:500;font-size:13px;color:var(--bone)}
@@ -222,12 +240,12 @@
 .tf-root .sp .aa{font-family:var(--mono);font-size:10px;letter-spacing:.04em}
 .tf-root .sp .aa.ok{color:#7fae6e}.tf-root .sp .aa.no{color:#d2706a}
 /* 导出区：钉在右栏底部常驻（核心 copy 动作）*/
-.tf-root .export{flex:none;border-top:1px solid var(--line2);padding:14px 22px 18px;display:flex;flex-direction:column;gap:10px;background:rgba(0,0,0,.25)}
+.tf-root .export{flex:none;border-top:1px solid var(--line2);padding:14px 22px 18px;display:flex;flex-direction:column;gap:10px;background:color-mix(in srgb,var(--bone) 5%,transparent)}
 .tf-root .export .hd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .tf-root .export .hd b{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone)}
 .tf-root .export .hd .stat{font-family:var(--mono);font-size:10px;color:var(--ash2);margin-left:auto}
-.tf-root .export pre{max-height:clamp(200px,32vh,360px);overflow-y:auto;overflow-x:hidden;background:#000;border:1px solid var(--line);padding:13px 15px;font-family:var(--mono);font-size:11px;line-height:1.8;color:#d4cfc0;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
-.tf-root .export pre .c{color:#6f6a5e}
+.tf-root .export pre{max-height:clamp(200px,32vh,360px);overflow-y:auto;overflow-x:hidden;background:color-mix(in srgb,var(--ink) 92%,#000);border:1px solid var(--line);padding:13px 15px;font-family:var(--mono);font-size:11px;line-height:1.8;color:var(--bone);white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}
+.tf-root .export pre .c{color:var(--ash2)}
 /* ── 统一：细而淡、方头无圆角的滚动条 ── */
 /* 深色区（舞台 / 标本栏 / 代码框）：淡骨色细条 */
 .tf-root .stage,.tf-root .spec .scroll,.tf-root .export pre{scrollbar-width:thin;scrollbar-color:rgba(236,231,218,.22) transparent}

@@ -64,6 +64,7 @@
   function render() {
     const p = T.build(state.id, state.mode);
     current = p;
+    root.dataset.mode = state.mode;
     // 灌 CSS 变量（换锚色 = 改这几十个变量，零节点重渲染）
     term.style.setProperty('--term-bg', p.ui.background.hex);
     term.style.setProperty('--term-fg', p.ui.foreground.hex);

@@ -13,8 +13,7 @@
   position: sticky;
   top: 68px;
   z-index: 12;
-  display: grid;
-  grid-template-columns: auto minmax(360px, 1fr);
+  display: flex;
   gap: 12px;
   align-items: center;
   padding: 12px clamp(16px, 2.4vw, 36px);
@@ -26,13 +25,19 @@
 .generator-method,
 .generator-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 6px;
   align-items: center;
+  min-width: 0;
+}
+
+.generator-method {
+  flex: 0 1 auto;
 }
 
 .generator-actions {
-  grid-column: 1 / -1;
+  flex: 0 0 auto;
+  justify-content: flex-end;
 }
 
 .generator-method button,
@@ -42,7 +47,8 @@
 }
 
 .generator-method button,
-.generator-actions button {
+.generator-actions button,
+.generator-more summary {
   display: inline-flex;
   gap: 7px;
   align-items: center;
@@ -63,10 +69,13 @@
 .generator-method button[aria-pressed="true"],
 .generator-actions button[aria-pressed="true"],
 .generator-actions button[data-feedback="true"],
+.generator-more[open] summary,
 .generator-method button:hover,
 .generator-method button:focus-visible,
 .generator-actions button:hover,
-.generator-actions button:focus-visible {
+.generator-actions button:focus-visible,
+.generator-more summary:hover,
+.generator-more summary:focus-visible {
   color: var(--hover-text);
   background: var(--hover-bg);
   border-color: var(--hover-bg);
@@ -99,8 +108,44 @@
   transform: scale(1.08);
 }
 
+.generator-more {
+  position: relative;
+}
+
+.generator-more summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.generator-more summary::-webkit-details-marker {
+  display: none;
+}
+
+.generator-more-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 25;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(104px, 1fr));
+  gap: 1px;
+  width: 230px;
+  padding: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+}
+
+.generator-more-menu button {
+  width: 100%;
+  background: var(--panel);
+  border: 0;
+}
+
 .generator-search-wrap {
   position: relative;
+  flex: 1 1 320px;
+  max-width: 560px;
   min-width: 0;
 }
 
@@ -161,6 +206,15 @@
   display: none;
 }
 
+.generator-search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-width: 0;
+  color: var(--ink);
+  background: var(--panel);
+}
+
 .generator-search-option {
   display: grid;
   grid-template-columns: 46px minmax(0, 1fr);
@@ -169,8 +223,8 @@
   min-width: 0;
   min-height: 66px;
   padding: 10px 12px;
-  color: var(--ink);
-  background: var(--panel);
+  color: inherit;
+  background: transparent;
   border: 0;
   cursor: pointer;
   text-align: left;
@@ -187,17 +241,17 @@
 .generator-search-effect {
   width: 46px;
   height: 46px;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--suggest-color) 72%, white), var(--suggest-color) 54%, color-mix(in srgb, var(--suggest-color) 74%, black)),
-    var(--suggest-color);
-  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 6px color-mix(in srgb, var(--suggest-ink) 10%, transparent);
+  background: var(--suggest-color);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transition: border-radius 180ms var(--ease-out-expo), transform 180ms var(--ease-out-expo);
 }
 
 .generator-search-option:hover .generator-search-effect,
 .generator-search-option:focus-visible .generator-search-effect {
-  border-color: color-mix(in srgb, var(--hover-text) 46%, transparent);
+  border-radius: 50%;
+  transform: scale(0.94);
 }
 
 .generator-search-copy {
@@ -229,6 +283,26 @@
 .generator-search-option:hover small,
 .generator-search-option:focus-visible small {
   color: color-mix(in srgb, var(--hover-text) 72%, transparent);
+}
+
+.generator-search-detail {
+  display: inline-flex;
+  align-items: center;
+  align-self: stretch;
+  padding: 0 12px;
+  color: var(--muted);
+  border-left: 1px solid var(--line);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.generator-search-detail:hover,
+.generator-search-detail:focus-visible {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+  outline: none;
 }
 
 .generator-search-empty {
@@ -695,11 +769,24 @@
   }
 
   .generator-commandbar {
-    grid-template-columns: 1fr;
     top: 68px;
     width: 100%;
     min-width: 0;
-    overflow-x: clip;
+    gap: 8px;
+    overflow: visible;
+  }
+
+  .generator-search-wrap {
+    flex-basis: 240px;
+  }
+
+  .generator-method {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .generator-method::-webkit-scrollbar {
+    display: none;
   }
 
   .generator-board {
@@ -739,6 +826,26 @@
   }
 }
 
+@media (max-width: 900px) {
+  .generator-actions {
+    gap: 4px;
+  }
+
+  .generator-actions button,
+  .generator-more summary {
+    width: 38px;
+    min-width: 38px;
+    padding-inline: 0;
+    font-size: 0;
+  }
+
+  .generator-actions iconify-icon,
+  .generator-more summary iconify-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
 @media (max-width: 720px) {
   .generator-commandbar {
     top: 62px;
@@ -746,32 +853,25 @@
     padding-left: 20px;
   }
 
-  .generator-method,
-  .generator-actions {
-    display: grid;
-    width: 100%;
-    min-width: 0;
-  }
-
   .generator-method {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    flex: 0 1 218px;
   }
 
   .generator-actions {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
   }
 
   .generator-method button,
-  .generator-actions button {
-    width: 100%;
+  .generator-actions button,
+  .generator-more summary {
     min-width: 0;
-    min-height: 42px;
-    white-space: normal;
+    min-height: 38px;
+    padding-inline: 8px;
   }
 
   .generator-actions .generator-favorite-action {
-    width: 100%;
-    min-width: 0;
+    width: 38px;
+    min-width: 38px;
   }
 
   .generator-search-suggestions {
@@ -791,12 +891,36 @@
 }
 
 @media (max-width: 480px) {
+  .generator-commandbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+
   .generator-method {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
   }
 
   .generator-actions {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .generator-search-wrap {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: none;
+  }
+
+  .generator-actions {
+    justify-content: stretch;
+  }
+
+  .generator-actions > button,
+  .generator-more {
+    flex: 1 1 0;
   }
 
   .generator-export-grid {

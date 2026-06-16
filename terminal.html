@@ -35,7 +35,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260614-4">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260616-1">
+    <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260616-2">
     <link rel="stylesheet" href="assets/css/terminal.css?v=20260615-4">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
@@ -62,7 +63,7 @@
           <div class="quick" data-quick></div>
           <label class="tm-search">
             <svg width="13" height="13"><use href="#tm-i-search"/></svg>
-            <input type="search" name="anchor-search" data-search list="tm-names" placeholder="色名 / 编号 / HEX" aria-label="搜索锚色">
+            <input type="search" name="anchor-search" data-search data-color-suggest list="tm-names" placeholder="色名 / 编号 / HEX" aria-label="搜索锚色">
             <datalist id="tm-names"></datalist>
           </label>
           <button class="ghost" data-random>随机</button>
@@ -126,9 +127,11 @@
       <symbol id="tm-i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 19h16"/></symbol>
     </defs></svg>
 
-    <script src="assets/js/shared-chrome.js?v=20260615-1" defer></script>
+    <script src="assets/js/shared-chrome.js?v=20260616-1" defer></script>
+    <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
     <script src="assets/data/preview-syntax.js?v=20260615-1" defer></script>
+    <script src="assets/js/color-search-suggestions.js?v=20260616-2" defer></script>
     <script src="assets/js/color-core.js?v=20260614-1" defer></script>
     <script src="assets/js/terminal-tokens.js?v=20260614-1" defer></script>
     <script src="assets/js/terminal-serialize.js?v=20260614-1" defer></script>
