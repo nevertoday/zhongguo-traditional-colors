@@ -6,11 +6,11 @@
 .theme-forge-page .style-lab-intro{padding-right:clamp(16px,2.4vw,36px);padding-left:clamp(16px,2.4vw,36px)}
 
 .tf-root{
-  --ink:#0d0d0b; --ink2:#15150f; --bone:#ece7da; --ash:#88847a; --ash2:#6a675f;
-  --line:rgba(236,231,218,.13); --line2:rgba(236,231,218,.26);
+  --ink:#f5efe2; --ink2:#fffaf0; --bone:#15130f; --ash:#655f53; --ash2:#847b6c;
+  --line:rgba(21,19,15,.12); --line2:rgba(21,19,15,.22);
   --serif:'Fraunces',serif; --sans:'Noto Sans SC',system-ui,sans-serif;
   --cn:'Noto Serif SC',serif; --mono:'Space Mono','SFMono-Regular',monospace;
-  --warn:#e8a04b;
+  --warn:#9a5c18;
   position:relative; height:min(1500px,calc(100vh - 24px)); min-height:760px;
   display:grid; grid-template-rows:auto 1fr;
   background:var(--ink); color:var(--bone); font-family:var(--sans);
