@@ -34,6 +34,14 @@ const ASSET_VERSION = '20260616-1';
 const SHARED_STYLE_VERSION = '20260616-1';
 const SHARED_CHROME_VERSION = '20260616-1';
 
+// Build date drives sitemap <lastmod>. Regenerated on every run, so the
+// freshness signal stays current each deploy.
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
+
+// Hue families grouped on the static colors/index.html, ordered to match the
+// dictionary hue filter (红 → 中性). Any family not listed falls to the end.
+const HUE_FAMILY_ORDER = ['红色系', '橙色系', '黄色系', '绿色系', '青色系', '蓝色系', '紫色系', '中性色'];
+
 // Root-level pages that also belong in the sitemap, with crawl priority hints.
 const MAIN_PAGES = [
   { path: '', priority: '1.0', changefreq: 'weekly' },
@@ -205,8 +213,9 @@ function colorPageUrl(image) {
   return `${SITE}/colors/${encodeURIComponent(colorSlug(image))}.html`;
 }
 
-function renderColorPage(image, harmony, context) {
+function renderColorPage(image, harmony, context, siblings = {}) {
   const { usage, imageById } = context;
+  const { prev, next } = siblings;
   const name = colorName(image);
   const hex = image.hex;
   const ink = readableText(hex);
@@ -298,6 +307,22 @@ function renderColorPage(image, harmony, context) {
     .join('\n    ');
 
   const note = toneNote(hsl, temperature);
+
+  // Static prev/next + all-colors links. These keep every page reachable by
+  // sequential traversal (id order) and give one hop to the full index, so the
+  // crawl graph is fully connected without relying on JavaScript.
+  const prevLink = prev
+    ? `<a class="button button-secondary" rel="prev" href="${encodeURIComponent(colorSlug(prev))}.html">← ${escapeHtml(colorName(prev))}</a>`
+    : '<span></span>';
+  const nextLink = next
+    ? `<a class="button button-secondary" rel="next" href="${encodeURIComponent(colorSlug(next))}.html">${escapeHtml(colorName(next))} →</a>`
+    : '<span></span>';
+  const pager = `
+      <nav class="color-pager" aria-label="颜色翻页" style="display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-top:2.5rem;">
+        ${prevLink}
+        <a class="button button-primary" href="index.html">全部 742 色索引</a>
+        ${nextLink}
+      </nav>`;
 
   return `<!doctype html>
 <html lang="zh-CN">
@@ -391,6 +416,7 @@ function renderColorPage(image, harmony, context) {
         <div class="relation-grid">${relationSections}
         </div>
       </section>
+      ${pager}
     </main>
 
     <div data-shared-footer></div>
@@ -422,16 +448,156 @@ function renderShareCard(image, harmony) {
 `;
 }
 
+// The static all-colors index page (colors/index.html). This is the crawl-path
+// fix: every one of the 742 color pages is reachable from here via a real
+// <a href> in the static HTML — no JavaScript required — grouped by hue family.
+function renderColorIndex(images, harmonies) {
+  const canonical = `${SITE}/colors/`;
+  const ogImage = `${SITE}/docs/screenshots/home-gallery.png`;
+  const description = `中国传统色完整索引：${images.length} 种传统色色卡，按红橙黄绿青蓝紫与中性色系分组，每色含 HEX 色值并链接到独立色彩详情页。`;
+
+  // Bucket colors by hue family, preserving the manifest's id order within each.
+  const groups = new Map(HUE_FAMILY_ORDER.map((family) => [family, []]));
+  for (const image of images) {
+    const family = harmonies[image.id]?.hueFamily || '其他';
+    if (!groups.has(family)) groups.set(family, []);
+    groups.get(family).push(image);
+  }
+
+  const sections = [...groups.entries()]
+    .filter(([, list]) => list.length)
+    .map(([family, list]) => {
+      const swatches = list.map((image) => {
+        const href = `${encodeURIComponent(colorSlug(image))}.html`;
+        const name = colorName(image);
+        return `
+              <a class="relation-swatch" href="${href}" style="--swatch: ${escapeHtml(image.hex)}; --swatch-ink: ${readableText(image.hex)};">
+                <span class="relation-swatch-name">${escapeHtml(name)}</span>
+                <span class="relation-swatch-hex">${escapeHtml(image.hex)}</span>
+              </a>`;
+      }).join('');
+      return `
+          <section class="relation-block">
+            <h2>${escapeHtml(family)}<span class="relation-intent">（${list.length} 色）</span></h2>
+            <div class="relation-swatches">${swatches}</div>
+          </section>`;
+    }).join('');
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: '色彩字典', item: `${SITE}/dictionary.html` },
+      { '@type': 'ListItem', position: 3, name: '全部色卡索引', item: canonical },
+    ],
+  };
+  const collectionJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: '中国传统色索引',
+    url: canonical,
+    inLanguage: 'zh-CN',
+    description,
+    isPartOf: { '@type': 'WebSite', name: '中国传统配色', url: `${SITE}/` },
+    about: { '@type': 'CreativeWorkSeries', name: '中国传统色 742 色', url: `${SITE}/dictionary.html` },
+    numberOfItems: images.length,
+  };
+  const jsonLd = [breadcrumbJsonLd, collectionJsonLd]
+    .map((data) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`)
+    .join('\n    ');
+
+  return `<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="${escapeHtml(description)}">
+    <meta name="theme-color" content="#f7f7f4" data-theme-color>
+    <title>中国传统色索引 · 全部 ${images.length} 色色卡 | 中国传统配色</title>
+    <link rel="canonical" href="${escapeHtml(canonical)}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="中国传统配色">
+    <meta property="og:title" content="中国传统色索引 · 全部 ${images.length} 色">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${escapeHtml(canonical)}">
+    <meta property="og:image" content="${escapeHtml(ogImage)}">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="中国传统色索引 · 全部 ${images.length} 色">
+    <meta name="twitter:description" content="${escapeHtml(description)}">
+    <meta name="twitter:image" content="${escapeHtml(ogImage)}">
+    <link rel="icon" href="../favicon.svg?v=20260610-6" type="image/svg+xml">
+    ${jsonLd}
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('theme');
+          if (theme === 'dark' || theme === 'light') {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch (error) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=${SHARED_STYLE_VERSION}">
+    <link rel="stylesheet" href="../assets/css/color-page.css?v=${ASSET_VERSION}">
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
+  </head>
+  <body data-current-page="dictionary" data-base="../">
+    <a class="skip-link" href="#color-index-main">跳到色卡索引</a>
+
+    <div data-shared-header></div>
+
+    <main id="color-index-main" class="color-detail-page">
+      <nav class="color-breadcrumb" aria-label="面包屑导航">
+        <a href="../index.html">首页</a>
+        <span aria-hidden="true">/</span>
+        <a href="../dictionary.html">色彩字典</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">全部色卡索引</span>
+      </nav>
+
+      <header class="color-hero" style="--swatch: #f7f7f4; --swatch-ink: #1a1a1a;">
+        <div class="color-hero-copy">
+          <p class="color-hero-id">中国传统色 · 全部 ${images.length} 色</p>
+          <h1>中国传统色索引</h1>
+          <p class="color-hero-note">${escapeHtml(images.length + ' 种中国传统色，按色系分组。点击任意色名进入它的色值与配色详情页。')}</p>
+        </div>
+      </header>
+
+      <section class="color-section" aria-labelledby="index-title">
+        <h2 id="index-title" class="sr-only">按色系浏览全部色卡</h2>
+        <div class="relation-grid">${sections}
+        </div>
+      </section>
+    </main>
+
+    <div data-shared-footer></div>
+
+    <script src="../assets/js/shared-chrome.js?v=${SHARED_CHROME_VERSION}" defer></script>
+  </body>
+</html>
+`;
+}
+
 function renderSitemap(images) {
   const urls = [];
   for (const page of MAIN_PAGES) {
     urls.push({ loc: `${SITE}/${page.path}`, priority: page.priority, changefreq: page.changefreq });
   }
+  // The static all-colors index — the crawlable hub that links to every color page.
+  urls.push({ loc: `${SITE}/colors/`, priority: '0.9', changefreq: 'weekly' });
   for (const image of images) {
     urls.push({ loc: colorPageUrl(image), priority: '0.6', changefreq: 'monthly' });
   }
   const body = urls.map((url) => `  <url>
     <loc>${escapeHtml(url.loc)}</loc>
+    <lastmod>${BUILD_DATE}</lastmod>
     <changefreq>${url.changefreq}</changefreq>
     <priority>${url.priority}</priority>
   </url>`).join('\n');
@@ -461,18 +627,24 @@ async function main() {
   await mkdir(CARDS_DIR, { recursive: true });
 
   let written = 0;
-  for (const image of images) {
+  for (let i = 0; i < images.length; i += 1) {
+    const image = images[i];
     const harmony = harmonies[image.id];
     const slug = colorSlug(image);
-    await writeFile(path.join(COLORS_DIR, `${slug}.html`), renderColorPage(image, harmony, context), 'utf8');
+    const siblings = { prev: images[i - 1], next: images[i + 1] };
+    await writeFile(path.join(COLORS_DIR, `${slug}.html`), renderColorPage(image, harmony, context, siblings), 'utf8');
     await writeFile(path.join(CARDS_DIR, `${image.id}.svg`), renderShareCard(image, harmony), 'utf8');
     written += 1;
   }
 
+  // The static all-colors index lives at colors/index.html (served as /colors/).
+  await writeFile(path.join(COLORS_DIR, 'index.html'), renderColorIndex(images, harmonies), 'utf8');
+
   await writeFile(SITEMAP_FILE, renderSitemap(images), 'utf8');
 
   console.log(`Generated ${written} color pages + share cards under colors/`);
-  console.log(`Wrote sitemap.xml with ${MAIN_PAGES.length + images.length} URLs`);
+  console.log('Wrote colors/index.html (static all-colors index)');
+  console.log(`Wrote sitemap.xml with ${MAIN_PAGES.length + 1 + images.length} URLs`);
 }
 
 main().catch((error) => {
