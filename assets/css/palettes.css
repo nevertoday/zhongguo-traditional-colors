@@ -1375,6 +1375,10 @@ h3::before {
 }
 
 .use-huebar button {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
   min-width: 34px;
   min-height: 34px;
   padding: 0 9px;
@@ -1384,6 +1388,14 @@ h3::before {
   cursor: pointer;
   font-size: 0.78rem;
   font-weight: 850;
+}
+
+.use-huebar button::before {
+  display: block;
+  width: 10px;
+  aspect-ratio: 1;
+  background: var(--hue-color);
+  content: "";
 }
 
 .use-huebar button[aria-pressed="true"],

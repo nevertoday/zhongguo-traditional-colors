@@ -35,8 +35,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260616-2">
-    <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260616-2">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260616-9">
+    <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260616-3">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
   </head>
@@ -47,11 +47,7 @@
 
     <main id="top" class="dictionary-page">
       <section class="dictionary-section" id="dictionary" aria-labelledby="dictionary-title">
-        <div class="section-heading">
-          <span class="section-kicker">Color Dictionary</span>
-          <h2 id="dictionary-title">传统色索引</h2>
-          <p>按色名、编号、HEX 或色系缩小范围。</p>
-        </div>
+        <h1 class="sr-only" id="dictionary-title">传统色索引</h1>
 
         <div class="dictionary-toolbar" aria-label="色彩字典工具">
           <label class="dictionary-search">
@@ -59,7 +55,7 @@
             <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
             <input type="search" data-dictionary-search data-color-suggest placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
           </label>
-          <label class="dictionary-filter">
+          <label class="dictionary-filter dictionary-filter--hidden">
             <span class="sr-only">按色系筛选</span>
             <select data-dictionary-hue aria-label="按色系筛选">
               <option value="all">全部色系</option>
@@ -73,6 +69,7 @@
               <option value="neutral">中性色</option>
             </select>
           </label>
+          <div class="dictionary-huebar" data-dictionary-hue-list aria-label="按色相筛选"></div>
           <button class="dictionary-random" type="button" data-dictionary-random>
             <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
             随机一色
@@ -134,7 +131,7 @@
     <script src="assets/js/shared-chrome.js?v=20260616-1" defer></script>
     <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
-    <script src="assets/js/color-search-suggestions.js?v=20260616-2" defer></script>
-    <script src="assets/js/dictionary.js?v=20260616-2" defer></script>
+    <script src="assets/js/color-search-suggestions.js?v=20260616-3" defer></script>
+    <script src="assets/js/dictionary.js?v=20260616-3" defer></script>
   </body>
 </html>

@@ -1150,7 +1150,7 @@ function setStyleDockCollapsed(collapsed) {
   document.body.dataset.styleDockCollapsed = collapsed ? 'true' : 'false';
   styleDockToggle.setAttribute('aria-expanded', String(!collapsed));
   styleDockToggle.setAttribute('aria-label', collapsed ? '展开侧边操作栏' : '侧向收起操作栏');
-  styleDockToggle.querySelector('iconify-icon')?.setAttribute('icon', collapsed ? 'lucide:chevron-left' : 'lucide:chevron-right');
+  styleDockToggle.querySelector('iconify-icon')?.setAttribute('icon', collapsed ? 'lucide:chevron-right' : 'lucide:chevron-left');
   if (styleDockToggleLabel) styleDockToggleLabel.textContent = collapsed ? '展开' : '收起';
 }
 
@@ -1303,7 +1303,6 @@ function styleTemplateMarkup(scene, scheme) {
       <header class="style-template-meta">
         <span>${escapeHtml(scheme.intent.label)}</span>
         <strong>${escapeHtml(scene.label)}场景预览</strong>
-        <small>${escapeHtml(scene.size)}</small>
         <button type="button" data-style-copy="${escapeHtml(scene.key)}" aria-label="复制 ${escapeHtml(scene.label)} 场景配色方案" title="复制 ${escapeHtml(scene.label)} 场景配色方案">
           <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
           <span class="sr-only">复制</span>
@@ -1313,12 +1312,14 @@ function styleTemplateMarkup(scene, scheme) {
           <span class="sr-only">收藏</span>
         </button>
       </header>
+      <div class="style-template-purpose">
+        <span><strong>用途</strong>${escapeHtml(scene.scene)}</span>
+        <span><strong>尺寸</strong>${escapeHtml(scene.size)}</span>
+      </div>
       <div class="style-template-canvas">
         ${styleLabCanvasMarkup(scene, scheme)}
       </div>
       <div class="style-template-brief">
-        <p><strong>用在</strong><span>${escapeHtml(scene.scene)}</span></p>
-        <p><strong>尺寸</strong><span>${escapeHtml(scene.size)}</span></p>
         <p><strong>骨架</strong><span>${escapeHtml(scene.layout)}</span></p>
         <p><strong>倾向</strong><span>${escapeHtml(scheme.intent.summary)}</span></p>
       </div>

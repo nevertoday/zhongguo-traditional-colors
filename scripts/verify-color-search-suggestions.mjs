@@ -58,10 +58,10 @@ for (const page of pages) {
 
 for (const page of genericAssetPages) {
   const html = read(page);
-  if (!html.includes('assets/css/color-suggestions.css?v=20260616-2')) {
+  if (!html.includes('assets/css/color-suggestions.css?v=20260616-3')) {
     fail(`${page}: missing color suggestions stylesheet`);
   }
-  if (!html.includes('assets/js/color-search-suggestions.js?v=20260616-2')) {
+  if (!html.includes('assets/js/color-search-suggestions.js?v=20260616-3')) {
     fail(`${page}: missing color suggestions script`);
   }
 
