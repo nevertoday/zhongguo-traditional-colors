@@ -1,0 +1,469 @@
+/*
+ * 每日一色 playground — built on the site design system (assets/css/styles.css).
+ * Chrome uses site tokens (adapts to light/dark); the card is a colored artifact
+ * whose own ink is set per-color. Sharp corners throughout, per house style.
+ */
+
+/* Full-bleed page like the other tool surfaces (.theme-forge-page is max-width:none);
+   inner content carries the horizontal padding. */
+.daily-main {
+  padding: clamp(16px, 2vw, 26px) clamp(16px, 2.4vw, 36px) clamp(48px, 5vw, 72px);
+}
+
+.daily-grid {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .daily-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------------- controls */
+
+.daily-controls {
+  position: sticky;
+  top: 92px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 22px 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+}
+
+@media (max-width: 900px) {
+  .daily-controls {
+    position: static;
+  }
+}
+
+.cgroup {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.cgroup + .cgroup {
+  padding-top: 20px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.clabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+}
+
+/* segmented control + nav row + presets share one button language */
+.seg,
+.navrow {
+  display: flex;
+  gap: 6px;
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.seg-btn,
+.preset {
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 170ms var(--ease-out-quart),
+    color 170ms ease,
+    border-color 170ms ease,
+    transform 170ms var(--ease-out-quart);
+}
+
+.seg-btn {
+  flex: 1;
+}
+
+.navrow .seg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.seg-btn:hover,
+.preset:hover {
+  background: var(--hover-bg);
+  color: var(--hover-text);
+  border-color: var(--hover-bg);
+  transform: translateY(-1px);
+}
+
+.seg-btn:active,
+.preset:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.seg-btn[aria-checked="true"] {
+  background: var(--ink);
+  color: var(--inverse);
+  border-color: var(--ink);
+}
+
+.seg-btn:focus-visible,
+.preset:focus-visible,
+.field:focus-visible,
+.toggle input:focus-visible + .box {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* date + select */
+.field {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+}
+
+select.field {
+  cursor: pointer;
+}
+
+/* toggles: real checkbox, sharp box, ink fill + check */
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 4px 0;
+  cursor: pointer;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toggle .box {
+  position: relative;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  transition: background 170ms var(--ease-out-quart), border-color 170ms ease;
+}
+
+.toggle .box::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 7px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--inverse);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0.6);
+  opacity: 0;
+  transition: opacity 130ms ease, transform 170ms var(--ease-out-quint);
+}
+
+.toggle:hover .box {
+  border-color: var(--ink);
+}
+
+.toggle input:checked + .box {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.toggle input:checked + .box::after {
+  opacity: 1;
+  transform: rotate(45deg) scale(1);
+}
+
+/* ----------------------------------------------------------------- stage */
+
+.daily-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.cardframe {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: clamp(6px, 2vw, 20px) 0;
+}
+
+/* the shareable artifact */
+.card {
+  --card-ink: #1a1a1a;
+  width: 100%;
+  background: #ffffff;
+  color: var(--card-ink);
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 4.5%, 44px);
+  font-family: var(--font-body);
+  transition: background 320ms var(--ease-out-quart);
+}
+
+.card[data-fmt="portrait"] {
+  max-width: 392px;
+  aspect-ratio: 3 / 4;
+}
+
+.card[data-fmt="square"] {
+  max-width: 468px;
+  aspect-ratio: 1 / 1;
+}
+
+.card[data-fmt="banner"] {
+  max-width: 620px;
+  aspect-ratio: 16 / 9;
+}
+
+.card-head {
+  font-family: var(--font-rounded);
+  font-size: 0.86rem;
+  letter-spacing: 0.01em;
+  opacity: 0.82;
+}
+
+.card-body {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.card-name {
+  font-family: var(--font-title);
+  font-weight: 900;
+  line-height: 1;
+  font-size: clamp(2.6rem, 8vw, 4.4rem);
+  text-wrap: balance;
+}
+
+.card[data-fmt="banner"] .card-name {
+  font-size: clamp(2.2rem, 6.5vw, 3.4rem);
+}
+
+.card-py {
+  margin-top: 8px;
+  font-family: var(--font-rounded);
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  opacity: 0.86;
+}
+
+.card-hex {
+  margin-top: 16px;
+  font-family: var(--font-rounded);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+.card-vals {
+  margin-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-family: var(--font-rounded);
+  font-size: 0.86rem;
+  opacity: 0.88;
+}
+
+.card-pair {
+  margin-top: 18px;
+}
+
+.card-pair-title,
+.card-foot {
+  font-family: var(--font-rounded);
+  letter-spacing: 0.02em;
+}
+
+.card-pair-title {
+  font-size: 0.72rem;
+  opacity: 0.7;
+  margin-bottom: 9px;
+}
+
+.card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.card-chip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  opacity: 0.94;
+}
+
+.card-chip .dot {
+  width: 18px;
+  height: 18px;
+  border: 1px solid color-mix(in srgb, var(--card-ink) 32%, transparent);
+}
+
+.card-use {
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid color-mix(in srgb, var(--card-ink) 15%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  opacity: 0.9;
+}
+
+.card-use b {
+  font-weight: 700;
+}
+
+.card-foot {
+  margin-top: 18px;
+  font-size: 0.74rem;
+  opacity: 0.66;
+}
+
+/* hand-off: take this color into the theme / terminal generators */
+.daily-handoff {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 620px;
+}
+
+.daily-handoff span {
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+.daily-handoff .button {
+  min-height: 40px;
+  padding: 8px 15px;
+}
+
+/* ---------------------------------------------------------------- output */
+
+.daily-out {
+  width: 100%;
+  max-width: 620px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+}
+
+.daily-out-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.daily-out-head h2 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.daily-out .button {
+  min-height: 40px;
+  padding: 8px 16px;
+  white-space: nowrap;
+}
+
+.daily-post {
+  margin: 0;
+  padding: 16px 18px 4px;
+  white-space: pre-wrap;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.daily-tags {
+  padding: 6px 18px 18px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  opacity: 0.82;
+}
+
+.daily-note {
+  max-width: 60ch;
+  text-align: center;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ---- touch targets: ≥44px on coarse pointers / mobile ---- */
+@media (max-width: 900px), (pointer: coarse) {
+  .seg-btn,
+  .preset,
+  .field,
+  .daily-out .button {
+    min-height: 44px;
+  }
+
+  .toggle {
+    padding: 9px 0;
+  }
+}
+
+/* --------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .seg-btn,
+  .preset,
+  .toggle .box,
+  .toggle .box::after {
+    transition: none;
+  }
+
+  .seg-btn:hover,
+  .preset:hover,
+  .seg-btn:active,
+  .preset:active {
+    transform: none;
+  }
+}
