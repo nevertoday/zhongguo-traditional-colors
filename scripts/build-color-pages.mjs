@@ -431,6 +431,9 @@ function renderShareCard(image, harmony, partners = []) {
     .filter(Boolean)
     .join(' · ');
   const nameSize = name.length >= 6 ? 96 : name.length >= 5 ? 120 : 150;
+  const pinyinLine = image.pinyin
+    ? `\n  <text x="80" y="340" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="${ink}" opacity="0.72" letter-spacing="1">${escapeHtml(image.pinyin)}</text>`
+    : '';
   const partnerTitle = partners.length
     ? `\n  <text x="80" y="512" font-family="'M PLUS Rounded 1c', sans-serif" font-size="22" fill="${ink}" opacity="0.6">配色搭档 · 取自传统色库</text>`
     : '';
@@ -443,9 +446,9 @@ function renderShareCard(image, harmony, partners = []) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="${escapeHtml(`${name} ${hex}`)}">
   <rect width="1200" height="630" fill="${escapeHtml(hex)}"/>
   <text x="80" y="96" font-family="'Noto Serif SC', serif" font-size="30" fill="${ink}" opacity="0.78">${escapeHtml(heading)}</text>
-  <text x="80" y="300" font-family="'Noto Serif SC', serif" font-size="${nameSize}" font-weight="900" fill="${ink}">${escapeHtml(name)}</text>
-  <text x="80" y="388" font-family="'M PLUS Rounded 1c', sans-serif" font-size="56" fill="${ink}" letter-spacing="4">${escapeHtml(hex)}</text>
-  <text x="80" y="450" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="${ink}" opacity="0.72">RGB ${rgb.r} ${rgb.g} ${rgb.b}　CMYK ${cmyk.c} ${cmyk.m} ${cmyk.y} ${cmyk.k}</text>${partnerTitle}${chipBlock}
+  <text x="80" y="288" font-family="'Noto Serif SC', serif" font-size="${nameSize}" font-weight="900" fill="${ink}">${escapeHtml(name)}</text>${pinyinLine}
+  <text x="80" y="404" font-family="'M PLUS Rounded 1c', sans-serif" font-size="56" fill="${ink}" letter-spacing="4">${escapeHtml(hex)}</text>
+  <text x="80" y="458" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="${ink}" opacity="0.72">RGB ${rgb.r} ${rgb.g} ${rgb.b}　CMYK ${cmyk.c} ${cmyk.m} ${cmyk.y} ${cmyk.k}</text>${partnerTitle}${chipBlock}
   <text x="1120" y="600" text-anchor="end" font-family="'M PLUS Rounded 1c', sans-serif" font-size="28" fill="${ink}" opacity="0.55">colors.xiaoxiaodong.ai</text>
 </svg>
 `;

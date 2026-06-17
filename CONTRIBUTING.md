@@ -17,8 +17,10 @@
 3. **在 `docs/chinese-color-master-list.md` 的颜色清单里增加对应行 `色名 #HEX`**，顺序与编号一致——这是色彩真相源，缺了这一步构建会直接 `exit 1`。文件名里的色名必须与清单同位置的色名完全一致，否则会报 `name drift`。
 4. 单张图片应包含色名、色值和必要说明，保持与现有色卡接近的视觉规格。
 5. 避免提交 `.DS_Store`、临时文件和重复图片。
-6. 运行 `npm run manifest` 更新图片清单（会校验图片与清单一一对应）。
-7. 打开页面检查新增图片是否能正常显示。
+6. 生成拼音：`python scripts/build-pinyin.py`（需 `pip install pypinyin`）。这会更新 `docs/chinese-color-pinyin.json`；`npm run manifest` 现在要求每个色名都有拼音，缺了会报错。若是多音字，复核 `scripts/build-pinyin.py` 里的 `CHAR_OVERRIDES` 表。
+7. 若新色名引入了新汉字，重新生成字体子集：`python scripts/build-font-subset.py`（需 `pip install fonttools brotli`）。
+8. 运行 `npm run manifest` 更新图片清单（会校验图片、清单、拼音一一对应）。
+9. 打开页面检查新增图片是否能正常显示。
 
 ## 命名建议
 
