@@ -106,6 +106,20 @@ These skills are not another explanation of color theory. They turn the 742-colo
 
 Every `xxd-*` skill folder bundles the full `references/chinese-color-master-list.md`, `references/chinese-color-harmony.md`, and `references/chinese-color-harmony.csv`. You can take one skill into another project and still have the complete 742-color list plus every color's harmony relationships.
 
+### Install into Claude Code
+
+Each `xxd-*` is a native Claude Code skill (a `SKILL.md` with frontmatter), so you can drop it straight into your own Claude Code:
+
+```bash
+# After cloning, copy the skills you want into your personal skills folder
+git clone https://github.com/nevertoday/zhongguo-traditional-colors.git
+cp -r zhongguo-traditional-colors/skills/xxd-palette-builder ~/.claude/skills/
+# Or install all of them:
+cp -r zhongguo-traditional-colors/skills/xxd-* ~/.claude/skills/
+```
+
+Every skill bundles its own `references/`, so it runs standalone with no network access. Once installed, just describe your task in Claude Code (e.g. "build a UI token set from 朱砂") or invoke the matching skill to trigger it.
+
 | Skill | Use it for |
 | --- | --- |
 | [`xxd-color-brief`](skills/xxd-color-brief/SKILL.md) | Translate vague terms like premium, Eastern, young, or restrained into temperature, lightness, saturation, contrast, and risk constraints |
