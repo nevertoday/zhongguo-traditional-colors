@@ -46,6 +46,21 @@ function colorNameFromFile(file) {
   return file.replace(/^\d{3}-/, '').replace(/\.[^.]+$/, '');
 }
 
+function cmykFromHex(hex) {
+  const v = hex.replace('#', '');
+  const r = parseInt(v.slice(0, 2), 16) / 255;
+  const g = parseInt(v.slice(2, 4), 16) / 255;
+  const b = parseInt(v.slice(4, 6), 16) / 255;
+  const k = 1 - Math.max(r, g, b);
+  if (k === 1) return { c: 0, m: 0, y: 0, k: 100 };
+  return {
+    c: Math.round(((1 - r - k) / (1 - k)) * 100),
+    m: Math.round(((1 - g - k) / (1 - k)) * 100),
+    y: Math.round(((1 - b - k) / (1 - k)) * 100),
+    k: Math.round(k * 100),
+  };
+}
+
 const images = loadBrowserData(MANIFEST, 'TRADITIONAL_COLOR_IMAGES') || [];
 const master = loadMasterList(MASTER_LIST);
 
@@ -75,6 +90,17 @@ for (const image of images) {
     fail(`null hex: No.${image.id} ${where} did not join to a master-list color name`);
   } else if (!/^#[0-9A-F]{6}$/.test(image.hex)) {
     fail(`bad hex: No.${image.id} has "${image.hex}" (${where})`);
+  }
+
+  // cmyk must be present, integer 0-100, and consistent with the hex.
+  if (image.hex && /^#[0-9A-F]{6}$/.test(image.hex)) {
+    const expected = cmykFromHex(image.hex);
+    const got = image.cmyk;
+    if (!got || typeof got !== 'object') {
+      fail(`missing cmyk: No.${image.id} ${where}`);
+    } else if (got.c !== expected.c || got.m !== expected.m || got.y !== expected.y || got.k !== expected.k) {
+      fail(`cmyk drift: No.${image.id} manifest=${JSON.stringify(got)} expected=${JSON.stringify(expected)}`);
+    }
   }
 
   // filename must follow NNN-色名.ext and its number must equal the id.
