@@ -34,9 +34,11 @@ const ASSET_VERSION = '20260616-1';
 const SHARED_STYLE_VERSION = '20260616-1';
 const SHARED_CHROME_VERSION = '20260616-1';
 
-// Build date drives sitemap <lastmod>. Regenerated on every run, so the
-// freshness signal stays current each deploy.
-const BUILD_DATE = new Date().toISOString().slice(0, 10);
+// Sitemap <lastmod> date. Bumped by hand (like ASSET_VERSION) when color data or
+// pages change — kept as a constant, NOT new Date(), so the generated artifacts
+// stay a deterministic function of their inputs. The verify workflow rebuilds and
+// diffs every artifact; a build-time clock would drift each day and fail CI.
+const LASTMOD = '2026-06-17';
 
 // Hue families grouped on the static colors/index.html, ordered to match the
 // dictionary hue filter (红 → 中性). Any family not listed falls to the end.
@@ -630,7 +632,7 @@ function renderSitemap(images) {
   }
   const body = urls.map((url) => `  <url>
     <loc>${escapeHtml(url.loc)}</loc>
-    <lastmod>${BUILD_DATE}</lastmod>
+    <lastmod>${LASTMOD}</lastmod>
     <changefreq>${url.changefreq}</changefreq>
     <priority>${url.priority}</priority>
   </url>`).join('\n');
