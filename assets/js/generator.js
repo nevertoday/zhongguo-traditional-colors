@@ -377,13 +377,16 @@
     searchInput.setAttribute('aria-expanded', 'true');
     searchSuggestions.innerHTML = matches.length
       ? matches.map((color) => `
-        <button type="button" class="generator-search-option" data-generator-search-pick="${color.id}" style="--suggest-color:${color.cleanHex}; --suggest-ink:${readableText(color.cleanHex)}">
-          <span class="generator-search-effect" aria-hidden="true"></span>
-          <span class="generator-search-copy">
-            <strong>${escapeHtml(color.name)}</strong>
-            <small>${color.id} · ${color.cleanHex} · ${escapeHtml(searchEffectLabel(color))}</small>
-          </span>
-        </button>
+        <div class="generator-search-row" style="--suggest-color:${color.cleanHex}; --suggest-ink:${readableText(color.cleanHex)}">
+          <button type="button" class="generator-search-option" data-generator-search-pick="${color.id}">
+            <span class="generator-search-effect" aria-hidden="true"></span>
+            <span class="generator-search-copy">
+              <strong>${escapeHtml(color.name)}</strong>
+              <small>${color.id} · ${color.cleanHex} · ${escapeHtml(searchEffectLabel(color))}</small>
+            </span>
+          </button>
+          <a class="generator-search-detail" href="dictionary.html?q=${encodeURIComponent(color.name)}" aria-label="打开 ${escapeHtml(color.name)} 详情页">详情</a>
+        </div>
       `).join('')
       : '<p class="generator-search-empty">没有匹配的传统色</p>';
   }

@@ -51,7 +51,7 @@ const checks = [
   {
     source: 'uses',
     label: 'uses search input is debounced',
-    pattern: /searchInput\?\.addEventListener\(\s*['"]input['"]\s*,\s*debounce\(\s*\(\)\s*=>\s*rerender\(\)\s*,\s*200\s*\)\s*\)/,
+    pattern: /searchInput\?\.addEventListener\(\s*['"]input['"]\s*,\s*debounce\(\s*\(\)\s*=>\s*\{[\s\S]*?rerender\(\)\s*;?[\s\S]*?\}\s*,\s*200\s*\)\s*\)/,
   },
 ];
 

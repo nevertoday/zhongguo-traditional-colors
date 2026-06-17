@@ -81,6 +81,10 @@
     }).join('');
   }
 
+  function currentPageLabel() {
+    return pages.find((page) => page.key === currentPage)?.label || '浏览色卡';
+  }
+
   function footerColorButtonsMarkup() {
     return Array.from({ length: 12 }, () => (
       '<button type="button" data-footer-color aria-label="复制随机传统色"></button>'
@@ -94,9 +98,12 @@
         <span>色</span>
         <strong>中国传统配色</strong>
       </a>
+      <a class="nav-current-chip" href="${navHref(pages.find((page) => page.key === currentPage) || pages[0])}" aria-label="当前页面：${currentPageLabel()}">
+        ${currentPageLabel()}
+      </a>
       <nav class="site-nav" id="site-nav" aria-label="主导航">${navMarkup()}</nav>
       <div class="header-tools" aria-label="站点工具">
-        <button class="nav-menu-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false">
+        <button class="nav-menu-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="展开导航">
           <iconify-icon icon="lucide:menu" aria-hidden="true"></iconify-icon>
           <span class="sr-only">展开导航</span>
         </button>
@@ -136,6 +143,7 @@
   document.querySelector('[data-shared-header]')?.replaceWith(template(headerMarkup()));
   document.querySelector('[data-shared-footer]')?.replaceWith(template(footerMarkup()));
   bindBrandColorHover(document.querySelector('.brand-mark'));
+  bindSharedNavigation();
   bindSharedFooter();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', buildSharedFooterSpectrum, { once: true });
@@ -194,6 +202,39 @@
     setBrandHoverColors(brand);
     brand.addEventListener('pointerenter', () => setBrandHoverColors(brand));
     brand.addEventListener('focus', () => setBrandHoverColors(brand));
+  }
+
+  function bindSharedNavigation() {
+    const header = document.querySelector('.site-header');
+    const nav = document.querySelector('.site-nav');
+    const toggle = document.querySelector('[data-nav-toggle]');
+    if (!header || !nav || !toggle) return;
+
+    const setOpen = (open) => {
+      header.dataset.navOpen = open ? 'true' : 'false';
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? '收起导航' : '展开导航');
+      const icon = toggle.querySelector('iconify-icon');
+      if (icon) icon.setAttribute('icon', open ? 'lucide:x' : 'lucide:menu');
+    };
+
+    toggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setOpen(header.dataset.navOpen !== 'true');
+    }, { capture: true });
+
+    nav.addEventListener('click', (event) => {
+      if (event.target.closest('a, button')) setOpen(false);
+    }, { capture: true });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+
+    window.addEventListener('resize', sharedUtils.debounce(() => {
+      if (window.matchMedia('(min-width: 1181px)').matches) setOpen(false);
+    }, 120));
   }
 
   function colorName(color) {

@@ -35,8 +35,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260614-4">
-    <link rel="stylesheet" href="assets/css/terminal.css?v=20260615-8">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260616-9">
+    <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260616-3">
+    <link rel="stylesheet" href="assets/css/terminal.css?v=20260616-3">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
   </head>
@@ -62,7 +63,7 @@
           <div class="quick" data-quick></div>
           <label class="tm-search">
             <svg width="13" height="13"><use href="#tm-i-search"/></svg>
-            <input type="search" name="anchor-search" data-search list="tm-names" placeholder="色名 / 编号 / HEX" aria-label="搜索锚色">
+            <input type="search" name="anchor-search" data-search data-color-suggest list="tm-names" placeholder="色名 / 编号 / HEX" aria-label="搜索锚色">
             <datalist id="tm-names"></datalist>
           </label>
           <button class="ghost" data-random>随机</button>
@@ -92,7 +93,7 @@
 
           <aside class="spec" aria-label="生成的调色板与导出">
             <div class="anchor">
-              <span class="sw" data-anchor-swatch></span>
+              <button class="sw" type="button" data-anchor-swatch aria-label="更换锚色"></button>
               <div class="meta">
                 <div class="k">锚色 ANCHOR · <span data-anchor-slot>—</span></div>
                 <div class="nm" data-anchor-name>—</div>
@@ -125,6 +126,22 @@
       </section>
     </main>
 
+    <dialog class="tm-color-dialog" data-terminal-color-dialog aria-labelledby="tm-color-dialog-title">
+      <div class="tm-color-head">
+        <div>
+          <span>锚色</span>
+          <h2 id="tm-color-dialog-title">切换终端锚色</h2>
+        </div>
+        <button type="button" class="tm-color-close" data-terminal-color-close aria-label="关闭颜色选择">×</button>
+      </div>
+      <label class="tm-color-search">
+        <svg width="14" height="14" aria-hidden="true"><use href="#tm-i-search"/></svg>
+        <input type="search" data-terminal-color-search placeholder="搜索色名 / 编号 / HEX" autocomplete="off">
+      </label>
+      <div class="tm-color-current" data-terminal-color-current></div>
+      <div class="tm-color-grid" data-terminal-color-grid aria-label="选择终端锚色"></div>
+    </dialog>
+
     <div data-shared-footer></div>
 
     <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -134,12 +151,14 @@
       <symbol id="tm-i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></symbol>
     </defs></svg>
 
-    <script src="assets/js/shared-chrome.js?v=20260615-1" defer></script>
+    <script src="assets/js/shared-chrome.js?v=20260616-1" defer></script>
+    <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
     <script src="assets/data/preview-syntax.js?v=20260615-1" defer></script>
+    <script src="assets/js/color-search-suggestions.js?v=20260616-3" defer></script>
     <script src="assets/js/color-core.js?v=20260615-9" defer></script>
     <script src="assets/js/terminal-tokens.js?v=20260615-9" defer></script>
     <script src="assets/js/terminal-serialize.js?v=20260615-11" defer></script>
-    <script src="assets/js/terminal.js?v=20260615-8" defer></script>
+    <script src="assets/js/terminal.js?v=20260616-1" defer></script>
   </body>
 </html>

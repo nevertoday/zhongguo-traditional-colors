@@ -17,6 +17,7 @@ if (!existsSync('dictionary.html')) {
     'assets/data/harmonies.js',
     'assets/js/dictionary.js',
     'data-dictionary-grid',
+    'data-dictionary-color-story',
     'data-color-detail-dialog',
   ];
 
@@ -45,6 +46,8 @@ if (!existsSync('assets/js/dictionary.js')) {
     'TRADITIONAL_COLOR_HARMONIES',
     'renderDictionary',
     'openColorDetail',
+    'renderColorStory',
+    'dictionary.html?q=',
     'copyColorValue',
     'data-color-card',
   ];

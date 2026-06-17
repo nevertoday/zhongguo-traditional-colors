@@ -34,7 +34,8 @@ const colorsDir = path.join(ROOT, 'colors');
 if (!existsSync(colorsDir)) {
   fail('colors/: directory missing — run build-color-pages.mjs');
 } else {
-  const htmlFiles = readdirSync(colorsDir).filter((file) => file.endsWith('.html'));
+  // index.html is the static all-colors index, not a per-color page.
+  const htmlFiles = readdirSync(colorsDir).filter((file) => file.endsWith('.html') && file !== 'index.html');
   if (htmlFiles.length !== images.length) {
     fail(`colors/: expected ${images.length} HTML pages, found ${htmlFiles.length}`);
   }
@@ -69,9 +70,32 @@ if (!existsSync(colorsDir)) {
       '../assets/js/color-page.js',
       'class="relation-swatch"',
       'data-copy-value',
+      'class="color-pager"',
+      'href="index.html"',
     ];
     for (const token of requiredTokens) {
       if (!page.includes(token)) fail(`colors/${slug}.html: missing ${token}`);
+    }
+  }
+
+  // The static all-colors index must exist and link to color pages with real anchors.
+  const indexPath = path.join(colorsDir, 'index.html');
+  if (!existsSync(indexPath)) {
+    fail('colors/index.html: static all-colors index missing — run build-color-pages.mjs');
+  } else {
+    const indexPage = readFileSync(indexPath, 'utf8');
+    const indexTokens = [
+      `<link rel="canonical" href="${SITE}/colors/"`,
+      'class="relation-swatch"',
+      '"@type":"CollectionPage"',
+    ];
+    for (const token of indexTokens) {
+      if (!indexPage.includes(token)) fail(`colors/index.html: missing ${token}`);
+    }
+    // Every color must be linked from the index (real <a href>, JS-free discovery path).
+    const linked = (indexPage.match(/class="relation-swatch"/g) || []).length;
+    if (linked !== images.length) {
+      fail(`colors/index.html: expected ${images.length} color links, found ${linked}`);
     }
   }
 }
@@ -85,12 +109,18 @@ if (!existsSync(path.join(ROOT, 'sitemap.xml'))) {
     fail('sitemap.xml: wrong/missing urlset namespace');
   }
   const locCount = (sitemap.match(/<loc>/g) || []).length;
-  const expected = images.length + 11; // 11 indexable main pages (favorites excluded)
+  const expected = images.length + 12; // 11 indexable main pages + colors/ index (favorites excluded)
   if (locCount !== expected) {
     fail(`sitemap.xml: expected ${expected} <loc> entries, found ${locCount}`);
   }
   if (!sitemap.includes(`<loc>${SITE}/</loc>`)) fail('sitemap.xml: missing homepage URL');
+  if (!sitemap.includes(`<loc>${SITE}/colors/</loc>`)) fail('sitemap.xml: missing colors/ index URL');
   if (sitemap.includes('favorites.html')) fail('sitemap.xml: favorites.html should be excluded');
+  // <lastmod> is the one sitemap field Google/Bing actually use to schedule crawl.
+  const lastmodCount = (sitemap.match(/<lastmod>/g) || []).length;
+  if (lastmodCount !== locCount) {
+    fail(`sitemap.xml: expected a <lastmod> on every URL (${locCount}), found ${lastmodCount}`);
+  }
 }
 
 // 3. robots.txt references the sitemap.

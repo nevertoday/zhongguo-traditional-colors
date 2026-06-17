@@ -107,6 +107,7 @@
   background: var(--surface-faint);
   border: 0;
   cursor: pointer;
+  outline: 0;
   text-align: left;
   transition: background 180ms ease, transform 180ms var(--ease-out-quart);
 }
@@ -196,6 +197,7 @@
   background: var(--surface-faint);
   border: 1px solid transparent;
   cursor: pointer;
+  outline: 0;
   transition: background 180ms ease, border-color 180ms ease, transform 180ms var(--ease-out-quart);
 }
 
@@ -227,6 +229,7 @@
   color: inherit;
   background: var(--surface-faint);
   border: 1px solid transparent;
+  outline: 0;
 }
 
 .explorer-search:focus-within {
@@ -257,10 +260,32 @@
 }
 
 .explorer-hues button {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
   min-width: 0;
   border-color: transparent;
   font-size: 0.86rem;
 }
+
+.explorer-hues button::before {
+  display: block;
+  width: 10px;
+  aspect-ratio: 1;
+  background: var(--hue-color, currentColor);
+  content: "";
+}
+
+.explorer-hues button[data-explorer-hue="all"] { --hue-color: var(--active-ink); }
+.explorer-hues button[data-explorer-hue="red"] { --hue-color: #f23e23; }
+.explorer-hues button[data-explorer-hue="orange"] { --hue-color: #f28e16; }
+.explorer-hues button[data-explorer-hue="yellow"] { --hue-color: #f8c648; }
+.explorer-hues button[data-explorer-hue="green"] { --hue-color: #43b244; }
+.explorer-hues button[data-explorer-hue="cyan"] { --hue-color: #16a6a8; }
+.explorer-hues button[data-explorer-hue="blue"] { --hue-color: #2f72d6; }
+.explorer-hues button[data-explorer-hue="purple"] { --hue-color: #7b4bc4; }
+.explorer-hues button[data-explorer-hue="neutral"] { --hue-color: #8f8a82; }
 
 .explorer-hues button[aria-pressed="true"] {
   color: var(--active-color);
@@ -299,10 +324,14 @@
 }
 
 .explorer-spectrum-head {
+  position: relative;
+  z-index: 2;
   align-items: baseline;
+  min-height: 30px;
   padding-top: 6px;
-  padding-bottom: 2px;
+  padding-bottom: 6px;
   min-width: 0;
+  background: var(--active-color);
 }
 
 .explorer-spectrum {
@@ -325,6 +354,7 @@
   background: var(--swatch);
   border: 0;
   cursor: pointer;
+  outline: 0;
   text-align: left;
   transition: transform 180ms var(--ease-out-quart), outline-color 180ms ease;
 }
@@ -334,15 +364,15 @@
 }
 
 .explorer-spectrum button[aria-pressed="true"] {
-  outline: 3px solid var(--active-ink);
-  outline-offset: -3px;
+  outline: 1px solid var(--active-ink);
+  outline-offset: -1px;
 }
 
 .explorer-spectrum button:hover,
 .explorer-spectrum button:focus-visible {
   z-index: 1;
-  outline: 2px solid var(--active-ink);
-  outline-offset: -2px;
+  outline: 1px solid var(--active-ink);
+  outline-offset: -1px;
   transform: translateY(-2px);
 }
 

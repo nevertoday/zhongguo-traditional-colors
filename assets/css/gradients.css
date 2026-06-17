@@ -194,7 +194,42 @@
   box-shadow: 0 14px 34px color-mix(in srgb, var(--card-deep) 14%, transparent);
   cursor: pointer;
   outline: none;
-  transition: transform 200ms var(--ease-out-quart), border-color 180ms ease, box-shadow 180ms ease;
+  transition: transform 220ms var(--ease-out-quint), border-color 180ms ease, box-shadow 220ms ease, background 220ms ease;
+  isolation: isolate;
+}
+
+.gradient-card::before,
+.gradient-card::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
+
+.gradient-card::before {
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(80% 52% at 50% 28%, color-mix(in srgb, var(--card-anchor) 28%, transparent), transparent 62%),
+    linear-gradient(135deg, color-mix(in srgb, var(--card-light) 20%, transparent), color-mix(in srgb, var(--card-deep) 16%, transparent));
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.gradient-card::after {
+  inset: 8px;
+  z-index: 2;
+  border: 2px solid color-mix(in srgb, var(--card-anchor) 72%, var(--line-strong));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--panel) 62%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--card-deep) 18%, transparent);
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 180ms ease, transform 220ms var(--ease-out-quint);
+}
+
+.gradient-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 :root[data-theme="dark"] .gradient-card {
@@ -205,9 +240,22 @@
 
 .gradient-card:hover,
 .gradient-card:focus-visible {
-  border-color: color-mix(in srgb, var(--card-anchor) 54%, var(--line-strong));
-  box-shadow: 0 20px 48px color-mix(in srgb, var(--card-deep) 22%, transparent);
-  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--card-anchor) 72%, var(--line-strong));
+  box-shadow:
+    0 22px 58px color-mix(in srgb, var(--card-deep) 28%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--card-anchor) 12%, transparent);
+  transform: translateY(-5px);
+}
+
+.gradient-card:hover::before,
+.gradient-card:focus-visible::before {
+  opacity: 1;
+}
+
+.gradient-card:hover::after,
+.gradient-card:focus-visible::after {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .gradient-card-head {
@@ -224,6 +272,15 @@
   font-size: 0.92rem;
   font-style: italic;
   font-weight: 500;
+  transition: color 180ms ease, background 180ms ease, padding 180ms var(--ease-out-quart);
+}
+
+.gradient-card:hover .gradient-card-head span,
+.gradient-card:focus-visible .gradient-card-head span {
+  padding: 2px 8px;
+  color: var(--card-ink);
+  background: var(--card-anchor);
+  font-style: normal;
 }
 
 .gradient-card-head h3 {
@@ -241,6 +298,12 @@
   text-decoration: none;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
+  transition: color 180ms ease;
+}
+
+.gradient-card:hover .gradient-card-head h3 a,
+.gradient-card:focus-visible .gradient-card-head h3 a {
+  color: color-mix(in srgb, var(--card-anchor) 82%, var(--ink));
 }
 
 .gradient-card-head h3 a:hover,
@@ -259,6 +322,12 @@
   font-weight: 650;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: color 180ms ease;
+}
+
+.gradient-card:hover .gradient-card-head small,
+.gradient-card:focus-visible .gradient-card-head small {
+  color: color-mix(in srgb, var(--ink) 80%, var(--card-anchor));
 }
 
 .gradient-card-logic {
@@ -345,7 +414,27 @@
   border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
   border-radius: 50%;
   box-shadow: none;
-  transition: transform 160ms linear, box-shadow 160ms linear;
+  transition: transform 220ms var(--ease-out-quint), box-shadow 180ms ease, border-radius 220ms var(--ease-out-quart), border-color 180ms ease;
+}
+
+.gradient-card:hover .gradient-tone-swatch,
+.gradient-card:focus-visible .gradient-tone-swatch {
+  border-color: color-mix(in srgb, var(--tone) 62%, var(--ink));
+  border-radius: 28%;
+  box-shadow:
+    0 8px 20px color-mix(in srgb, var(--tone) 32%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--tone) 16%, transparent);
+  transform: translateY(-3px) scale(1.08);
+}
+
+.gradient-card:hover .gradient-tone:nth-child(2n) .gradient-tone-swatch,
+.gradient-card:focus-visible .gradient-tone:nth-child(2n) .gradient-tone-swatch {
+  transform: translateY(2px) scale(1.08);
+}
+
+.gradient-card:hover .gradient-tone strong,
+.gradient-card:focus-visible .gradient-tone strong {
+  color: color-mix(in srgb, var(--ink) 82%, var(--card-anchor));
 }
 
 .gradient-tone strong,
@@ -376,6 +465,13 @@
 .gradient-card-rule {
   height: 1px;
   background: color-mix(in srgb, var(--ink) 22%, transparent);
+  transition: background 180ms ease, transform 220ms var(--ease-out-quart);
+}
+
+.gradient-card:hover .gradient-card-rule,
+.gradient-card:focus-visible .gradient-card-rule {
+  background: color-mix(in srgb, var(--card-anchor) 58%, var(--ink));
+  transform: scaleX(0.86);
 }
 
 .gradient-pair-list {
@@ -398,6 +494,7 @@
   font-size: 0.68rem;
   font-weight: 750;
   text-align: left;
+  transition: color 180ms ease, transform 180ms var(--ease-out-quart);
 }
 
 .gradient-path-track {
@@ -407,6 +504,9 @@
   background: linear-gradient(90deg, var(--pair-from) 0%, var(--pair-to) 100%);
   border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
   border-radius: 999px;
+  box-shadow: none;
+  transform-origin: center;
+  transition: transform 220ms var(--ease-out-quint), border-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
 .gradient-pair:hover,
@@ -419,6 +519,26 @@
 .gradient-pair:focus-visible .gradient-path-track {
   border-color: color-mix(in srgb, var(--ink) 34%, transparent);
   transform: translateY(-1px);
+}
+
+.gradient-card:hover .gradient-pair,
+.gradient-card:focus-visible .gradient-pair {
+  color: color-mix(in srgb, var(--ink) 82%, var(--card-anchor));
+}
+
+.gradient-card:hover .gradient-path-track,
+.gradient-card:focus-visible .gradient-path-track {
+  border-color: color-mix(in srgb, var(--card-anchor) 42%, var(--ink));
+  box-shadow:
+    0 6px 14px color-mix(in srgb, var(--card-deep) 20%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--panel) 30%, transparent);
+  filter: saturate(1.1) contrast(1.04);
+  transform: scaleY(1.28);
+}
+
+.gradient-card:hover .gradient-pair:hover .gradient-path-track,
+.gradient-card:focus-visible .gradient-pair:focus-visible .gradient-path-track {
+  transform: translateY(-1px) scaleY(1.42);
 }
 
 .gradient-pair small {
@@ -669,5 +789,36 @@
   .gradient-toast {
     right: 16px;
     bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-card,
+  .gradient-card::before,
+  .gradient-card::after,
+  .gradient-card-head span,
+  .gradient-card-head h3 a,
+  .gradient-card-head small,
+  .gradient-tone,
+  .gradient-tone-swatch,
+  .gradient-card-rule,
+  .gradient-pair,
+  .gradient-path-track {
+    transition-duration: 0.01ms;
+  }
+
+  .gradient-card:hover,
+  .gradient-card:focus-visible,
+  .gradient-card:hover .gradient-tone-swatch,
+  .gradient-card:focus-visible .gradient-tone-swatch,
+  .gradient-card:hover .gradient-tone:nth-child(2n) .gradient-tone-swatch,
+  .gradient-card:focus-visible .gradient-tone:nth-child(2n) .gradient-tone-swatch,
+  .gradient-card:hover .gradient-card-rule,
+  .gradient-card:focus-visible .gradient-card-rule,
+  .gradient-card:hover .gradient-path-track,
+  .gradient-card:focus-visible .gradient-path-track,
+  .gradient-card:hover .gradient-pair:hover .gradient-path-track,
+  .gradient-card:focus-visible .gradient-pair:focus-visible .gradient-path-track {
+    transform: none;
   }
 }
