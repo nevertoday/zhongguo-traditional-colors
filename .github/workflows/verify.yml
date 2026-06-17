@@ -1,0 +1,54 @@
+name: verify
+
+# Guards the project's single source of truth and its generated artifacts.
+# The repo commits all generated output (color pages, harmonies, share cards,
+# the README, the on-site source preview) directly, so a contributor who edits
+# a source file but forgets to re-run the build would silently ship stale
+# artifacts. This workflow rebuilds the deterministic outputs and fails if any
+# of them drift from what was committed.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 1. The manifest must join cleanly to the canonical color list
+      #    (contiguous stable ids, no null/invalid hex, name+cmyk agreement).
+      - name: Verify manifest join
+        run: npm run verify:manifest
+
+      # 2. Rebuild every deterministic generated artifact, then fail if the
+      #    working tree drifted. images.js is intentionally NOT rebuilt here —
+      #    its generatedAt timestamp is non-deterministic; its integrity is
+      #    already covered by verify:manifest above.
+      - name: Rebuild deterministic artifacts
+        run: |
+          npm run harmonies
+          npm run harmony:uses
+          npm run colorpages
+          npm run preview:syntax
+          npm run readme
+
+      - name: Fail on uncommitted artifact drift
+        run: |
+          if ! git diff --exit-code -- . ':(exclude)assets/data/images.js'; then
+            echo "::error::Generated artifacts are out of date. Run 'npm run prepare:release' and commit the result."
+            exit 1
+          fi
+
+      # 3. Validate the artifacts themselves (SEO pages, terminal palette, harmony).
+      - name: Verify artifacts
+        run: |
+          npm run verify:colorpages
+          npm run terminal:audit
+          npm run harmony:audit
