@@ -72,9 +72,17 @@ if (!existsSync(colorsDir)) {
       'data-copy-value',
       'class="color-pager"',
       'href="index.html"',
+      'id="about-title"',
+      '"@type":"DefinedTerm"',
+      '"@type":"ImageObject"',
+      'loading="lazy"',
     ];
     for (const token of requiredTokens) {
       if (!page.includes(token)) fail(`colors/${slug}.html: missing ${token}`);
+    }
+    // Image SEO: every color page must carry a thumbnail <img> with non-empty alt.
+    if (!/<img [^>]*alt="[^"]+"/.test(page)) {
+      fail(`colors/${slug}.html: missing <img> with non-empty alt (Google Images)`);
     }
   }
 
@@ -88,6 +96,8 @@ if (!existsSync(colorsDir)) {
       `<link rel="canonical" href="${SITE}/colors/"`,
       'class="relation-swatch"',
       '"@type":"CollectionPage"',
+      '"@type":"ItemList"',
+      '中国传统色大全',
     ];
     for (const token of indexTokens) {
       if (!indexPage.includes(token)) fail(`colors/index.html: missing ${token}`);
@@ -116,6 +126,14 @@ if (!existsSync(path.join(ROOT, 'sitemap.xml'))) {
   if (!sitemap.includes(`<loc>${SITE}/</loc>`)) fail('sitemap.xml: missing homepage URL');
   if (!sitemap.includes(`<loc>${SITE}/colors/</loc>`)) fail('sitemap.xml: missing colors/ index URL');
   if (sitemap.includes('favorites.html')) fail('sitemap.xml: favorites.html should be excluded');
+  // Image sitemap: namespace + one image:image per color page.
+  if (!sitemap.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"')) {
+    fail('sitemap.xml: missing image sitemap namespace');
+  }
+  const imageCount = (sitemap.match(/<image:loc>/g) || []).length;
+  if (imageCount !== images.length) {
+    fail(`sitemap.xml: expected ${images.length} <image:loc> entries, found ${imageCount}`);
+  }
   // <lastmod> is the one sitemap field Google/Bing actually use to schedule crawl.
   const lastmodCount = (sitemap.match(/<lastmod>/g) || []).length;
   if (lastmodCount !== locCount) {
@@ -128,6 +146,26 @@ if (!existsSync(path.join(ROOT, 'robots.txt'))) {
   fail('robots.txt: missing');
 } else if (!read('robots.txt').includes(`Sitemap: ${SITE}/sitemap.xml`)) {
   fail('robots.txt: missing Sitemap directive');
+}
+
+// 3b. AI-discovery files exist and list the colors.
+for (const f of ['llms.txt', 'llms-full.txt']) {
+  if (!existsSync(path.join(ROOT, f))) fail(`${f}: missing — run build-color-pages.mjs`);
+}
+if (existsSync(path.join(ROOT, 'llms-full.txt'))) {
+  const full = read('llms-full.txt');
+  const hexCount = (full.match(/#[0-9A-Fa-f]{6}/g) || []).length;
+  if (hexCount < images.length) {
+    fail(`llms-full.txt: expected >= ${images.length} colors, found ${hexCount} hex values`);
+  }
+}
+
+// 3c. index.html carries the consolidated entity graph (Organization + Person sameAs).
+{
+  const home = read('index.html');
+  for (const token of ['"@type":"Organization"', '"@type":"Person"', '"@id":"https://colors.xiaoxiaodong.ai/#person"', 'x.com/xiaoxiaodong01']) {
+    if (!home.includes(token)) fail(`index.html: missing entity-graph token ${token}`);
+  }
 }
 
 // 4. Main pages carry canonical + Open Graph; favorites is noindex.
