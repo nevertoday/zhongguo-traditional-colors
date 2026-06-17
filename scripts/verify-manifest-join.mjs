@@ -76,6 +76,11 @@ for (const image of images) {
     }
   }
 
+  // pinyin must be present (the share card / SEO page rely on it).
+  if (!image.pinyin || typeof image.pinyin !== 'string') {
+    fail(`missing pinyin: No.${image.id} ${where} — run \`python scripts/build-pinyin.py\``);
+  }
+
   // filename must parse as NNN-色名.ext (same parser the manifest builder uses,
   // so producer and verifier can't disagree on filename semantics) and its
   // number must equal the id.

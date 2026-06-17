@@ -27,8 +27,9 @@ X1 埋点(随A3/B2落地)                 B1 安装文档(无依赖) · B2 复�
 | **C1** 稳定主键表 + 去本机路径 | ✅ | `9e15f68` — id 从文件名前缀取；输出逐字节等价 |
 | **C2** fail-loud join + verify 脚本 | ✅ | `9e15f68` — 改名/null hex 精确报错并 exit 1 |
 | **C3** CMYK 落数据层（抽共享 util） | 🟦 | C3a CMYK 入数据层 ✅ `d4da4ce`；C3b 抽共享 util ⤵ 推迟（实为 7 文件全站重构，需浏览器回归） |
-| **A1** SVG 卡片渲染器 | 🟦 | build-time 身份证卡 ✅ `ecff189`（名/HEX/RGB/CMYK/真实配色搭档）；交互三版式卡 ⏸ 待浏览器 |
-| **A2** 中文字体子集化 | ⛔ | 环境无 `pyftsubset`/`fonttools`/`subset-font`，需先装工具 |
+| **A1** SVG 卡片渲染器 | 🟦 | build-time 身份证卡 ✅（名/**拼音**/HEX/RGB/CMYK/真实配色搭档）；交互三版式卡 ⏸ 待浏览器 |
+| **A2** 中文字体子集化 | 🟦 | 子集已生成 ✅ `NotoSerifSC-subset.woff2`（233KB，729 字形）+ OFL + 可复现 `scripts/build-font-subset.py`；`@font-face` 接线 ⏸ 待浏览器（A3） |
+| **拼音** 数据层 | ✅ | `scripts/build-pinyin.py`（pypinyin + override）→ `docs/chinese-color-pinyin.json`（742）→ 进 `images.js` + 身份证卡 + verify 完整性 |
 | **A3** PNG/SVG 一键导出 | ⏸ | 需浏览器验收视觉与字体 |
 | **A4** playground 接真数据 | ⏸ | 需浏览器验收 |
 | **A5** playground 进站 | ⏸ | 需浏览器验收 |
@@ -39,7 +40,7 @@ X1 埋点(随A3/B2落地)                 B1 安装文档(无依赖) · B2 复�
 
 **已闭环**：地基周（C1/C2/C3a）+ 分发（B1）+ 出图地基（A1 build-time）+ CI。6 个 commit 全部在本地分支 `dev_foundation-stable-keys`，未 push、未开 PR。
 
-**解锁剩余 A 线需要的输入**（用户决策项）：① 安装字体子集化工具（A2）；② 提供/确认拼音数据来源（"身份证"拼音）；③ 浏览器验收交互卡视觉（A3/A4/A5/B2）。这些是纯静态站在自动循环里无法自验证的部分。
+**解锁剩余 A 线需要的输入**：① ~~安装字体子集化工具~~ ✅ 已完成（venv + 子集 woff2 + 脚本）；② ~~拼音数据来源~~ ✅ 已完成（pypinyin + override → 数据层）；③ **浏览器验收交互卡视觉**（A3/A4/A5/B2）——剩这一项需要你在浏览器里验收，纯静态站在自动循环里无法自验证。
 
 ---
 
@@ -77,8 +78,8 @@ X1 埋点(随A3/B2落地)                 B1 安装文档(无依赖) · B2 复�
 - **验收**：给定色号渲染出三版式 SVG，含 色名/拼音/HEX/RGB/CMYK/搭档/用法/水印。
 - **工作量**：L ｜ **依赖**：C3
 
-### ⛔ A2 · 中文字体子集化打包（防豆腐块）
-> **状态：阻塞。** 环境无 `pyftsubset`/`fonttools`/`subset-font`，需先安装字体子集化工具。
+### 🟦 A2 · 中文字体子集化打包（防豆腐块）
+> **状态：子集已产出。** `scripts/build-font-subset.py`（pyftsubset，729 字形）→ `assets/fonts/NotoSerifSC-subset.woff2`（233KB，从 11MB Noto Serif SC OFL 子集化）+ `OFL.txt`。剩 `@font-face` 接线 + 导出前 `await document.fonts.ready` ⏸ 待浏览器（随 A3）。
 - **做什么**：用 Noto Serif SC，子集化只保留 742 色名出现过的汉字 + 拼音/数字，打成 woff2 内联/打包；导出前 `await document.fonts.ready`。
 - **文件**：`assets/fonts/`(新)、字体子集构建脚本
 - **验收**：在不装中文字体的环境（CI / Windows）导出 PNG，色名字体正确、不出豆腐块。

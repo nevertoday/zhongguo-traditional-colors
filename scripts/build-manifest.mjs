@@ -7,6 +7,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const IMAGE_DIR = path.join(ROOT, 'images');
 const OUT_FILE = path.join(ROOT, 'assets', 'data', 'images.js');
 const MASTER_LIST_FILE = path.join(ROOT, 'docs', 'chinese-color-master-list.md');
+const PINYIN_FILE = path.join(ROOT, 'docs', 'chinese-color-pinyin.json');
 const IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp']);
 
 async function collectImages(dir) {
@@ -36,6 +37,7 @@ async function collectImages(dir) {
 }
 
 const master = loadMasterList(await readFile(MASTER_LIST_FILE, 'utf8'));
+const pinyin = JSON.parse(await readFile(PINYIN_FILE, 'utf8'));
 const images = (await collectImages(IMAGE_DIR)).sort((a, b) => a.path.localeCompare(b.path, 'zh-Hans-CN'));
 const totalBytes = images.reduce((total, image) => total + image.size, 0);
 
@@ -76,7 +78,11 @@ for (const image of images) {
   if (entry.name !== name) {
     errors.push(`name drift No.${id}: file="${name}" but master-list[#${id}]="${entry.name}"`);
   }
-  payload.push({ id, hex: entry.hex, cmyk: cmykFromHex(entry.hex), ...image });
+  const py = pinyin[entry.name];
+  if (!py) {
+    errors.push(`No.${id} ${entry.name}: missing pinyin — run \`python scripts/build-pinyin.py\``);
+  }
+  payload.push({ id, hex: entry.hex, cmyk: cmykFromHex(entry.hex), pinyin: py || '', ...image });
 }
 
 for (let i = 1; i <= images.length; i += 1) {
