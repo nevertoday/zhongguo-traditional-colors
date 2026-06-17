@@ -10,6 +10,11 @@
   const $ = s => root.querySelector(s);
   const ALL = T.ALL(), REC = T.REC;
   const term = $('[data-term]');
+  const colorDialog = document.querySelector('[data-terminal-color-dialog]');
+  const colorDialogClose = document.querySelector('[data-terminal-color-close]');
+  const colorDialogSearch = document.querySelector('[data-terminal-color-search]');
+  const colorDialogGrid = document.querySelector('[data-terminal-color-grid]');
+  const colorDialogCurrent = document.querySelector('[data-terminal-color-current]');
   let state = { id: null, mode: 'dark', fmt: 'ghostty' };
   let current = null;
 
@@ -80,6 +85,7 @@
   function render() {
     const p = T.build(state.id, state.mode);
     current = p;
+    root.dataset.mode = state.mode;
     // 灌 CSS 变量（换锚色 = 改这几十个变量，零节点重渲染）
     term.style.setProperty('--term-bg', p.ui.background.hex);
     term.style.setProperty('--term-fg', p.ui.foreground.hex);
@@ -185,6 +191,53 @@
   function setAnchor(id) { if (REC(id)) { state.id = id; render(); } }
   const byName = {}; ALL.forEach(c => byName[c.name] = c.id);
   $('#tm-names').innerHTML = ALL.map(c => `<option value="${c.name}">${c.id} · ${c.hex}</option>`).join('');
+  const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  const normalize = value => String(value ?? '').trim().toLowerCase();
+  function colorMatches(query, limit = 42) {
+    const value = normalize(query);
+    if (!value) return ALL.slice(0, limit);
+    if (window.ZH_COLOR_SEARCH?.rankedImages) {
+      const ranked = window.ZH_COLOR_SEARCH.rankedImages(value, limit).map(item => REC(item.id)).filter(Boolean);
+      if (ranked.length) return ranked;
+    }
+    const hex = value[0] === '#' ? value : '#' + value;
+    return ALL.filter(c => normalize(`${c.id} ${c.name} ${c.hex}`).includes(value) || normalize(c.hex) === hex).slice(0, limit);
+  }
+  function relatedAnchors() {
+    const anchor = REC(state.id);
+    const ids = ['same', 'analogous', 'complementary', 'splitComplementary', 'temperatureContrast', 'lighter', 'darker']
+      .flatMap(key => anchor?.[key] || []);
+    return [...new Set([state.id, ...ids])].map(id => REC(id)).filter(Boolean).slice(0, 10);
+  }
+  function colorPickMarkup(c) {
+    const currentAttr = c.id === state.id ? ' aria-current="true"' : '';
+    return `<button type="button" class="tm-color-pick" data-terminal-pick="${escapeHtml(c.id)}" style="--tm-pick:${escapeHtml(c.hex)}"${currentAttr}>`
+      + `<i aria-hidden="true"></i><span><strong>${escapeHtml(c.name)}</strong><small>${escapeHtml(c.id)} · ${escapeHtml(c.hex.toUpperCase())}</small></span></button>`;
+  }
+  function renderColorDialog() {
+    if (!colorDialogGrid) return;
+    const query = colorDialogSearch?.value || '';
+    const list = colorMatches(query, query.trim() ? 72 : 72);
+    if (colorDialogCurrent) colorDialogCurrent.innerHTML = relatedAnchors().map(colorPickMarkup).join('');
+    colorDialogGrid.innerHTML = list.length ? list.map(colorPickMarkup).join('') : '<p class="tm-color-empty">没有匹配的传统色</p>';
+  }
+  function openColorDialog() {
+    if (!colorDialog) return;
+    if (colorDialogSearch) colorDialogSearch.value = '';
+    renderColorDialog();
+    colorDialog.showModal();
+    colorDialogSearch?.focus();
+  }
+  function closeColorDialog() {
+    colorDialog?.close();
+    $('[data-anchor-swatch]')?.focus();
+  }
+  function pickDialogColor(id) {
+    if (!REC(id)) return;
+    setAnchor(id);
+    syncQuick(id);
+    closeColorDialog();
+  }
 
   $('[data-search]').addEventListener('change', e => {
     const v = e.target.value.trim(); if (!v) return;
@@ -192,6 +245,14 @@
       || (ALL.find(c => c.hex.toLowerCase() === (v[0] === '#' ? v : '#' + v).toLowerCase()) || {}).id
       || (ALL.find(c => c.name.includes(v)) || {}).id;
     if (hit) { setAnchor(hit); syncQuick(hit); }
+  });
+  $('[data-anchor-swatch]')?.addEventListener('click', openColorDialog);
+  colorDialogSearch?.addEventListener('input', renderColorDialog);
+  colorDialogClose?.addEventListener('click', closeColorDialog);
+  colorDialog?.addEventListener('click', e => {
+    if (e.target === colorDialog) closeColorDialog();
+    const button = e.target.closest('[data-terminal-pick]');
+    if (button) pickDialogColor(button.dataset.terminalPick);
   });
   root.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => {
     state.mode = b.dataset.mode;

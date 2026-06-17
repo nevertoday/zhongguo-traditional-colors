@@ -247,14 +247,20 @@
     const hex = cleanHex(image.hex);
     const hue = hueFromHex(hex);
     const meta = [image.id, hex, HUE_LABELS[hue] || '传统色', toneLabel(image)].filter(Boolean).join(' · ');
+    const detailHref = `dictionary.html?q=${encodeURIComponent(name)}`;
     return `
-      <button class="color-suggest-option" type="button" role="option" data-color-suggest-index="${index}" style="--suggest-color: ${escapeHtml(hex)}; --suggest-ink: ${readableText(hex)}" aria-label="选择 ${escapeHtml(name)} ${escapeHtml(hex)}">
-        <span class="color-suggest-effect" aria-hidden="true"></span>
-        <span class="color-suggest-copy">
-          <strong>${escapeHtml(name)}</strong>
-          <small>${escapeHtml(meta)}</small>
-        </span>
-      </button>
+      <div class="color-suggest-row" style="--suggest-color: ${escapeHtml(hex)}; --suggest-ink: ${readableText(hex)}">
+        <button class="color-suggest-option" type="button" role="option" data-color-suggest-index="${index}" aria-label="选择 ${escapeHtml(name)} ${escapeHtml(hex)}">
+          <span class="color-suggest-effect" aria-hidden="true"></span>
+          <span class="color-suggest-copy">
+            <strong>${escapeHtml(name)}</strong>
+            <small>${escapeHtml(meta)}</small>
+          </span>
+        </button>
+        <a class="color-suggest-detail" href="${detailHref}" aria-label="打开 ${escapeHtml(name)} 详情页">
+          详情
+        </a>
+      </div>
     `;
   }
 

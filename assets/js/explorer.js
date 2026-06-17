@@ -16,7 +16,7 @@
   });
 
   const state = {
-    activeId: images[0]?.id,
+    activeId: randomColorId(),
     hue: 'all',
     query: '',
     filtered: images,
@@ -53,6 +53,11 @@
     purple: '紫色系',
     neutral: '中性色',
   };
+
+  function randomColorId() {
+    if (!images.length) return '';
+    return images[Math.floor(Math.random() * images.length)]?.id || images[0]?.id || '';
+  }
 
   function rgbFromHex(hex) {
     const value = Number.parseInt(hex.replace('#', ''), 16);

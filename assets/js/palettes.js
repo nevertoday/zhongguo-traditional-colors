@@ -76,7 +76,7 @@ const TONES = [
   { key: 'neutralHue', label: '灰', icon: '灰' },
 ];
 
-const ROLE_LABELS = ['主色', '辅助', '强调', '承托'];
+const ROLE_LABELS = ['主色', '辅助', '强调', '底色'];
 const TITLE_TONE_MAP = [
   { match: ['inspector', '当前', '选一组'], hues: ['blue', 'cyan', 'green', 'purple'] },
   { match: ['palette', '配色', '灵感', '筛选'], hues: ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple'] },

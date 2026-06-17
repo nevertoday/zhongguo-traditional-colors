@@ -35,8 +35,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260614-4">
-    <link rel="stylesheet" href="assets/css/theme-forge.css?v=20260614-8">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260616-9">
+    <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260616-3">
+    <link rel="stylesheet" href="assets/css/theme-forge.css?v=20260616-2">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
   </head>
@@ -54,7 +55,7 @@
         </div>
 
       <!-- ── Theme Forge 工作台（作用域 .tf-root） ── -->
-      <div class="tf-root" id="theme-forge">
+      <div class="tf-root" id="theme-forge" data-mode="light">
         <header class="bar">
           <span class="brand"><span class="cn">织色</span><span class="en">Theme Forge</span></span>
           <span class="tag">素地敷彩 · 文化主导</span>
@@ -62,14 +63,10 @@
           <div class="quick" data-quick></div>
           <label class="tf-search">
             <svg width="13" height="13"><use href="#tf-i-search"/></svg>
-            <input type="search" data-search list="tf-names" placeholder="色名 / 编号 / HEX" aria-label="搜索锚色">
+            <input type="search" data-search data-color-suggest list="tf-names" placeholder="色名 / 编号 / HEX" aria-label="搜索锚色">
             <datalist id="tf-names"></datalist>
           </label>
           <button class="ghost" data-random>随机</button>
-          <div class="seg" role="group" aria-label="预览模式">
-            <button data-mode="light" aria-pressed="true">日间</button>
-            <button data-mode="dark" aria-pressed="false">夜间</button>
-          </div>
         </header>
 
         <div class="work">
@@ -264,10 +261,12 @@
       <symbol id="tf-i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11"/><path d="M5 15H4V4h11v1"/></symbol>
     </defs></svg>
 
-    <script src="assets/js/shared-chrome.js?v=20260615-1" defer></script>
+    <script src="assets/js/shared-chrome.js?v=20260616-1" defer></script>
+    <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
+    <script src="assets/js/color-search-suggestions.js?v=20260616-3" defer></script>
     <script src="assets/js/color-core.js?v=20260614-1" defer></script>
     <script src="assets/js/theme-forge-tokens.js?v=20260614-2" defer></script>
-    <script src="assets/js/theme-forge.js?v=20260614-4" defer></script>
+    <script src="assets/js/theme-forge.js?v=20260616-1" defer></script>
   </body>
 </html>

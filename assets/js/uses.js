@@ -39,15 +39,15 @@ const MODES = [
   { key: 'palette', label: '色板', icon: 'lucide:rows-3' },
 ];
 const HUE_FILTERS = [
-  { key: 'all', label: '全部' },
-  { key: 'red', label: '红' },
-  { key: 'orange', label: '橙' },
-  { key: 'yellow', label: '黄' },
-  { key: 'green', label: '绿' },
-  { key: 'cyan', label: '青' },
-  { key: 'blue', label: '蓝' },
-  { key: 'purple', label: '紫' },
-  { key: 'neutral', label: '灰' },
+  { key: 'all', label: '全部', color: 'linear-gradient(135deg,#f23e23 0 14%,#f28e16 14% 28%,#f8c648 28% 42%,#43b244 42% 56%,#16a6a8 56% 70%,#2f72d6 70% 84%,#7b4bc4 84% 100%)' },
+  { key: 'red', label: '红', color: '#f23e23' },
+  { key: 'orange', label: '橙', color: '#f28e16' },
+  { key: 'yellow', label: '黄', color: '#f8c648' },
+  { key: 'green', label: '绿', color: '#43b244' },
+  { key: 'cyan', label: '青', color: '#16a6a8' },
+  { key: 'blue', label: '蓝', color: '#2f72d6' },
+  { key: 'purple', label: '紫', color: '#7b4bc4' },
+  { key: 'neutral', label: '灰', color: '#8f8a82' },
 ];
 const EXPLORE_PRESETS = [
   { name: '古籍封面', mode: 'type', hue: 'neutral', bias: 76, query: '浅色 & 深色' },
@@ -512,7 +512,7 @@ function renderModebar() {
 function renderHuebar() {
   if (!huebar) return;
   huebar.innerHTML = HUE_FILTERS.map((filter) => `
-    <button type="button" data-use-hue="${escapeHtml(filter.key)}" aria-pressed="${filter.key === currentHue ? 'true' : 'false'}">${escapeHtml(filter.label)}</button>
+    <button type="button" data-use-hue="${escapeHtml(filter.key)}" aria-pressed="${filter.key === currentHue ? 'true' : 'false'}" style="--hue-color: ${escapeHtml(filter.color)}">${escapeHtml(filter.label)}</button>
   `).join('');
 }
 

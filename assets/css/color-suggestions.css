@@ -11,10 +11,10 @@
   z-index: 80;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 1px;
+  gap: 0;
   max-height: min(390px, calc(100vh - 170px));
   overflow: auto;
-  background: var(--line, rgba(24, 24, 24, 0.12));
+  background: var(--panel, #ffffff);
   border: 1px solid var(--line, rgba(24, 24, 24, 0.12));
   box-shadow: var(--shadow-soft, 0 18px 40px rgba(0, 0, 0, 0.16));
   scrollbar-width: thin;
@@ -22,6 +22,17 @@
 
 .color-suggest-panel[hidden] {
   display: none;
+}
+
+.color-suggest-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-width: 0;
+  color: var(--ink, #171510);
+  background: var(--panel, #f7f7f4);
+  border-right: 1px solid var(--line, rgba(24, 24, 24, 0.12));
+  border-bottom: 1px solid var(--line, rgba(24, 24, 24, 0.12));
 }
 
 .color-suggest-option {
@@ -32,8 +43,8 @@
   min-width: 0;
   min-height: 64px;
   padding: 10px 12px;
-  color: var(--ink, #171510);
-  background: var(--panel, #f7f7f4);
+  color: inherit;
+  background: transparent;
   border: 0;
   cursor: pointer;
   text-align: left;
@@ -55,12 +66,19 @@
 .color-suggest-effect {
   width: 42px;
   height: 42px;
-  background:
-    radial-gradient(circle at 34% 30%, color-mix(in srgb, white 34%, var(--suggest-color)), transparent 32%),
-    linear-gradient(135deg, color-mix(in srgb, var(--suggest-color) 72%, white), var(--suggest-color) 58%, color-mix(in srgb, var(--suggest-color) 78%, black));
-  border: 1px solid color-mix(in srgb, var(--suggest-ink) 18%, transparent);
+  background: var(--suggest-color);
+  border: 0 !important;
+  border-radius: 0;
+  outline: 0;
+  box-shadow: none;
+  transition: border-radius 180ms var(--ease-out-quart, ease), transform 180ms var(--ease-out-quart, ease);
+}
+
+.color-suggest-option:hover .color-suggest-effect,
+.color-suggest-option:focus-visible .color-suggest-effect,
+.color-suggest-option[aria-selected="true"] .color-suggest-effect {
   border-radius: 50%;
-  box-shadow: inset 0 0 0 6px color-mix(in srgb, var(--suggest-ink) 10%, transparent);
+  transform: scale(0.94);
 }
 
 .color-suggest-copy {
@@ -97,6 +115,26 @@
   color: color-mix(in srgb, currentColor 72%, transparent);
 }
 
+.color-suggest-detail {
+  display: inline-flex;
+  align-items: center;
+  align-self: stretch;
+  padding: 0 12px;
+  color: var(--muted, rgba(23, 21, 16, 0.62));
+  border-left: 1px solid var(--line, rgba(24, 24, 24, 0.12));
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.color-suggest-detail:hover,
+.color-suggest-detail:focus-visible {
+  color: var(--hover-text, #f7f7f4);
+  background: var(--hover-bg, #171510);
+  outline: none;
+}
+
 .color-suggest-empty {
   grid-column: 1 / -1;
   margin: 0;
@@ -115,5 +153,9 @@
 
   .color-suggest-option {
     min-height: 60px;
+  }
+
+  .color-suggest-detail {
+    padding: 0 10px;
   }
 }
