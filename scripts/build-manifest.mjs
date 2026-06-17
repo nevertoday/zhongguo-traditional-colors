@@ -16,6 +16,24 @@ function parseImageName(file) {
   return match ? { id: match[1], name: match[2] } : null;
 }
 
+// Naive RGB→CMYK (no ICC profile) — matches the formula the web UI already
+// shows, lifted into the data layer so every consumer (cards, SEO pages, the
+// SVG share card) reads one canonical value instead of recomputing.
+function cmykFromHex(hex) {
+  const v = hex.replace('#', '');
+  const r = parseInt(v.slice(0, 2), 16) / 255;
+  const g = parseInt(v.slice(2, 4), 16) / 255;
+  const b = parseInt(v.slice(4, 6), 16) / 255;
+  const k = 1 - Math.max(r, g, b);
+  if (k === 1) return { c: 0, m: 0, y: 0, k: 100 };
+  return {
+    c: Math.round(((1 - r - k) / (1 - k)) * 100),
+    m: Math.round(((1 - g - k) / (1 - k)) * 100),
+    y: Math.round(((1 - b - k) / (1 - k)) * 100),
+    k: Math.round(k * 100),
+  };
+}
+
 // The master list is the canonical, ordered 742-color source of truth.
 async function loadMasterList() {
   const content = await readFile(MASTER_LIST_FILE, 'utf8');
@@ -89,7 +107,7 @@ for (const image of images) {
   if (entry.name !== name) {
     errors.push(`name drift No.${id}: file="${name}" but master-list[#${id}]="${entry.name}"`);
   }
-  payload.push({ id, hex: entry.hex, ...image });
+  payload.push({ id, hex: entry.hex, cmyk: cmykFromHex(entry.hex), ...image });
 }
 
 for (let i = 1; i <= images.length; i += 1) {
