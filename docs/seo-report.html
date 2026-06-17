@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>SEO 审计报告 · colors.xiaoxiaodong.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1b1a17; --sub:#56544d; --faint:#8a877e;
+    --paper:#f5f3ed; --card:#fffefb; --line:#e0ddd3; --line2:#cfccc0;
+    --accent:#8E1B1B;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.7; font-size:15px;
+  }
+  .serif{font-family:"Noto Serif SC",serif}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+
+  /* header */
+  header.top{border-bottom:2px solid var(--ink);background:var(--card)}
+  .top .wrap{padding:40px 24px 30px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin:0 0 14px}
+  h1.title{font-size:34px;line-height:1.2;margin:0;font-weight:900}
+  .sitemeta{display:flex;flex-wrap:wrap;gap:20px;margin-top:18px;font-size:13px;color:var(--sub)}
+  .sitemeta b{color:var(--ink);font-weight:600}
+
+  /* scorecard */
+  .score-sec{background:var(--ink);color:#f3f1ea}
+  .score-sec .wrap{padding:38px 24px;display:flex;gap:40px;align-items:center;flex-wrap:wrap}
+  .score-num{font-size:88px;line-height:.9;font-weight:900;letter-spacing:-.03em}
+  .score-num small{font-size:24px;color:#a7a39a;font-weight:500}
+  .score-side{flex:1;min-width:260px}
+  .delta{display:inline-block;border:1px solid #4a4842;padding:3px 10px;font-size:13px;color:#cdebd8;margin-bottom:12px}
+  .score-side .oneliner{margin:0;color:#d8d5cc;font-size:15px}
+  .score-stats{display:flex;gap:28px;margin-top:18px;font-size:13px;color:#a7a39a}
+  .score-stats b{display:block;font-size:22px;color:#f3f1ea;font-weight:700}
+  .scale{height:6px;background:#39372f;margin-top:6px;width:200px;max-width:100%}
+  .scale > i{display:block;height:100%;background:#9A7B3A}
+
+  section{padding:44px 0}
+  section + section{border-top:1px solid var(--line)}
+  .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 6px;font-weight:600}
+  h2{font-size:23px;margin:0 0 22px;font-weight:800}
+  .lead{color:var(--sub);font-size:15px;max-width:70ch}
+
+  /* exec summary */
+  .summary p{margin:0 0 14px;color:#37352f}
+  .summary{max-width:74ch}
+
+  /* dimensions */
+  .dim{margin-bottom:22px}
+  .dim-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .dim-name{font-weight:600;font-size:14.5px}
+  .dim-meta{display:flex;gap:14px;align-items:baseline;white-space:nowrap}
+  .dim-w{font-size:12px;color:var(--faint)}
+  .dim-score{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums}
+  .bar{height:8px;background:#e7e4da;margin:7px 0 6px}
+  .bar-fill{height:100%}
+  .dim-note{margin:0;font-size:13px;color:var(--sub)}
+
+  /* wins */
+  ul.wins{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  ul.wins li{position:relative;padding-left:30px;font-size:14px;color:#37352f}
+  ul.wins li::before{content:"✓";position:absolute;left:0;top:0;color:#3F6B5E;font-weight:800}
+
+  /* roadmap */
+  .rgroup{display:flex;align-items:center;gap:12px;margin:30px 0 14px;font-size:15px}
+  .rgroup:first-child{margin-top:0}
+  .sev{color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:4px 11px}
+  .rgroup-count{font-size:12px;color:var(--faint)}
+  .card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);padding:20px 22px;margin-bottom:14px}
+  .card-top{display:flex;gap:14px;align-items:baseline}
+  .num{font-family:"Noto Serif SC",serif;font-size:15px;color:var(--faint);font-weight:700;font-variant-numeric:tabular-nums}
+  .card h4{margin:0;font-size:16.5px;font-weight:700;line-height:1.4}
+  .chips{display:flex;gap:8px;margin:12px 0 4px;flex-wrap:wrap}
+  .chip{font-size:11.5px;color:var(--sub);border:1px solid var(--line2);padding:2px 9px;letter-spacing:.02em}
+  .lab{margin:14px 0 2px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .txt{margin:0;font-size:13.5px;color:#403d36}
+  .kpi{margin:14px 0 0;font-size:12.5px;color:var(--sub);border-top:1px dashed var(--line2);padding-top:10px}
+  .kpi span{display:inline-block;color:var(--accent);font-weight:600;margin-right:8px}
+
+  /* kpi list */
+  ol.kpis{margin:0;padding-left:20px;display:grid;gap:9px}
+  ol.kpis li{font-size:14px;color:#37352f;padding-left:6px}
+
+  footer{border-top:2px solid var(--ink);background:var(--card);font-size:12.5px;color:var(--faint)}
+  footer .wrap{padding:26px 24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  @media (max-width:560px){
+    h1.title{font-size:27px} .score-num{font-size:66px} .score-sec .wrap{gap:24px}
+  }
+  @media print{
+    body{background:#fff} .card,.score-sec,header.top,footer{break-inside:avoid}
+    a[href]::after{content:""}
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">claude-seo · SEO 审计与改进报告</p>
+    <h1 class="title serif">中国传统配色 · SEO 健康度报告</h1>
+    <div class="sitemeta">
+      <span>站点 <b>colors.xiaoxiaodong.ai</b></span>
+      <span>类型 <b>参考资料 / 设计工具站（742 中华传统色）</b></span>
+      <span>日期 <b>2026-06-17</b></span>
+      <span>方法 <b>8 维并行发现 → 对抗式校验 → 加权评分</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="score-sec">
+  <div class="wrap">
+    <div class="score-num serif">75<small>/100</small></div>
+    <div class="score-side">
+      <span class="delta">较上次 68 ↑ +7</span>
+      <p class="oneliner">A technically sound, schema-rich 742-color reference site that has solved its crawl-orphan and indexing fundamentals; the remaining ceiling is off-page authority, a missing hue-hub/scheme content layer, and a homepage LCP gated behind 492KB of JS.</p>
+      <div class="score-stats">
+        <span><b>2</b>紧急项</span>
+        <span><b>5</b>高优项</span>
+        <span><b>10</b>已落地</span>
+        <span>健康度<div class="scale"><i></i></div></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="summary">
+  <div class="wrap">
+    <p class="kicker">执行摘要</p>
+    <h2>现状与最大杠杆</h2>
+    <p>【洞察】 colors.xiaoxiaodong.ai is a static, framework-free reference for 742 Chinese traditional colors on GitHub Pages with a custom domain. Since the prior audit (68), the team shipped the heavy lifting: a 754-URL sitemap with lastmod + image extension, a fully server-rendered 中国传统色大全 hub with 742 real anchors (crawl-orphan solved), rich per-color JSON-LD (CreativeWork/DefinedTerm/BreadcrumbList), data-derived 关于 prose that clears the 60%-unique programmatic gate, /llms.txt + /llms-full.txt, CLS-hardened images, and a clean Organization/Person entity graph.</p><p>【分析】 dimension scores land at technical 86, geo 82, schema 82, sitemap-images 78, performance 78, content 72, sxo-keywords 62, i18n-offpage 38 — weighted health 75 (up from 68). The pattern: the indexing/eligibility foundation is strong, but two structural gaps cap growth — (1) the topic cluster has spokes (742) and a flat index but no pillars (hue-family hubs) and no informational 国风配色 scheme content, the largest untapped lower-difficulty cluster; (2) off-page, a ~3-week-old domain with a ~1,040-star repo whose topics are empty, no IndexNow, and no Bing/Baidu submission — authority is the true gating constraint on competitive head terms.</p><p>【验证】 every survived finding was confirmed live (curl/WebFetch) and against the served source — static home HTML has 0 color-card markup with harmonies.js (492KB raw/84KB gzip, max-age=600) parsing serially ahead of the rendering app.js; dictionary.html returns 0 JSON-LD yet is the SearchAction target and breadcrumb pivot for all 742 pages; no /colors/hue/ URLs exist; no 国风配色 landing exists; repo repositoryTopics is null; /indexnow.txt is 404. Refuted/over-stated claims were dropped or corrected (e.g. the 大全 title collision is already avoided; GitHub rejects the CJK topic).</p><p>【行动】 the single biggest remaining lever is off-page + discovery acceleration paired with the hue-hub pillar layer — these unlock authority and consolidate the 742 spokes that on-page quality alone cannot rank. Sequence the free, immediate wins first (GitHub topics, IndexNow, Bing/Baidu), then build the hub-and-scheme content cluster, then fix the homepage LCP and the dictionary.html schema/cannibalization issues, with i18n deliberately deferred until the zh core is indexed.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">维度评分</p>
+    <h2>八个维度（加权健康度 75）</h2>
+    
+      <div class="dim">
+        <div class="dim-head">
+          <span class="dim-name">Technical SEO: crawlability/indexability</span>
+          <span class="dim-meta"><span class="dim-w">权重 20%</span><span class="dim-score" style="color:#3F6B5E">86</span></span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:86%;background:#3F6B5E"></div></div>
+        <p class="dim-note">Foundation strong and verified live: robots.txt open + sitemap, self-referential percent-encoded canonicals matching the 754-URL sitemap, 大全 + 742 pages fully server-rendered, favorites correctly noindex/excluded, lean color-page critical path. Remaining gaps are infra-bound (no security headers, max-age=600, no IndexNow) plus the homepage JS-render LCP risk.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <span class="dim-name">Content quality &amp; E-E-A-T</span>
+          <span class="dim-meta"><span class="dim-w">权重 18%</span><span class="dim-score" style="color:#9A7B3A">72</span></span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:72%;background:#9A7B3A"></div></div>
+        <p class="dim-note">Per-color 关于 prose is genuinely unique and data-derived (clears the 60% gate), authorship attributed, no fabrication. Weakness moved up-funnel: hub pages (dictionary/uses) have near-zero editorial copy, head terms 国风/古风配色 untargeted, and there is still no per-color etymology/出处 layer — the top unique-content and AI-citation gap.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <span class="dim-name">Structured data (JSON-LD)</span>
+          <span class="dim-meta"><span class="dim-w">权重 12%</span><span class="dim-score" style="color:#3F6B5E">82</span></span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:82%;background:#3F6B5E"></div></div>
+        <p class="dim-note">Strong, validating graph: WebSite+SearchAction, Organization/Person, per-color CreativeWork/DefinedTerm/BreadcrumbList, CollectionPage with full 742 ItemList. Main defect is a dangling DefinedTermSet @id referenced by 743+ nodes but never materialized — because dictionary.html (its declared home and the SearchAction target) emits zero JSON-LD. No Dataset node yet.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <span class="dim-name">Sitemap + Image SEO</span>
+          <span class="dim-meta"><span class="dim-w">权重 12%</span><span class="dim-score" style="color:#9A7B3A">78</span></span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:78%;background:#9A7B3A"></div></div>
+        <p class="dim-note">Sitemap clean: 754 locs, 100% lastmod, valid dual namespace, 742 image:image entries; on-page thumbnails are CLS-safe 270x360 JPEGs with unique alt; index-bloat well guarded. Gaps are payload: full-size PNGs are 5-20x oversized (1.25MB PNG -&gt; 58KB WebP) and thumbnails are JPEG not WebP/AVIF.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <span class="dim-name">Performance / Core Web Vitals (INP/LCP/CLS)</span>
+          <span class="dim-meta"><span class="dim-w">权重 10%</span><span class="dim-score" style="color:#9A7B3A">78</span></span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:78%;background:#9A7B3A"></div></div>
+        <p class="dim-note">CLS hardened (explicit width/height, thumbnails at display size). Real cost is JS execution order: harmonies.js (492KB raw/84KB gzip) parses serially ahead of the rendering app.js though the gallery/hero LCP elements use only images data; GitHub Pages max-age=600 with gzip-only (no brotli) is secondary.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <span class="dim-name">GEO / AI search (AI Overviews, ChatGPT, Perplexity)</span>
+          <span class="dim-meta"><span class="dim-w">权重 10%</span><span class="dim-score" style="color:#3F6B5E">82</span></span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:82%;background:#3F6B5E"></div></div>
+        <p class="dim-note">Well-prepared: /llms.txt + /llms-full.txt live and well-formed, open robots, consistent entity graph, exemplary liftable 关于 passages answering &#x27;X是什么颜色/HEX&#x27;. Upside is incremental: make llms.txt HTML-discoverable, add a Dataset + QAPage layer, and feed real etymology so pages can also answer 名字由来/出处.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <span class="dim-name">SXO + keyword/cluster strategy</span>
+          <span class="dim-meta"><span class="dim-w">权重 10%</span><span class="dim-score" style="color:#9A7B3A">62</span></span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:62%;background:#9A7B3A"></div></div>
+        <p class="dim-note">Head terms matched at page-TYPE level (大全 + 742 detail pages target well). Ceiling is architectural: no hue-family hub/pillar layer between the flat index and 742 spokes, dictionary.html is a JS-empty page cannibalizing 大全 intent (and is the SearchAction target), and zero informational content for 国风配色方案 — the largest untapped cluster.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-head">
+          <span class="dim-name">i18n + off-page authority</span>
+          <span class="dim-meta"><span class="dim-w">权重 8%</span><span class="dim-score" style="color:#8E1B1B">38</span></span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:38%;background:#8E1B1B"></div></div>
+        <p class="dim-note">Clean single-language entity signals but ~3-week-old domain captures no international demand and has almost no backlinks. The 1,040-star repo is under-exploited (topics null), no IndexNow, no Bing/Baidu submission, no distribution plan. Correct call: harvest existing repo authority first, defer i18n until the zh core is indexed.</p>
+      </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">已落地</p>
+    <h2>本阶段已完成的改进（10 项）</h2>
+    <ul class="wins"><li>robots.txt live and correct: User-agent:* Allow:/ + Sitemap directive, AI crawlers (GPTBot/ClaudeBot/PerplexityBot/Google-Extended) unblocked</li><li>sitemap.xml live with 754 &lt;loc&gt;, 100% &lt;lastmod&gt;/changefreq/priority coverage, dual namespace (sitemaps 0.9 + image 1.1), and 742 &lt;image:image&gt; entries with descriptive &lt;image:title&gt;; all URLs percent-encoded identically to canonicals</li><li>Self-referential canonicals on home, 大全, and all color pages — no canonical/sitemap URL-form mismatch</li><li>colors/index.html 大全: server-rendered, hue-grouped, 742 real crawlable &lt;a&gt; links + intro prose + CollectionPage with a full 742-item ItemList (crawl-orphan problem solved; verified with JS disabled)</li><li>742 color detail pages are static server-rendered HTML with full content, load only color-page.js (not harmonies.js), and each carry a unique data-derived 关于 paragraph (hue-family rank + named harmony partners + real WCAG contrast) that clears the 60%-unique programmatic gate</li><li>Per-color JSON-LD: BreadcrumbList + CreativeWork (ImageObject + 6 PropertyValues for HEX/RGB/HSL/CMYK/色系/冷暖 + Person creator) + DefinedTerm; homepage WebSite+SearchAction + Organization/Person entity graph with @id linkage and sameAs (GitHub + X) — all validating live</li><li>favorites.html correctly noindex,follow and absent from the sitemap; share-card SVGs excluded — index-bloat guarded</li><li>CLS hardened: hero mosaic + gallery + reward QR images all carry explicit width/height + decoding=async; thumbnails pre-rendered at exact 270x360 display size (~12KB JPEG)</li><li>/llms.txt and /llms-full.txt live (HTTP 200): full 742-color name-&gt;HEX-&gt;RGB-&gt;色系 table generated in-pipeline, a strong AI-citation corpus competitors lack</li><li>HTTPS enforced over HTTP/2 with valid custom-domain cert; correct viewport + theme-color; proper 404; preconnect to Google Fonts; all render-data/page scripts deferred; manual ?v= cache-busting in place</li></ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">改进路线图</p>
+    <h2>按优先级排序的 13 项行动</h2>
+    <h3 class="rgroup"><span class="sev" style="background:#8E1B1B">Critical · 紧急</span><span class="rgroup-count">2 项</span></h3>
+      <article class="card" style="--accent:#8E1B1B">
+        <div class="card-top">
+          <span class="num">01</span>
+          <h4>Accelerate discovery: GitHub topics + IndexNow + Bing/Baidu submission</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">配置/外部</span>
+          <span class="chip">工作量 中</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">Off-page authority is the true gating constraint on a ~3-week-old domain whose only authoritative inbound is the repo link. The 1,040-star repo has repositoryTopics=null (invisible on GitHub topic hubs), /indexnow.txt is 404, and neither Bing nor Baidu (both material for the zh-CN audience and AI citation via Bing) has been told the site exists. These are the cheapest, fastest levers and unblock several other items.</p>
+        <p class="lab">怎么做</p><p class="txt">Add 8-12 lowercase GitHub topics now (chinese-colors, traditional-colors, color-palette, color-scheme, design-tools, hex-colors, chinese-traditional-colors, color-reference, palette-generator, static-site) — drop the CJK topic, GitHub rejects it. Import the domain into Bing Webmaster Tools from GSC and submit the sitemap; register + submit to Baidu 搜索资源平台. Commit a {key}.txt IndexNow key at site root and add an `npm run submit:indexnow` step to prepare:release that POSTs changed URLs to api.indexnow.org.</p>
+        <p class="kpi"><span>领先指标</span>Bing/Baidu indexed-URL count climbing in their consoles within 2-4 weeks; GitHub topic-hub referral sessions appearing; IndexNow submissions returning 200.</p>
+      </article>
+      <article class="card" style="--accent:#8E1B1B">
+        <div class="card-top">
+          <span class="num">02</span>
+          <h4>Build the hue-family hub/pillar layer (大全 -&gt; 8 hubs -&gt; 742 spokes)</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">代码</span>
+          <span class="chip">工作量 中</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">The topic cluster has spokes and a flat index but no pillars: the 8 hue families exist only as plain &lt;h2&gt; sections inside colors/index.html, there are no /colors/hue/ URLs, and detail pages never link up to a hue hub. Queries like 红色系传统色 / 蓝色系中国色 have no landing page and the 742 spokes have no intermediate page to consolidate authority. This is the structural lever that lets the strong on-page content actually rank.</p>
+        <p class="lab">怎么做</p><p class="txt">Add a hue-hub generator emitting colors/hue/{red,...,neutral}/index.html: H1 like &#x27;红色系中国传统色（196 色）&#x27;, 300-500 words of genuine hue-family prose, the family&#x27;s swatch grid linking to all spokes, CollectionPage + ItemList schema, breadcrumb 首页 &gt; 中国传统色大全 &gt; 红色系. Link the 8 hubs from the 大全 section headers, add an up-link + hue breadcrumb node on every detail page, and add them to the sitemap. Re-run from manifest/colorpages.</p>
+        <p class="kpi"><span>领先指标</span>8 hue-hub URLs indexed in GSC; impressions appearing for {hue}系传统色 queries; internal-link depth to detail pages reduced.</p>
+      </article><h3 class="rgroup"><span class="sev" style="background:#B5532E">High · 高</span><span class="rgroup-count">5 项</span></h3>
+      <article class="card" style="--accent:#B5532E">
+        <div class="card-top">
+          <span class="num">03</span>
+          <h4>Create the 国风配色方案 informational scheme cluster</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">内容</span>
+          <span class="chip">工作量 高</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">国风配色方案 / 传统色搭配 is the largest untapped, lower-difficulty cluster, and its SERP is owned by article/scheme content (Zhihu, MasterGo, Canva) — not tools. The site only has tool pages (palettes.html, generator.html) for this intent and grep for 国风配色 across all root HTML returns nothing. This is the biggest content lever against comparatively weak competitors.</p>
+        <p class="lab">怎么做</p><p class="txt">Generate curated /palettes/{slug}.html scheme pages (e.g. 故宫红配色, 青绿山水配色, 节气配色), each with 4-6 HEX swatches, copy buttons, &gt;60%-unique authored cultural/usage prose, and links to source spokes; add a 国风配色方案 pillar listing them. Author real scheme data/copy (harmonies.js encodes relations, not human-meaningful schemes). Target 国风配色 / 中式配色 / 传统色搭配.</p>
+        <p class="kpi"><span>领先指标</span>Scheme pages indexed and earning impressions for 国风配色/中式配色 queries; AI engines citing named schemes.</p>
+      </article>
+      <article class="card" style="--accent:#B5532E">
+        <div class="card-top">
+          <span class="num">04</span>
+          <h4>Fix homepage LCP: lazy-load harmonies.js and server-render the first screenful</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">代码</span>
+          <span class="chip">工作量 高</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">The homepage is the primary entry page and its visual LCP element renders 0 cards in static HTML; app.js cannot paint until images.js AND harmonies.js (492KB raw/84KB gzip, max-age=600) both download+parse, yet the gallery/hero render uses only images data — harmonies is needed only by the click-opened preview/style-lab. ~492KB of JS sits on the LCP path for zero first-paint benefit.</p>
+        <p class="lab">怎么做</p><p class="txt">Drop the harmonies.js &lt;script&gt; from index.html&#x27;s defer chain and lazy-inject it on first hero-preview open (or via requestIdleCallback after first paint), reading window.TRADITIONAL_COLOR_HARMONIES on load. Server-render the hero swatch + a first screenful of gallery cards as static HTML from images.js, then progressively hydrate. Scope to index.html only — style-lab.html legitimately needs harmonies at first paint. Add a verify-* check asserting harmonies is not a first-paint script on index.html.</p>
+        <p class="kpi"><span>领先指标</span>CrUX/Lighthouse mobile LCP for the homepage dropping below 2.5s; harmonies.js no longer in the LCP request chain.</p>
+      </article>
+      <article class="card" style="--accent:#B5532E">
+        <div class="card-top">
+          <span class="num">05</span>
+          <h4>Resolve dictionary.html: add JSON-LD + DefinedTermSet and stop 大全 cannibalization</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">代码</span>
+          <span class="chip">工作量 中</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">dictionary.html is the SearchAction target and the level-2 breadcrumb pivot for all 742 pages and the 大全, yet it returns 0 JSON-LD and is JS-empty (no server-rendered color content, no noscript fallback) — so 743+ inbound isPartOf/about/inDefinedTermSet references resolve to a node that never exists, and query intent is routed to a crawler-empty page that competes with the server-rendered 大全.</p>
+        <p class="lab">怎么做</p><p class="txt">Emit the canonical DefinedTermSet node (and a WebPage/CollectionPage + self BreadcrumbList) on dictionary.html at @id .../dictionary.html#termset, and add color-page/CollectionPage @ids so the graph is bidirectional. Repoint the WebSite SearchAction urlTemplate to colors/?q={search_term_string} (server-rendered). Reposition dictionary.html as the interactive search tool (distinct title/intent) and/or add a server-rendered fallback list. Fold in a schema.org/Dataset node (creator, license MIT, variableMeasured, distribution -&gt; llms-full.txt + ZIP).</p>
+        <p class="kpi"><span>领先指标</span>Rich Results Test shows DefinedTermSet/Dataset resolving with no dangling references; SearchAction points to an indexable page; dictionary.html appears as a graph node.</p>
+      </article>
+      <article class="card" style="--accent:#B5532E">
+        <div class="card-top">
+          <span class="num">06</span>
+          <h4>Author a per-color etymology / 出处 / 释义 data layer</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">内容</span>
+          <span class="chip">工作量 高</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">The 关于 prose is entirely color-math; there is no cultural/textual provenance, so pages cannot satisfy &#x27;黛/朱红 的出处&#x27; intent and AI engines have nothing citable beyond the HEX table. This is the highest-value unique-content + E-E-A-T gap and the main reason a 中华传统色 reference under-ranks editorial color encyclopedias.</p>
+        <p class="lab">怎么做</p><p class="txt">Hand-author assets/data/color-lore.js keyed by id/name ({出处, 释义, 别名, 古籍引文+来源}) starting with the most-searched names (黛/朱/绛/天青/胭脂/月白/竹青...), each with explicit citations. Extend build-color-pages.mjs to emit a 名称由来/出处 &lt;section&gt; ONLY when curated data exists (preserve the no-fabrication rule) and surface it in JSON-LD as CreativeWork.description / DefinedTerm.description. Even 80-120 entries materially lifts citability.</p>
+        <p class="kpi"><span>领先指标</span>AI engines citing the site for 名字由来/出处 queries; impressions for {色名}+出处/释义 in GSC; longer dwell time on enriched pages.</p>
+      </article>
+      <article class="card" style="--accent:#B5532E">
+        <div class="card-top">
+          <span class="num">07</span>
+          <h4>Plan and seed an off-page distribution campaign on the repo&#x27;s social proof</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">运营</span>
+          <span class="chip">工作量 高</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">Without referring domains the site cannot out-rank established aggregators (color-hex, SchemeColor, zhongguose clones) regardless of on-page quality. The 1,040-star repo is the strongest social-proof asset and is currently the only inbound path; backlinks compound slowly (movement at 60-90 days), so seeding must start now.</p>
+        <p class="lab">怎么做</p><p class="txt">Add a live-site badge + screenshot GIF to README (and make the repo description EN-leading/bilingual). PR the repo into relevant awesome-lists (awesome-design-tools, awesome-color). Distribute into Chinese dev communities (掘金 article &#x27;我整理了742个中华传统色&#x27;, V2EX, 少数派), plus a timed Show HN / Product Hunt launch. Pitch the llms.txt table + harmony CSV as a citable dataset to design blogs. Track referring domains monthly in GSC + Bing.</p>
+        <p class="kpi"><span>领先指标</span>Referring-domain count rising in GSC/Bing over 60-90 days; referral sessions from awesome-lists + community posts.</p>
+      </article><h3 class="rgroup"><span class="sev" style="background:#9A7B3A">Medium · 中</span><span class="rgroup-count">3 项</span></h3>
+      <article class="card" style="--accent:#9A7B3A">
+        <div class="card-top">
+          <span class="num">08</span>
+          <h4>Add visible editorial intros to dictionary.html and uses.html; differentiate browse-page metadata</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">内容</span>
+          <span class="chip">工作量 中</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">dictionary.html and uses.html have sr-only H1s and no visible body copy, so they cannot rank for editorial head terms and give AI engines nothing to summarize; uses.html never uses 国风/古风/中式配色 despite being the use-case page. Four overlapping browse pages (index/explorer/dictionary/大全) also dilute intent with near-identical descriptions.</p>
+        <p class="lab">怎么做</p><p class="txt">Add a 2-3 sentence visible lede to dictionary.html (&#x27;中国传统色色彩字典&#x27; covering HEX/RGB/CMYK 色值、色系、配色关系) and a visible intro to uses.html naming 国风/古风/中式配色场景. Assign each browse page a distinct primary intent (大全=canonical reference, explorer=沉浸式, dictionary=在线检索 tool, home=brand hub) and rewrite titles/H1/descriptions to stop verbatim repetition. Hand edits to static HTML — low risk.</p>
+        <p class="kpi"><span>领先指标</span>dictionary.html/uses.html gaining impressions for editorial head terms; reduced keyword-cannibalization signals across browse pages in GSC.</p>
+      </article>
+      <article class="card" style="--accent:#9A7B3A">
+        <div class="card-top">
+          <span class="num">09</span>
+          <h4>Re-encode full-size images to WebP and surface a Dataset + QAPage AI layer</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">代码</span>
+          <span class="chip">工作量 中</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">The full-size PNGs (999MB / ~1.3MB avg) are the og:image / twitter:image / JSON-LD contentUrl / download targets and re-encode to ~58-128KB WebP (~95% smaller) — faster social-card and Google Images fetches. Separately the site is fundamentally a Dataset with no Dataset node, and the 关于 prose answers stable questions with no machine-readable QAPage wrapper.</p>
+        <p class="lab">怎么做</p><p class="txt">Add a build-images step (cwebp on path) emitting full-res WebP and repoint og:image/twitter:image/contentUrl at WebP, keeping PNG only as the explicit download; generate WebP thumbnails too. Add a schema.org/Dataset node (license MIT, variableMeasured, distribution -&gt; llms-full.txt + ZIP) and a QAPage block per color page (2-3 stable Qs lifted from existing data sentences) for AI citation — not FAQPage. Add image license/creditText to ImageObject. Bump ASSET_VERSION.</p>
+        <p class="kpi"><span>领先指标</span>Social-card + Google Images fetch sizes drop; Dataset recognized in Rich Results Test; AI engines citing the QAPage answers.</p>
+      </article>
+      <article class="card" style="--accent:#9A7B3A">
+        <div class="card-top">
+          <span class="num">10</span>
+          <h4>Front the domain with Cloudflare for headers, brotli, long-lived caching</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">配置/外部</span>
+          <span class="chip">工作量 中</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">GitHub Pages caps cache at max-age=600 with gzip-only and no security headers — wasting crawl budget on 742 immutable images, leaving HSTS/X-Content-Type-Options/Referrer-Policy absent, and capping the ?v= cache-busting benefit. One Cloudflare front unlocks brotli (harmonies.js ~84KB gzip -&gt; ~60-65KB br), long immutable caching for /assets/* and /images/*, and security headers at once.</p>
+        <p class="lab">怎么做</p><p class="txt">Proxy DNS through Cloudflare to GitHub Pages; add Transform/Cache Rules: Strict-Transport-Security (max-age=31536000; includeSubDomains; preload), X-Content-Type-Options nosniff, Referrer-Policy strict-origin-when-cross-origin, and Cache-Control public, max-age=31536000, immutable for /assets/*, /images/*, /thumbnails/*. Enable brotli.</p>
+        <p class="kpi"><span>领先指标</span>securityheaders.com grade improves; content-encoding: br on text assets; reduced image re-crawl frequency in GSC crawl stats.</p>
+      </article><h3 class="rgroup"><span class="sev" style="background:#6E6E6A">Low · 低</span><span class="rgroup-count">3 项</span></h3>
+      <article class="card" style="--accent:#6E6E6A">
+        <div class="card-top">
+          <span class="num">11</span>
+          <h4>Make llms.txt HTML-discoverable and enrich the AI corpus + image titles</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">代码</span>
+          <span class="chip">工作量 低</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">llms.txt is reachable only by URL (no &lt;link&gt;, no footer link, no robots reference), llms-full.txt omits the harmony partners the site&#x27;s own prose cites, and image alt/title are templated identically with no hue-family/warm-cool differentiation the generator already computes — all small, cheap wins.</p>
+        <p class="lab">怎么做</p><p class="txt">Add &lt;link rel=&#x27;llms-txt&#x27; href=&#x27;/llms.txt&#x27;&gt; + a footer link via shared-chrome.js, and a robots.txt comment pointer. Extend renderLlmsTxt to include each color&#x27;s complementary/adjacent partners. Enrich &lt;image:title&gt;/alt with existing hue-family + warm/cool fields (e.g. &#x27;中国传统色 乳白 #F9F4DC 色卡（黄色系 暖色调）&#x27;).</p>
+        <p class="kpi"><span>领先指标</span>llms.txt request volume from AI crawlers; improved Google Images relevance for hue-qualified queries.</p>
+      </article>
+      <article class="card" style="--accent:#6E6E6A">
+        <div class="card-top">
+          <span class="num">12</span>
+          <h4>Add 大全 to global nav and connect tool-page schema</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">代码</span>
+          <span class="chip">工作量 低</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">The 大全 — the strongest SEO landing holding the 742-link ItemList — is missing from the shared nav, so it is reachable only from the homepage hero CTA and under-distributes internal link equity. Tool pages (generator/palettes/uses/gradient) carry no structured data and sit outside the entity graph.</p>
+        <p class="lab">怎么做</p><p class="txt">Add a nav entry { key:&#x27;colors&#x27;, label:&#x27;传统色大全&#x27;, href:&#x27;colors/index.html&#x27; } to the pages array in shared-chrome.js (verify ../ base resolution from subdirectory pages). Add lightweight WebPage/WebApplication + BreadcrumbList nodes (isPartOf the WebSite @id) to the tool pages.</p>
+        <p class="kpi"><span>领先指标</span>Internal links to /colors/ on all ~750 pages; tool pages appearing as connected graph nodes in Rich Results Test.</p>
+      </article>
+      <article class="card" style="--accent:#6E6E6A">
+        <div class="card-top">
+          <span class="num">13</span>
+          <h4>Diversify the 关于 prose and add a definitional lead sentence</h4>
+        </div>
+        <div class="chips">
+          <span class="chip">代码</span>
+          <span class="chip">工作量 低</span>
+        </div>
+        <p class="lab">为什么</p><p class="txt">All 742 关于 paragraphs share one 4-clause skeleton; uniqueness passes via interpolated tokens but the constant lexical structure risks a low-effort-programmatic perception, and the lead is color-classification rather than the self-contained definition AI/snippet extractors prefer for &#x27;{色名}是什么颜色&#x27;.</p>
+        <p class="lab">怎么做</p><p class="txt">In build-color-pages.mjs aboutSentences, add 1-2 conditional sentence variants keyed on already-computed buckets (lightness/saturation/temperature) and prepend one plain definitional sentence (&#x27;「X」是一种偏[暖/冷]的[高/低明度][色系]中国传统色。&#x27;) before the HEX dump. Pure data interpolation, no fabrication.</p>
+        <p class="kpi"><span>领先指标</span>Higher lexical diversity across pages; improved featured-snippet/AI extraction for &#x27;{色名}是什么颜色&#x27;.</p>
+      </article>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">度量</p>
+    <h2>关键指标（KPI）</h2>
+    <ol class="kpis"><li>Indexed URL count across Google + Bing + Baidu (target: 742 detail + 大全 + hubs fully indexed within 90 days)</li><li>Referring-domain count (GSC + Bing) — the gating off-page metric; expect movement at 60-90 days</li><li>Homepage mobile LCP (CrUX/Lighthouse) below 2.5s after harmonies.js deferral + static first-screen render</li><li>Organic impressions/clicks for cluster head terms ({hue}系传统色, 国风配色方案, {色名}是什么颜色/出处)</li><li>AI-citation rate: appearances in AI Overviews / ChatGPT / Perplexity for color value, harmony, and etymology queries</li><li>GitHub repo topic-hub referral sessions and star growth feeding sameAs authority</li><li>Image/social-card payload reduction (full PNG -&gt; WebP) and Google Images CTR</li></ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>由 claude-seo 多智能体编排生成 · 所有结论经实时抓取 + 仓库源码对抗式校验</span>
+    <span>colors.xiaoxiaodong.ai · 2026-06-17</span>
+  </div>
+</footer>
+</body>
+</html>
