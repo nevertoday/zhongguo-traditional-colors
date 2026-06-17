@@ -4,7 +4,7 @@
   <text x="80" y="300" font-family="'Noto Serif SC', serif" font-size="150" font-weight="900" fill="#1a1a1a">浅肤色</text>
   <text x="80" y="388" font-family="'M PLUS Rounded 1c', sans-serif" font-size="56" fill="#1a1a1a" letter-spacing="4">#EBCDA8</text>
   <text x="80" y="450" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="#1a1a1a" opacity="0.72">RGB 235 205 168　CMYK 0 13 29 8</text>
-  <text x="80" y="512" font-family="'M PLUS Rounded 1c', sans-serif" font-size="22" fill="#1a1a1a" opacity="0.6">配色搭档 · 取自 742 色库</text>
+  <text x="80" y="512" font-family="'M PLUS Rounded 1c', sans-serif" font-size="22" fill="#1a1a1a" opacity="0.6">配色搭档 · 取自传统色库</text>
   <rect x="80" y="540" width="34" height="34" fill="#EDC3AE" stroke="#1a1a1a" stroke-opacity="0.4"/>
   <text x="126" y="565" font-family="'Noto Serif SC', serif" font-size="24" fill="#1a1a1a" opacity="0.82">藕荷</text>
   <rect x="345" y="540" width="34" height="34" fill="#E5D3AA" stroke="#1a1a1a" stroke-opacity="0.4"/>

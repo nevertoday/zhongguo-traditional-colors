@@ -4,7 +4,7 @@
   <text x="80" y="300" font-family="'Noto Serif SC', serif" font-size="150" font-weight="900" fill="#f7f7f4">火鹅紫</text>
   <text x="80" y="388" font-family="'M PLUS Rounded 1c', sans-serif" font-size="56" fill="#f7f7f4" letter-spacing="4">#33141E</text>
   <text x="80" y="450" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="#f7f7f4" opacity="0.72">RGB 51 20 30　CMYK 0 61 41 80</text>
-  <text x="80" y="512" font-family="'M PLUS Rounded 1c', sans-serif" font-size="22" fill="#f7f7f4" opacity="0.6">配色搭档 · 取自 742 色库</text>
+  <text x="80" y="512" font-family="'M PLUS Rounded 1c', sans-serif" font-size="22" fill="#f7f7f4" opacity="0.6">配色搭档 · 取自传统色库</text>
   <rect x="80" y="540" width="34" height="34" fill="#30161C" stroke="#f7f7f4" stroke-opacity="0.4"/>
   <text x="126" y="565" font-family="'Noto Serif SC', serif" font-size="24" fill="#f7f7f4" opacity="0.82">卵石紫</text>
   <rect x="345" y="540" width="34" height="34" fill="#381924" stroke="#f7f7f4" stroke-opacity="0.4"/>
