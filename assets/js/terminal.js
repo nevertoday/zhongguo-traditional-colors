@@ -300,7 +300,8 @@
     qWrap.appendChild(b);
   });
 
-  const startId = byName['竹青'] || (qWrap.querySelector('button') || {}).dataset?.qid || ALL[0].id;
+  const urlAnchor = new URLSearchParams(location.search).get('anchor');
+  const startId = (urlAnchor && REC(urlAnchor) ? urlAnchor : '') || byName['竹青'] || (qWrap.querySelector('button') || {}).dataset?.qid || ALL[0].id;
   setAnchor(startId); syncQuick(startId);
 
   /* ── 高度自适应：让整台装置（含 16 色板带）恰好落在视口内 ──
