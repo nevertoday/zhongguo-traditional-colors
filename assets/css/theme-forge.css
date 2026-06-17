@@ -55,6 +55,11 @@
 .tf-root .tf-search input::placeholder{color:var(--ash2)}
 .tf-root .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line2);padding:7px 12px;color:var(--bone);transition:background .15s}
 .tf-root .ghost:hover{background:color-mix(in srgb,var(--bone) 8%,transparent)}
+.tf-root .seg{display:flex;border:1px solid var(--line2)}
+.tf-root .seg button{font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:7px 13px;color:var(--ash);background:transparent;border:0;cursor:pointer;transition:background .15s,color .15s}
+.tf-root .seg button:hover{color:var(--bone)}
+.tf-root .seg button[aria-pressed=true]{background:var(--bone);color:var(--ink)}
+.tf-root .seg button:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
 
 /* 工作区：装置 + 标本 */
 .tf-root .work{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:0}
