@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="选一个中国传统色，实时生成可发布的「传统色身份证」分享卡与配套文案。色值与配色搭档取自真实 742 色库。">
+    <meta name="theme-color" content="#f7f7f4" data-theme-color>
+    <title>每日一色 · 传统色身份证 - 中国传统配色</title>
+    <link rel="icon" href="favicon.svg?v=20260611-1" type="image/svg+xml">
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('theme');
+          if (theme === 'dark' || theme === 'light') {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch (error) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260617-1">
+    <link rel="stylesheet" href="assets/css/daily.css?v=20260617-2">
+  </head>
+  <body data-current-page="daily" data-no-gradient-logic>
+    <div data-shared-header></div>
+
+    <main class="daily-main">
+      <section aria-labelledby="daily-title">
+      <div class="style-lab-intro">
+        <h1 class="sr-only" id="daily-title">每日一色 · 传统色身份证</h1>
+        <span class="section-kicker">每日一色 · 传统色身份证</span>
+        <p>选一个中国传统色（今天的色，或自己挑），实时生成一张可发布的「传统色身份证」分享卡，配好能直接粘贴的文案。每张卡的色值与配色搭档都取自真实色库。</p>
+      </div>
+
+      <div class="daily-grid">
+        <aside class="daily-controls" aria-label="生成选项">
+          <div class="cgroup">
+            <label class="clabel" for="dateInput">今日色（按日期生成）</label>
+            <input type="date" class="field" id="dateInput">
+            <div class="navrow">
+              <button class="seg-btn" type="button" id="prev"><iconify-icon icon="ph:caret-left" aria-hidden="true"></iconify-icon>上一张</button>
+              <button class="seg-btn" type="button" id="rand">随机</button>
+              <button class="seg-btn" type="button" id="next">下一张<iconify-icon icon="ph:caret-right" aria-hidden="true"></iconify-icon></button>
+            </div>
+            <select class="field" id="pick" aria-label="选择颜色"></select>
+          </div>
+
+          <div class="cgroup">
+            <span class="clabel" id="fmt-label">版式</span>
+            <div class="seg" id="fmt" role="radiogroup" aria-labelledby="fmt-label">
+              <button class="seg-btn" type="button" role="radio" data-v="portrait" aria-checked="true" tabindex="0">小红书竖版</button>
+              <button class="seg-btn" type="button" role="radio" data-v="square" aria-checked="false" tabindex="-1">方形</button>
+              <button class="seg-btn" type="button" role="radio" data-v="banner" aria-checked="false" tabindex="-1">公众号横版</button>
+            </div>
+          </div>
+
+          <div class="cgroup">
+            <span class="clabel" id="mode-label">卡片底</span>
+            <div class="seg" id="mode" role="radiogroup" aria-labelledby="mode-label">
+              <button class="seg-btn" type="button" role="radio" data-v="auto" aria-checked="true" tabindex="0">跟随色</button>
+              <button class="seg-btn" type="button" role="radio" data-v="light" aria-checked="false" tabindex="-1">浅底</button>
+              <button class="seg-btn" type="button" role="radio" data-v="dark" aria-checked="false" tabindex="-1">深底</button>
+            </div>
+          </div>
+
+          <div class="cgroup">
+            <span class="clabel" id="tone-label">文案语气</span>
+            <div class="seg" id="tone" role="radiogroup" aria-labelledby="tone-label">
+              <button class="seg-btn" type="button" role="radio" data-v="art" aria-checked="true" tabindex="0">文艺</button>
+              <button class="seg-btn" type="button" role="radio" data-v="util" aria-checked="false" tabindex="-1">实用</button>
+              <button class="seg-btn" type="button" role="radio" data-v="trend" aria-checked="false" tabindex="-1">国潮</button>
+            </div>
+          </div>
+
+          <div class="cgroup">
+            <span class="clabel">卡片显示</span>
+            <label class="toggle"><input type="checkbox" id="t-py" checked><span class="box"></span>拼音</label>
+            <label class="toggle"><input type="checkbox" id="t-cmyk" checked><span class="box"></span>CMYK 值</label>
+            <label class="toggle"><input type="checkbox" id="t-pair" checked><span class="box"></span>配色搭档</label>
+            <label class="toggle"><input type="checkbox" id="t-use" checked><span class="box"></span>用对 / 用错</label>
+          </div>
+
+          <div class="cgroup">
+            <span class="clabel">快速预设</span>
+            <div class="presets" id="presets">
+              <button class="preset" type="button" data-p="xhs">小红书种草</button>
+              <button class="preset" type="button" data-p="wechat">公众号头图</button>
+              <button class="preset" type="button" data-p="designer">设计师速查</button>
+            </div>
+          </div>
+        </aside>
+
+        <section class="daily-stage" aria-label="预览">
+          <div class="cardframe">
+            <article class="card" data-fmt="portrait" id="card" aria-label="传统色身份证预览"></article>
+          </div>
+
+          <div class="daily-handoff">
+            <span>用这个色继续：</span>
+            <a class="button button-secondary" id="to-theme" href="theme-forge.html">生成主题</a>
+            <a class="button button-secondary" id="to-terminal" href="terminal.html">终端配色</a>
+          </div>
+
+          <div class="daily-out">
+            <div class="daily-out-head">
+              <h2>可发布文案（小红书 / 公众号）</h2>
+              <button class="button button-primary" type="button" id="copy">复制文案</button>
+            </div>
+            <p class="daily-post" id="post"></p>
+            <div class="daily-tags" id="tags"></div>
+          </div>
+
+          <p class="daily-note">「用对 / 用错」按明度·饱和度规则推导（正式版接入 WCAG 校验）；「意象」文案为示例（正式版接入出处考据）。当前为演示，内置部分色样。</p>
+        </section>
+      </div>
+      </section>
+      <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+    </main>
+
+    <div data-shared-footer></div>
+
+    <script src="assets/js/shared-chrome.js?v=20260615-1" defer></script>
+    <script>
+      const COLORS = [
+        {id:"011",name:"藤黄",py:"téng huáng",hex:"#FFD111",h:48,s:100,l:53,family:"黄色系",temp:"暖",story:"取自海藤树脂的传统颜料，明黄带暖，是国画里最亮的一抹黄。",aux:[{name:"向日葵黄",hex:"#FECC11"},{name:"金瓜黄",hex:"#FCD217"}],accent:[{name:"苍碧",hex:"#2A52BE"},{name:"绀青",hex:"#4F84FF"}]},
+        {id:"424",name:"月白",py:"yuè bái",hex:"#EEF7F2",h:147,s:36,l:95,family:"绿色系",temp:"冷",story:"不是纯白，是月光落在素帛上那点冷青白，比白多一丝呼吸。",aux:[{name:"梨花白",hex:"#F8F5F0"},{name:"白雪藤",hex:"#E8F4F0"}],accent:[{name:"藕丝",hex:"#D8B0C8"},{name:"鼠鼻红",hex:"#E3B4B8"}]},
+        {id:"569",name:"竹青",py:"zhú qīng",hex:"#00A86B",h:158,s:100,l:33,family:"青色系",temp:"冷",story:"新竹表皮那层青，沉静而有生气，是青绿里最“活”的一档。",aux:[{name:"翠绿",hex:"#20A162"},{name:"孔雀绿",hex:"#229453"}],accent:[{name:"菜头紫",hex:"#951C48"},{name:"茜红",hex:"#C70039"}]},
+        {id:"378",name:"群青",py:"qún qīng",hex:"#1772B4",h:205,s:77,l:40,family:"蓝色系",temp:"冷",story:"源自矿物的深蓝，曾比黄金还贵，沉得下来又透得出光。",aux:[{name:"天蓝",hex:"#1677B3"},{name:"柏林蓝",hex:"#126BAE"}],accent:[{name:"琥珀",hex:"#CA6924"},{name:"檀色",hex:"#A65F2E"}]},
+        {id:"626",name:"绛紫",py:"jiàng zǐ",hex:"#8E354A",h:346,s:46,l:38,family:"红色系",temp:"暖",story:"红里压了暗，像陈年朱漆，端庄、有重量。",aux:[{name:"醋",hex:"#8A3A3A"},{name:"淡土黄",hex:"#8C4B31"}],accent:[{name:"青矾绿",hex:"#2C9678"},{name:"海王绿",hex:"#248067"}]},
+        {id:"596",name:"鹅黄",py:"é huáng",hex:"#F2C867",h:42,s:84,l:68,family:"橙色系",temp:"暖",story:"雏鹅绒毛的嫩黄，娇而不艳，常用来形容初春。",aux:[{name:"炒米黄",hex:"#F4CE69"},{name:"淡密黄",hex:"#F9D367"}],accent:[{name:"苍碧",hex:"#2A52BE"},{name:"绀青",hex:"#4F84FF"}]},
+        {id:"240",name:"海棠红",py:"hǎi táng hóng",hex:"#F03752",h:351,s:86,l:58,family:"红色系",temp:"暖",story:"海棠花那种亮而不冲的红，明媚里带一点甜。",aux:[{name:"茶花红",hex:"#EE3F4D"},{name:"草茉莉红",hex:"#EF475D"}],accent:[{name:"美蝶绿",hex:"#12AA9C"},{name:"蓝绿",hex:"#12A182"}]},
+        {id:"533",name:"黛蓝",py:"dài lán",hex:"#2A3C5C",h:218,s:37,l:26,family:"蓝色系",temp:"冷",story:"黛是古人画眉的青黑，黛蓝是它偏蓝的一支，深而内敛。",aux:[{name:"黛青",hex:"#2A475F"},{name:"玄青",hex:"#2B3A4F"}],accent:[{name:"苍黄",hex:"#806332"},{name:"莱阳梨黄",hex:"#815F25"}]},
+        {id:"734",name:"石青",py:"shí qīng",hex:"#2E5D8C",h:210,s:51,l:36,family:"蓝色系",temp:"冷",story:"取自蓝铜矿的蓝，是壁画与青绿山水里的“重蓝”。",aux:[{name:"蓼蓝青",hex:"#2E5A88"},{name:"青蓝",hex:"#2A5C82"}],accent:[{name:"皮弁",hex:"#8B5D33"},{name:"驼色",hex:"#66462A"}]},
+        {id:"222",name:"樱桃红",py:"yīng táo hóng",hex:"#ED3321",h:5,s:85,l:53,family:"红色系",temp:"暖",story:"熟樱桃的红，鲜亮直接，是最讨喜的一档正红。",aux:[{name:"秋海棠红",hex:"#EC2B24"},{name:"胭脂红",hex:"#F03F24"}],accent:[{name:"蔚蓝",hex:"#29B7CB"},{name:"甸子蓝",hex:"#10AEC2"}]},
+        {id:"705",name:"松花绿",py:"sōng huā lǜ",hex:"#A0D6B4",h:142,s:40,l:73,family:"绿色系",temp:"冷",story:"松花粉调出的浅绿，柔和清润，像初春的草色。",aux:[{name:"嘉陵水绿",hex:"#ADD5A2"},{name:"松花",hex:"#B6D7A8"}],accent:[{name:"青蛤壳紫",hex:"#BC84A8"},{name:"藕丝",hex:"#D8B0C8"}]},
+        {id:"599",name:"天青",py:"tiān qīng",hex:"#6C9BCA",h:210,s:47,l:61,family:"蓝色系",temp:"冷",story:"“雨过天青云破处”那一色，温润浅蓝，是汝窑的理想。",aux:[{name:"涧石蓝",hex:"#66A9C9"},{name:"羽扇豆蓝",hex:"#619AC3"}],accent:[{name:"缊",hex:"#C79A6A"},{name:"灰橙色",hex:"#C48A69"}]},
+        {id:"605",name:"黛绿",py:"dài lǜ",hex:"#3B7A57",h:147,s:35,l:35,family:"绿色系",temp:"冷",story:"墨绿压暗的一支，像远山、像深潭，安静耐看。",aux:[{name:"青絇繶纯",hex:"#3B7A5D"},{name:"柳苍",hex:"#3E6A3D"}],accent:[{name:"苋菜紫",hex:"#9B1E64"},{name:"绛紫",hex:"#8E354A"}]},
+        {id:"122",name:"桃红",py:"táo hóng",hex:"#F0ADA0",h:10,s:73,l:78,family:"红色系",temp:"暖",story:"桃花的粉红，明快、亲切，是最日常的一抹暖粉。",aux:[{name:"颊红",hex:"#EEAA9C"},{name:"粉红",hex:"#F2B9B2"}],accent:[{name:"清水蓝",hex:"#93D5DC"},{name:"湖水蓝",hex:"#B0D5DF"}]},
+        {id:"542",name:"琥珀",py:"hǔ pò",hex:"#CA6924",h:25,s:70,l:47,family:"橙色系",temp:"暖",story:"松脂凝结千年的暖棕橙，透亮而温厚。",aux:[{name:"火砖红",hex:"#CD6227"},{name:"麂棕",hex:"#DE7622"}],accent:[{name:"潮蓝",hex:"#2983BB"},{name:"花青",hex:"#2376B7"}]},
+        {id:"696",name:"靛蓝",py:"diàn lán",hex:"#4B0082",h:275,s:100,l:25,family:"紫色系",temp:"冷",story:"蓝草发酵出的深蓝，“青出于蓝”说的就是它。",aux:[{name:"魏紫",hex:"#7E1671"},{name:"紫云",hex:"#A020F0"}],accent:[{name:"水绿",hex:"#8CC269"},{name:"鹦鹉绿",hex:"#5BAE23"}]},
+        {id:"620",name:"黛紫",py:"dài zǐ",hex:"#5D3A6F",h:280,s:31,l:33,family:"紫色系",temp:"冷",story:"黛色偏紫的一支，暮色山影的颜色，沉静神秘。",aux:[{name:"暮山紫",hex:"#6E4D7E"},{name:"芓紫",hex:"#894276"}],accent:[{name:"荠麦绿",hex:"#8DB67A"},{name:"官绿",hex:"#7AA35A"}]},
+        {id:"577",name:"柳黄",py:"liǔ huáng",hex:"#C9E079",h:73,s:62,l:68,family:"黄色系",temp:"暖",story:"新柳初发的嫩黄绿，轻盈清新，是早春的信号。",aux:[{name:"槐花黄绿",hex:"#D2D97A"},{name:"浅驼色",hex:"#E2C17C"}],accent:[{name:"紫藤萝",hex:"#9B8AE8"},{name:"苍碧",hex:"#2A52BE"}]},
+        {id:"001",name:"乳白",py:"rǔ bái",hex:"#F9F4DC",h:50,s:71,l:92,family:"黄色系",temp:"暖",story:"带一点暖的奶白，温柔的底色，不刺眼。",aux:[{name:"蚌肉白",hex:"#F9F1DB"},{name:"粉白",hex:"#FBF2E3"}],accent:[{name:"绀青",hex:"#4F84FF"},{name:"霜华",hex:"#D0E7F9"}]},
+        {id:"038",name:"芒果黄",py:"máng guǒ huáng",hex:"#DDC871",h:48,s:61,l:65,family:"黄色系",temp:"暖",story:"熟芒果的暖黄，饱满、有食欲感。",aux:[{name:"槐花黄绿",hex:"#D2D97A"},{name:"槐黄",hex:"#D8C37C"}],accent:[{name:"苍碧",hex:"#2A52BE"},{name:"绀青",hex:"#4F84FF"}]},
+        {id:"112",name:"驼色",py:"tuó sè",hex:"#66462A",h:28,s:42,l:28,family:"橙色系",temp:"暖",story:"骆驼毛的暖棕，百搭耐看，是大地色里的常青款。",aux:[{name:"茶褐",hex:"#5D3D21"},{name:"中灰驼",hex:"#603D30"}],accent:[{name:"海军蓝",hex:"#346C9C"},{name:"夜筵青",hex:"#1D3F5A"}]},
+        {id:"149",name:"石板灰",py:"shí bǎn huī",hex:"#624941",h:15,s:20,l:32,family:"橙色系",temp:"暖",story:"带暖的深灰褐，像旧石板，沉得住场面。",aux:[{name:"珠母灰",hex:"#64483D"},{name:"緅",hex:"#5C4A43"}],accent:[{name:"黛青山",hex:"#2E5A6F"},{name:"潆青",hex:"#6B8E9A"}]},
+        {id:"186",name:"淡藏花红",py:"dàn cáng huā hóng",hex:"#F6AD8F",h:17,s:85,l:76,family:"橙色系",temp:"暖",story:"藏红花染出的浅橙红，柔和温暖。",aux:[{name:"玫瑰粉",hex:"#F8B37F"},{name:"淡罂粟红",hex:"#EEA08C"}],accent:[{name:"云蓝",hex:"#87CEEB"},{name:"雪青",hex:"#B0D8E8"}]},
+        {id:"260",name:"品红",py:"pǐn hóng",hex:"#EF3473",h:340,s:85,l:57,family:"红色系",temp:"暖",story:"高饱和的洋红，张扬抓眼，慎用大面积。",aux:[{name:"榲桲红",hex:"#ED2F6A"},{name:"紫荆红",hex:"#EE2C79"}],accent:[{name:"莹翠",hex:"#3EB489"},{name:"黛绿色",hex:"#3AB08C"}]},
+        {id:"297",name:"白芨红",py:"bái jí hóng",hex:"#DE7897",h:342,s:61,l:67,family:"红色系",temp:"暖",story:"白芨花的柔粉红，温婉、低饱和。",aux:[{name:"初荷红",hex:"#E16C96"},{name:"淡茜红",hex:"#E77C8E"}],accent:[{name:"黛绿色",hex:"#3AB08C"},{name:"铜绿",hex:"#2BAE85"}]},
+        {id:"371",name:"花青",py:"huā qīng",hex:"#2376B7",h:206,s:68,l:43,family:"蓝色系",temp:"冷",story:"国画颜料花青，偏冷的蓝，沉稳通用。",aux:[{name:"尼罗蓝",hex:"#2474B5"},{name:"虹蓝",hex:"#2177B8"}],accent:[{name:"琥珀",hex:"#CA6924"},{name:"槟榔综",hex:"#C1651A"}]},
+        {id:"408",name:"井天蓝",py:"jǐng tiān lán",hex:"#C3D7DF",h:197,s:30,l:82,family:"蓝色系",temp:"冷",story:"井口望天那一方浅蓝灰，淡而透气。",aux:[{name:"浅灰蓝",hex:"#C2D1E0"},{name:"月白天青",hex:"#C6D7DB"}],accent:[{name:"杏粉",hex:"#F0D9D0"},{name:"浅杏粉",hex:"#F5E6E0"}]}
+      ];
+
+      const hexToRgb = (h) => { h = h.replace('#', ''); return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)); };
+      function rgbToCmyk(r, g, b) {
+        r /= 255; g /= 255; b /= 255;
+        const k = 1 - Math.max(r, g, b);
+        if (k === 1) return [0, 0, 0, 100];
+        return [(1 - r - k) / (1 - k), (1 - g - k) / (1 - k), (1 - b - k) / (1 - k), k].map((v) => Math.round(v * 100));
+      }
+      function relLum(hex) {
+        const [r, g, b] = hexToRgb(hex).map((v) => {
+          v /= 255;
+          return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      }
+      const INK_DARK = '#1a1a1a';
+      const INK_LIGHT = '#ffffff';
+      const DARK_LUM = relLum(INK_DARK);
+      const contrast = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      // Pick whichever ink maximizes contrast against the color — not a luminance
+      // cutoff, which on mid colors can return the weaker of the two.
+      function readableOn(hex) {
+        const L = relLum(hex);
+        return contrast(L, 1) >= contrast(L, DARK_LUM) ? INK_LIGHT : INK_DARK;
+      }
+      function usage(c) {
+        if (c.l >= 80) return { dos: '大面积底色、留白、卡片背景', donts: '别写正文或小字，对比不够会糊' };
+        if (c.l <= 35) return { dos: '正文 / 标题 / 压场的重色块', donts: '别大面积铺亮背景，会闷、会脏' };
+        if (c.s >= 70) return { dos: '点缀 / CTA / 标题强调，面积压到 10% 以内', donts: '别大面积平涂，太燥会抢注意力' };
+        return { dos: '主色块 / 区域分区 / 卡片', donts: '和邻近色要拉开明度，否则层次糊在一起' };
+      }
+
+      const DEFAULTS = { fmt: 'portrait', mode: 'auto', tone: 'art', py: true, cmyk: true, pair: true, use: true };
+      const state = { ...DEFAULTS, idx: 0 };
+      const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+      function dayIndex(d) {
+        const start = new Date(d.getFullYear(), 0, 0);
+        return Math.floor((d - start) / 86400000) % COLORS.length;
+      }
+
+      const card = document.getElementById('card');
+      const live = document.getElementById('live');
+      const toTheme = document.getElementById('to-theme');
+      const toTerminal = document.getElementById('to-terminal');
+      let lastColorId = null;
+      function announceColor(c) {
+        if (c.id === lastColorId) return;
+        lastColorId = c.id;
+        live.textContent = `已选 No.${c.id} ${c.name} ${c.hex}`;
+      }
+
+      function render() {
+        const c = COLORS[state.idx];
+        const [r, g, b] = hexToRgb(c.hex);
+        const cmyk = rgbToCmyk(r, g, b);
+        const u = usage(c);
+
+        let bg; let ink; let showSwatch;
+        if (state.mode === 'light') { bg = '#faf8f4'; ink = '#1a1a1a'; showSwatch = true; }
+        else if (state.mode === 'dark') { bg = '#141310'; ink = '#efece4'; showSwatch = true; }
+        else { bg = c.hex; ink = readableOn(c.hex); showSwatch = false; }
+
+        card.dataset.fmt = state.fmt;
+        card.style.background = bg;
+        card.style.setProperty('--card-ink', ink);
+
+        const swatch = showSwatch ? `<div class="card-swatch" style="background:${esc(c.hex)}"></div>` : '';
+        const py = state.py ? `<div class="card-py">${esc(c.py)}</div>` : '';
+        const vals = `<div class="card-vals"><span>RGB ${r} ${g} ${b}</span>${state.cmyk ? `<span>CMYK ${cmyk.join(' ')}</span>` : ''}</div>`;
+        const pair = state.pair ? `<div class="card-pair"><div class="card-pair-title">配色搭档 · 取自传统色库</div><div class="card-chips">${[...c.aux, ...c.accent].slice(0, 4).map((p) => `<span class="card-chip"><span class="dot" style="background:${esc(p.hex)}"></span>${esc(p.name)}</span>`).join('')}</div></div>` : '';
+        const use = state.use ? `<div class="card-use"><div><b>用对</b> ${esc(u.dos)}</div><div><b>用错</b> ${esc(u.donts)}</div></div>` : '';
+
+        card.innerHTML = `
+          <div class="card-head">中国传统色 · No.${esc(c.id)} · ${esc(c.family)} · ${esc(c.temp)}色</div>
+          ${swatch}
+          <div class="card-body">
+            <div class="card-name">${esc(c.name)}</div>
+            ${py}
+            <div class="card-hex">${esc(c.hex)}</div>
+            ${vals}
+            ${pair}
+            ${use}
+          </div>
+          <div class="card-foot">中国传统色 Studio · 每日一色 · colors.xiaoxiaodong.ai</div>`;
+        toTheme.href = `theme-forge.html?anchor=${c.id}`;
+        toTerminal.href = `terminal.html?anchor=${c.id}`;
+        updatePost(c, r, g, b, cmyk, u);
+        announceColor(c);
+      }
+
+      const post = document.getElementById('post');
+      const tags = document.getElementById('tags');
+      function updatePost(c, r, g, b, cmyk, u) {
+        if (state.tone === 'art') {
+          post.textContent = `【今日传统色 · ${c.name}】\n\n${c.story}\n\n色号 No.${c.id}　HEX ${c.hex}\n它属于${c.family}，${c.temp}调。\n配它好看的：${c.aux[0].name}、${c.accent[0].name}。\n\n把日子过成一幅画，从认识一个颜色开始。`;
+          tags.textContent = `#中国传统色 #每日一色 #国风美学 #配色灵感 #${c.name}`;
+        } else if (state.tone === 'util') {
+          post.textContent = `今日配色速记 · ${c.name}（No.${c.id}）\n\nHEX ${c.hex}　RGB ${r},${g},${b}　CMYK ${cmyk.join('/')}\n用对 → ${u.dos}\n用错 → ${u.donts}\n推荐搭配：主 ${c.name} ｜ 辅 ${c.aux.map((x) => x.name).join('、')} ｜ 点缀 ${c.accent[0].name}\n\n全部 742 色 + 8904 套配色：colors.xiaoxiaodong.ai`;
+          tags.textContent = '#配色 #设计素材 #UI配色 #传统色 #设计师日常';
+        } else {
+          post.textContent = `这个颜色，中国人用了上千年 👇\n\n${c.name}｜${c.hex}\n${c.story}\n\n谁懂啊，一个名字就是一幅画 🥹\n配上${c.accent[0].name}，国潮感拉满。\n\n收藏这套色，做封面 / 穿搭 / 家装都用得上。`;
+          tags.textContent = `#国潮 #中国传统色 #宝藏配色 #高级感 #色彩美学 #${c.name}`;
+        }
+      }
+
+      function bindRadioGroup(id, key) {
+        const group = document.getElementById(id);
+        const radios = [...group.querySelectorAll('[role="radio"]')];
+        const select = (btn, focus) => {
+          state[key] = btn.dataset.v;
+          radios.forEach((r) => {
+            const on = r === btn;
+            r.setAttribute('aria-checked', String(on));
+            r.tabIndex = on ? 0 : -1;
+          });
+          if (focus) btn.focus();
+          render();
+        };
+        group.addEventListener('click', (e) => {
+          const btn = e.target.closest('[role="radio"]');
+          if (btn) select(btn, false);
+        });
+        group.addEventListener('keydown', (e) => {
+          const i = radios.indexOf(document.activeElement);
+          if (i < 0) return;
+          let j;
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') j = (i + 1) % radios.length;
+          else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') j = (i - 1 + radios.length) % radios.length;
+          else return;
+          e.preventDefault();
+          select(radios[j], true);
+        });
+      }
+      bindRadioGroup('fmt', 'fmt');
+      bindRadioGroup('mode', 'mode');
+      bindRadioGroup('tone', 'tone');
+
+      [['t-py', 'py'], ['t-cmyk', 'cmyk'], ['t-pair', 'pair'], ['t-use', 'use']].forEach(([id, key]) => {
+        document.getElementById(id).addEventListener('change', (e) => { state[key] = e.target.checked; render(); });
+      });
+
+      const pick = document.getElementById('pick');
+      COLORS.forEach((c, i) => {
+        const o = document.createElement('option');
+        o.value = i;
+        o.textContent = `No.${c.id}　${c.name}　${c.hex}`;
+        pick.appendChild(o);
+      });
+      pick.addEventListener('change', () => { state.idx = +pick.value; render(); });
+
+      const step = (delta) => { state.idx = (state.idx + delta + COLORS.length) % COLORS.length; pick.value = state.idx; render(); };
+      document.getElementById('prev').addEventListener('click', () => step(-1));
+      document.getElementById('next').addEventListener('click', () => step(1));
+      document.getElementById('rand').addEventListener('click', () => { state.idx = Math.floor(Math.random() * COLORS.length); pick.value = state.idx; render(); });
+
+      const dateInput = document.getElementById('dateInput');
+      dateInput.addEventListener('change', () => {
+        if (!dateInput.value) return;
+        state.idx = dayIndex(new Date(`${dateInput.value}T00:00:00`));
+        pick.value = state.idx;
+        render();
+      });
+
+      const PRESETS = {
+        xhs: { fmt: 'portrait', mode: 'auto', tone: 'trend', py: true, cmyk: false, pair: true, use: false },
+        wechat: { fmt: 'banner', mode: 'dark', tone: 'art', py: true, cmyk: false, pair: true, use: false },
+        designer: { fmt: 'square', mode: 'light', tone: 'util', py: false, cmyk: true, pair: true, use: true },
+      };
+      document.getElementById('presets').addEventListener('click', (e) => {
+        const preset = PRESETS[e.target.dataset.p];
+        if (!preset) return;
+        Object.assign(state, preset);
+        syncControls();
+        render();
+      });
+      function syncControls() {
+        ['fmt', 'mode', 'tone'].forEach((id) => {
+          document.querySelectorAll(`#${id} [role="radio"]`).forEach((b) => {
+            const on = b.dataset.v === state[id];
+            b.setAttribute('aria-checked', String(on));
+            b.tabIndex = on ? 0 : -1;
+          });
+        });
+        [['t-py', 'py'], ['t-cmyk', 'cmyk'], ['t-pair', 'pair'], ['t-use', 'use']].forEach(([id, key]) => {
+          document.getElementById(id).checked = state[key];
+        });
+      }
+
+      const copyBtn = document.getElementById('copy');
+      copyBtn.addEventListener('click', () => {
+        const text = `${post.textContent}\n\n${tags.textContent}`;
+        navigator.clipboard.writeText(text).then(() => {
+          const original = copyBtn.textContent;
+          copyBtn.textContent = '已复制 ✓';
+          copyBtn.disabled = true;
+          live.textContent = '文案已复制到剪贴板';
+          setTimeout(() => { copyBtn.textContent = original; copyBtn.disabled = false; }, 1400);
+        });
+      });
+
+      const today = new Date();
+      dateInput.value = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+      state.idx = dayIndex(today);
+      pick.value = state.idx;
+      render();
+    </script>
+  </body>
+</html>
