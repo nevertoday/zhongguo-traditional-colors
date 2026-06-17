@@ -1,8 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="杏子灰 #D9CBB8">
   <rect width="1200" height="630" fill="#D9CBB8"/>
-  <text x="80" y="120" font-family="'Noto Serif SC', serif" font-size="34" fill="#1a1a1a" opacity="0.78">中国传统色 · No.699</text>
-  <text x="80" y="360" font-family="'Noto Serif SC', serif" font-size="180" font-weight="900" fill="#1a1a1a">杏子灰</text>
-  <text x="80" y="470" font-family="'M PLUS Rounded 1c', sans-serif" font-size="64" fill="#1a1a1a" letter-spacing="4">#D9CBB8</text>
-  <text x="80" y="545" font-family="'M PLUS Rounded 1c', sans-serif" font-size="34" fill="#1a1a1a" opacity="0.7">橙色系 · 暖色</text>
-  <text x="1120" y="560" text-anchor="end" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="#1a1a1a" opacity="0.6">colors.xiaoxiaodong.ai</text>
+  <text x="80" y="96" font-family="'Noto Serif SC', serif" font-size="30" fill="#1a1a1a" opacity="0.78">中国传统色 · No.699 · 橙色系 · 暖色</text>
+  <text x="80" y="300" font-family="'Noto Serif SC', serif" font-size="150" font-weight="900" fill="#1a1a1a">杏子灰</text>
+  <text x="80" y="388" font-family="'M PLUS Rounded 1c', sans-serif" font-size="56" fill="#1a1a1a" letter-spacing="4">#D9CBB8</text>
+  <text x="80" y="450" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="#1a1a1a" opacity="0.72">RGB 217 203 184　CMYK 0 6 15 15</text>
+  <text x="80" y="512" font-family="'M PLUS Rounded 1c', sans-serif" font-size="22" fill="#1a1a1a" opacity="0.6">配色搭档 · 取自 742 色库</text>
+  <rect x="80" y="540" width="34" height="34" fill="#D6C9B8" stroke="#1a1a1a" stroke-opacity="0.4"/>
+  <text x="126" y="565" font-family="'Noto Serif SC', serif" font-size="24" fill="#1a1a1a" opacity="0.82">素鞸</text>
+  <rect x="345" y="540" width="34" height="34" fill="#D9C6B3" stroke="#1a1a1a" stroke-opacity="0.4"/>
+  <text x="391" y="565" font-family="'Noto Serif SC', serif" font-size="24" fill="#1a1a1a" opacity="0.82">藕丝秋</text>
+  <rect x="610" y="540" width="34" height="34" fill="#C2D1E0" stroke="#1a1a1a" stroke-opacity="0.4"/>
+  <text x="656" y="565" font-family="'Noto Serif SC', serif" font-size="24" fill="#1a1a1a" opacity="0.82">浅灰蓝</text>
+  <rect x="875" y="540" width="34" height="34" fill="#93D5DC" stroke="#1a1a1a" stroke-opacity="0.4"/>
+  <text x="921" y="565" font-family="'Noto Serif SC', serif" font-size="24" fill="#1a1a1a" opacity="0.82">清水蓝</text>
+  <text x="1120" y="600" text-anchor="end" font-family="'M PLUS Rounded 1c', sans-serif" font-size="28" fill="#1a1a1a" opacity="0.55">colors.xiaoxiaodong.ai</text>
 </svg>
