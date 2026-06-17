@@ -1,10 +1,6 @@
 # 中国色 AI 主色列表
 
-本文件来自本地原始清单：
-
-```text
-/Users/admin/Desktop/中国色AI主色列表.md
-```
+本文件是项目的色彩真相源（canonical source of truth）：每行一个颜色，格式为 `色名 #HEX`，顺序即颜色编号。`scripts/build-manifest.mjs` 据此生成 `assets/data/images.js`，并由 `scripts/verify-manifest-join.mjs` 校验「图片文件 NNN-色名.png 与本清单逐一对应」。
 
 共 742 个颜色。
 

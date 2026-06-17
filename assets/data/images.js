@@ -2,7 +2,6 @@
 window.TRADITIONAL_COLOR_PROJECT = {
   "count": 742,
   "totalBytes": 1046035317,
-  "generatedAt": "2026-06-08T02:07:51.406Z",
   "archiveName": "zhongguo-traditional-colors-images.zip"
 };
 
@@ -10,6 +9,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "001",
     "hex": "#F9F4DC",
+    "cmyk": {
+      "c": 0,
+      "m": 2,
+      "y": 12,
+      "k": 2
+    },
+    "pinyin": "rǔ bái",
     "path": "images/001-乳白.png",
     "file": "001-乳白.png",
     "size": 1246346
@@ -17,6 +23,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "002",
     "hex": "#F7E8AA",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 31,
+      "k": 3
+    },
+    "pinyin": "xìng rén huáng",
     "path": "images/002-杏仁黄.png",
     "file": "002-杏仁黄.png",
     "size": 1498579
@@ -24,6 +37,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "003",
     "hex": "#F8DF72",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 54,
+      "k": 3
+    },
+    "pinyin": "mò lì huáng",
     "path": "images/003-茉莉黄.png",
     "file": "003-茉莉黄.png",
     "size": 1302694
@@ -31,6 +51,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "004",
     "hex": "#F8DF70",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 55,
+      "k": 3
+    },
+    "pinyin": "mài gǎn huáng",
     "path": "images/004-麦秆黄.png",
     "file": "004-麦秆黄.png",
     "size": 1278767
@@ -38,6 +65,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "005",
     "hex": "#FBDA41",
+    "cmyk": {
+      "c": 0,
+      "m": 13,
+      "y": 74,
+      "k": 2
+    },
+    "pinyin": "yóu cài huā huáng",
     "path": "images/005-油菜花黄.png",
     "file": "005-油菜花黄.png",
     "size": 1681602
@@ -45,6 +79,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "006",
     "hex": "#FED71A",
+    "cmyk": {
+      "c": 0,
+      "m": 15,
+      "y": 90,
+      "k": 0
+    },
+    "pinyin": "fó shǒu huáng",
     "path": "images/006-佛手黄.png",
     "file": "006-佛手黄.png",
     "size": 1257916
@@ -52,6 +93,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "007",
     "hex": "#F7DE98",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 38,
+      "k": 3
+    },
+    "pinyin": "miè huáng",
     "path": "images/007-篾黄.png",
     "file": "007-篾黄.png",
     "size": 1268717
@@ -59,6 +107,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "008",
     "hex": "#F8D86A",
+    "cmyk": {
+      "c": 0,
+      "m": 13,
+      "y": 57,
+      "k": 3
+    },
+    "pinyin": "kuí shàn huáng",
     "path": "images/008-葵扇黄.png",
     "file": "008-葵扇黄.png",
     "size": 1569696
@@ -66,6 +121,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "009",
     "hex": "#FCD337",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 78,
+      "k": 1
+    },
+    "pinyin": "níng méng huáng",
     "path": "images/009-柠檬黄.png",
     "file": "009-柠檬黄.png",
     "size": 1600138
@@ -73,6 +135,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "010",
     "hex": "#FCD217",
+    "cmyk": {
+      "c": 0,
+      "m": 17,
+      "y": 91,
+      "k": 1
+    },
+    "pinyin": "jīn guā huáng",
     "path": "images/010-金瓜黄.png",
     "file": "010-金瓜黄.png",
     "size": 1288548
@@ -80,6 +149,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "011",
     "hex": "#FFD111",
+    "cmyk": {
+      "c": 0,
+      "m": 18,
+      "y": 93,
+      "k": 0
+    },
+    "pinyin": "téng huáng",
     "path": "images/011-藤黄.png",
     "file": "011-藤黄.png",
     "size": 1155890
@@ -87,6 +163,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "012",
     "hex": "#F6DEAD",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 30,
+      "k": 4
+    },
+    "pinyin": "lào huáng",
     "path": "images/012-酪黄.png",
     "file": "012-酪黄.png",
     "size": 1173890
@@ -94,6 +177,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "013",
     "hex": "#F7DA94",
+    "cmyk": {
+      "c": 0,
+      "m": 12,
+      "y": 40,
+      "k": 3
+    },
+    "pinyin": "xiāng shuǐ méi guī huáng",
     "path": "images/013-香水玫瑰黄.png",
     "file": "013-香水玫瑰黄.png",
     "size": 1264317
@@ -101,6 +191,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "014",
     "hex": "#F9D367",
+    "cmyk": {
+      "c": 0,
+      "m": 15,
+      "y": 59,
+      "k": 2
+    },
+    "pinyin": "dàn mì huáng",
     "path": "images/014-淡密黄.png",
     "file": "014-淡密黄.png",
     "size": 1285683
@@ -108,6 +205,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "015",
     "hex": "#FBCD31",
+    "cmyk": {
+      "c": 0,
+      "m": 18,
+      "y": 80,
+      "k": 2
+    },
+    "pinyin": "dà dòu huáng",
     "path": "images/015-大豆黄.png",
     "file": "015-大豆黄.png",
     "size": 1251613
@@ -115,6 +219,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "016",
     "hex": "#FCCB16",
+    "cmyk": {
+      "c": 0,
+      "m": 19,
+      "y": 91,
+      "k": 1
+    },
+    "pinyin": "sù xīn huáng",
     "path": "images/016-素馨黄.png",
     "file": "016-素馨黄.png",
     "size": 1277962
@@ -122,6 +233,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "017",
     "hex": "#FECC11",
+    "cmyk": {
+      "c": 0,
+      "m": 20,
+      "y": 93,
+      "k": 0
+    },
+    "pinyin": "xiàng rì kuí huáng",
     "path": "images/017-向日葵黄.png",
     "file": "017-向日葵黄.png",
     "size": 1423346
@@ -129,6 +247,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "018",
     "hex": "#FBC82F",
+    "cmyk": {
+      "c": 0,
+      "m": 20,
+      "y": 81,
+      "k": 2
+    },
+    "pinyin": "yǎ lí huáng",
     "path": "images/018-雅梨黄.png",
     "file": "018-雅梨黄.png",
     "size": 1335199
@@ -136,6 +261,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "019",
     "hex": "#FCC515",
+    "cmyk": {
+      "c": 0,
+      "m": 22,
+      "y": 92,
+      "k": 1
+    },
+    "pinyin": "huáng lián huáng",
     "path": "images/019-黄连黄.png",
     "file": "019-黄连黄.png",
     "size": 1183793
@@ -143,6 +275,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "020",
     "hex": "#FCC307",
+    "cmyk": {
+      "c": 0,
+      "m": 23,
+      "y": 97,
+      "k": 1
+    },
+    "pinyin": "jīn zhǎn huáng",
     "path": "images/020-金盏黄.png",
     "file": "020-金盏黄.png",
     "size": 1190187
@@ -150,6 +289,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "021",
     "hex": "#F8C387",
+    "cmyk": {
+      "c": 0,
+      "m": 21,
+      "y": 46,
+      "k": 3
+    },
+    "pinyin": "dàn ké huáng",
     "path": "images/021-蛋壳黄.png",
     "file": "021-蛋壳黄.png",
     "size": 1248421
@@ -157,6 +303,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "022",
     "hex": "#F7C173",
+    "cmyk": {
+      "c": 0,
+      "m": 22,
+      "y": 53,
+      "k": 3
+    },
+    "pinyin": "ròu sè",
     "path": "images/022-肉色.png",
     "file": "022-肉色.png",
     "size": 1400372
@@ -164,6 +317,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "023",
     "hex": "#FBB929",
+    "cmyk": {
+      "c": 0,
+      "m": 26,
+      "y": 84,
+      "k": 2
+    },
+    "pinyin": "é zhǎng huáng",
     "path": "images/023-鹅掌黄.png",
     "file": "023-鹅掌黄.png",
     "size": 1368580
@@ -171,6 +331,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "024",
     "hex": "#FBB612",
+    "cmyk": {
+      "c": 0,
+      "m": 27,
+      "y": 93,
+      "k": 2
+    },
+    "pinyin": "jī dàn huáng",
     "path": "images/024-鸡蛋黄.png",
     "file": "024-鸡蛋黄.png",
     "size": 1443795
@@ -178,6 +345,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "025",
     "hex": "#FCB70A",
+    "cmyk": {
+      "c": 0,
+      "m": 27,
+      "y": 96,
+      "k": 1
+    },
+    "pinyin": "yòu huáng",
     "path": "images/025-鼬黄.png",
     "file": "025-鼬黄.png",
     "size": 1222081
@@ -185,6 +359,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "026",
     "hex": "#F9A633",
+    "cmyk": {
+      "c": 0,
+      "m": 33,
+      "y": 80,
+      "k": 2
+    },
+    "pinyin": "liú è huáng",
     "path": "images/026-榴萼黄.png",
     "file": "026-榴萼黄.png",
     "size": 1507359
@@ -192,6 +373,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "027",
     "hex": "#FBA414",
+    "cmyk": {
+      "c": 0,
+      "m": 35,
+      "y": 92,
+      "k": 2
+    },
+    "pinyin": "dàn jú chéng",
     "path": "images/027-淡橘橙.png",
     "file": "027-淡橘橙.png",
     "size": 1243877
@@ -199,6 +387,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "028",
     "hex": "#FCA106",
+    "cmyk": {
+      "c": 0,
+      "m": 36,
+      "y": 98,
+      "k": 1
+    },
+    "pinyin": "pí pá huáng",
     "path": "images/028-枇杷黄.png",
     "file": "028-枇杷黄.png",
     "size": 1254615
@@ -206,6 +401,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "029",
     "hex": "#FCA104",
+    "cmyk": {
+      "c": 0,
+      "m": 36,
+      "y": 98,
+      "k": 1
+    },
+    "pinyin": "chéng pí huáng",
     "path": "images/029-橙皮黄.png",
     "file": "029-橙皮黄.png",
     "size": 1246421
@@ -213,6 +415,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "030",
     "hex": "#FC8C23",
+    "cmyk": {
+      "c": 0,
+      "m": 44,
+      "y": 86,
+      "k": 1
+    },
+    "pinyin": "běi guā huáng",
     "path": "images/030-北瓜黄.png",
     "file": "030-北瓜黄.png",
     "size": 1252799
@@ -220,6 +429,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "031",
     "hex": "#F28E16",
+    "cmyk": {
+      "c": 0,
+      "m": 41,
+      "y": 91,
+      "k": 5
+    },
+    "pinyin": "xìng huáng",
     "path": "images/031-杏黄.png",
     "file": "031-杏黄.png",
     "size": 1184465
@@ -227,6 +443,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "032",
     "hex": "#FF9900",
+    "cmyk": {
+      "c": 0,
+      "m": 40,
+      "y": 100,
+      "k": 0
+    },
+    "pinyin": "xióng huáng",
     "path": "images/032-雄黄.png",
     "file": "032-雄黄.png",
     "size": 1507052
@@ -234,6 +457,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "033",
     "hex": "#FB8B05",
+    "cmyk": {
+      "c": 0,
+      "m": 45,
+      "y": 98,
+      "k": 2
+    },
+    "pinyin": "wàn shòu jú huáng",
     "path": "images/033-万寿菊黄.png",
     "file": "033-万寿菊黄.png",
     "size": 1426863
@@ -241,6 +471,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "034",
     "hex": "#E9DDB6",
+    "cmyk": {
+      "c": 0,
+      "m": 5,
+      "y": 22,
+      "k": 9
+    },
+    "pinyin": "jú lěi bái",
     "path": "images/034-菊蕾白.png",
     "file": "034-菊蕾白.png",
     "size": 1413521
@@ -248,6 +485,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "035",
     "hex": "#EED045",
+    "cmyk": {
+      "c": 0,
+      "m": 13,
+      "y": 71,
+      "k": 7
+    },
+    "pinyin": "qiū kuí huáng",
     "path": "images/035-秋葵黄.png",
     "file": "035-秋葵黄.png",
     "size": 1194926
@@ -255,6 +499,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "036",
     "hex": "#F2CE2B",
+    "cmyk": {
+      "c": 0,
+      "m": 15,
+      "y": 82,
+      "k": 5
+    },
+    "pinyin": "liú huá huáng",
     "path": "images/036-硫华黄.png",
     "file": "036-硫华黄.png",
     "size": 1518213
@@ -262,6 +513,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "037",
     "hex": "#F1CA17",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 90,
+      "k": 5
+    },
+    "pinyin": "yòu huáng",
     "path": "images/037-柚黄.png",
     "file": "037-柚黄.png",
     "size": 1389510
@@ -269,6 +527,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "038",
     "hex": "#DDC871",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 49,
+      "k": 13
+    },
+    "pinyin": "máng guǒ huáng",
     "path": "images/038-芒果黄.png",
     "file": "038-芒果黄.png",
     "size": 1383102
@@ -276,6 +541,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "039",
     "hex": "#DFC243",
+    "cmyk": {
+      "c": 0,
+      "m": 13,
+      "y": 70,
+      "k": 13
+    },
+    "pinyin": "hāo huáng",
     "path": "images/039-蒿黄.png",
     "file": "039-蒿黄.png",
     "size": 1577289
@@ -283,6 +555,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "040",
     "hex": "#E2C027",
+    "cmyk": {
+      "c": 0,
+      "m": 15,
+      "y": 83,
+      "k": 11
+    },
+    "pinyin": "jiāng huáng",
     "path": "images/040-姜黄.png",
     "file": "040-姜黄.png",
     "size": 1218162
@@ -290,6 +569,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "041",
     "hex": "#E4BF11",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 93,
+      "k": 11
+    },
+    "pinyin": "xiāng jiāo huáng",
     "path": "images/041-香蕉黄.png",
     "file": "041-香蕉黄.png",
     "size": 1137863
@@ -297,6 +583,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "042",
     "hex": "#D2B42C",
+    "cmyk": {
+      "c": 0,
+      "m": 14,
+      "y": 79,
+      "k": 18
+    },
+    "pinyin": "cǎo huáng",
     "path": "images/042-草黄.png",
     "file": "042-草黄.png",
     "size": 1753938
@@ -304,6 +597,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "043",
     "hex": "#D2B116",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 90,
+      "k": 18
+    },
+    "pinyin": "xīn hé lǜ",
     "path": "images/043-新禾绿.png",
     "file": "043-新禾绿.png",
     "size": 1382438
@@ -311,6 +611,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "044",
     "hex": "#B7AE8F",
+    "cmyk": {
+      "c": 0,
+      "m": 5,
+      "y": 22,
+      "k": 28
+    },
+    "pinyin": "yuè huī",
     "path": "images/044-月灰.png",
     "file": "044-月灰.png",
     "size": 1141890
@@ -318,6 +625,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "045",
     "hex": "#AD9E5F",
+    "cmyk": {
+      "c": 0,
+      "m": 9,
+      "y": 45,
+      "k": 32
+    },
+    "pinyin": "dàn huī lǜ",
     "path": "images/045-淡灰绿.png",
     "file": "045-淡灰绿.png",
     "size": 1146272
@@ -325,6 +639,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "046",
     "hex": "#8E804B",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 47,
+      "k": 44
+    },
+    "pinyin": "cǎo huī lǜ",
     "path": "images/046-草灰绿.png",
     "file": "046-草灰绿.png",
     "size": 1229863
@@ -332,6 +653,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "047",
     "hex": "#887322",
+    "cmyk": {
+      "c": 0,
+      "m": 15,
+      "y": 75,
+      "k": 47
+    },
+    "pinyin": "tái lǜ",
     "path": "images/047-苔绿.png",
     "file": "047-苔绿.png",
     "size": 1245096
@@ -339,6 +667,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "048",
     "hex": "#867018",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 82,
+      "k": 47
+    },
+    "pinyin": "bì luó chūn lǜ",
     "path": "images/048-碧螺春绿.png",
     "file": "048-碧螺春绿.png",
     "size": 1261197
@@ -346,6 +681,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "049",
     "hex": "#685E48",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 31,
+      "k": 59
+    },
+    "pinyin": "yàn yǔ huī",
     "path": "images/049-燕羽灰.png",
     "file": "049-燕羽灰.png",
     "size": 1166696
@@ -353,6 +695,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "050",
     "hex": "#695E45",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 34,
+      "k": 59
+    },
+    "pinyin": "xiè ké huī",
     "path": "images/050-蟹壳灰.png",
     "file": "050-蟹壳灰.png",
     "size": 1428638
@@ -360,6 +709,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "051",
     "hex": "#645822",
+    "cmyk": {
+      "c": 0,
+      "m": 12,
+      "y": 66,
+      "k": 61
+    },
+    "pinyin": "tán shuǐ lǜ",
     "path": "images/051-潭水绿.png",
     "file": "051-潭水绿.png",
     "size": 1212150
@@ -367,6 +723,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "052",
     "hex": "#5E5314",
+    "cmyk": {
+      "c": 0,
+      "m": 12,
+      "y": 79,
+      "k": 63
+    },
+    "pinyin": "gǎn lǎn lǜ",
     "path": "images/052-橄榄绿.png",
     "file": "052-橄榄绿.png",
     "size": 1248290
@@ -374,6 +737,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "053",
     "hex": "#F9F1DB",
+    "cmyk": {
+      "c": 0,
+      "m": 3,
+      "y": 12,
+      "k": 2
+    },
+    "pinyin": "bàng ròu bái",
     "path": "images/053-蚌肉白.png",
     "file": "053-蚌肉白.png",
     "size": 1396177
@@ -381,6 +751,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "054",
     "hex": "#F8E8C1",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 22,
+      "k": 3
+    },
+    "pinyin": "dòu zhī huáng",
     "path": "images/054-豆汁黄.png",
     "file": "054-豆汁黄.png",
     "size": 1155638
@@ -388,6 +765,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "055",
     "hex": "#F9D770",
+    "cmyk": {
+      "c": 0,
+      "m": 14,
+      "y": 55,
+      "k": 2
+    },
+    "pinyin": "dàn jiǎn huáng",
     "path": "images/055-淡茧黄.png",
     "file": "055-淡茧黄.png",
     "size": 1257270
@@ -395,6 +779,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "056",
     "hex": "#FFC90C",
+    "cmyk": {
+      "c": 0,
+      "m": 21,
+      "y": 95,
+      "k": 0
+    },
+    "pinyin": "rǔ yā huáng",
     "path": "images/056-乳鸭黄.png",
     "file": "056-乳鸭黄.png",
     "size": 1435445
@@ -402,6 +793,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "057",
     "hex": "#F2E6CE",
+    "cmyk": {
+      "c": 0,
+      "m": 5,
+      "y": 15,
+      "k": 5
+    },
+    "pinyin": "lì ròu bái",
     "path": "images/057-荔肉白.png",
     "file": "057-荔肉白.png",
     "size": 1222624
@@ -409,6 +807,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "058",
     "hex": "#F0D695",
+    "cmyk": {
+      "c": 0,
+      "m": 11,
+      "y": 38,
+      "k": 6
+    },
+    "pinyin": "xiàng yá huáng",
     "path": "images/058-象牙黄.png",
     "file": "058-象牙黄.png",
     "size": 1205044
@@ -416,6 +821,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "059",
     "hex": "#F4CE69",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 57,
+      "k": 4
+    },
+    "pinyin": "chǎo mǐ huáng",
     "path": "images/059-炒米黄.png",
     "file": "059-炒米黄.png",
     "size": 1211545
@@ -423,6 +835,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "060",
     "hex": "#F6C430",
+    "cmyk": {
+      "c": 0,
+      "m": 20,
+      "y": 80,
+      "k": 4
+    },
+    "pinyin": "yīng wǔ guān huáng",
     "path": "images/060-鹦鹉冠黄.png",
     "file": "060-鹦鹉冠黄.png",
     "size": 1267518
@@ -430,6 +849,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "061",
     "hex": "#F9C116",
+    "cmyk": {
+      "c": 0,
+      "m": 22,
+      "y": 91,
+      "k": 2
+    },
+    "pinyin": "mù guā huáng",
     "path": "images/061-木瓜黄.png",
     "file": "061-木瓜黄.png",
     "size": 1360003
@@ -437,6 +863,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "062",
     "hex": "#F9BD10",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 94,
+      "k": 2
+    },
+    "pinyin": "qiǎn lào huáng",
     "path": "images/062-浅烙黄.png",
     "file": "062-浅烙黄.png",
     "size": 1525784
@@ -444,6 +877,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "063",
     "hex": "#E5D3AA",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 26,
+      "k": 10
+    },
+    "pinyin": "lián zi bái",
     "path": "images/063-莲子白.png",
     "file": "063-莲子白.png",
     "size": 1493737
@@ -451,6 +891,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "064",
     "hex": "#E8B004",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 98,
+      "k": 9
+    },
+    "pinyin": "gǔ huáng",
     "path": "images/064-谷黄.png",
     "file": "064-谷黄.png",
     "size": 1520537
@@ -458,6 +905,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "065",
     "hex": "#EBB10D",
+    "cmyk": {
+      "c": 0,
+      "m": 25,
+      "y": 94,
+      "k": 8
+    },
+    "pinyin": "zhī zi huáng",
     "path": "images/065-栀子黄.png",
     "file": "065-栀子黄.png",
     "size": 1518131
@@ -465,6 +919,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "066",
     "hex": "#D9A40E",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 94,
+      "k": 15
+    },
+    "pinyin": "jiè huáng",
     "path": "images/066-芥黄.png",
     "file": "066-芥黄.png",
     "size": 1300391
@@ -472,6 +933,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "067",
     "hex": "#B5AA90",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 20,
+      "k": 29
+    },
+    "pinyin": "yín shǔ huī",
     "path": "images/067-银鼠灰.png",
     "file": "067-银鼠灰.png",
     "size": 1381379
@@ -479,6 +947,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "068",
     "hex": "#B6A476",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 35,
+      "k": 29
+    },
+    "pinyin": "chén huī",
     "path": "images/068-尘灰.png",
     "file": "068-尘灰.png",
     "size": 1375949
@@ -486,6 +961,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "069",
     "hex": "#B78D12",
+    "cmyk": {
+      "c": 0,
+      "m": 23,
+      "y": 90,
+      "k": 28
+    },
+    "pinyin": "kū lǜ",
     "path": "images/069-枯绿.png",
     "file": "069-枯绿.png",
     "size": 1325801
@@ -493,6 +975,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "070",
     "hex": "#87723E",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 54,
+      "k": 47
+    },
+    "pinyin": "jiāo qīng",
     "path": "images/070-鲛青.png",
     "file": "070-鲛青.png",
     "size": 1332092
@@ -500,6 +989,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "071",
     "hex": "#876818",
+    "cmyk": {
+      "c": 0,
+      "m": 23,
+      "y": 82,
+      "k": 47
+    },
+    "pinyin": "zòng yè lǜ",
     "path": "images/071-粽叶绿.png",
     "file": "071-粽叶绿.png",
     "size": 1309698
@@ -507,6 +1003,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "072",
     "hex": "#8A6913",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 86,
+      "k": 46
+    },
+    "pinyin": "huī lǜ",
     "path": "images/072-灰绿.png",
     "file": "072-灰绿.png",
     "size": 1195376
@@ -514,6 +1017,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "073",
     "hex": "#4A4035",
+    "cmyk": {
+      "c": 0,
+      "m": 14,
+      "y": 28,
+      "k": 71
+    },
+    "pinyin": "hè huī",
     "path": "images/073-鹤灰.png",
     "file": "073-鹤灰.png",
     "size": 1226072
@@ -521,6 +1031,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "074",
     "hex": "#4D4030",
+    "cmyk": {
+      "c": 0,
+      "m": 17,
+      "y": 38,
+      "k": 70
+    },
+    "pinyin": "dàn sōng yān",
     "path": "images/074-淡松烟.png",
     "file": "074-淡松烟.png",
     "size": 1313581
@@ -528,6 +1045,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "075",
     "hex": "#584717",
+    "cmyk": {
+      "c": 0,
+      "m": 19,
+      "y": 74,
+      "k": 65
+    },
+    "pinyin": "àn hǎi shuǐ lǜ",
     "path": "images/075-暗海水绿.png",
     "file": "075-暗海水绿.png",
     "size": 1237398
@@ -535,6 +1059,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "076",
     "hex": "#5B4913",
+    "cmyk": {
+      "c": 0,
+      "m": 20,
+      "y": 79,
+      "k": 64
+    },
+    "pinyin": "zōng lǘ lǜ",
     "path": "images/076-棕榈绿.png",
     "file": "076-棕榈绿.png",
     "size": 1270232
@@ -542,6 +1073,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "077",
     "hex": "#F9E9CD",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 18,
+      "k": 2
+    },
+    "pinyin": "mǐ sè",
     "path": "images/077-米色.png",
     "file": "077-米色.png",
     "size": 1198246
@@ -549,6 +1087,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "078",
     "hex": "#F8E0B0",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 29,
+      "k": 3
+    },
+    "pinyin": "dàn ròu sè",
     "path": "images/078-淡肉色.png",
     "file": "078-淡肉色.png",
     "size": 1094381
@@ -556,6 +1101,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "079",
     "hex": "#F9D27D",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 50,
+      "k": 2
+    },
+    "pinyin": "mài yá táng huáng",
     "path": "images/079-麦芽糖黄.png",
     "file": "079-麦芽糖黄.png",
     "size": 1329757
@@ -563,6 +1115,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "080",
     "hex": "#FEBA07",
+    "cmyk": {
+      "c": 0,
+      "m": 27,
+      "y": 97,
+      "k": 0
+    },
+    "pinyin": "hǔ pò huáng",
     "path": "images/080-琥珀黄.png",
     "file": "080-琥珀黄.png",
     "size": 1147151
@@ -570,6 +1129,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "081",
     "hex": "#F3BF4C",
+    "cmyk": {
+      "c": 0,
+      "m": 21,
+      "y": 69,
+      "k": 5
+    },
+    "pinyin": "gān cǎo huáng",
     "path": "images/081-甘草黄.png",
     "file": "081-甘草黄.png",
     "size": 1134611
@@ -577,6 +1143,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "082",
     "hex": "#F8BC31",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 80,
+      "k": 3
+    },
+    "pinyin": "chū shú xìng huáng",
     "path": "images/082-初熟杏黄.png",
     "file": "082-初熟杏黄.png",
     "size": 1242845
@@ -584,6 +1157,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "083",
     "hex": "#E2C17C",
+    "cmyk": {
+      "c": 0,
+      "m": 15,
+      "y": 45,
+      "k": 11
+    },
+    "pinyin": "qiǎn tuó sè",
     "path": "images/083-浅驼色.png",
     "file": "083-浅驼色.png",
     "size": 1181882
@@ -591,6 +1171,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "084",
     "hex": "#E5B751",
+    "cmyk": {
+      "c": 0,
+      "m": 20,
+      "y": 65,
+      "k": 10
+    },
+    "pinyin": "shā shí huáng",
     "path": "images/084-沙石黄.png",
     "file": "084-沙石黄.png",
     "size": 1327435
@@ -598,6 +1185,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "085",
     "hex": "#EAAD1A",
+    "cmyk": {
+      "c": 0,
+      "m": 26,
+      "y": 89,
+      "k": 8
+    },
+    "pinyin": "hǔ pí huáng",
     "path": "images/085-虎皮黄.png",
     "file": "085-虎皮黄.png",
     "size": 1523131
@@ -605,6 +1199,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "086",
     "hex": "#D6A01D",
+    "cmyk": {
+      "c": 0,
+      "m": 25,
+      "y": 86,
+      "k": 16
+    },
+    "pinyin": "tǔ huáng",
     "path": "images/086-土黄.png",
     "file": "086-土黄.png",
     "size": 1441612
@@ -612,6 +1213,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "087",
     "hex": "#B4A992",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 19,
+      "k": 29
+    },
+    "pinyin": "bǎi líng niǎo huī",
     "path": "images/087-百灵鸟灰.png",
     "file": "087-百灵鸟灰.png",
     "size": 1459851
@@ -619,6 +1227,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "088",
     "hex": "#B78B26",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 79,
+      "k": 28
+    },
+    "pinyin": "shān jī huáng",
     "path": "images/088-山鸡黄.png",
     "file": "088-山鸡黄.png",
     "size": 1319849
@@ -626,6 +1241,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "089",
     "hex": "#826B48",
+    "cmyk": {
+      "c": 0,
+      "m": 18,
+      "y": 45,
+      "k": 49
+    },
+    "pinyin": "guī bèi huáng",
     "path": "images/089-龟背黄.png",
     "file": "089-龟背黄.png",
     "size": 1407939
@@ -633,6 +1255,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "090",
     "hex": "#806332",
+    "cmyk": {
+      "c": 0,
+      "m": 23,
+      "y": 61,
+      "k": 50
+    },
+    "pinyin": "cāng huáng",
     "path": "images/090-苍黄.png",
     "file": "090-苍黄.png",
     "size": 1161562
@@ -640,6 +1269,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "091",
     "hex": "#815F25",
+    "cmyk": {
+      "c": 0,
+      "m": 26,
+      "y": 71,
+      "k": 49
+    },
+    "pinyin": "lái yáng lí huáng",
     "path": "images/091-莱阳梨黄.png",
     "file": "091-莱阳梨黄.png",
     "size": 1248564
@@ -647,6 +1283,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "092",
     "hex": "#835E1D",
+    "cmyk": {
+      "c": 0,
+      "m": 28,
+      "y": 78,
+      "k": 49
+    },
+    "pinyin": "yì lí lǜ",
     "path": "images/092-蜴蜊绿.png",
     "file": "092-蜴蜊绿.png",
     "size": 1864337
@@ -654,6 +1297,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "093",
     "hex": "#4F4032",
+    "cmyk": {
+      "c": 0,
+      "m": 19,
+      "y": 37,
+      "k": 69
+    },
+    "pinyin": "sōng shǔ huī",
     "path": "images/093-松鼠灰.png",
     "file": "093-松鼠灰.png",
     "size": 1198961
@@ -661,6 +1311,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "094",
     "hex": "#503E2A",
+    "cmyk": {
+      "c": 0,
+      "m": 22,
+      "y": 48,
+      "k": 69
+    },
+    "pinyin": "gǎn lǎn huī",
     "path": "images/094-橄榄灰.png",
     "file": "094-橄榄灰.png",
     "size": 1277959
@@ -668,6 +1325,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "095",
     "hex": "#513C20",
+    "cmyk": {
+      "c": 0,
+      "m": 26,
+      "y": 60,
+      "k": 68
+    },
+    "pinyin": "xiè ké lǜ",
     "path": "images/095-蟹壳绿.png",
     "file": "095-蟹壳绿.png",
     "size": 1149033
@@ -675,6 +1339,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "096",
     "hex": "#533C1B",
+    "cmyk": {
+      "c": 0,
+      "m": 28,
+      "y": 67,
+      "k": 67
+    },
+    "pinyin": "gǔ tóng lǜ",
     "path": "images/096-古铜绿.png",
     "file": "096-古铜绿.png",
     "size": 1372153
@@ -682,6 +1353,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "097",
     "hex": "#553B18",
+    "cmyk": {
+      "c": 0,
+      "m": 31,
+      "y": 72,
+      "k": 67
+    },
+    "pinyin": "jiāo chá lǜ",
     "path": "images/097-焦茶绿.png",
     "file": "097-焦茶绿.png",
     "size": 1162162
@@ -689,6 +1367,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "098",
     "hex": "#FBF2E3",
+    "cmyk": {
+      "c": 0,
+      "m": 4,
+      "y": 10,
+      "k": 2
+    },
+    "pinyin": "fěn bái",
     "path": "images/098-粉白.png",
     "file": "098-粉白.png",
     "size": 1105535
@@ -696,6 +1381,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "099",
     "hex": "#F9E8D0",
+    "cmyk": {
+      "c": 0,
+      "m": 7,
+      "y": 16,
+      "k": 2
+    },
+    "pinyin": "luò yīng dàn fěn",
     "path": "images/099-落英淡粉.png",
     "file": "099-落英淡粉.png",
     "size": 1256712
@@ -703,6 +1395,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "100",
     "hex": "#F9CB8B",
+    "cmyk": {
+      "c": 0,
+      "m": 18,
+      "y": 44,
+      "k": 2
+    },
+    "pinyin": "guā ráng fěn",
     "path": "images/100-瓜瓤粉.png",
     "file": "100-瓜瓤粉.png",
     "size": 1261885
@@ -710,6 +1409,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "101",
     "hex": "#FBB957",
+    "cmyk": {
+      "c": 0,
+      "m": 26,
+      "y": 65,
+      "k": 2
+    },
+    "pinyin": "mì huáng",
     "path": "images/101-蜜黄.png",
     "file": "101-蜜黄.png",
     "size": 1210722
@@ -717,6 +1423,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "102",
     "hex": "#FFA60F",
+    "cmyk": {
+      "c": 0,
+      "m": 35,
+      "y": 94,
+      "k": 0
+    },
+    "pinyin": "jīn yè huáng",
     "path": "images/102-金叶黄.png",
     "file": "102-金叶黄.png",
     "size": 1226346
@@ -724,6 +1437,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "103",
     "hex": "#F4A83A",
+    "cmyk": {
+      "c": 0,
+      "m": 31,
+      "y": 76,
+      "k": 4
+    },
+    "pinyin": "jīn yīng huáng",
     "path": "images/103-金莺黄.png",
     "file": "103-金莺黄.png",
     "size": 1230567
@@ -731,6 +1451,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "104",
     "hex": "#E3BD8D",
+    "cmyk": {
+      "c": 0,
+      "m": 17,
+      "y": 38,
+      "k": 11
+    },
+    "pinyin": "lù jiǎo zōng",
     "path": "images/104-鹿角棕.png",
     "file": "104-鹿角棕.png",
     "size": 1213263
@@ -738,6 +1465,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "105",
     "hex": "#E7A23F",
+    "cmyk": {
+      "c": 0,
+      "m": 30,
+      "y": 73,
+      "k": 9
+    },
+    "pinyin": "diāo yè zōng",
     "path": "images/105-凋叶棕.png",
     "file": "105-凋叶棕.png",
     "size": 1253371
@@ -745,6 +1479,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "106",
     "hex": "#DAA45A",
+    "cmyk": {
+      "c": 0,
+      "m": 25,
+      "y": 59,
+      "k": 15
+    },
+    "pinyin": "dài mào huáng",
     "path": "images/106-玳瑁黄.png",
     "file": "106-玳瑁黄.png",
     "size": 1230442
@@ -752,6 +1493,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "107",
     "hex": "#DE9E44",
+    "cmyk": {
+      "c": 0,
+      "m": 29,
+      "y": 69,
+      "k": 13
+    },
+    "pinyin": "ruǎn mù huáng",
     "path": "images/107-软木黄.png",
     "file": "107-软木黄.png",
     "size": 1509244
@@ -759,6 +1507,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "108",
     "hex": "#DC9123",
+    "cmyk": {
+      "c": 0,
+      "m": 34,
+      "y": 84,
+      "k": 14
+    },
+    "pinyin": "fēng fān huáng",
     "path": "images/108-风帆黄.png",
     "file": "108-风帆黄.png",
     "size": 1234409
@@ -766,6 +1521,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "109",
     "hex": "#C09351",
+    "cmyk": {
+      "c": 0,
+      "m": 23,
+      "y": 58,
+      "k": 25
+    },
+    "pinyin": "guì pí dàn zōng",
     "path": "images/109-桂皮淡棕.png",
     "file": "109-桂皮淡棕.png",
     "size": 1249249
@@ -773,6 +1535,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "110",
     "hex": "#97846C",
+    "cmyk": {
+      "c": 0,
+      "m": 13,
+      "y": 28,
+      "k": 41
+    },
+    "pinyin": "hóu máo huī",
     "path": "images/110-猴毛灰.png",
     "file": "110-猴毛灰.png",
     "size": 1213816
@@ -780,6 +1549,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "111",
     "hex": "#986524",
+    "cmyk": {
+      "c": 0,
+      "m": 34,
+      "y": 76,
+      "k": 40
+    },
+    "pinyin": "shān jī hè",
     "path": "images/111-山鸡褐.png",
     "file": "111-山鸡褐.png",
     "size": 1108830
@@ -787,6 +1563,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "112",
     "hex": "#66462A",
+    "cmyk": {
+      "c": 0,
+      "m": 31,
+      "y": 59,
+      "k": 60
+    },
+    "pinyin": "tuó sè",
     "path": "images/112-驼色.png",
     "file": "112-驼色.png",
     "size": 1117694
@@ -794,6 +1577,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "113",
     "hex": "#5D3D21",
+    "cmyk": {
+      "c": 0,
+      "m": 34,
+      "y": 65,
+      "k": 64
+    },
+    "pinyin": "chá hè",
     "path": "images/113-茶褐.png",
     "file": "113-茶褐.png",
     "size": 1100095
@@ -801,6 +1591,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "114",
     "hex": "#5C3719",
+    "cmyk": {
+      "c": 0,
+      "m": 40,
+      "y": 73,
+      "k": 64
+    },
+    "pinyin": "gǔ tóng hè",
     "path": "images/114-古铜褐.png",
     "file": "114-古铜褐.png",
     "size": 1130408
@@ -808,6 +1605,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "115",
     "hex": "#FBECDE",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 12,
+      "k": 2
+    },
+    "pinyin": "hé huā bái",
     "path": "images/115-荷花白.png",
     "file": "115-荷花白.png",
     "size": 1066699
@@ -815,6 +1619,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "116",
     "hex": "#F8B37F",
+    "cmyk": {
+      "c": 0,
+      "m": 28,
+      "y": 49,
+      "k": 3
+    },
+    "pinyin": "méi guī fěn",
     "path": "images/116-玫瑰粉.png",
     "file": "116-玫瑰粉.png",
     "size": 1096700
@@ -822,6 +1633,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "117",
     "hex": "#F97D1C",
+    "cmyk": {
+      "c": 0,
+      "m": 50,
+      "y": 89,
+      "k": 2
+    },
+    "pinyin": "jú chéng",
     "path": "images/117-橘橙.png",
     "file": "117-橘橙.png",
     "size": 1138218
@@ -829,6 +1647,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "118",
     "hex": "#FA7E23",
+    "cmyk": {
+      "c": 0,
+      "m": 50,
+      "y": 86,
+      "k": 2
+    },
+    "pinyin": "měi rén jiāo chéng",
     "path": "images/118-美人焦橙.png",
     "file": "118-美人焦橙.png",
     "size": 1097356
@@ -836,6 +1661,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "119",
     "hex": "#F7CDBC",
+    "cmyk": {
+      "c": 0,
+      "m": 17,
+      "y": 24,
+      "k": 3
+    },
+    "pinyin": "rùn hóng",
     "path": "images/119-润红.png",
     "file": "119-润红.png",
     "size": 1109163
@@ -843,6 +1675,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "120",
     "hex": "#F6CEC1",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 22,
+      "k": 4
+    },
+    "pinyin": "dàn táo hóng",
     "path": "images/120-淡桃红.png",
     "file": "120-淡桃红.png",
     "size": 1156910
@@ -850,6 +1689,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "121",
     "hex": "#F0945D",
+    "cmyk": {
+      "c": 0,
+      "m": 38,
+      "y": 61,
+      "k": 6
+    },
+    "pinyin": "hǎi luó chéng",
     "path": "images/121-海螺橙.png",
     "file": "121-海螺橙.png",
     "size": 1393168
@@ -857,6 +1703,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "122",
     "hex": "#F0ADA0",
+    "cmyk": {
+      "c": 0,
+      "m": 28,
+      "y": 33,
+      "k": 6
+    },
+    "pinyin": "táo hóng",
     "path": "images/122-桃红.png",
     "file": "122-桃红.png",
     "size": 1385328
@@ -864,6 +1717,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "123",
     "hex": "#EEAA9C",
+    "cmyk": {
+      "c": 0,
+      "m": 29,
+      "y": 34,
+      "k": 7
+    },
+    "pinyin": "jiá hóng",
     "path": "images/123-颊红.png",
     "file": "123-颊红.png",
     "size": 1667041
@@ -871,6 +1731,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "124",
     "hex": "#EEA08C",
+    "cmyk": {
+      "c": 0,
+      "m": 33,
+      "y": 41,
+      "k": 7
+    },
+    "pinyin": "dàn yīng sù hóng",
     "path": "images/124-淡罂粟红.png",
     "file": "124-淡罂粟红.png",
     "size": 1690591
@@ -878,6 +1745,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "125",
     "hex": "#EA8958",
+    "cmyk": {
+      "c": 0,
+      "m": 41,
+      "y": 62,
+      "k": 8
+    },
+    "pinyin": "chén xī hóng",
     "path": "images/125-晨曦红.png",
     "file": "125-晨曦红.png",
     "size": 1304105
@@ -885,6 +1759,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "126",
     "hex": "#F27635",
+    "cmyk": {
+      "c": 0,
+      "m": 51,
+      "y": 78,
+      "k": 5
+    },
+    "pinyin": "xiè ké hóng",
     "path": "images/126-蟹壳红.png",
     "file": "126-蟹壳红.png",
     "size": 1348698
@@ -892,6 +1773,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "127",
     "hex": "#F86B1D",
+    "cmyk": {
+      "c": 0,
+      "m": 57,
+      "y": 88,
+      "k": 3
+    },
+    "pinyin": "jīn lián huā chéng",
     "path": "images/127-金莲花橙.png",
     "file": "127-金莲花橙.png",
     "size": 1414550
@@ -899,6 +1787,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "128",
     "hex": "#EF6F48",
+    "cmyk": {
+      "c": 0,
+      "m": 54,
+      "y": 70,
+      "k": 6
+    },
+    "pinyin": "cǎo méi hóng",
     "path": "images/128-草莓红.png",
     "file": "128-草莓红.png",
     "size": 1319564
@@ -906,6 +1801,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "129",
     "hex": "#EF632B",
+    "cmyk": {
+      "c": 0,
+      "m": 59,
+      "y": 82,
+      "k": 6
+    },
+    "pinyin": "lóng jīng yú hóng",
     "path": "images/129-龙睛鱼红.png",
     "file": "129-龙睛鱼红.png",
     "size": 1376676
@@ -913,6 +1815,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "130",
     "hex": "#F1441D",
+    "cmyk": {
+      "c": 0,
+      "m": 72,
+      "y": 88,
+      "k": 5
+    },
+    "pinyin": "qīng tíng hóng",
     "path": "images/130-蜻蜓红.png",
     "file": "130-蜻蜓红.png",
     "size": 1475328
@@ -920,6 +1829,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "131",
     "hex": "#F04B22",
+    "cmyk": {
+      "c": 0,
+      "m": 69,
+      "y": 86,
+      "k": 6
+    },
+    "pinyin": "dà hóng",
     "path": "images/131-大红.png",
     "file": "131-大红.png",
     "size": 1185717
@@ -927,6 +1843,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "132",
     "hex": "#F2481B",
+    "cmyk": {
+      "c": 0,
+      "m": 70,
+      "y": 89,
+      "k": 5
+    },
+    "pinyin": "shì hóng",
     "path": "images/132-柿红.png",
     "file": "132-柿红.png",
     "size": 1259582
@@ -934,6 +1857,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "133",
     "hex": "#F34718",
+    "cmyk": {
+      "c": 0,
+      "m": 71,
+      "y": 90,
+      "k": 5
+    },
+    "pinyin": "liú huā hóng",
     "path": "images/133-榴花红.png",
     "file": "133-榴花红.png",
     "size": 1264535
@@ -941,6 +1871,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "134",
     "hex": "#F43E06",
+    "cmyk": {
+      "c": 0,
+      "m": 75,
+      "y": 98,
+      "k": 4
+    },
+    "pinyin": "yín zhū",
     "path": "images/134-银朱.png",
     "file": "134-银朱.png",
     "size": 1265899
@@ -948,6 +1885,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "135",
     "hex": "#ED5126",
+    "cmyk": {
+      "c": 0,
+      "m": 66,
+      "y": 84,
+      "k": 7
+    },
+    "pinyin": "zhū hóng",
     "path": "images/135-朱红.png",
     "file": "135-朱红.png",
     "size": 1199862
@@ -955,6 +1899,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "136",
     "hex": "#F09C5A",
+    "cmyk": {
+      "c": 0,
+      "m": 35,
+      "y": 62,
+      "k": 6
+    },
+    "pinyin": "guī yú hóng",
     "path": "images/136-鲑鱼红.png",
     "file": "136-鲑鱼红.png",
     "size": 1271636
@@ -962,6 +1913,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "137",
     "hex": "#F26B1F",
+    "cmyk": {
+      "c": 0,
+      "m": 56,
+      "y": 87,
+      "k": 5
+    },
+    "pinyin": "jīn huáng",
     "path": "images/137-金黄.png",
     "file": "137-金黄.png",
     "size": 1630564
@@ -969,6 +1927,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "138",
     "hex": "#D99156",
+    "cmyk": {
+      "c": 0,
+      "m": 33,
+      "y": 60,
+      "k": 15
+    },
+    "pinyin": "lù pí hè",
     "path": "images/138-鹿皮褐.png",
     "file": "138-鹿皮褐.png",
     "size": 1595253
@@ -976,6 +1941,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "139",
     "hex": "#DB8540",
+    "cmyk": {
+      "c": 0,
+      "m": 39,
+      "y": 71,
+      "k": 14
+    },
+    "pinyin": "zuì guā ròu",
     "path": "images/139-醉瓜肉.png",
     "file": "139-醉瓜肉.png",
     "size": 1323578
@@ -983,6 +1955,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "140",
     "hex": "#DE7622",
+    "cmyk": {
+      "c": 0,
+      "m": 47,
+      "y": 85,
+      "k": 13
+    },
+    "pinyin": "jǐ zōng",
     "path": "images/140-麂棕.png",
     "file": "140-麂棕.png",
     "size": 1199244
@@ -990,6 +1969,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "141",
     "hex": "#C1B2A3",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 16,
+      "k": 24
+    },
+    "pinyin": "dàn yín huī",
     "path": "images/141-淡银灰.png",
     "file": "141-淡银灰.png",
     "size": 1282997
@@ -997,6 +1983,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "142",
     "hex": "#BE7E4A",
+    "cmyk": {
+      "c": 0,
+      "m": 34,
+      "y": 61,
+      "k": 25
+    },
+    "pinyin": "dàn zhě",
     "path": "images/142-淡赭.png",
     "file": "142-淡赭.png",
     "size": 1586317
@@ -1004,6 +1997,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "143",
     "hex": "#C1651A",
+    "cmyk": {
+      "c": 0,
+      "m": 48,
+      "y": 87,
+      "k": 24
+    },
+    "pinyin": "bīng láng zōng",
     "path": "images/143-槟榔综.png",
     "file": "143-槟榔综.png",
     "size": 1221617
@@ -1011,6 +2011,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "144",
     "hex": "#918072",
+    "cmyk": {
+      "c": 0,
+      "m": 12,
+      "y": 21,
+      "k": 43
+    },
+    "pinyin": "yín huī",
     "path": "images/144-银灰.png",
     "file": "144-银灰.png",
     "size": 1721976
@@ -1018,6 +2025,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "145",
     "hex": "#9A8878",
+    "cmyk": {
+      "c": 0,
+      "m": 12,
+      "y": 22,
+      "k": 40
+    },
+    "pinyin": "hǎi ōu huī",
     "path": "images/145-海鸥灰.png",
     "file": "145-海鸥灰.png",
     "size": 1370073
@@ -1025,6 +2039,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "146",
     "hex": "#945833",
+    "cmyk": {
+      "c": 0,
+      "m": 41,
+      "y": 66,
+      "k": 42
+    },
+    "pinyin": "dàn kā fēi",
     "path": "images/146-淡咖啡.png",
     "file": "146-淡咖啡.png",
     "size": 1735658
@@ -1032,6 +2053,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "147",
     "hex": "#964D22",
+    "cmyk": {
+      "c": 0,
+      "m": 49,
+      "y": 77,
+      "k": 41
+    },
+    "pinyin": "yán shí zōng",
     "path": "images/147-岩石棕.png",
     "file": "147-岩石棕.png",
     "size": 1827011
@@ -1039,6 +2067,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "148",
     "hex": "#954416",
+    "cmyk": {
+      "c": 0,
+      "m": 54,
+      "y": 85,
+      "k": 42
+    },
+    "pinyin": "máng guǒ zōng",
     "path": "images/148-芒果棕.png",
     "file": "148-芒果棕.png",
     "size": 1810880
@@ -1046,6 +2081,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "149",
     "hex": "#624941",
+    "cmyk": {
+      "c": 0,
+      "m": 26,
+      "y": 34,
+      "k": 62
+    },
+    "pinyin": "shí bǎn huī",
     "path": "images/149-石板灰.png",
     "file": "149-石板灰.png",
     "size": 1577134
@@ -1053,6 +2095,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "150",
     "hex": "#64483D",
+    "cmyk": {
+      "c": 0,
+      "m": 28,
+      "y": 39,
+      "k": 61
+    },
+    "pinyin": "zhū mǔ huī",
     "path": "images/150-珠母灰.png",
     "file": "150-珠母灰.png",
     "size": 1263422
@@ -1060,6 +2109,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "151",
     "hex": "#71361D",
+    "cmyk": {
+      "c": 0,
+      "m": 52,
+      "y": 74,
+      "k": 56
+    },
+    "pinyin": "dīng xiāng zōng",
     "path": "images/151-丁香棕.png",
     "file": "151-丁香棕.png",
     "size": 1293749
@@ -1067,6 +2123,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "152",
     "hex": "#753117",
+    "cmyk": {
+      "c": 0,
+      "m": 58,
+      "y": 80,
+      "k": 54
+    },
+    "pinyin": "kā fēi",
     "path": "images/152-咖啡.png",
     "file": "152-咖啡.png",
     "size": 1257469
@@ -1074,6 +2137,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "153",
     "hex": "#732E12",
+    "cmyk": {
+      "c": 0,
+      "m": 60,
+      "y": 84,
+      "k": 55
+    },
+    "pinyin": "sǔn pí zōng",
     "path": "images/153-筍皮棕.png",
     "file": "153-筍皮棕.png",
     "size": 1472588
@@ -1081,6 +2151,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "154",
     "hex": "#FC6315",
+    "cmyk": {
+      "c": 0,
+      "m": 61,
+      "y": 92,
+      "k": 1
+    },
+    "pinyin": "yàn hàn hóng",
     "path": "images/154-燕颔红.png",
     "file": "154-燕颔红.png",
     "size": 1376518
@@ -1088,6 +2165,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "155",
     "hex": "#E8B49A",
+    "cmyk": {
+      "c": 0,
+      "m": 22,
+      "y": 34,
+      "k": 9
+    },
+    "pinyin": "yù fěn hóng",
     "path": "images/155-玉粉红.png",
     "file": "155-玉粉红.png",
     "size": 1578189
@@ -1095,6 +2179,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "156",
     "hex": "#E46828",
+    "cmyk": {
+      "c": 0,
+      "m": 54,
+      "y": 82,
+      "k": 11
+    },
+    "pinyin": "jīn tuó",
     "path": "images/156-金驼.png",
     "file": "156-金驼.png",
     "size": 1521129
@@ -1102,6 +2193,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "157",
     "hex": "#D85916",
+    "cmyk": {
+      "c": 0,
+      "m": 59,
+      "y": 90,
+      "k": 15
+    },
+    "pinyin": "tiě zōng",
     "path": "images/157-铁棕.png",
     "file": "157-铁棕.png",
     "size": 1322673
@@ -1109,6 +2207,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "158",
     "hex": "#B7A091",
+    "cmyk": {
+      "c": 0,
+      "m": 13,
+      "y": 21,
+      "k": 28
+    },
+    "pinyin": "zhū wǎng huī",
     "path": "images/158-蛛网灰.png",
     "file": "158-蛛网灰.png",
     "size": 1518896
@@ -1116,6 +2221,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "159",
     "hex": "#B7511D",
+    "cmyk": {
+      "c": 0,
+      "m": 56,
+      "y": 84,
+      "k": 28
+    },
+    "pinyin": "dàn kě kě zōng",
     "path": "images/159-淡可可棕.png",
     "file": "159-淡可可棕.png",
     "size": 1428682
@@ -1123,6 +2235,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "160",
     "hex": "#8B614D",
+    "cmyk": {
+      "c": 0,
+      "m": 30,
+      "y": 45,
+      "k": 45
+    },
+    "pinyin": "zhōng hóng huī",
     "path": "images/160-中红灰.png",
     "file": "160-中红灰.png",
     "size": 1284140
@@ -1130,6 +2249,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "161",
     "hex": "#8C4B31",
+    "cmyk": {
+      "c": 0,
+      "m": 46,
+      "y": 65,
+      "k": 45
+    },
+    "pinyin": "dàn tǔ huáng",
     "path": "images/161-淡土黄.png",
     "file": "161-淡土黄.png",
     "size": 1694508
@@ -1137,6 +2263,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "162",
     "hex": "#873D24",
+    "cmyk": {
+      "c": 0,
+      "m": 55,
+      "y": 73,
+      "k": 47
+    },
+    "pinyin": "dàn dòu shā",
     "path": "images/162-淡豆沙.png",
     "file": "162-淡豆沙.png",
     "size": 1465220
@@ -1144,6 +2277,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "163",
     "hex": "#883A1E",
+    "cmyk": {
+      "c": 0,
+      "m": 57,
+      "y": 78,
+      "k": 47
+    },
+    "pinyin": "yē ké zōng",
     "path": "images/163-椰壳棕.png",
     "file": "163-椰壳棕.png",
     "size": 1645827
@@ -1151,6 +2291,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "164",
     "hex": "#5B423A",
+    "cmyk": {
+      "c": 0,
+      "m": 27,
+      "y": 36,
+      "k": 64
+    },
+    "pinyin": "dàn tiě huī",
     "path": "images/164-淡铁灰.png",
     "file": "164-淡铁灰.png",
     "size": 1466063
@@ -1158,6 +2305,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "165",
     "hex": "#603D30",
+    "cmyk": {
+      "c": 0,
+      "m": 36,
+      "y": 50,
+      "k": 62
+    },
+    "pinyin": "zhōng huī tuó",
     "path": "images/165-中灰驼.png",
     "file": "165-中灰驼.png",
     "size": 1695356
@@ -1165,6 +2319,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "166",
     "hex": "#673424",
+    "cmyk": {
+      "c": 0,
+      "m": 50,
+      "y": 65,
+      "k": 60
+    },
+    "pinyin": "dàn lì zōng",
     "path": "images/166-淡栗棕.png",
     "file": "166-淡栗棕.png",
     "size": 1828529
@@ -1172,6 +2333,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "167",
     "hex": "#652B1C",
+    "cmyk": {
+      "c": 0,
+      "m": 57,
+      "y": 72,
+      "k": 60
+    },
+    "pinyin": "kě kě zōng",
     "path": "images/167-可可棕.png",
     "file": "167-可可棕.png",
     "size": 1660558
@@ -1179,6 +2347,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "168",
     "hex": "#692A1B",
+    "cmyk": {
+      "c": 0,
+      "m": 60,
+      "y": 74,
+      "k": 59
+    },
+    "pinyin": "zhà yè zōng",
     "path": "images/168-柞叶棕.png",
     "file": "168-柞叶棕.png",
     "size": 1401897
@@ -1186,6 +2361,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "169",
     "hex": "#FB9968",
+    "cmyk": {
+      "c": 0,
+      "m": 39,
+      "y": 59,
+      "k": 2
+    },
+    "pinyin": "yě qiáng wēi hóng",
     "path": "images/169-野蔷薇红.png",
     "file": "169-野蔷薇红.png",
     "size": 1781286
@@ -1193,6 +2375,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "170",
     "hex": "#FC7930",
+    "cmyk": {
+      "c": 0,
+      "m": 52,
+      "y": 81,
+      "k": 1
+    },
+    "pinyin": "bō luó hóng",
     "path": "images/170-菠萝红.png",
     "file": "170-菠萝红.png",
     "size": 1185759
@@ -1200,6 +2389,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "171",
     "hex": "#EDC3AE",
+    "cmyk": {
+      "c": 0,
+      "m": 18,
+      "y": 27,
+      "k": 7
+    },
+    "pinyin": "ǒu hé",
     "path": "images/171-藕荷.png",
     "file": "171-藕荷.png",
     "size": 1435200
@@ -1207,6 +2403,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "172",
     "hex": "#E16723",
+    "cmyk": {
+      "c": 0,
+      "m": 54,
+      "y": 84,
+      "k": 12
+    },
+    "pinyin": "táo cí hóng",
     "path": "images/172-陶瓷红.png",
     "file": "172-陶瓷红.png",
     "size": 1704069
@@ -1214,6 +2417,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "173",
     "hex": "#D4C4B7",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 14,
+      "k": 17
+    },
+    "pinyin": "xiǎo huī",
     "path": "images/173-晓灰.png",
     "file": "173-晓灰.png",
     "size": 1396490
@@ -1221,6 +2431,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "174",
     "hex": "#CF7543",
+    "cmyk": {
+      "c": 0,
+      "m": 43,
+      "y": 68,
+      "k": 19
+    },
+    "pinyin": "yú jìn hóng",
     "path": "images/174-余烬红.png",
     "file": "174-余烬红.png",
     "size": 1845204
@@ -1228,6 +2445,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "175",
     "hex": "#CD6227",
+    "cmyk": {
+      "c": 0,
+      "m": 52,
+      "y": 81,
+      "k": 20
+    },
+    "pinyin": "huǒ zhuān hóng",
     "path": "images/175-火砖红.png",
     "file": "175-火砖红.png",
     "size": 1469889
@@ -1235,6 +2459,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "176",
     "hex": "#AA6A4C",
+    "cmyk": {
+      "c": 0,
+      "m": 38,
+      "y": 55,
+      "k": 33
+    },
+    "pinyin": "huǒ ní zōng",
     "path": "images/176-火泥棕.png",
     "file": "176-火泥棕.png",
     "size": 1678958
@@ -1242,6 +2473,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "177",
     "hex": "#A6522C",
+    "cmyk": {
+      "c": 0,
+      "m": 51,
+      "y": 73,
+      "k": 35
+    },
+    "pinyin": "gàn hóng",
     "path": "images/177-绀红.png",
     "file": "177-绀红.png",
     "size": 1670282
@@ -1249,6 +2487,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "178",
     "hex": "#773D31",
+    "cmyk": {
+      "c": 0,
+      "m": 49,
+      "y": 59,
+      "k": 53
+    },
+    "pinyin": "xiàng shù zōng",
     "path": "images/178-橡树棕.png",
     "file": "178-橡树棕.png",
     "size": 1520491
@@ -1256,6 +2501,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "179",
     "hex": "#483332",
+    "cmyk": {
+      "c": 0,
+      "m": 29,
+      "y": 31,
+      "k": 72
+    },
+    "pinyin": "hǎi bào huī",
     "path": "images/179-海报灰.png",
     "file": "179-海报灰.png",
     "size": 1692944
@@ -1263,6 +2515,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "180",
     "hex": "#4B2E2B",
+    "cmyk": {
+      "c": 0,
+      "m": 39,
+      "y": 43,
+      "k": 71
+    },
+    "pinyin": "méi guī huī",
     "path": "images/180-玫瑰灰.png",
     "file": "180-玫瑰灰.png",
     "size": 2045538
@@ -1270,6 +2529,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "181",
     "hex": "#482522",
+    "cmyk": {
+      "c": 0,
+      "m": 49,
+      "y": 53,
+      "k": 72
+    },
+    "pinyin": "huǒ shān zōng",
     "path": "images/181-火山棕.png",
     "file": "181-火山棕.png",
     "size": 1372382
@@ -1277,6 +2543,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "182",
     "hex": "#481E1C",
+    "cmyk": {
+      "c": 0,
+      "m": 58,
+      "y": 61,
+      "k": 72
+    },
+    "pinyin": "dòu shā",
     "path": "images/182-豆沙.png",
     "file": "182-豆沙.png",
     "size": 1442752
@@ -1284,6 +2557,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "183",
     "hex": "#FBEEE2",
+    "cmyk": {
+      "c": 0,
+      "m": 5,
+      "y": 10,
+      "k": 2
+    },
+    "pinyin": "dàn mǐ fěn",
     "path": "images/183-淡米粉.png",
     "file": "183-淡米粉.png",
     "size": 1534801
@@ -1291,6 +2571,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "184",
     "hex": "#F6DCCE",
+    "cmyk": {
+      "c": 0,
+      "m": 11,
+      "y": 16,
+      "k": 4
+    },
+    "pinyin": "chū táo fěn hóng",
     "path": "images/184-初桃粉红.png",
     "file": "184-初桃粉红.png",
     "size": 1681540
@@ -1298,6 +2585,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "185",
     "hex": "#F7CFBA",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 25,
+      "k": 3
+    },
+    "pinyin": "jiè ké dàn fěn hóng",
     "path": "images/185-介壳淡粉红.png",
     "file": "185-介壳淡粉红.png",
     "size": 1448803
@@ -1305,6 +2599,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "186",
     "hex": "#F6AD8F",
+    "cmyk": {
+      "c": 0,
+      "m": 30,
+      "y": 42,
+      "k": 4
+    },
+    "pinyin": "dàn cáng huā hóng",
     "path": "images/186-淡藏花红.png",
     "file": "186-淡藏花红.png",
     "size": 1402704
@@ -1312,6 +2613,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "187",
     "hex": "#F68C60",
+    "cmyk": {
+      "c": 0,
+      "m": 43,
+      "y": 61,
+      "k": 4
+    },
+    "pinyin": "guā ráng hóng",
     "path": "images/187-瓜瓤红.png",
     "file": "187-瓜瓤红.png",
     "size": 1413118
@@ -1319,6 +2627,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "188",
     "hex": "#F9723D",
+    "cmyk": {
+      "c": 0,
+      "m": 54,
+      "y": 76,
+      "k": 2
+    },
+    "pinyin": "fú róng hóng",
     "path": "images/188-芙蓉红.png",
     "file": "188-芙蓉红.png",
     "size": 1364853
@@ -1326,6 +2641,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "189",
     "hex": "#FA5D19",
+    "cmyk": {
+      "c": 0,
+      "m": 63,
+      "y": 90,
+      "k": 2
+    },
+    "pinyin": "méi jiàng hóng",
     "path": "images/189-莓酱红.png",
     "file": "189-莓酱红.png",
     "size": 1851908
@@ -1333,6 +2655,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "190",
     "hex": "#EE8055",
+    "cmyk": {
+      "c": 0,
+      "m": 46,
+      "y": 64,
+      "k": 7
+    },
+    "pinyin": "fǎ luó hóng",
     "path": "images/190-法螺红.png",
     "file": "190-法螺红.png",
     "size": 1859697
@@ -1340,6 +2669,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "191",
     "hex": "#CF4813",
+    "cmyk": {
+      "c": 0,
+      "m": 65,
+      "y": 91,
+      "k": 19
+    },
+    "pinyin": "luò xiá hóng",
     "path": "images/191-落霞红.png",
     "file": "191-落霞红.png",
     "size": 1177180
@@ -1347,6 +2683,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "192",
     "hex": "#B89485",
+    "cmyk": {
+      "c": 0,
+      "m": 20,
+      "y": 28,
+      "k": 28
+    },
+    "pinyin": "dàn méi guī huī",
     "path": "images/192-淡玫瑰灰.png",
     "file": "192-淡玫瑰灰.png",
     "size": 1392388
@@ -1354,6 +2697,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "193",
     "hex": "#B14B28",
+    "cmyk": {
+      "c": 0,
+      "m": 58,
+      "y": 77,
+      "k": 31
+    },
+    "pinyin": "xiè máo hóng",
     "path": "images/193-蟹蝥红.png",
     "file": "193-蟹蝥红.png",
     "size": 1698635
@@ -1361,6 +2711,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "194",
     "hex": "#863020",
+    "cmyk": {
+      "c": 0,
+      "m": 64,
+      "y": 76,
+      "k": 47
+    },
+    "pinyin": "huǒ yán zōng",
     "path": "images/194-火岩棕.png",
     "file": "194-火岩棕.png",
     "size": 1435041
@@ -1368,6 +2725,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "195",
     "hex": "#862617",
+    "cmyk": {
+      "c": 0,
+      "m": 72,
+      "y": 83,
+      "k": 47
+    },
+    "pinyin": "zhě shí",
     "path": "images/195-赭石.png",
     "file": "195-赭石.png",
     "size": 1448068
@@ -1375,6 +2739,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "196",
     "hex": "#592620",
+    "cmyk": {
+      "c": 0,
+      "m": 57,
+      "y": 64,
+      "k": 65
+    },
+    "pinyin": "àn tuó zōng",
     "path": "images/196-暗驼棕.png",
     "file": "196-暗驼棕.png",
     "size": 1198620
@@ -1382,6 +2753,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "197",
     "hex": "#5A1F1B",
+    "cmyk": {
+      "c": 0,
+      "m": 66,
+      "y": 70,
+      "k": 65
+    },
+    "pinyin": "jiàng zōng",
     "path": "images/197-酱棕.png",
     "file": "197-酱棕.png",
     "size": 1619305
@@ -1389,6 +2767,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "198",
     "hex": "#5C1E19",
+    "cmyk": {
+      "c": 0,
+      "m": 67,
+      "y": 73,
+      "k": 64
+    },
+    "pinyin": "lì zōng",
     "path": "images/198-栗棕.png",
     "file": "198-栗棕.png",
     "size": 1574649
@@ -1396,6 +2781,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "199",
     "hex": "#F4C7BA",
+    "cmyk": {
+      "c": 0,
+      "m": 18,
+      "y": 24,
+      "k": 4
+    },
+    "pinyin": "yáng shuǐ xiān hóng",
     "path": "images/199-洋水仙红.png",
     "file": "199-洋水仙红.png",
     "size": 1284475
@@ -1403,6 +2795,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "200",
     "hex": "#F17666",
+    "cmyk": {
+      "c": 0,
+      "m": 51,
+      "y": 58,
+      "k": 5
+    },
+    "pinyin": "gǔ qiào hóng",
     "path": "images/200-谷鞘红.png",
     "file": "200-谷鞘红.png",
     "size": 1185403
@@ -1410,6 +2809,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "201",
     "hex": "#F15642",
+    "cmyk": {
+      "c": 0,
+      "m": 64,
+      "y": 73,
+      "k": 5
+    },
+    "pinyin": "píng guǒ hóng",
     "path": "images/201-苹果红.png",
     "file": "201-苹果红.png",
     "size": 1479213
@@ -1417,6 +2823,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "202",
     "hex": "#F5391C",
+    "cmyk": {
+      "c": 0,
+      "m": 77,
+      "y": 89,
+      "k": 4
+    },
+    "pinyin": "tiě shuǐ hóng",
     "path": "images/202-铁水红.png",
     "file": "202-铁水红.png",
     "size": 1387274
@@ -1424,6 +2837,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "203",
     "hex": "#F25A47",
+    "cmyk": {
+      "c": 0,
+      "m": 63,
+      "y": 71,
+      "k": 5
+    },
+    "pinyin": "guì hóng",
     "path": "images/203-桂红.png",
     "file": "203-桂红.png",
     "size": 1510366
@@ -1431,6 +2851,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "204",
     "hex": "#F33B1F",
+    "cmyk": {
+      "c": 0,
+      "m": 76,
+      "y": 87,
+      "k": 5
+    },
+    "pinyin": "jí guāng hóng",
     "path": "images/204-极光红.png",
     "file": "204-极光红.png",
     "size": 1286126
@@ -1438,6 +2865,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "205",
     "hex": "#F2B9B2",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 26,
+      "k": 5
+    },
+    "pinyin": "fěn hóng",
     "path": "images/205-粉红.png",
     "file": "205-粉红.png",
     "size": 1547653
@@ -1445,6 +2879,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "206",
     "hex": "#F19790",
+    "cmyk": {
+      "c": 0,
+      "m": 37,
+      "y": 40,
+      "k": 5
+    },
+    "pinyin": "shé hóng",
     "path": "images/206-舌红.png",
     "file": "206-舌红.png",
     "size": 1750919
@@ -1452,6 +2893,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "207",
     "hex": "#F05A46",
+    "cmyk": {
+      "c": 0,
+      "m": 62,
+      "y": 71,
+      "k": 6
+    },
+    "pinyin": "qū hóng",
     "path": "images/207-曲红.png",
     "file": "207-曲红.png",
     "size": 1500505
@@ -1459,6 +2907,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "208",
     "hex": "#F23E23",
+    "cmyk": {
+      "c": 0,
+      "m": 74,
+      "y": 86,
+      "k": 5
+    },
+    "pinyin": "hóng gǒng hóng",
     "path": "images/208-红汞红.png",
     "file": "208-红汞红.png",
     "size": 1341133
@@ -1466,6 +2921,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "209",
     "hex": "#F2CAC9",
+    "cmyk": {
+      "c": 0,
+      "m": 17,
+      "y": 17,
+      "k": 5
+    },
+    "pinyin": "dàn fēi",
     "path": "images/209-淡绯.png",
     "file": "209-淡绯.png",
     "size": 1516206
@@ -1473,6 +2935,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "210",
     "hex": "#EFAFAD",
+    "cmyk": {
+      "c": 0,
+      "m": 27,
+      "y": 28,
+      "k": 6
+    },
+    "pinyin": "wú huā guǒ hóng",
     "path": "images/210-无花果红.png",
     "file": "210-无花果红.png",
     "size": 1322590
@@ -1480,6 +2949,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "211",
     "hex": "#F1908C",
+    "cmyk": {
+      "c": 0,
+      "m": 40,
+      "y": 42,
+      "k": 5
+    },
+    "pinyin": "liú zi hóng",
     "path": "images/211-榴子红.png",
     "file": "211-榴子红.png",
     "size": 1468423
@@ -1487,6 +2963,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "212",
     "hex": "#F03F24",
+    "cmyk": {
+      "c": 0,
+      "m": 74,
+      "y": 85,
+      "k": 6
+    },
+    "pinyin": "yān zhī hóng",
     "path": "images/212-胭脂红.png",
     "file": "212-胭脂红.png",
     "size": 1420860
@@ -1494,6 +2977,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "213",
     "hex": "#F0A1A8",
+    "cmyk": {
+      "c": 0,
+      "m": 33,
+      "y": 30,
+      "k": 6
+    },
+    "pinyin": "hé huān hóng",
     "path": "images/213-合欢红.png",
     "file": "213-合欢红.png",
     "size": 1553591
@@ -1501,6 +2991,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "214",
     "hex": "#F1939C",
+    "cmyk": {
+      "c": 0,
+      "m": 39,
+      "y": 35,
+      "k": 5
+    },
+    "pinyin": "chūn méi hóng",
     "path": "images/214-春梅红.png",
     "file": "214-春梅红.png",
     "size": 1473935
@@ -1508,6 +3005,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "215",
     "hex": "#F07C82",
+    "cmyk": {
+      "c": 0,
+      "m": 48,
+      "y": 46,
+      "k": 6
+    },
+    "pinyin": "xiāng yè hóng",
     "path": "images/215-香叶红.png",
     "file": "215-香叶红.png",
     "size": 1827625
@@ -1515,6 +3019,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "216",
     "hex": "#F04A3A",
+    "cmyk": {
+      "c": 0,
+      "m": 69,
+      "y": 76,
+      "k": 6
+    },
+    "pinyin": "shān hú hóng",
     "path": "images/216-珊瑚红.png",
     "file": "216-珊瑚红.png",
     "size": 1742830
@@ -1522,6 +3033,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "217",
     "hex": "#F13C22",
+    "cmyk": {
+      "c": 0,
+      "m": 75,
+      "y": 86,
+      "k": 5
+    },
+    "pinyin": "luó bo hóng",
     "path": "images/217-萝卜红.png",
     "file": "217-萝卜红.png",
     "size": 1194076
@@ -1529,6 +3047,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "218",
     "hex": "#E77C8E",
+    "cmyk": {
+      "c": 0,
+      "m": 46,
+      "y": 39,
+      "k": 9
+    },
+    "pinyin": "dàn qiàn hóng",
     "path": "images/218-淡茜红.png",
     "file": "218-淡茜红.png",
     "size": 1436359
@@ -1536,6 +3061,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "219",
     "hex": "#ED5A65",
+    "cmyk": {
+      "c": 0,
+      "m": 62,
+      "y": 57,
+      "k": 7
+    },
+    "pinyin": "yàn hóng",
     "path": "images/219-艳红.png",
     "file": "219-艳红.png",
     "size": 1189948
@@ -1543,6 +3075,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "220",
     "hex": "#ED4845",
+    "cmyk": {
+      "c": 0,
+      "m": 70,
+      "y": 71,
+      "k": 7
+    },
+    "pinyin": "dàn shū hóng",
     "path": "images/220-淡菽红.png",
     "file": "220-淡菽红.png",
     "size": 1745774
@@ -1550,6 +3089,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "221",
     "hex": "#ED3B2F",
+    "cmyk": {
+      "c": 0,
+      "m": 75,
+      "y": 80,
+      "k": 7
+    },
+    "pinyin": "yú sāi hóng",
     "path": "images/221-鱼鳃红.png",
     "file": "221-鱼鳃红.png",
     "size": 1783729
@@ -1557,6 +3103,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "222",
     "hex": "#ED3321",
+    "cmyk": {
+      "c": 0,
+      "m": 78,
+      "y": 86,
+      "k": 7
+    },
+    "pinyin": "yīng táo hóng",
     "path": "images/222-樱桃红.png",
     "file": "222-樱桃红.png",
     "size": 1781232
@@ -1564,6 +3117,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "223",
     "hex": "#EE4866",
+    "cmyk": {
+      "c": 0,
+      "m": 70,
+      "y": 57,
+      "k": 7
+    },
+    "pinyin": "dàn ruǐ xiāng hóng",
     "path": "images/223-淡蕊香红.png",
     "file": "223-淡蕊香红.png",
     "size": 1786204
@@ -1571,6 +3131,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "224",
     "hex": "#EE4863",
+    "cmyk": {
+      "c": 0,
+      "m": 70,
+      "y": 58,
+      "k": 7
+    },
+    "pinyin": "shí zhú hóng",
     "path": "images/224-石竹红.png",
     "file": "224-石竹红.png",
     "size": 1737379
@@ -1578,6 +3145,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "225",
     "hex": "#EF475D",
+    "cmyk": {
+      "c": 0,
+      "m": 70,
+      "y": 61,
+      "k": 6
+    },
+    "pinyin": "cǎo mò lì hóng",
     "path": "images/225-草茉莉红.png",
     "file": "225-草茉莉红.png",
     "size": 1743882
@@ -1585,6 +3159,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "226",
     "hex": "#EE3F4D",
+    "cmyk": {
+      "c": 0,
+      "m": 74,
+      "y": 68,
+      "k": 7
+    },
+    "pinyin": "chá huā hóng",
     "path": "images/226-茶花红.png",
     "file": "226-茶花红.png",
     "size": 1502241
@@ -1592,6 +3173,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "227",
     "hex": "#ED3333",
+    "cmyk": {
+      "c": 0,
+      "m": 78,
+      "y": 78,
+      "k": 7
+    },
+    "pinyin": "gǒu shū hóng",
     "path": "images/227-枸枢红.png",
     "file": "227-枸枢红.png",
     "size": 1445086
@@ -1599,6 +3187,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "228",
     "hex": "#EC2B24",
+    "cmyk": {
+      "c": 0,
+      "m": 82,
+      "y": 85,
+      "k": 7
+    },
+    "pinyin": "qiū hǎi táng hóng",
     "path": "images/228-秋海棠红.png",
     "file": "228-秋海棠红.png",
     "size": 1707762
@@ -1606,6 +3201,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "229",
     "hex": "#EB261A",
+    "cmyk": {
+      "c": 0,
+      "m": 84,
+      "y": 89,
+      "k": 8
+    },
+    "pinyin": "lì chūn hóng",
     "path": "images/229-丽春红.png",
     "file": "229-丽春红.png",
     "size": 1626327
@@ -1613,6 +3215,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "230",
     "hex": "#DE2A18",
+    "cmyk": {
+      "c": 0,
+      "m": 81,
+      "y": 89,
+      "k": 13
+    },
+    "pinyin": "xī yáng hóng",
     "path": "images/230-夕阳红.png",
     "file": "230-夕阳红.png",
     "size": 1196642
@@ -1620,6 +3229,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "231",
     "hex": "#D42517",
+    "cmyk": {
+      "c": 0,
+      "m": 83,
+      "y": 89,
+      "k": 17
+    },
+    "pinyin": "hè dǐng hóng",
     "path": "images/231-鹤顶红.png",
     "file": "231-鹤顶红.png",
     "size": 1431454
@@ -1627,6 +3243,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "232",
     "hex": "#AB372F",
+    "cmyk": {
+      "c": 0,
+      "m": 68,
+      "y": 73,
+      "k": 33
+    },
+    "pinyin": "é xuè shí hóng",
     "path": "images/232-鹅血石红.png",
     "file": "232-鹅血石红.png",
     "size": 1244583
@@ -1634,6 +3257,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "233",
     "hex": "#AC1F18",
+    "cmyk": {
+      "c": 0,
+      "m": 82,
+      "y": 86,
+      "k": 33
+    },
+    "pinyin": "fù pén zǐ hóng",
     "path": "images/233-覆盆子红.png",
     "file": "233-覆盆子红.png",
     "size": 1731551
@@ -1641,6 +3271,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "234",
     "hex": "#5D3131",
+    "cmyk": {
+      "c": 0,
+      "m": 47,
+      "y": 47,
+      "k": 64
+    },
+    "pinyin": "diāo zǐ",
     "path": "images/234-貂紫.png",
     "file": "234-貂紫.png",
     "size": 1144382
@@ -1648,6 +3285,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "235",
     "hex": "#5C2223",
+    "cmyk": {
+      "c": 0,
+      "m": 63,
+      "y": 62,
+      "k": 64
+    },
+    "pinyin": "àn yù zǐ",
     "path": "images/235-暗玉紫.png",
     "file": "235-暗玉紫.png",
     "size": 1165419
@@ -1655,6 +3299,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "236",
     "hex": "#5A191B",
+    "cmyk": {
+      "c": 0,
+      "m": 72,
+      "y": 70,
+      "k": 65
+    },
+    "pinyin": "lì zǐ",
     "path": "images/236-栗紫.png",
     "file": "236-栗紫.png",
     "size": 1186673
@@ -1662,6 +3313,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "237",
     "hex": "#5A1216",
+    "cmyk": {
+      "c": 0,
+      "m": 80,
+      "y": 76,
+      "k": 65
+    },
+    "pinyin": "pú táo jiàng zǐ",
     "path": "images/237-葡萄酱紫.png",
     "file": "237-葡萄酱紫.png",
     "size": 1243405
@@ -1669,6 +3327,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "238",
     "hex": "#EEA2A4",
+    "cmyk": {
+      "c": 0,
+      "m": 32,
+      "y": 31,
+      "k": 7
+    },
+    "pinyin": "mǔ dān fěn hóng",
     "path": "images/238-牡丹粉红.png",
     "file": "238-牡丹粉红.png",
     "size": 1272254
@@ -1676,6 +3341,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "239",
     "hex": "#ED556A",
+    "cmyk": {
+      "c": 0,
+      "m": 64,
+      "y": 55,
+      "k": 7
+    },
+    "pinyin": "shān chá hóng",
     "path": "images/239-山茶红.png",
     "file": "239-山茶红.png",
     "size": 1335507
@@ -1683,6 +3355,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "240",
     "hex": "#F03752",
+    "cmyk": {
+      "c": 0,
+      "m": 77,
+      "y": 66,
+      "k": 6
+    },
+    "pinyin": "hǎi táng hóng",
     "path": "images/240-海棠红.png",
     "file": "240-海棠红.png",
     "size": 1412351
@@ -1690,6 +3369,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "241",
     "hex": "#C04851",
+    "cmyk": {
+      "c": 0,
+      "m": 63,
+      "y": 58,
+      "k": 25
+    },
+    "pinyin": "yù hóng",
     "path": "images/241-玉红.png",
     "file": "241-玉红.png",
     "size": 1552388
@@ -1697,6 +3383,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "242",
     "hex": "#C02C38",
+    "cmyk": {
+      "c": 0,
+      "m": 77,
+      "y": 71,
+      "k": 25
+    },
+    "pinyin": "gāo liáng hóng",
     "path": "images/242-高粱红.png",
     "file": "242-高粱红.png",
     "size": 1579591
@@ -1704,6 +3397,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "243",
     "hex": "#A7535A",
+    "cmyk": {
+      "c": 0,
+      "m": 50,
+      "y": 46,
+      "k": 35
+    },
+    "pinyin": "mǎn jiāng hóng",
     "path": "images/243-满江红.png",
     "file": "243-满江红.png",
     "size": 1458607
@@ -1711,6 +3411,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "244",
     "hex": "#7C1823",
+    "cmyk": {
+      "c": 0,
+      "m": 81,
+      "y": 72,
+      "k": 51
+    },
+    "pinyin": "zǎo hóng",
     "path": "images/244-枣红.png",
     "file": "244-枣红.png",
     "size": 1501182
@@ -1718,6 +3425,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "245",
     "hex": "#4C1F24",
+    "cmyk": {
+      "c": 0,
+      "m": 59,
+      "y": 53,
+      "k": 70
+    },
+    "pinyin": "pú táo zǐ",
     "path": "images/245-葡萄紫.png",
     "file": "245-葡萄紫.png",
     "size": 1644619
@@ -1725,6 +3439,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "246",
     "hex": "#4D1018",
+    "cmyk": {
+      "c": 0,
+      "m": 79,
+      "y": 69,
+      "k": 70
+    },
+    "pinyin": "jiàng zǐ",
     "path": "images/246-酱紫.png",
     "file": "246-酱紫.png",
     "size": 1326631
@@ -1732,6 +3453,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "247",
     "hex": "#EE2746",
+    "cmyk": {
+      "c": 0,
+      "m": 84,
+      "y": 71,
+      "k": 7
+    },
+    "pinyin": "dàn shǔ hóng",
     "path": "images/247-淡曙红.png",
     "file": "247-淡曙红.png",
     "size": 1322538
@@ -1739,6 +3467,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "248",
     "hex": "#DE1C31",
+    "cmyk": {
+      "c": 0,
+      "m": 87,
+      "y": 78,
+      "k": 13
+    },
+    "pinyin": "táng chāng pú hóng",
     "path": "images/248-唐菖蒲红.png",
     "file": "248-唐菖蒲红.png",
     "size": 1282792
@@ -1746,6 +3481,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "249",
     "hex": "#D11A2D",
+    "cmyk": {
+      "c": 0,
+      "m": 88,
+      "y": 78,
+      "k": 18
+    },
+    "pinyin": "é guān hóng",
     "path": "images/249-鹅冠红.png",
     "file": "249-鹅冠红.png",
     "size": 1703037
@@ -1753,6 +3495,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "250",
     "hex": "#C45A65",
+    "cmyk": {
+      "c": 0,
+      "m": 54,
+      "y": 48,
+      "k": 23
+    },
+    "pinyin": "méi hóng",
     "path": "images/250-莓红.png",
     "file": "250-莓红.png",
     "size": 1488083
@@ -1760,6 +3509,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "251",
     "hex": "#C21F30",
+    "cmyk": {
+      "c": 0,
+      "m": 84,
+      "y": 75,
+      "k": 24
+    },
+    "pinyin": "fēng yè hóng",
     "path": "images/251-枫叶红.png",
     "file": "251-枫叶红.png",
     "size": 1714001
@@ -1767,6 +3523,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "252",
     "hex": "#A61B29",
+    "cmyk": {
+      "c": 0,
+      "m": 84,
+      "y": 75,
+      "k": 35
+    },
+    "pinyin": "xiàn cài hóng",
     "path": "images/252-苋菜红.png",
     "file": "252-苋菜红.png",
     "size": 1737992
@@ -1774,6 +3537,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "253",
     "hex": "#894E54",
+    "cmyk": {
+      "c": 0,
+      "m": 43,
+      "y": 39,
+      "k": 46
+    },
+    "pinyin": "yān hóng",
     "path": "images/253-烟红.png",
     "file": "253-烟红.png",
     "size": 1234825
@@ -1781,6 +3551,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "254",
     "hex": "#82202B",
+    "cmyk": {
+      "c": 0,
+      "m": 75,
+      "y": 67,
+      "k": 49
+    },
+    "pinyin": "àn zǐ yuàn hóng",
     "path": "images/254-暗紫苑红.png",
     "file": "254-暗紫苑红.png",
     "size": 1301094
@@ -1788,6 +3565,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "255",
     "hex": "#82111F",
+    "cmyk": {
+      "c": 0,
+      "m": 87,
+      "y": 76,
+      "k": 49
+    },
+    "pinyin": "yān hóng",
     "path": "images/255-殷红.png",
     "file": "255-殷红.png",
     "size": 1311726
@@ -1795,6 +3579,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "256",
     "hex": "#541E24",
+    "cmyk": {
+      "c": 0,
+      "m": 64,
+      "y": 57,
+      "k": 67
+    },
+    "pinyin": "zhū gān zǐ",
     "path": "images/256-猪肝紫.png",
     "file": "256-猪肝紫.png",
     "size": 1448344
@@ -1802,6 +3593,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "257",
     "hex": "#500A16",
+    "cmyk": {
+      "c": 0,
+      "m": 88,
+      "y": 72,
+      "k": 69
+    },
+    "pinyin": "jīn yú zǐ",
     "path": "images/257-金鱼紫.png",
     "file": "257-金鱼紫.png",
     "size": 1594787
@@ -1809,6 +3607,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "258",
     "hex": "#F8EBE6",
+    "cmyk": {
+      "c": 0,
+      "m": 5,
+      "y": 7,
+      "k": 3
+    },
+    "pinyin": "cǎo zhū hóng",
     "path": "images/258-草珠红.png",
     "file": "258-草珠红.png",
     "size": 1154478
@@ -1816,6 +3621,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "259",
     "hex": "#EC7696",
+    "cmyk": {
+      "c": 0,
+      "m": 50,
+      "y": 36,
+      "k": 7
+    },
+    "pinyin": "dàn jiàng hóng",
     "path": "images/259-淡绛红.png",
     "file": "259-淡绛红.png",
     "size": 1297694
@@ -1823,6 +3635,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "260",
     "hex": "#EF3473",
+    "cmyk": {
+      "c": 0,
+      "m": 78,
+      "y": 52,
+      "k": 6
+    },
+    "pinyin": "pǐn hóng",
     "path": "images/260-品红.png",
     "file": "260-品红.png",
     "size": 1537868
@@ -1830,6 +3649,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "261",
     "hex": "#EA7293",
+    "cmyk": {
+      "c": 0,
+      "m": 51,
+      "y": 37,
+      "k": 8
+    },
+    "pinyin": "fèng xiān huā hóng",
     "path": "images/261-凤仙花红.png",
     "file": "261-凤仙花红.png",
     "size": 1180657
@@ -1837,6 +3663,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "262",
     "hex": "#EC9BAD",
+    "cmyk": {
+      "c": 0,
+      "m": 34,
+      "y": 27,
+      "k": 7
+    },
+    "pinyin": "fěn tuán huā hóng",
     "path": "images/262-粉团花红.png",
     "file": "262-粉团花红.png",
     "size": 1209590
@@ -1844,6 +3677,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "263",
     "hex": "#EB507E",
+    "cmyk": {
+      "c": 0,
+      "m": 66,
+      "y": 46,
+      "k": 8
+    },
+    "pinyin": "jiā zhú táo hóng",
     "path": "images/263-夹竹桃红.png",
     "file": "263-夹竹桃红.png",
     "size": 1304726
@@ -1851,6 +3691,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "264",
     "hex": "#ED2F6A",
+    "cmyk": {
+      "c": 0,
+      "m": 80,
+      "y": 55,
+      "k": 7
+    },
+    "pinyin": "wēn po hóng",
     "path": "images/264-榲桲红.png",
     "file": "264-榲桲红.png",
     "size": 1489652
@@ -1858,6 +3705,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "265",
     "hex": "#EEB8C3",
+    "cmyk": {
+      "c": 0,
+      "m": 23,
+      "y": 18,
+      "k": 7
+    },
+    "pinyin": "jiāng hóng",
     "path": "images/265-姜红.png",
     "file": "265-姜红.png",
     "size": 1172518
@@ -1865,6 +3719,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "266",
     "hex": "#EA517F",
+    "cmyk": {
+      "c": 0,
+      "m": 65,
+      "y": 46,
+      "k": 8
+    },
+    "pinyin": "lián bàn hóng",
     "path": "images/266-莲瓣红.png",
     "file": "266-莲瓣红.png",
     "size": 1250520
@@ -1872,6 +3733,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "267",
     "hex": "#F1C4CD",
+    "cmyk": {
+      "c": 0,
+      "m": 19,
+      "y": 15,
+      "k": 5
+    },
+    "pinyin": "shuǐ hóng",
     "path": "images/267-水红.png",
     "file": "267-水红.png",
     "size": 1253447
@@ -1879,6 +3747,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "268",
     "hex": "#EC8AA4",
+    "cmyk": {
+      "c": 0,
+      "m": 42,
+      "y": 31,
+      "k": 7
+    },
+    "pinyin": "bào chūn hóng",
     "path": "images/268-报春红.png",
     "file": "268-报春红.png",
     "size": 1203445
@@ -1886,6 +3761,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "269",
     "hex": "#CE5777",
+    "cmyk": {
+      "c": 0,
+      "m": 58,
+      "y": 42,
+      "k": 19
+    },
+    "pinyin": "yuè jì hóng",
     "path": "images/269-月季红.png",
     "file": "269-月季红.png",
     "size": 1492101
@@ -1893,6 +3775,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "270",
     "hex": "#ED9DB2",
+    "cmyk": {
+      "c": 0,
+      "m": 34,
+      "y": 25,
+      "k": 7
+    },
+    "pinyin": "jiāng dòu hóng",
     "path": "images/270-豇豆红.png",
     "file": "270-豇豆红.png",
     "size": 1531391
@@ -1900,6 +3789,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "271",
     "hex": "#EF82A0",
+    "cmyk": {
+      "c": 0,
+      "m": 46,
+      "y": 33,
+      "k": 6
+    },
+    "pinyin": "xiá guāng hóng",
     "path": "images/271-霞光红.png",
     "file": "271-霞光红.png",
     "size": 1562257
@@ -1907,6 +3803,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "272",
     "hex": "#EB3C70",
+    "cmyk": {
+      "c": 0,
+      "m": 74,
+      "y": 52,
+      "k": 8
+    },
+    "pinyin": "sōng yè mǔ dān hóng",
     "path": "images/272-松叶牡丹红.png",
     "file": "272-松叶牡丹红.png",
     "size": 1790884
@@ -1914,6 +3817,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "273",
     "hex": "#EC2C64",
+    "cmyk": {
+      "c": 0,
+      "m": 81,
+      "y": 58,
+      "k": 7
+    },
+    "pinyin": "xǐ dàn hóng",
     "path": "images/273-喜蛋红.png",
     "file": "273-喜蛋红.png",
     "size": 1746077
@@ -1921,6 +3831,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "274",
     "hex": "#E3B4B8",
+    "cmyk": {
+      "c": 0,
+      "m": 21,
+      "y": 19,
+      "k": 11
+    },
+    "pinyin": "shǔ bí hóng",
     "path": "images/274-鼠鼻红.png",
     "file": "274-鼠鼻红.png",
     "size": 1616347
@@ -1928,6 +3845,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "275",
     "hex": "#CC163A",
+    "cmyk": {
+      "c": 0,
+      "m": 89,
+      "y": 72,
+      "k": 20
+    },
+    "pinyin": "jiān jīng yù hóng",
     "path": "images/275-尖晶玉红.png",
     "file": "275-尖晶玉红.png",
     "size": 1442133
@@ -1935,6 +3859,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "276",
     "hex": "#C27C88",
+    "cmyk": {
+      "c": 0,
+      "m": 36,
+      "y": 30,
+      "k": 24
+    },
+    "pinyin": "shān lí dòu hóng",
     "path": "images/276-山黎豆红.png",
     "file": "276-山黎豆红.png",
     "size": 1519199
@@ -1942,6 +3873,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "277",
     "hex": "#BF3553",
+    "cmyk": {
+      "c": 0,
+      "m": 72,
+      "y": 57,
+      "k": 25
+    },
+    "pinyin": "jǐn kuí hóng",
     "path": "images/277-锦葵红.png",
     "file": "277-锦葵红.png",
     "size": 1409565
@@ -1949,6 +3887,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "278",
     "hex": "#73575C",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 20,
+      "k": 55
+    },
+    "pinyin": "shǔ bèi huī",
     "path": "images/278-鼠背灰.png",
     "file": "278-鼠背灰.png",
     "size": 1293389
@@ -1956,6 +3901,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "279",
     "hex": "#621624",
+    "cmyk": {
+      "c": 0,
+      "m": 78,
+      "y": 63,
+      "k": 62
+    },
+    "pinyin": "gān zhè zǐ",
     "path": "images/279-甘蔗紫.png",
     "file": "279-甘蔗紫.png",
     "size": 1588159
@@ -1963,6 +3915,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "280",
     "hex": "#63071C",
+    "cmyk": {
+      "c": 0,
+      "m": 93,
+      "y": 72,
+      "k": 61
+    },
+    "pinyin": "shí zhú zǐ",
     "path": "images/280-石竹紫.png",
     "file": "280-石竹紫.png",
     "size": 1398915
@@ -1970,6 +3929,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "281",
     "hex": "#36282B",
+    "cmyk": {
+      "c": 0,
+      "m": 26,
+      "y": 20,
+      "k": 79
+    },
+    "pinyin": "cāng yíng huī",
     "path": "images/281-苍蝇灰.png",
     "file": "281-苍蝇灰.png",
     "size": 1862920
@@ -1977,6 +3943,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "282",
     "hex": "#30161C",
+    "cmyk": {
+      "c": 0,
+      "m": 54,
+      "y": 42,
+      "k": 81
+    },
+    "pinyin": "luǎn shí zǐ",
     "path": "images/282-卵石紫.png",
     "file": "282-卵石紫.png",
     "size": 1654424
@@ -1984,6 +3957,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "283",
     "hex": "#2B1216",
+    "cmyk": {
+      "c": 0,
+      "m": 58,
+      "y": 49,
+      "k": 83
+    },
+    "pinyin": "lǐ zǐ",
     "path": "images/283-李紫.png",
     "file": "283-李紫.png",
     "size": 1282578
@@ -1991,6 +3971,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "284",
     "hex": "#2D0C13",
+    "cmyk": {
+      "c": 0,
+      "m": 73,
+      "y": 58,
+      "k": 82
+    },
+    "pinyin": "jiā pí zǐ",
     "path": "images/284-茄皮紫.png",
     "file": "284-茄皮紫.png",
     "size": 1244930
@@ -1998,6 +3985,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "285",
     "hex": "#CE5E8A",
+    "cmyk": {
+      "c": 0,
+      "m": 54,
+      "y": 33,
+      "k": 19
+    },
+    "pinyin": "diào zhōng huā hóng",
     "path": "images/285-吊钟花红.png",
     "file": "285-吊钟花红.png",
     "size": 1496564
@@ -2005,6 +3999,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "286",
     "hex": "#EC4E8A",
+    "cmyk": {
+      "c": 0,
+      "m": 67,
+      "y": 42,
+      "k": 7
+    },
+    "pinyin": "tù yǎn hóng",
     "path": "images/286-兔眼红.png",
     "file": "286-兔眼红.png",
     "size": 1396345
@@ -2012,6 +4013,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "287",
     "hex": "#EE2C79",
+    "cmyk": {
+      "c": 0,
+      "m": 82,
+      "y": 49,
+      "k": 7
+    },
+    "pinyin": "zǐ jīng hóng",
     "path": "images/287-紫荆红.png",
     "file": "287-紫荆红.png",
     "size": 1188942
@@ -2019,6 +4027,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "288",
     "hex": "#951C48",
+    "cmyk": {
+      "c": 0,
+      "m": 81,
+      "y": 52,
+      "k": 42
+    },
+    "pinyin": "cài tóu zǐ",
     "path": "images/288-菜头紫.png",
     "file": "288-菜头紫.png",
     "size": 1489784
@@ -2026,6 +4041,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "289",
     "hex": "#621D34",
+    "cmyk": {
+      "c": 0,
+      "m": 70,
+      "y": 47,
+      "k": 62
+    },
+    "pinyin": "yào guān zǐ",
     "path": "images/289-鹞冠紫.png",
     "file": "289-鹞冠紫.png",
     "size": 1502158
@@ -2033,6 +4055,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "290",
     "hex": "#62102E",
+    "cmyk": {
+      "c": 0,
+      "m": 84,
+      "y": 53,
+      "k": 62
+    },
+    "pinyin": "pú táo jiǔ hóng",
     "path": "images/290-葡萄酒红.png",
     "file": "290-葡萄酒红.png",
     "size": 1518491
@@ -2040,6 +4069,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "291",
     "hex": "#382129",
+    "cmyk": {
+      "c": 0,
+      "m": 41,
+      "y": 27,
+      "k": 78
+    },
+    "pinyin": "mó shí zǐ",
     "path": "images/291-磨石紫.png",
     "file": "291-磨石紫.png",
     "size": 1547335
@@ -2047,6 +4083,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "292",
     "hex": "#381924",
+    "cmyk": {
+      "c": 0,
+      "m": 55,
+      "y": 36,
+      "k": 78
+    },
+    "pinyin": "tán zǐ",
     "path": "images/292-檀紫.png",
     "file": "292-檀紫.png",
     "size": 1404201
@@ -2054,6 +4097,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "293",
     "hex": "#33141E",
+    "cmyk": {
+      "c": 0,
+      "m": 61,
+      "y": 41,
+      "k": 80
+    },
+    "pinyin": "huǒ é zǐ",
     "path": "images/293-火鹅紫.png",
     "file": "293-火鹅紫.png",
     "size": 1262424
@@ -2061,6 +4111,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "294",
     "hex": "#310F1B",
+    "cmyk": {
+      "c": 0,
+      "m": 69,
+      "y": 45,
+      "k": 81
+    },
+    "pinyin": "mò zǐ",
     "path": "images/294-墨紫.png",
     "file": "294-墨紫.png",
     "size": 1190398
@@ -2068,6 +4125,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "295",
     "hex": "#EEA6B7",
+    "cmyk": {
+      "c": 0,
+      "m": 30,
+      "y": 23,
+      "k": 7
+    },
+    "pinyin": "jīng hóng",
     "path": "images/295-晶红.png",
     "file": "295-晶红.png",
     "size": 1482148
@@ -2075,6 +4139,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "296",
     "hex": "#EF498B",
+    "cmyk": {
+      "c": 0,
+      "m": 69,
+      "y": 42,
+      "k": 6
+    },
+    "pinyin": "biǎn dòu huā hóng",
     "path": "images/296-扁豆花红.png",
     "file": "296-扁豆花红.png",
     "size": 1246861
@@ -2082,6 +4153,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "297",
     "hex": "#DE7897",
+    "cmyk": {
+      "c": 0,
+      "m": 46,
+      "y": 32,
+      "k": 13
+    },
+    "pinyin": "bái jī hóng",
     "path": "images/297-白芨红.png",
     "file": "297-白芨红.png",
     "size": 1159825
@@ -2089,6 +4167,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "298",
     "hex": "#DE3F7C",
+    "cmyk": {
+      "c": 0,
+      "m": 72,
+      "y": 44,
+      "k": 13
+    },
+    "pinyin": "nèn líng hóng",
     "path": "images/298-嫩菱红.png",
     "file": "298-嫩菱红.png",
     "size": 1489355
@@ -2096,6 +4181,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "299",
     "hex": "#D13C74",
+    "cmyk": {
+      "c": 0,
+      "m": 71,
+      "y": 44,
+      "k": 18
+    },
+    "pinyin": "bō gēn hóng",
     "path": "images/299-菠根红.png",
     "file": "299-菠根红.png",
     "size": 1404387
@@ -2103,6 +4195,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "300",
     "hex": "#C5708B",
+    "cmyk": {
+      "c": 0,
+      "m": 43,
+      "y": 29,
+      "k": 23
+    },
+    "pinyin": "cù jiàng cǎo hóng",
     "path": "images/300-酢酱草红.png",
     "file": "300-酢酱草红.png",
     "size": 1388537
@@ -2110,6 +4209,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "301",
     "hex": "#A8456B",
+    "cmyk": {
+      "c": 0,
+      "m": 59,
+      "y": 36,
+      "k": 34
+    },
+    "pinyin": "yáng cōng zǐ",
     "path": "images/301-洋葱紫.png",
     "file": "301-洋葱紫.png",
     "size": 1351509
@@ -2117,6 +4223,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "302",
     "hex": "#4B1E2F",
+    "cmyk": {
+      "c": 0,
+      "m": 60,
+      "y": 37,
+      "k": 71
+    },
+    "pinyin": "hǎi xiàng zǐ",
     "path": "images/302-海象紫.png",
     "file": "302-海象紫.png",
     "size": 1243303
@@ -2124,6 +4237,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "303",
     "hex": "#461629",
+    "cmyk": {
+      "c": 0,
+      "m": 69,
+      "y": 41,
+      "k": 73
+    },
+    "pinyin": "gàn zǐ",
     "path": "images/303-绀紫.png",
     "file": "303-绀紫.png",
     "size": 1186464
@@ -2131,6 +4251,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "304",
     "hex": "#440E25",
+    "cmyk": {
+      "c": 0,
+      "m": 79,
+      "y": 46,
+      "k": 73
+    },
+    "pinyin": "gǔ tóng zǐ",
     "path": "images/304-古铜紫.png",
     "file": "304-古铜紫.png",
     "size": 1457974
@@ -2138,6 +4265,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "305",
     "hex": "#F0C9CF",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 14,
+      "k": 6
+    },
+    "pinyin": "shí ruǐ hóng",
     "path": "images/305-石蕊红.png",
     "file": "305-石蕊红.png",
     "size": 1183270
@@ -2145,6 +4279,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "306",
     "hex": "#EBA0B3",
+    "cmyk": {
+      "c": 0,
+      "m": 32,
+      "y": 24,
+      "k": 8
+    },
+    "pinyin": "sháo yào gēng hóng",
     "path": "images/306-芍药耕红.png",
     "file": "306-芍药耕红.png",
     "size": 1422966
@@ -2152,6 +4293,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "307",
     "hex": "#EC2D7A",
+    "cmyk": {
+      "c": 0,
+      "m": 81,
+      "y": 48,
+      "k": 7
+    },
+    "pinyin": "cáng huā hóng",
     "path": "images/307-藏花红.png",
     "file": "307-藏花红.png",
     "size": 1467825
@@ -2159,6 +4307,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "308",
     "hex": "#E16C96",
+    "cmyk": {
+      "c": 0,
+      "m": 52,
+      "y": 33,
+      "k": 12
+    },
+    "pinyin": "chū hé hóng",
     "path": "images/308-初荷红.png",
     "file": "308-初荷红.png",
     "size": 1303283
@@ -2166,6 +4321,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "309",
     "hex": "#EDE3E7",
+    "cmyk": {
+      "c": 0,
+      "m": 4,
+      "y": 3,
+      "k": 7
+    },
+    "pinyin": "mǎ biān cǎo zǐ",
     "path": "images/309-马鞭草紫.png",
     "file": "309-马鞭草紫.png",
     "size": 1130839
@@ -2173,6 +4335,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "310",
     "hex": "#E9D7DF",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 4,
+      "k": 9
+    },
+    "pinyin": "dīng xiāng dàn zǐ",
     "path": "images/310-丁香淡紫.png",
     "file": "310-丁香淡紫.png",
     "size": 1164024
@@ -2180,6 +4349,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "311",
     "hex": "#D2568C",
+    "cmyk": {
+      "c": 0,
+      "m": 59,
+      "y": 33,
+      "k": 18
+    },
+    "pinyin": "dān zǐ hóng",
     "path": "images/311-丹紫红.png",
     "file": "311-丹紫红.png",
     "size": 1774107
@@ -2187,6 +4363,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "312",
     "hex": "#D2357D",
+    "cmyk": {
+      "c": 0,
+      "m": 75,
+      "y": 40,
+      "k": 18
+    },
+    "pinyin": "méi guī hóng",
     "path": "images/312-玫瑰红.png",
     "file": "312-玫瑰红.png",
     "size": 1739787
@@ -2194,6 +4377,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "313",
     "hex": "#D1C2D3",
+    "cmyk": {
+      "c": 1,
+      "m": 8,
+      "y": 0,
+      "k": 17
+    },
+    "pinyin": "dàn qiān niú zǐ",
     "path": "images/313-淡牵牛紫.png",
     "file": "313-淡牵牛紫.png",
     "size": 1603151
@@ -2201,6 +4391,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "314",
     "hex": "#C8ADC4",
+    "cmyk": {
+      "c": 0,
+      "m": 13,
+      "y": 2,
+      "k": 22
+    },
+    "pinyin": "fèng xìn zǐ",
     "path": "images/314-凤信紫.png",
     "file": "314-凤信紫.png",
     "size": 1664583
@@ -2208,6 +4405,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "315",
     "hex": "#C08EAF",
+    "cmyk": {
+      "c": 0,
+      "m": 26,
+      "y": 9,
+      "k": 25
+    },
+    "pinyin": "luó lán zǐ",
     "path": "images/315-萝兰紫.png",
     "file": "315-萝兰紫.png",
     "size": 1270923
@@ -2215,6 +4419,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "316",
     "hex": "#BA2F7B",
+    "cmyk": {
+      "c": 0,
+      "m": 75,
+      "y": 34,
+      "k": 27
+    },
+    "pinyin": "méi guī zǐ",
     "path": "images/316-玫瑰紫.png",
     "file": "316-玫瑰紫.png",
     "size": 1420901
@@ -2222,6 +4433,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "317",
     "hex": "#8076A3",
+    "cmyk": {
+      "c": 21,
+      "m": 28,
+      "y": 0,
+      "k": 36
+    },
+    "pinyin": "téng luó zǐ",
     "path": "images/317-藤萝紫.png",
     "file": "317-藤萝紫.png",
     "size": 1726789
@@ -2229,6 +4447,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "318",
     "hex": "#806D9E",
+    "cmyk": {
+      "c": 19,
+      "m": 31,
+      "y": 0,
+      "k": 38
+    },
+    "pinyin": "jǐn zǐ",
     "path": "images/318-槿紫.png",
     "file": "318-槿紫.png",
     "size": 1727124
@@ -2236,6 +4461,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "319",
     "hex": "#815C94",
+    "cmyk": {
+      "c": 13,
+      "m": 38,
+      "y": 0,
+      "k": 42
+    },
+    "pinyin": "xùn zǐ",
     "path": "images/319-蕈紫.png",
     "file": "319-蕈紫.png",
     "size": 1692823
@@ -2243,6 +4475,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "320",
     "hex": "#813C85",
+    "cmyk": {
+      "c": 3,
+      "m": 55,
+      "y": 0,
+      "k": 48
+    },
+    "pinyin": "jié gěng zǐ",
     "path": "images/320-桔梗紫.png",
     "file": "320-桔梗紫.png",
     "size": 1716954
@@ -2250,6 +4489,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "321",
     "hex": "#7E1671",
+    "cmyk": {
+      "c": 0,
+      "m": 83,
+      "y": 10,
+      "k": 51
+    },
+    "pinyin": "wèi zǐ",
     "path": "images/321-魏紫.png",
     "file": "321-魏紫.png",
     "size": 1893241
@@ -2257,6 +4503,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "322",
     "hex": "#E9CCD3",
+    "cmyk": {
+      "c": 0,
+      "m": 12,
+      "y": 9,
+      "k": 9
+    },
+    "pinyin": "zhī lán zǐ",
     "path": "images/322-芝兰紫.png",
     "file": "322-芝兰紫.png",
     "size": 1275795
@@ -2264,6 +4517,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "323",
     "hex": "#D276A3",
+    "cmyk": {
+      "c": 0,
+      "m": 44,
+      "y": 22,
+      "k": 18
+    },
+    "pinyin": "líng měng hóng",
     "path": "images/323-菱锰红.png",
     "file": "323-菱锰红.png",
     "size": 1454990
@@ -2271,6 +4531,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "324",
     "hex": "#CC5595",
+    "cmyk": {
+      "c": 0,
+      "m": 58,
+      "y": 27,
+      "k": 20
+    },
+    "pinyin": "lóng xū hóng",
     "path": "images/324-龙须红.png",
     "file": "324-龙须红.png",
     "size": 1306602
@@ -2278,6 +4545,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "325",
     "hex": "#E6D2D5",
+    "cmyk": {
+      "c": 0,
+      "m": 9,
+      "y": 7,
+      "k": 10
+    },
+    "pinyin": "jì fěn hóng",
     "path": "images/325-蓟粉红.png",
     "file": "325-蓟粉红.png",
     "size": 1234701
@@ -2285,6 +4559,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "326",
     "hex": "#C35691",
+    "cmyk": {
+      "c": 0,
+      "m": 56,
+      "y": 26,
+      "k": 24
+    },
+    "pinyin": "diàn qì shí hóng",
     "path": "images/326-电气石红.png",
     "file": "326-电气石红.png",
     "size": 1332690
@@ -2292,6 +4573,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "327",
     "hex": "#C06F98",
+    "cmyk": {
+      "c": 0,
+      "m": 42,
+      "y": 21,
+      "k": 25
+    },
+    "pinyin": "yīng cǎo zǐ",
     "path": "images/327-樱草紫.png",
     "file": "327-樱草紫.png",
     "size": 1278765
@@ -2299,6 +4587,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "328",
     "hex": "#BDAEAD",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 8,
+      "k": 26
+    },
+    "pinyin": "lú suì huī",
     "path": "images/328-芦穗灰.png",
     "file": "328-芦穗灰.png",
     "size": 1235369
@@ -2306,6 +4601,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "329",
     "hex": "#B598A1",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 11,
+      "k": 29
+    },
+    "pinyin": "yǐn hóng huī",
     "path": "images/329-隐红灰.png",
     "file": "329-隐红灰.png",
     "size": 1213272
@@ -2313,6 +4615,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "330",
     "hex": "#9B1E64",
+    "cmyk": {
+      "c": 0,
+      "m": 81,
+      "y": 35,
+      "k": 39
+    },
+    "pinyin": "xiàn cài zǐ",
     "path": "images/330-苋菜紫.png",
     "file": "330-苋菜紫.png",
     "size": 1330436
@@ -2320,6 +4629,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "331",
     "hex": "#856D72",
+    "cmyk": {
+      "c": 0,
+      "m": 18,
+      "y": 14,
+      "k": 48
+    },
+    "pinyin": "lú huī",
     "path": "images/331-芦灰.png",
     "file": "331-芦灰.png",
     "size": 1577465
@@ -2327,6 +4643,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "332",
     "hex": "#4F383E",
+    "cmyk": {
+      "c": 0,
+      "m": 29,
+      "y": 22,
+      "k": 69
+    },
+    "pinyin": "mù yún huī",
     "path": "images/332-暮云灰.png",
     "file": "332-暮云灰.png",
     "size": 1241418
@@ -2334,6 +4657,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "333",
     "hex": "#482936",
+    "cmyk": {
+      "c": 0,
+      "m": 43,
+      "y": 25,
+      "k": 72
+    },
+    "pinyin": "bān jiū huī",
     "path": "images/333-斑鸠灰.png",
     "file": "333-斑鸠灰.png",
     "size": 1547024
@@ -2341,6 +4671,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "334",
     "hex": "#F2E7E5",
+    "cmyk": {
+      "c": 0,
+      "m": 5,
+      "y": 5,
+      "k": 5
+    },
+    "pinyin": "dàn téng luó zǐ",
     "path": "images/334-淡藤萝紫.png",
     "file": "334-淡藤萝紫.png",
     "size": 1245364
@@ -2348,6 +4685,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "335",
     "hex": "#E0C8D1",
+    "cmyk": {
+      "c": 0,
+      "m": 11,
+      "y": 7,
+      "k": 12
+    },
+    "pinyin": "dàn qīng zǐ",
     "path": "images/335-淡青紫.png",
     "file": "335-淡青紫.png",
     "size": 1296492
@@ -2355,6 +4699,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "336",
     "hex": "#BC84A8",
+    "cmyk": {
+      "c": 0,
+      "m": 30,
+      "y": 11,
+      "k": 26
+    },
+    "pinyin": "qīng há ké zǐ",
     "path": "images/336-青蛤壳紫.png",
     "file": "336-青蛤壳紫.png",
     "size": 1320484
@@ -2362,6 +4713,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "337",
     "hex": "#AD6598",
+    "cmyk": {
+      "c": 0,
+      "m": 42,
+      "y": 12,
+      "k": 32
+    },
+    "pinyin": "dòu kòu zǐ",
     "path": "images/337-豆蔻紫.png",
     "file": "337-豆蔻紫.png",
     "size": 1402068
@@ -2369,6 +4727,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "338",
     "hex": "#A35C8F",
+    "cmyk": {
+      "c": 0,
+      "m": 44,
+      "y": 12,
+      "k": 36
+    },
+    "pinyin": "biǎn dòu zǐ",
     "path": "images/338-扁豆紫.png",
     "file": "338-扁豆紫.png",
     "size": 1225197
@@ -2376,6 +4741,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "339",
     "hex": "#983680",
+    "cmyk": {
+      "c": 0,
+      "m": 64,
+      "y": 16,
+      "k": 40
+    },
+    "pinyin": "jiè huā zǐ",
     "path": "images/339-芥花紫.png",
     "file": "339-芥花紫.png",
     "size": 1302764
@@ -2383,6 +4755,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "340",
     "hex": "#8B2671",
+    "cmyk": {
+      "c": 0,
+      "m": 73,
+      "y": 19,
+      "k": 45
+    },
+    "pinyin": "qīng lián",
     "path": "images/340-青莲.png",
     "file": "340-青莲.png",
     "size": 1312062
@@ -2390,6 +4769,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "341",
     "hex": "#894276",
+    "cmyk": {
+      "c": 0,
+      "m": 52,
+      "y": 14,
+      "k": 46
+    },
+    "pinyin": "zì zǐ",
     "path": "images/341-芓紫.png",
     "file": "341-芓紫.png",
     "size": 1685626
@@ -2397,6 +4783,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "342",
     "hex": "#7E2065",
+    "cmyk": {
+      "c": 0,
+      "m": 75,
+      "y": 20,
+      "k": 51
+    },
+    "pinyin": "gé jīn zǐ",
     "path": "images/342-葛巾紫.png",
     "file": "342-葛巾紫.png",
     "size": 1654419
@@ -2404,6 +4797,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "343",
     "hex": "#681752",
+    "cmyk": {
+      "c": 0,
+      "m": 78,
+      "y": 21,
+      "k": 59
+    },
+    "pinyin": "qiān niú zǐ",
     "path": "images/343-牵牛紫.png",
     "file": "343-牵牛紫.png",
     "size": 1495927
@@ -2411,6 +4811,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "344",
     "hex": "#5D3F51",
+    "cmyk": {
+      "c": 0,
+      "m": 32,
+      "y": 13,
+      "k": 64
+    },
+    "pinyin": "zǐ huī",
     "path": "images/344-紫灰.png",
     "file": "344-紫灰.png",
     "size": 1501338
@@ -2418,6 +4825,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "345",
     "hex": "#4E2A40",
+    "cmyk": {
+      "c": 0,
+      "m": 46,
+      "y": 18,
+      "k": 69
+    },
+    "pinyin": "lóng jīng yú zǐ",
     "path": "images/345-龙睛鱼紫.png",
     "file": "345-龙睛鱼紫.png",
     "size": 1545259
@@ -2425,6 +4839,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "346",
     "hex": "#411C35",
+    "cmyk": {
+      "c": 0,
+      "m": 57,
+      "y": 18,
+      "k": 75
+    },
+    "pinyin": "bí qí zǐ",
     "path": "images/346-荸荠紫.png",
     "file": "346-荸荠紫.png",
     "size": 1325782
@@ -2432,6 +4853,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "347",
     "hex": "#36292F",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 13,
+      "k": 79
+    },
+    "pinyin": "gǔ dǐng huī",
     "path": "images/347-古鼎灰.png",
     "file": "347-古鼎灰.png",
     "size": 1219422
@@ -2439,6 +4867,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "348",
     "hex": "#1E131D",
+    "cmyk": {
+      "c": 0,
+      "m": 37,
+      "y": 3,
+      "k": 88
+    },
+    "pinyin": "wū méi zǐ",
     "path": "images/348-乌梅紫.png",
     "file": "348-乌梅紫.png",
     "size": 1449744
@@ -2446,6 +4881,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "349",
     "hex": "#1C0D1A",
+    "cmyk": {
+      "c": 0,
+      "m": 54,
+      "y": 7,
+      "k": 89
+    },
+    "pinyin": "shēn qiān niú zǐ",
     "path": "images/349-深牵牛紫.png",
     "file": "349-深牵牛紫.png",
     "size": 1325397
@@ -2453,6 +4895,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "350",
     "hex": "#F1F0ED",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 2,
+      "k": 5
+    },
+    "pinyin": "yín bái",
     "path": "images/350-银白.png",
     "file": "350-银白.png",
     "size": 1270218
@@ -2460,6 +4909,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "351",
     "hex": "#E2E1E4",
+    "cmyk": {
+      "c": 1,
+      "m": 1,
+      "y": 0,
+      "k": 11
+    },
+    "pinyin": "qiàn shí bái",
     "path": "images/351-芡食白.png",
     "file": "351-芡食白.png",
     "size": 1156969
@@ -2467,6 +4923,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "352",
     "hex": "#CCCCD6",
+    "cmyk": {
+      "c": 5,
+      "m": 5,
+      "y": 0,
+      "k": 16
+    },
+    "pinyin": "yuǎn shān zǐ",
     "path": "images/352-远山紫.png",
     "file": "352-远山紫.png",
     "size": 1201027
@@ -2474,6 +4937,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "353",
     "hex": "#A7A8BD",
+    "cmyk": {
+      "c": 12,
+      "m": 11,
+      "y": 0,
+      "k": 26
+    },
+    "pinyin": "dàn lán zǐ",
     "path": "images/353-淡蓝紫.png",
     "file": "353-淡蓝紫.png",
     "size": 1596910
@@ -2481,6 +4951,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "354",
     "hex": "#61649F",
+    "cmyk": {
+      "c": 39,
+      "m": 37,
+      "y": 0,
+      "k": 38
+    },
+    "pinyin": "shān gěng zǐ",
     "path": "images/354-山梗紫.png",
     "file": "354-山梗紫.png",
     "size": 1526099
@@ -2488,6 +4965,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "355",
     "hex": "#74759B",
+    "cmyk": {
+      "c": 25,
+      "m": 25,
+      "y": 0,
+      "k": 39
+    },
+    "pinyin": "luó diān zǐ",
     "path": "images/355-螺甸紫.png",
     "file": "355-螺甸紫.png",
     "size": 1500018
@@ -2495,6 +4979,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "356",
     "hex": "#CFCCC9",
+    "cmyk": {
+      "c": 0,
+      "m": 1,
+      "y": 3,
+      "k": 19
+    },
+    "pinyin": "mǎ nǎo huī",
     "path": "images/356-玛瑙灰.png",
     "file": "356-玛瑙灰.png",
     "size": 1222874
@@ -2502,6 +4993,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "357",
     "hex": "#525288",
+    "cmyk": {
+      "c": 40,
+      "m": 40,
+      "y": 0,
+      "k": 47
+    },
+    "pinyin": "yě jú zǐ",
     "path": "images/357-野菊紫.png",
     "file": "357-野菊紫.png",
     "size": 1660989
@@ -2509,6 +5007,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "358",
     "hex": "#2E317C",
+    "cmyk": {
+      "c": 63,
+      "m": 60,
+      "y": 0,
+      "k": 51
+    },
+    "pinyin": "mǎn tiān xīng zǐ",
     "path": "images/358-满天星紫.png",
     "file": "358-满天星紫.png",
     "size": 1381932
@@ -2516,6 +5021,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "359",
     "hex": "#7A7374",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 5,
+      "k": 52
+    },
+    "pinyin": "xīn huī",
     "path": "images/359-锌灰.png",
     "file": "359-锌灰.png",
     "size": 1201026
@@ -2523,6 +5035,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "360",
     "hex": "#302F4B",
+    "cmyk": {
+      "c": 36,
+      "m": 37,
+      "y": 0,
+      "k": 71
+    },
+    "pinyin": "yě pú táo zǐ",
     "path": "images/360-野葡萄紫.png",
     "file": "360-野葡萄紫.png",
     "size": 1553612
@@ -2530,6 +5049,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "361",
     "hex": "#3E3841",
+    "cmyk": {
+      "c": 5,
+      "m": 14,
+      "y": 0,
+      "k": 75
+    },
+    "pinyin": "jiàn fēng zǐ",
     "path": "images/361-剑锋紫.png",
     "file": "361-剑锋紫.png",
     "size": 1699431
@@ -2537,6 +5063,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "362",
     "hex": "#322F3B",
+    "cmyk": {
+      "c": 15,
+      "m": 20,
+      "y": 0,
+      "k": 77
+    },
+    "pinyin": "lóng kuí zǐ",
     "path": "images/362-龙葵紫.png",
     "file": "362-龙葵紫.png",
     "size": 1229820
@@ -2544,6 +5077,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "363",
     "hex": "#22202E",
+    "cmyk": {
+      "c": 26,
+      "m": 30,
+      "y": 0,
+      "k": 82
+    },
+    "pinyin": "àn lóng dǎn zǐ",
     "path": "images/363-暗龙胆紫.png",
     "file": "363-暗龙胆紫.png",
     "size": 1172798
@@ -2551,6 +5091,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "364",
     "hex": "#1F2040",
+    "cmyk": {
+      "c": 52,
+      "m": 50,
+      "y": 0,
+      "k": 75
+    },
+    "pinyin": "jīng shí zǐ",
     "path": "images/364-晶石紫.png",
     "file": "364-晶石紫.png",
     "size": 1284784
@@ -2558,6 +5105,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "365",
     "hex": "#131124",
+    "cmyk": {
+      "c": 47,
+      "m": 53,
+      "y": 0,
+      "k": 86
+    },
+    "pinyin": "àn lán zǐ",
     "path": "images/365-暗蓝紫.png",
     "file": "365-暗蓝紫.png",
     "size": 1173593
@@ -2565,6 +5119,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "366",
     "hex": "#2775B6",
+    "cmyk": {
+      "c": 79,
+      "m": 36,
+      "y": 0,
+      "k": 29
+    },
+    "pinyin": "jǐng tài lán",
     "path": "images/366-景泰蓝.png",
     "file": "366-景泰蓝.png",
     "size": 1213029
@@ -2572,6 +5133,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "367",
     "hex": "#2474B5",
+    "cmyk": {
+      "c": 80,
+      "m": 36,
+      "y": 0,
+      "k": 29
+    },
+    "pinyin": "ní luó lán",
     "path": "images/367-尼罗蓝.png",
     "file": "367-尼罗蓝.png",
     "size": 1388589
@@ -2579,6 +5147,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "368",
     "hex": "#D0DFE6",
+    "cmyk": {
+      "c": 10,
+      "m": 3,
+      "y": 0,
+      "k": 10
+    },
+    "pinyin": "yuǎn tiān lán",
     "path": "images/368-远天蓝.png",
     "file": "368-远天蓝.png",
     "size": 1200141
@@ -2586,6 +5161,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "369",
     "hex": "#93B5CF",
+    "cmyk": {
+      "c": 29,
+      "m": 13,
+      "y": 0,
+      "k": 19
+    },
+    "pinyin": "xīng lán",
     "path": "images/369-星蓝.png",
     "file": "369-星蓝.png",
     "size": 1570868
@@ -2593,6 +5175,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "370",
     "hex": "#619AC3",
+    "cmyk": {
+      "c": 50,
+      "m": 21,
+      "y": 0,
+      "k": 24
+    },
+    "pinyin": "yǔ shàn dòu lán",
     "path": "images/370-羽扇豆蓝.png",
     "file": "370-羽扇豆蓝.png",
     "size": 1265666
@@ -2600,6 +5189,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "371",
     "hex": "#2376B7",
+    "cmyk": {
+      "c": 81,
+      "m": 36,
+      "y": 0,
+      "k": 28
+    },
+    "pinyin": "huā qīng",
     "path": "images/371-花青.png",
     "file": "371-花青.png",
     "size": 1835187
@@ -2607,6 +5203,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "372",
     "hex": "#5698C3",
+    "cmyk": {
+      "c": 56,
+      "m": 22,
+      "y": 0,
+      "k": 24
+    },
+    "pinyin": "jīng lán",
     "path": "images/372-睛蓝.png",
     "file": "372-睛蓝.png",
     "size": 1157835
@@ -2614,6 +5217,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "373",
     "hex": "#2177B8",
+    "cmyk": {
+      "c": 82,
+      "m": 35,
+      "y": 0,
+      "k": 28
+    },
+    "pinyin": "hóng lán",
     "path": "images/373-虹蓝.png",
     "file": "373-虹蓝.png",
     "size": 1227787
@@ -2621,6 +5231,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "374",
     "hex": "#B0D5DF",
+    "cmyk": {
+      "c": 21,
+      "m": 4,
+      "y": 0,
+      "k": 13
+    },
+    "pinyin": "hú shuǐ lán",
     "path": "images/374-湖水蓝.png",
     "file": "374-湖水蓝.png",
     "size": 1166073
@@ -2628,6 +5245,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "375",
     "hex": "#8ABCD1",
+    "cmyk": {
+      "c": 34,
+      "m": 10,
+      "y": 0,
+      "k": 18
+    },
+    "pinyin": "qiū bō lán",
     "path": "images/375-秋波蓝.png",
     "file": "375-秋波蓝.png",
     "size": 1184222
@@ -2635,6 +5259,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "376",
     "hex": "#66A9C9",
+    "cmyk": {
+      "c": 49,
+      "m": 16,
+      "y": 0,
+      "k": 21
+    },
+    "pinyin": "jiàn shí lán",
     "path": "images/376-涧石蓝.png",
     "file": "376-涧石蓝.png",
     "size": 1155449
@@ -2642,6 +5273,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "377",
     "hex": "#2983BB",
+    "cmyk": {
+      "c": 78,
+      "m": 30,
+      "y": 0,
+      "k": 27
+    },
+    "pinyin": "cháo lán",
     "path": "images/377-潮蓝.png",
     "file": "377-潮蓝.png",
     "size": 1244467
@@ -2649,6 +5287,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "378",
     "hex": "#1772B4",
+    "cmyk": {
+      "c": 87,
+      "m": 37,
+      "y": 0,
+      "k": 29
+    },
+    "pinyin": "qún qīng",
     "path": "images/378-群青.png",
     "file": "378-群青.png",
     "size": 1240807
@@ -2656,6 +5301,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "379",
     "hex": "#63BBD0",
+    "cmyk": {
+      "c": 52,
+      "m": 10,
+      "y": 0,
+      "k": 18
+    },
+    "pinyin": "jì qīng",
     "path": "images/379-霁青.png",
     "file": "379-霁青.png",
     "size": 1109021
@@ -2663,6 +5315,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "380",
     "hex": "#5CB3CC",
+    "cmyk": {
+      "c": 55,
+      "m": 12,
+      "y": 0,
+      "k": 20
+    },
+    "pinyin": "bì qīng",
     "path": "images/380-碧青.png",
     "file": "380-碧青.png",
     "size": 1137288
@@ -2670,6 +5329,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "381",
     "hex": "#2486B9",
+    "cmyk": {
+      "c": 81,
+      "m": 28,
+      "y": 0,
+      "k": 27
+    },
+    "pinyin": "bǎo shí lán",
     "path": "images/381-宝石蓝.png",
     "file": "381-宝石蓝.png",
     "size": 1277482
@@ -2677,6 +5343,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "382",
     "hex": "#1677B3",
+    "cmyk": {
+      "c": 88,
+      "m": 34,
+      "y": 0,
+      "k": 30
+    },
+    "pinyin": "tiān lán",
     "path": "images/382-天蓝.png",
     "file": "382-天蓝.png",
     "size": 1172110
@@ -2684,6 +5357,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "383",
     "hex": "#126BAE",
+    "cmyk": {
+      "c": 90,
+      "m": 39,
+      "y": 0,
+      "k": 32
+    },
+    "pinyin": "bó lín lán",
     "path": "images/383-柏林蓝.png",
     "file": "383-柏林蓝.png",
     "size": 1232328
@@ -2691,6 +5371,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "384",
     "hex": "#22A2C3",
+    "cmyk": {
+      "c": 83,
+      "m": 17,
+      "y": 0,
+      "k": 24
+    },
+    "pinyin": "hǎi qīng",
     "path": "images/384-海青.png",
     "file": "384-海青.png",
     "size": 1234541
@@ -2698,6 +5385,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "385",
     "hex": "#1A94BC",
+    "cmyk": {
+      "c": 86,
+      "m": 21,
+      "y": 0,
+      "k": 26
+    },
+    "pinyin": "gǔ lán",
     "path": "images/385-钴蓝.png",
     "file": "385-钴蓝.png",
     "size": 1181166
@@ -2705,6 +5399,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "386",
     "hex": "#158BB8",
+    "cmyk": {
+      "c": 89,
+      "m": 24,
+      "y": 0,
+      "k": 28
+    },
+    "pinyin": "yuān wěi lán",
     "path": "images/386-鸢尾蓝.png",
     "file": "386-鸢尾蓝.png",
     "size": 1273911
@@ -2712,6 +5413,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "387",
     "hex": "#1177B0",
+    "cmyk": {
+      "c": 90,
+      "m": 32,
+      "y": 0,
+      "k": 31
+    },
+    "pinyin": "qiān niú huā lán",
     "path": "images/387-牵牛花蓝.png",
     "file": "387-牵牛花蓝.png",
     "size": 1192055
@@ -2719,6 +5427,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "388",
     "hex": "#0F59A4",
+    "cmyk": {
+      "c": 91,
+      "m": 46,
+      "y": 0,
+      "k": 36
+    },
+    "pinyin": "fēi yàn cǎo lán",
     "path": "images/388-飞燕草蓝.png",
     "file": "388-飞燕草蓝.png",
     "size": 1185703
@@ -2726,6 +5441,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "389",
     "hex": "#2B73AF",
+    "cmyk": {
+      "c": 75,
+      "m": 34,
+      "y": 0,
+      "k": 31
+    },
+    "pinyin": "pǐn lán",
     "path": "images/389-品蓝.png",
     "file": "389-品蓝.png",
     "size": 1164897
@@ -2733,6 +5455,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "390",
     "hex": "#CDD1D3",
+    "cmyk": {
+      "c": 3,
+      "m": 1,
+      "y": 0,
+      "k": 17
+    },
+    "pinyin": "yín yú bái",
     "path": "images/390-银鱼白.png",
     "file": "390-银鱼白.png",
     "size": 1237605
@@ -2740,6 +5469,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "391",
     "hex": "#3170A7",
+    "cmyk": {
+      "c": 71,
+      "m": 33,
+      "y": 0,
+      "k": 35
+    },
+    "pinyin": "ān ān lán",
     "path": "images/391-安安蓝.png",
     "file": "391-安安蓝.png",
     "size": 1197306
@@ -2747,6 +5483,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "392",
     "hex": "#5E616D",
+    "cmyk": {
+      "c": 14,
+      "m": 11,
+      "y": 0,
+      "k": 57
+    },
+    "pinyin": "yú wěi huī",
     "path": "images/392-鱼尾灰.png",
     "file": "392-鱼尾灰.png",
     "size": 1230163
@@ -2754,6 +5497,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "393",
     "hex": "#475164",
+    "cmyk": {
+      "c": 29,
+      "m": 19,
+      "y": 0,
+      "k": 61
+    },
+    "pinyin": "jīng yú huī",
     "path": "images/393-鲸鱼灰.png",
     "file": "393-鲸鱼灰.png",
     "size": 1366132
@@ -2761,6 +5511,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "394",
     "hex": "#FFFEFA",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 2,
+      "k": 0
+    },
+    "pinyin": "hǎi shēn huī",
     "path": "images/394-海参灰.png",
     "file": "394-海参灰.png",
     "size": 1164831
@@ -2768,6 +5525,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "395",
     "hex": "#35333C",
+    "cmyk": {
+      "c": 12,
+      "m": 15,
+      "y": 0,
+      "k": 76
+    },
+    "pinyin": "shā yú huī",
     "path": "images/395-沙鱼灰.png",
     "file": "395-沙鱼灰.png",
     "size": 1381717
@@ -2775,6 +5539,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "396",
     "hex": "#0F1423",
+    "cmyk": {
+      "c": 57,
+      "m": 43,
+      "y": 0,
+      "k": 86
+    },
+    "pinyin": "gāng lán",
     "path": "images/396-钢蓝.png",
     "file": "396-钢蓝.png",
     "size": 1197679
@@ -2782,6 +5553,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "397",
     "hex": "#BACCD9",
+    "cmyk": {
+      "c": 14,
+      "m": 6,
+      "y": 0,
+      "k": 15
+    },
+    "pinyin": "yún shuǐ lán",
     "path": "images/397-云水蓝.png",
     "file": "397-云水蓝.png",
     "size": 1295585
@@ -2789,6 +5567,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "398",
     "hex": "#8FB2C9",
+    "cmyk": {
+      "c": 29,
+      "m": 11,
+      "y": 0,
+      "k": 21
+    },
+    "pinyin": "qíng shān lán",
     "path": "images/398-晴山蓝.png",
     "file": "398-晴山蓝.png",
     "size": 1524353
@@ -2796,6 +5581,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "399",
     "hex": "#1661AB",
+    "cmyk": {
+      "c": 87,
+      "m": 43,
+      "y": 0,
+      "k": 33
+    },
+    "pinyin": "diàn qīng",
     "path": "images/399-靛青.png",
     "file": "399-靛青.png",
     "size": 1291110
@@ -2803,6 +5595,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "400",
     "hex": "#C4CBCF",
+    "cmyk": {
+      "c": 5,
+      "m": 2,
+      "y": 0,
+      "k": 19
+    },
+    "pinyin": "dà lǐ shí huī",
     "path": "images/400-大理石灰.png",
     "file": "400-大理石灰.png",
     "size": 1577176
@@ -2810,6 +5609,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "401",
     "hex": "#15559A",
+    "cmyk": {
+      "c": 86,
+      "m": 45,
+      "y": 0,
+      "k": 40
+    },
+    "pinyin": "hǎi tāo lán",
     "path": "images/401-海涛蓝.png",
     "file": "401-海涛蓝.png",
     "size": 1552359
@@ -2817,6 +5623,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "402",
     "hex": "#4E7CA1",
+    "cmyk": {
+      "c": 52,
+      "m": 23,
+      "y": 0,
+      "k": 37
+    },
+    "pinyin": "dié chì lán",
     "path": "images/402-蝶翅蓝.png",
     "file": "402-蝶翅蓝.png",
     "size": 1817615
@@ -2824,6 +5637,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "403",
     "hex": "#346C9C",
+    "cmyk": {
+      "c": 67,
+      "m": 31,
+      "y": 0,
+      "k": 39
+    },
+    "pinyin": "hǎi jūn lán",
     "path": "images/403-海军蓝.png",
     "file": "403-海军蓝.png",
     "size": 1844644
@@ -2831,6 +5651,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "404",
     "hex": "#2F2F35",
+    "cmyk": {
+      "c": 11,
+      "m": 11,
+      "y": 0,
+      "k": 79
+    },
+    "pinyin": "shuǐ niú huī",
     "path": "images/404-水牛灰.png",
     "file": "404-水牛灰.png",
     "size": 1794550
@@ -2838,6 +5665,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "405",
     "hex": "#2D2E36",
+    "cmyk": {
+      "c": 17,
+      "m": 15,
+      "y": 0,
+      "k": 79
+    },
+    "pinyin": "niú jiǎo huī",
     "path": "images/405-牛角灰.png",
     "file": "405-牛角灰.png",
     "size": 1443576
@@ -2845,6 +5679,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "406",
     "hex": "#131824",
+    "cmyk": {
+      "c": 47,
+      "m": 33,
+      "y": 0,
+      "k": 86
+    },
+    "pinyin": "yàn hàn lán",
     "path": "images/406-燕颔蓝.png",
     "file": "406-燕颔蓝.png",
     "size": 1695359
@@ -2852,6 +5693,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "407",
     "hex": "#D8E3E7",
+    "cmyk": {
+      "c": 6,
+      "m": 2,
+      "y": 0,
+      "k": 9
+    },
+    "pinyin": "yún fēng bái",
     "path": "images/407-云峰白.png",
     "file": "407-云峰白.png",
     "size": 1671149
@@ -2859,6 +5707,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "408",
     "hex": "#C3D7DF",
+    "cmyk": {
+      "c": 13,
+      "m": 4,
+      "y": 0,
+      "k": 13
+    },
+    "pinyin": "jǐng tiān lán",
     "path": "images/408-井天蓝.png",
     "file": "408-井天蓝.png",
     "size": 1715020
@@ -2866,6 +5721,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "409",
     "hex": "#2F90B9",
+    "cmyk": {
+      "c": 75,
+      "m": 22,
+      "y": 0,
+      "k": 27
+    },
+    "pinyin": "yún shān lán",
     "path": "images/409-云山蓝.png",
     "file": "409-云山蓝.png",
     "size": 1767725
@@ -2873,6 +5735,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "410",
     "hex": "#1781B5",
+    "cmyk": {
+      "c": 87,
+      "m": 29,
+      "y": 0,
+      "k": 29
+    },
+    "pinyin": "yòu lán",
     "path": "images/410-釉蓝.png",
     "file": "410-釉蓝.png",
     "size": 1683305
@@ -2880,6 +5749,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "411",
     "hex": "#C7D2D4",
+    "cmyk": {
+      "c": 6,
+      "m": 1,
+      "y": 0,
+      "k": 17
+    },
+    "pinyin": "ōu lán",
     "path": "images/411-鸥蓝.png",
     "file": "411-鸥蓝.png",
     "size": 1227109
@@ -2887,6 +5763,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "412",
     "hex": "#11659A",
+    "cmyk": {
+      "c": 89,
+      "m": 34,
+      "y": 0,
+      "k": 40
+    },
+    "pinyin": "táng cí lán",
     "path": "images/412-搪磁蓝.png",
     "file": "412-搪磁蓝.png",
     "size": 1661713
@@ -2894,6 +5777,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "413",
     "hex": "#C0C4C3",
+    "cmyk": {
+      "c": 2,
+      "m": 0,
+      "y": 1,
+      "k": 23
+    },
+    "pinyin": "yuè yǐng bái",
     "path": "images/413-月影白.png",
     "file": "413-月影白.png",
     "size": 1576925
@@ -2901,6 +5791,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "414",
     "hex": "#B2BBBE",
+    "cmyk": {
+      "c": 6,
+      "m": 2,
+      "y": 0,
+      "k": 25
+    },
+    "pinyin": "xīng huī",
     "path": "images/414-星灰.png",
     "file": "414-星灰.png",
     "size": 1395125
@@ -2908,6 +5805,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "415",
     "hex": "#5E7987",
+    "cmyk": {
+      "c": 30,
+      "m": 10,
+      "y": 0,
+      "k": 47
+    },
+    "pinyin": "dàn lán huī",
     "path": "images/415-淡蓝灰.png",
     "file": "415-淡蓝灰.png",
     "size": 1684483
@@ -2915,6 +5819,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "416",
     "hex": "#144A74",
+    "cmyk": {
+      "c": 83,
+      "m": 36,
+      "y": 0,
+      "k": 55
+    },
+    "pinyin": "yàn lán",
     "path": "images/416-鷃蓝.png",
     "file": "416-鷃蓝.png",
     "size": 1786310
@@ -2922,6 +5833,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "417",
     "hex": "#74787A",
+    "cmyk": {
+      "c": 5,
+      "m": 2,
+      "y": 0,
+      "k": 52
+    },
+    "pinyin": "nèn huī",
     "path": "images/417-嫩灰.png",
     "file": "417-嫩灰.png",
     "size": 1327993
@@ -2929,6 +5847,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "418",
     "hex": "#495C69",
+    "cmyk": {
+      "c": 30,
+      "m": 12,
+      "y": 0,
+      "k": 59
+    },
+    "pinyin": "zhàn jiàn huī",
     "path": "images/418-战舰灰.png",
     "file": "418-战舰灰.png",
     "size": 1368163
@@ -2936,6 +5861,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "419",
     "hex": "#47484C",
+    "cmyk": {
+      "c": 7,
+      "m": 5,
+      "y": 0,
+      "k": 70
+    },
+    "pinyin": "wǎ guàn huī",
     "path": "images/419-瓦罐灰.png",
     "file": "419-瓦罐灰.png",
     "size": 1676924
@@ -2943,6 +5875,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "420",
     "hex": "#2B333E",
+    "cmyk": {
+      "c": 31,
+      "m": 18,
+      "y": 0,
+      "k": 76
+    },
+    "pinyin": "qīng huī",
     "path": "images/420-青灰.png",
     "file": "420-青灰.png",
     "size": 1289161
@@ -2950,6 +5889,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "421",
     "hex": "#1C2938",
+    "cmyk": {
+      "c": 50,
+      "m": 27,
+      "y": 0,
+      "k": 78
+    },
+    "pinyin": "gē lán",
     "path": "images/421-鸽蓝.png",
     "file": "421-鸽蓝.png",
     "size": 1313304
@@ -2957,6 +5903,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "422",
     "hex": "#142334",
+    "cmyk": {
+      "c": 62,
+      "m": 33,
+      "y": 0,
+      "k": 80
+    },
+    "pinyin": "gāng qīng",
     "path": "images/422-钢青.png",
     "file": "422-钢青.png",
     "size": 1315197
@@ -2964,6 +5917,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "423",
     "hex": "#101F30",
+    "cmyk": {
+      "c": 67,
+      "m": 35,
+      "y": 0,
+      "k": 81
+    },
+    "pinyin": "àn lán",
     "path": "images/423-暗蓝.png",
     "file": "423-暗蓝.png",
     "size": 1322265
@@ -2971,6 +5931,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "424",
     "hex": "#EEF7F2",
+    "cmyk": {
+      "c": 4,
+      "m": 0,
+      "y": 2,
+      "k": 3
+    },
+    "pinyin": "yuè bái",
     "path": "images/424-月白.png",
     "file": "424-月白.png",
     "size": 1264172
@@ -2978,6 +5945,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "425",
     "hex": "#C6E6E8",
+    "cmyk": {
+      "c": 15,
+      "m": 1,
+      "y": 0,
+      "k": 9
+    },
+    "pinyin": "hǎi tiān lán",
     "path": "images/425-海天蓝.png",
     "file": "425-海天蓝.png",
     "size": 1469062
@@ -2985,6 +5959,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "426",
     "hex": "#93D5DC",
+    "cmyk": {
+      "c": 33,
+      "m": 3,
+      "y": 0,
+      "k": 14
+    },
+    "pinyin": "qīng shuǐ lán",
     "path": "images/426-清水蓝.png",
     "file": "426-清水蓝.png",
     "size": 1534362
@@ -2992,6 +5973,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "427",
     "hex": "#51C4D3",
+    "cmyk": {
+      "c": 62,
+      "m": 7,
+      "y": 0,
+      "k": 17
+    },
+    "pinyin": "pù bù lán",
     "path": "images/427-瀑布蓝.png",
     "file": "427-瀑布蓝.png",
     "size": 1501304
@@ -2999,6 +5987,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "428",
     "hex": "#29B7CB",
+    "cmyk": {
+      "c": 80,
+      "m": 10,
+      "y": 0,
+      "k": 20
+    },
+    "pinyin": "wèi lán",
     "path": "images/428-蔚蓝.png",
     "file": "428-蔚蓝.png",
     "size": 1362549
@@ -3006,6 +6001,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "429",
     "hex": "#0EB0C9",
+    "cmyk": {
+      "c": 93,
+      "m": 12,
+      "y": 0,
+      "k": 21
+    },
+    "pinyin": "kǒng què lán",
     "path": "images/429-孔雀蓝.png",
     "file": "429-孔雀蓝.png",
     "size": 1537934
@@ -3013,6 +6015,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "430",
     "hex": "#10AEC2",
+    "cmyk": {
+      "c": 92,
+      "m": 10,
+      "y": 0,
+      "k": 24
+    },
+    "pinyin": "diàn zi lán",
     "path": "images/430-甸子蓝.png",
     "file": "430-甸子蓝.png",
     "size": 1405905
@@ -3020,6 +6029,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "431",
     "hex": "#57C3C2",
+    "cmyk": {
+      "c": 55,
+      "m": 0,
+      "y": 1,
+      "k": 24
+    },
+    "pinyin": "shí lǜ",
     "path": "images/431-石绿.png",
     "file": "431-石绿.png",
     "size": 1515068
@@ -3027,6 +6043,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "432",
     "hex": "#B9DEC9",
+    "cmyk": {
+      "c": 17,
+      "m": 0,
+      "y": 9,
+      "k": 13
+    },
+    "pinyin": "zhú huáng lǜ",
     "path": "images/432-竹篁绿.png",
     "file": "432-竹篁绿.png",
     "size": 1536934
@@ -3034,6 +6057,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "433",
     "hex": "#83CBAC",
+    "cmyk": {
+      "c": 35,
+      "m": 0,
+      "y": 15,
+      "k": 20
+    },
+    "pinyin": "fěn lǜ",
     "path": "images/433-粉绿.png",
     "file": "433-粉绿.png",
     "size": 1256598
@@ -3041,6 +6071,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "434",
     "hex": "#12AA9C",
+    "cmyk": {
+      "c": 89,
+      "m": 0,
+      "y": 8,
+      "k": 33
+    },
+    "pinyin": "měi dié lǜ",
     "path": "images/434-美蝶绿.png",
     "file": "434-美蝶绿.png",
     "size": 1835276
@@ -3048,6 +6085,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "435",
     "hex": "#66C18C",
+    "cmyk": {
+      "c": 47,
+      "m": 0,
+      "y": 27,
+      "k": 24
+    },
+    "pinyin": "máo lǜ",
     "path": "images/435-毛绿.png",
     "file": "435-毛绿.png",
     "size": 1184873
@@ -3055,6 +6099,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "436",
     "hex": "#5DBE8A",
+    "cmyk": {
+      "c": 51,
+      "m": 0,
+      "y": 27,
+      "k": 25
+    },
+    "pinyin": "kòu shāo lǜ",
     "path": "images/436-蔻梢绿.png",
     "file": "436-蔻梢绿.png",
     "size": 1615123
@@ -3062,6 +6113,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "437",
     "hex": "#55BB8A",
+    "cmyk": {
+      "c": 55,
+      "m": 0,
+      "y": 26,
+      "k": 27
+    },
+    "pinyin": "mài miáo lǜ",
     "path": "images/437-麦苗绿.png",
     "file": "437-麦苗绿.png",
     "size": 1547188
@@ -3069,6 +6127,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "438",
     "hex": "#45B787",
+    "cmyk": {
+      "c": 62,
+      "m": 0,
+      "y": 26,
+      "k": 28
+    },
+    "pinyin": "wā lǜ",
     "path": "images/438-蛙绿.png",
     "file": "438-蛙绿.png",
     "size": 1261968
@@ -3076,6 +6141,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "439",
     "hex": "#2BAE85",
+    "cmyk": {
+      "c": 75,
+      "m": 0,
+      "y": 24,
+      "k": 32
+    },
+    "pinyin": "tóng lǜ",
     "path": "images/439-铜绿.png",
     "file": "439-铜绿.png",
     "size": 1479632
@@ -3083,6 +6155,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "440",
     "hex": "#1BA784",
+    "cmyk": {
+      "c": 84,
+      "m": 0,
+      "y": 21,
+      "k": 35
+    },
+    "pinyin": "zhú lǜ",
     "path": "images/440-竹绿.png",
     "file": "440-竹绿.png",
     "size": 1542764
@@ -3090,6 +6169,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "441",
     "hex": "#12A182",
+    "cmyk": {
+      "c": 89,
+      "m": 0,
+      "y": 19,
+      "k": 37
+    },
+    "pinyin": "lán lǜ",
     "path": "images/441-蓝绿.png",
     "file": "441-蓝绿.png",
     "size": 1378101
@@ -3097,6 +6183,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "442",
     "hex": "#C4D7D6",
+    "cmyk": {
+      "c": 9,
+      "m": 0,
+      "y": 0,
+      "k": 16
+    },
+    "pinyin": "qióng huī",
     "path": "images/442-穹灰.png",
     "file": "442-穹灰.png",
     "size": 1276022
@@ -3104,6 +6197,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "443",
     "hex": "#1E9EB3",
+    "cmyk": {
+      "c": 83,
+      "m": 12,
+      "y": 0,
+      "k": 30
+    },
+    "pinyin": "cuì lán",
     "path": "images/443-翠蓝.png",
     "file": "443-翠蓝.png",
     "size": 1352726
@@ -3111,6 +6211,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "444",
     "hex": "#0F95B0",
+    "cmyk": {
+      "c": 91,
+      "m": 15,
+      "y": 0,
+      "k": 31
+    },
+    "pinyin": "dǎn fán lán",
     "path": "images/444-胆矾蓝.png",
     "file": "444-胆矾蓝.png",
     "size": 1282058
@@ -3118,6 +6225,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "445",
     "hex": "#1491A8",
+    "cmyk": {
+      "c": 88,
+      "m": 14,
+      "y": 0,
+      "k": 34
+    },
+    "pinyin": "jiān niǎo lán",
     "path": "images/445-樫鸟蓝.png",
     "file": "445-樫鸟蓝.png",
     "size": 1311311
@@ -3125,6 +6239,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "446",
     "hex": "#7CABB1",
+    "cmyk": {
+      "c": 30,
+      "m": 3,
+      "y": 0,
+      "k": 31
+    },
+    "pinyin": "shǎn lán",
     "path": "images/446-闪蓝.png",
     "file": "446-闪蓝.png",
     "size": 1312360
@@ -3132,6 +6253,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "447",
     "hex": "#A4ACA7",
+    "cmyk": {
+      "c": 5,
+      "m": 0,
+      "y": 3,
+      "k": 33
+    },
+    "pinyin": "bīng shān lán",
     "path": "images/447-冰山蓝.png",
     "file": "447-冰山蓝.png",
     "size": 1268933
@@ -3139,6 +6267,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "448",
     "hex": "#869D9D",
+    "cmyk": {
+      "c": 15,
+      "m": 0,
+      "y": 0,
+      "k": 38
+    },
+    "pinyin": "xiā ké qīng",
     "path": "images/448-虾壳青.png",
     "file": "448-虾壳青.png",
     "size": 1301202
@@ -3146,6 +6281,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "449",
     "hex": "#648E93",
+    "cmyk": {
+      "c": 32,
+      "m": 3,
+      "y": 0,
+      "k": 42
+    },
+    "pinyin": "wǎn bō lán",
     "path": "images/449-晚波蓝.png",
     "file": "449-晚波蓝.png",
     "size": 1330678
@@ -3153,6 +6295,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "450",
     "hex": "#3B818C",
+    "cmyk": {
+      "c": 58,
+      "m": 8,
+      "y": 0,
+      "k": 45
+    },
+    "pinyin": "qīng tíng lán",
     "path": "images/450-蜻蜓蓝.png",
     "file": "450-蜻蜓蓝.png",
     "size": 1354889
@@ -3160,6 +6309,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "451",
     "hex": "#126E82",
+    "cmyk": {
+      "c": 86,
+      "m": 15,
+      "y": 0,
+      "k": 49
+    },
+    "pinyin": "yù qín lán",
     "path": "images/451-玉鈫蓝.png",
     "file": "451-玉鈫蓝.png",
     "size": 1270316
@@ -3167,6 +6323,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "452",
     "hex": "#737C7B",
+    "cmyk": {
+      "c": 7,
+      "m": 0,
+      "y": 1,
+      "k": 51
+    },
+    "pinyin": "è huī",
     "path": "images/452-垩灰.png",
     "file": "452-垩灰.png",
     "size": 1303289
@@ -3174,6 +6337,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "453",
     "hex": "#617172",
+    "cmyk": {
+      "c": 15,
+      "m": 1,
+      "y": 0,
+      "k": 55
+    },
+    "pinyin": "xià yún huī",
     "path": "images/453-夏云灰.png",
     "file": "453-夏云灰.png",
     "size": 1262346
@@ -3181,6 +6351,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "454",
     "hex": "#134857",
+    "cmyk": {
+      "c": 78,
+      "m": 17,
+      "y": 0,
+      "k": 66
+    },
+    "pinyin": "cāng lán",
     "path": "images/454-苍蓝.png",
     "file": "454-苍蓝.png",
     "size": 1280327
@@ -3188,6 +6365,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "455",
     "hex": "#474B4C",
+    "cmyk": {
+      "c": 7,
+      "m": 1,
+      "y": 0,
+      "k": 70
+    },
+    "pinyin": "huáng hūn huī",
     "path": "images/455-黄昏灰.png",
     "file": "455-黄昏灰.png",
     "size": 1253087
@@ -3195,6 +6379,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "456",
     "hex": "#21373D",
+    "cmyk": {
+      "c": 46,
+      "m": 10,
+      "y": 0,
+      "k": 76
+    },
+    "pinyin": "huī lán",
     "path": "images/456-灰蓝.png",
     "file": "456-灰蓝.png",
     "size": 1266651
@@ -3202,6 +6393,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "457",
     "hex": "#132C33",
+    "cmyk": {
+      "c": 63,
+      "m": 14,
+      "y": 0,
+      "k": 80
+    },
+    "pinyin": "shēn huī lán",
     "path": "images/457-深灰蓝.png",
     "file": "457-深灰蓝.png",
     "size": 1498951
@@ -3209,6 +6407,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "458",
     "hex": "#A4CAB6",
+    "cmyk": {
+      "c": 19,
+      "m": 0,
+      "y": 10,
+      "k": 21
+    },
+    "pinyin": "yù zān lǜ",
     "path": "images/458-玉簪绿.png",
     "file": "458-玉簪绿.png",
     "size": 1608019
@@ -3216,6 +6421,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "459",
     "hex": "#2C9678",
+    "cmyk": {
+      "c": 71,
+      "m": 0,
+      "y": 20,
+      "k": 41
+    },
+    "pinyin": "qīng fán lǜ",
     "path": "images/459-青矾绿.png",
     "file": "459-青矾绿.png",
     "size": 1385782
@@ -3223,6 +6435,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "460",
     "hex": "#9ABEAF",
+    "cmyk": {
+      "c": 19,
+      "m": 0,
+      "y": 8,
+      "k": 25
+    },
+    "pinyin": "cǎo yuán yuǎn lǜ",
     "path": "images/460-草原远绿.png",
     "file": "460-草原远绿.png",
     "size": 1446166
@@ -3230,6 +6449,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "461",
     "hex": "#69A794",
+    "cmyk": {
+      "c": 37,
+      "m": 0,
+      "y": 11,
+      "k": 35
+    },
+    "pinyin": "wú zhī lǜ",
     "path": "images/461-梧枝绿.png",
     "file": "461-梧枝绿.png",
     "size": 1285075
@@ -3237,6 +6463,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "462",
     "hex": "#92B3A5",
+    "cmyk": {
+      "c": 18,
+      "m": 0,
+      "y": 8,
+      "k": 30
+    },
+    "pinyin": "làng huā lǜ",
     "path": "images/462-浪花绿.png",
     "file": "462-浪花绿.png",
     "size": 1413302
@@ -3244,6 +6477,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "463",
     "hex": "#248067",
+    "cmyk": {
+      "c": 72,
+      "m": 0,
+      "y": 20,
+      "k": 50
+    },
+    "pinyin": "hǎi wáng lǜ",
     "path": "images/463-海王绿.png",
     "file": "463-海王绿.png",
     "size": 1348541
@@ -3251,6 +6491,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "464",
     "hex": "#428675",
+    "cmyk": {
+      "c": 51,
+      "m": 0,
+      "y": 13,
+      "k": 47
+    },
+    "pinyin": "yà dīng lǜ",
     "path": "images/464-亚丁绿.png",
     "file": "464-亚丁绿.png",
     "size": 1329720
@@ -3258,6 +6505,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "465",
     "hex": "#9FA39A",
+    "cmyk": {
+      "c": 2,
+      "m": 0,
+      "y": 6,
+      "k": 36
+    },
+    "pinyin": "niè huī",
     "path": "images/465-镍灰.png",
     "file": "465-镍灰.png",
     "size": 1178324
@@ -3265,6 +6519,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "466",
     "hex": "#8A988E",
+    "cmyk": {
+      "c": 9,
+      "m": 0,
+      "y": 7,
+      "k": 40
+    },
+    "pinyin": "míng huī",
     "path": "images/466-明灰.png",
     "file": "466-明灰.png",
     "size": 1260499
@@ -3272,6 +6533,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "467",
     "hex": "#70887D",
+    "cmyk": {
+      "c": 18,
+      "m": 0,
+      "y": 8,
+      "k": 47
+    },
+    "pinyin": "dàn lǜ huī",
     "path": "images/467-淡绿灰.png",
     "file": "467-淡绿灰.png",
     "size": 1258189
@@ -3279,6 +6547,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "468",
     "hex": "#497568",
+    "cmyk": {
+      "c": 38,
+      "m": 0,
+      "y": 11,
+      "k": 54
+    },
+    "pinyin": "fēi quán lǜ",
     "path": "images/468-飞泉绿.png",
     "file": "468-飞泉绿.png",
     "size": 1315179
@@ -3286,6 +6561,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "469",
     "hex": "#5D655F",
+    "cmyk": {
+      "c": 8,
+      "m": 0,
+      "y": 6,
+      "k": 60
+    },
+    "pinyin": "láng yān huī",
     "path": "images/469-狼烟灰.png",
     "file": "469-狼烟灰.png",
     "size": 1291865
@@ -3293,6 +6575,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "470",
     "hex": "#314A43",
+    "cmyk": {
+      "c": 34,
+      "m": 0,
+      "y": 9,
+      "k": 71
+    },
+    "pinyin": "lǜ huī",
     "path": "images/470-绿灰.png",
     "file": "470-绿灰.png",
     "size": 1281937
@@ -3300,6 +6589,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "471",
     "hex": "#223E36",
+    "cmyk": {
+      "c": 45,
+      "m": 0,
+      "y": 13,
+      "k": 76
+    },
+    "pinyin": "cāng lǜ",
     "path": "images/471-苍绿.png",
     "file": "471-苍绿.png",
     "size": 1400699
@@ -3307,6 +6603,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "472",
     "hex": "#1A3B32",
+    "cmyk": {
+      "c": 56,
+      "m": 0,
+      "y": 15,
+      "k": 77
+    },
+    "pinyin": "shēn hǎi lǜ",
     "path": "images/472-深海绿.png",
     "file": "472-深海绿.png",
     "size": 1575866
@@ -3314,6 +6617,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "473",
     "hex": "#363433",
+    "cmyk": {
+      "c": 0,
+      "m": 4,
+      "y": 6,
+      "k": 79
+    },
+    "pinyin": "cháng shí huī",
     "path": "images/473-长石灰.png",
     "file": "473-长石灰.png",
     "size": 1446255
@@ -3321,6 +6631,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "474",
     "hex": "#1F2623",
+    "cmyk": {
+      "c": 18,
+      "m": 0,
+      "y": 8,
+      "k": 85
+    },
+    "pinyin": "gān lán lǜ",
     "path": "images/474-苷蓝绿.png",
     "file": "474-苷蓝绿.png",
     "size": 1379075
@@ -3328,6 +6645,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "475",
     "hex": "#141E1B",
+    "cmyk": {
+      "c": 33,
+      "m": 0,
+      "y": 10,
+      "k": 88
+    },
+    "pinyin": "mǎng cóng lǜ",
     "path": "images/475-莽丛绿.png",
     "file": "475-莽丛绿.png",
     "size": 1695822
@@ -3335,6 +6659,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "476",
     "hex": "#C6DFC8",
+    "cmyk": {
+      "c": 11,
+      "m": 0,
+      "y": 10,
+      "k": 13
+    },
+    "pinyin": "dàn cuì lǜ",
     "path": "images/476-淡翠绿.png",
     "file": "476-淡翠绿.png",
     "size": 1373363
@@ -3342,6 +6673,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "477",
     "hex": "#9ECCAB",
+    "cmyk": {
+      "c": 23,
+      "m": 0,
+      "y": 16,
+      "k": 20
+    },
+    "pinyin": "míng lǜ",
     "path": "images/477-明绿.png",
     "file": "477-明绿.png",
     "size": 1536292
@@ -3349,6 +6687,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "478",
     "hex": "#68B88E",
+    "cmyk": {
+      "c": 43,
+      "m": 0,
+      "y": 23,
+      "k": 28
+    },
+    "pinyin": "tián yuán lǜ",
     "path": "images/478-田园绿.png",
     "file": "478-田园绿.png",
     "size": 1508999
@@ -3356,6 +6701,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "479",
     "hex": "#20A162",
+    "cmyk": {
+      "c": 80,
+      "m": 0,
+      "y": 39,
+      "k": 37
+    },
+    "pinyin": "cuì lǜ",
     "path": "images/479-翠绿.png",
     "file": "479-翠绿.png",
     "size": 1391265
@@ -3363,6 +6715,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "480",
     "hex": "#61AC85",
+    "cmyk": {
+      "c": 44,
+      "m": 0,
+      "y": 23,
+      "k": 33
+    },
+    "pinyin": "dàn lǜ",
     "path": "images/480-淡绿.png",
     "file": "480-淡绿.png",
     "size": 1751188
@@ -3370,6 +6729,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "481",
     "hex": "#40A070",
+    "cmyk": {
+      "c": 60,
+      "m": 0,
+      "y": 30,
+      "k": 37
+    },
+    "pinyin": "cōng lǜ",
     "path": "images/481-葱绿.png",
     "file": "481-葱绿.png",
     "size": 1521180
@@ -3377,6 +6743,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "482",
     "hex": "#229453",
+    "cmyk": {
+      "c": 77,
+      "m": 0,
+      "y": 44,
+      "k": 42
+    },
+    "pinyin": "kǒng què lǜ",
     "path": "images/482-孔雀绿.png",
     "file": "482-孔雀绿.png",
     "size": 1559755
@@ -3384,6 +6757,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "483",
     "hex": "#CAD3C3",
+    "cmyk": {
+      "c": 4,
+      "m": 0,
+      "y": 8,
+      "k": 17
+    },
+    "pinyin": "ài lǜ",
     "path": "images/483-艾绿.png",
     "file": "483-艾绿.png",
     "size": 1575069
@@ -3391,6 +6771,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "484",
     "hex": "#3C9566",
+    "cmyk": {
+      "c": 60,
+      "m": 0,
+      "y": 32,
+      "k": 42
+    },
+    "pinyin": "chán lǜ",
     "path": "images/484-蟾绿.png",
     "file": "484-蟾绿.png",
     "size": 1392683
@@ -3398,6 +6785,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "485",
     "hex": "#20894D",
+    "cmyk": {
+      "c": 77,
+      "m": 0,
+      "y": 44,
+      "k": 46
+    },
+    "pinyin": "gōng diàn lǜ",
     "path": "images/485-宫殿绿.png",
     "file": "485-宫殿绿.png",
     "size": 1614804
@@ -3405,6 +6799,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "486",
     "hex": "#83A78D",
+    "cmyk": {
+      "c": 22,
+      "m": 0,
+      "y": 16,
+      "k": 35
+    },
+    "pinyin": "sōng shuāng lǜ",
     "path": "images/486-松霜绿.png",
     "file": "486-松霜绿.png",
     "size": 1594692
@@ -3412,6 +6813,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "487",
     "hex": "#579572",
+    "cmyk": {
+      "c": 42,
+      "m": 0,
+      "y": 23,
+      "k": 42
+    },
+    "pinyin": "dàn bái shí lǜ",
     "path": "images/487-蛋白石绿.png",
     "file": "487-蛋白石绿.png",
     "size": 1277808
@@ -3419,6 +6827,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "488",
     "hex": "#207F4C",
+    "cmyk": {
+      "c": 75,
+      "m": 0,
+      "y": 40,
+      "k": 50
+    },
+    "pinyin": "bò hé lǜ",
     "path": "images/488-薄荷绿.png",
     "file": "488-薄荷绿.png",
     "size": 1448405
@@ -3426,6 +6841,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "489",
     "hex": "#6E8B74",
+    "cmyk": {
+      "c": 21,
+      "m": 0,
+      "y": 17,
+      "k": 45
+    },
+    "pinyin": "wǎ sōng lǜ",
     "path": "images/489-瓦松绿.png",
     "file": "489-瓦松绿.png",
     "size": 1419471
@@ -3433,6 +6855,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "490",
     "hex": "#1A6840",
+    "cmyk": {
+      "c": 75,
+      "m": 0,
+      "y": 38,
+      "k": 59
+    },
+    "pinyin": "hé yè lǜ",
     "path": "images/490-荷叶绿.png",
     "file": "490-荷叶绿.png",
     "size": 1593278
@@ -3440,6 +6869,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "491",
     "hex": "#5E665B",
+    "cmyk": {
+      "c": 8,
+      "m": 0,
+      "y": 11,
+      "k": 60
+    },
+    "pinyin": "tián luó lǜ",
     "path": "images/491-田螺绿.png",
     "file": "491-田螺绿.png",
     "size": 1514194
@@ -3447,6 +6883,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "492",
     "hex": "#485B4D",
+    "cmyk": {
+      "c": 21,
+      "m": 0,
+      "y": 15,
+      "k": 64
+    },
+    "pinyin": "bái qū cài lǜ",
     "path": "images/492-白屈菜绿.png",
     "file": "492-白屈菜绿.png",
     "size": 1702880
@@ -3454,6 +6897,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "493",
     "hex": "#393733",
+    "cmyk": {
+      "c": 0,
+      "m": 4,
+      "y": 11,
+      "k": 78
+    },
+    "pinyin": "hé tún huī",
     "path": "images/493-河豚灰.png",
     "file": "493-河豚灰.png",
     "size": 1607385
@@ -3461,6 +6911,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "494",
     "hex": "#373834",
+    "cmyk": {
+      "c": 2,
+      "m": 0,
+      "y": 7,
+      "k": 78
+    },
+    "pinyin": "ēn yóu lǜ",
     "path": "images/494-蒽油绿.png",
     "file": "494-蒽油绿.png",
     "size": 1745444
@@ -3468,6 +6925,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "495",
     "hex": "#2B312C",
+    "cmyk": {
+      "c": 12,
+      "m": 0,
+      "y": 10,
+      "k": 81
+    },
+    "pinyin": "hú jì shēng lǜ",
     "path": "images/495-槲寄生绿.png",
     "file": "495-槲寄生绿.png",
     "size": 1643821
@@ -3475,6 +6939,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "496",
     "hex": "#15231B",
+    "cmyk": {
+      "c": 40,
+      "m": 0,
+      "y": 23,
+      "k": 86
+    },
+    "pinyin": "yún shān lǜ",
     "path": "images/496-云杉绿.png",
     "file": "496-云杉绿.png",
     "size": 1607952
@@ -3482,6 +6953,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "497",
     "hex": "#F0F5E5",
+    "cmyk": {
+      "c": 2,
+      "m": 0,
+      "y": 7,
+      "k": 4
+    },
+    "pinyin": "nèn jú lǜ",
     "path": "images/497-嫩菊绿.png",
     "file": "497-嫩菊绿.png",
     "size": 1683253
@@ -3489,6 +6967,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "498",
     "hex": "#DFECD5",
+    "cmyk": {
+      "c": 6,
+      "m": 0,
+      "y": 10,
+      "k": 7
+    },
+    "pinyin": "ài bèi lǜ",
     "path": "images/498-艾背绿.png",
     "file": "498-艾背绿.png",
     "size": 1633714
@@ -3496,6 +6981,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "499",
     "hex": "#ADD5A2",
+    "cmyk": {
+      "c": 19,
+      "m": 0,
+      "y": 24,
+      "k": 16
+    },
+    "pinyin": "jiā líng shuǐ lǜ",
     "path": "images/499-嘉陵水绿.png",
     "file": "499-嘉陵水绿.png",
     "size": 1156307
@@ -3503,6 +6995,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "500",
     "hex": "#41B349",
+    "cmyk": {
+      "c": 64,
+      "m": 0,
+      "y": 59,
+      "k": 30
+    },
+    "pinyin": "yù suǐ lǜ",
     "path": "images/500-玉髓绿.png",
     "file": "500-玉髓绿.png",
     "size": 1121950
@@ -3510,6 +7009,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "501",
     "hex": "#43B244",
+    "cmyk": {
+      "c": 62,
+      "m": 0,
+      "y": 62,
+      "k": 30
+    },
+    "pinyin": "xiān lǜ",
     "path": "images/501-鲜绿.png",
     "file": "501-鲜绿.png",
     "size": 1110382
@@ -3517,6 +7023,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "502",
     "hex": "#41AE3C",
+    "cmyk": {
+      "c": 63,
+      "m": 0,
+      "y": 66,
+      "k": 32
+    },
+    "pinyin": "bǎo shí lǜ",
     "path": "images/502-宝石绿.png",
     "file": "502-宝石绿.png",
     "size": 1093786
@@ -3524,6 +7037,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "503",
     "hex": "#E2E7BF",
+    "cmyk": {
+      "c": 2,
+      "m": 0,
+      "y": 17,
+      "k": 9
+    },
+    "pinyin": "hǎi mèi lǜ",
     "path": "images/503-海沬绿.png",
     "file": "503-海沬绿.png",
     "size": 1213192
@@ -3531,6 +7051,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "504",
     "hex": "#D0DEAA",
+    "cmyk": {
+      "c": 6,
+      "m": 0,
+      "y": 23,
+      "k": 13
+    },
+    "pinyin": "yáo huáng",
     "path": "images/504-姚黄.png",
     "file": "504-姚黄.png",
     "size": 1085766
@@ -3538,6 +7065,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "505",
     "hex": "#B2CF87",
+    "cmyk": {
+      "c": 14,
+      "m": 0,
+      "y": 35,
+      "k": 19
+    },
+    "pinyin": "gǎn lǎn shí lǜ",
     "path": "images/505-橄榄石绿.png",
     "file": "505-橄榄石绿.png",
     "size": 1127778
@@ -3545,6 +7079,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "506",
     "hex": "#8CC269",
+    "cmyk": {
+      "c": 28,
+      "m": 0,
+      "y": 46,
+      "k": 24
+    },
+    "pinyin": "shuǐ lǜ",
     "path": "images/506-水绿.png",
     "file": "506-水绿.png",
     "size": 1121408
@@ -3552,6 +7093,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "507",
     "hex": "#B7D07A",
+    "cmyk": {
+      "c": 12,
+      "m": 0,
+      "y": 41,
+      "k": 18
+    },
+    "pinyin": "lú wěi lǜ",
     "path": "images/507-芦苇绿.png",
     "file": "507-芦苇绿.png",
     "size": 1305102
@@ -3559,6 +7107,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "508",
     "hex": "#D2D97A",
+    "cmyk": {
+      "c": 3,
+      "m": 0,
+      "y": 44,
+      "k": 15
+    },
+    "pinyin": "huái huā huáng lǜ",
     "path": "images/508-槐花黄绿.png",
     "file": "508-槐花黄绿.png",
     "size": 1213068
@@ -3566,6 +7121,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "509",
     "hex": "#BACF65",
+    "cmyk": {
+      "c": 10,
+      "m": 0,
+      "y": 51,
+      "k": 19
+    },
+    "pinyin": "píng guǒ lǜ",
     "path": "images/509-苹果绿.png",
     "file": "509-苹果绿.png",
     "size": 1246462
@@ -3573,6 +7135,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "510",
     "hex": "#96C24E",
+    "cmyk": {
+      "c": 23,
+      "m": 0,
+      "y": 60,
+      "k": 24
+    },
+    "pinyin": "yá lǜ",
     "path": "images/510-芽绿.png",
     "file": "510-芽绿.png",
     "size": 1433478
@@ -3580,6 +7149,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "511",
     "hex": "#E2D849",
+    "cmyk": {
+      "c": 0,
+      "m": 4,
+      "y": 68,
+      "k": 11
+    },
+    "pinyin": "dié huáng",
     "path": "images/511-蝶黄.png",
     "file": "511-蝶黄.png",
     "size": 1614377
@@ -3587,6 +7163,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "512",
     "hex": "#BEC936",
+    "cmyk": {
+      "c": 5,
+      "m": 0,
+      "y": 73,
+      "k": 21
+    },
+    "pinyin": "gǎn lǎn huáng lǜ",
     "path": "images/512-橄榄黄绿.png",
     "file": "512-橄榄黄绿.png",
     "size": 1459627
@@ -3594,6 +7177,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "513",
     "hex": "#5BAE23",
+    "cmyk": {
+      "c": 48,
+      "m": 0,
+      "y": 80,
+      "k": 32
+    },
+    "pinyin": "yīng wǔ lǜ",
     "path": "images/513-鹦鹉绿.png",
     "file": "513-鹦鹉绿.png",
     "size": 1316935
@@ -3601,6 +7191,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "514",
     "hex": "#253D24",
+    "cmyk": {
+      "c": 39,
+      "m": 0,
+      "y": 41,
+      "k": 76
+    },
+    "pinyin": "yóu lǜ",
     "path": "images/514-油绿.png",
     "file": "514-油绿.png",
     "size": 1528751
@@ -3608,6 +7205,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "515",
     "hex": "#FFFEF8",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 3,
+      "k": 0
+    },
+    "pinyin": "xiàng yá bái",
     "path": "images/515-象牙白.png",
     "file": "515-象牙白.png",
     "size": 1131600
@@ -3615,6 +7219,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "516",
     "hex": "#F8F4ED",
+    "cmyk": {
+      "c": 0,
+      "m": 2,
+      "y": 4,
+      "k": 3
+    },
+    "pinyin": "hàn bái yù",
     "path": "images/516-汉白玉.png",
     "file": "516-汉白玉.png",
     "size": 1321926
@@ -3622,6 +7233,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "517",
     "hex": "#FFFEF9",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 2,
+      "k": 0
+    },
+    "pinyin": "xuě bái",
     "path": "images/517-雪白.png",
     "file": "517-雪白.png",
     "size": 1096395
@@ -3629,6 +7247,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "518",
     "hex": "#F7F4ED",
+    "cmyk": {
+      "c": 0,
+      "m": 1,
+      "y": 4,
+      "k": 3
+    },
+    "pinyin": "yú dù bái",
     "path": "images/518-鱼肚白.png",
     "file": "518-鱼肚白.png",
     "size": 1306594
@@ -3636,6 +7261,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "519",
     "hex": "#E4DFD7",
+    "cmyk": {
+      "c": 0,
+      "m": 2,
+      "y": 6,
+      "k": 11
+    },
+    "pinyin": "zhēn zhū huī",
     "path": "images/519-珍珠灰.png",
     "file": "519-珍珠灰.png",
     "size": 1624412
@@ -3643,6 +7275,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "520",
     "hex": "#DAD4CB",
+    "cmyk": {
+      "c": 0,
+      "m": 3,
+      "y": 7,
+      "k": 15
+    },
+    "pinyin": "qiǎn huī",
     "path": "images/520-浅灰.png",
     "file": "520-浅灰.png",
     "size": 1141157
@@ -3650,6 +7289,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "521",
     "hex": "#BBB5AC",
+    "cmyk": {
+      "c": 0,
+      "m": 3,
+      "y": 8,
+      "k": 27
+    },
+    "pinyin": "qiān huī",
     "path": "images/521-铅灰.png",
     "file": "521-铅灰.png",
     "size": 1158417
@@ -3657,6 +7303,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "522",
     "hex": "#A49C93",
+    "cmyk": {
+      "c": 0,
+      "m": 5,
+      "y": 10,
+      "k": 36
+    },
+    "pinyin": "zhōng huī",
     "path": "images/522-中灰.png",
     "file": "522-中灰.png",
     "size": 1471995
@@ -3664,6 +7317,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "523",
     "hex": "#867E76",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 12,
+      "k": 47
+    },
+    "pinyin": "wǎ huī",
     "path": "images/523-瓦灰.png",
     "file": "523-瓦灰.png",
     "size": 1521335
@@ -3671,6 +7331,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "524",
     "hex": "#847C74",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 12,
+      "k": 48
+    },
+    "pinyin": "yè huī",
     "path": "images/524-夜灰.png",
     "file": "524-夜灰.png",
     "size": 1112076
@@ -3678,6 +7345,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "525",
     "hex": "#80766E",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 14,
+      "k": 50
+    },
+    "pinyin": "yàn huī",
     "path": "images/525-雁灰.png",
     "file": "525-雁灰.png",
     "size": 1137908
@@ -3685,6 +7359,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "526",
     "hex": "#81776E",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 15,
+      "k": 49
+    },
+    "pinyin": "shēn huī",
     "path": "images/526-深灰.png",
     "file": "526-深灰.png",
     "size": 1404645
@@ -3692,6 +7373,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "527",
     "hex": "#4B8F8C",
+    "cmyk": {
+      "c": 48,
+      "m": 0,
+      "y": 2,
+      "k": 44
+    },
+    "pinyin": "lán cuì zhú",
     "path": "images/527-蓝翠竹.png",
     "file": "527-蓝翠竹.png",
     "size": 1236930
@@ -3699,6 +7387,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "528",
     "hex": "#8A9A9C",
+    "cmyk": {
+      "c": 12,
+      "m": 1,
+      "y": 0,
+      "k": 39
+    },
+    "pinyin": "yún qīng huī",
     "path": "images/528-云青灰.png",
     "file": "528-云青灰.png",
     "size": 1355337
@@ -3706,6 +7401,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "529",
     "hex": "#000000",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 0,
+      "k": 100
+    },
+    "pinyin": "hēi",
     "path": "images/529-黑.png",
     "file": "529-黑.png",
     "size": 788842
@@ -3713,6 +7415,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "530",
     "hex": "#003152",
+    "cmyk": {
+      "c": 100,
+      "m": 40,
+      "y": 0,
+      "k": 68
+    },
+    "pinyin": "pǔ lǔ shì lán",
     "path": "images/530-普鲁士蓝.png",
     "file": "530-普鲁士蓝.png",
     "size": 1810186
@@ -3720,6 +7429,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "531",
     "hex": "#B2C9B2",
+    "cmyk": {
+      "c": 11,
+      "m": 0,
+      "y": 11,
+      "k": 21
+    },
+    "pinyin": "shān lán",
     "path": "images/531-山岚.png",
     "file": "531-山岚.png",
     "size": 1643889
@@ -3727,6 +7443,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "532",
     "hex": "#6B8E23",
+    "cmyk": {
+      "c": 25,
+      "m": 0,
+      "y": 75,
+      "k": 44
+    },
+    "pinyin": "lì shòu",
     "path": "images/532-綟绶.png",
     "file": "532-綟绶.png",
     "size": 2098754
@@ -3734,6 +7457,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "533",
     "hex": "#2A3C5C",
+    "cmyk": {
+      "c": 54,
+      "m": 35,
+      "y": 0,
+      "k": 64
+    },
+    "pinyin": "dài lán",
     "path": "images/533-黛蓝.png",
     "file": "533-黛蓝.png",
     "size": 1571760
@@ -3741,6 +7471,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "534",
     "hex": "#704A70",
+    "cmyk": {
+      "c": 0,
+      "m": 34,
+      "y": 0,
+      "k": 56
+    },
+    "pinyin": "yān zǐ",
     "path": "images/534-烟紫.png",
     "file": "534-烟紫.png",
     "size": 1743743
@@ -3748,6 +7485,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "535",
     "hex": "#6E4D7E",
+    "cmyk": {
+      "c": 13,
+      "m": 39,
+      "y": 0,
+      "k": 51
+    },
+    "pinyin": "mù shān zǐ",
     "path": "images/535-暮山紫.png",
     "file": "535-暮山紫.png",
     "size": 2001836
@@ -3755,6 +7499,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "536",
     "hex": "#C6D7DB",
+    "cmyk": {
+      "c": 10,
+      "m": 2,
+      "y": 0,
+      "k": 14
+    },
+    "pinyin": "yuè bái tiān qīng",
     "path": "images/536-月白天青.png",
     "file": "536-月白天青.png",
     "size": 1698539
@@ -3762,6 +7513,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "537",
     "hex": "#3CB371",
+    "cmyk": {
+      "c": 66,
+      "m": 0,
+      "y": 37,
+      "k": 30
+    },
+    "pinyin": "cuì wēi",
     "path": "images/537-翠微.png",
     "file": "537-翠微.png",
     "size": 1883344
@@ -3769,6 +7527,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "538",
     "hex": "#A020F0",
+    "cmyk": {
+      "c": 33,
+      "m": 87,
+      "y": 0,
+      "k": 6
+    },
+    "pinyin": "zǐ yún",
     "path": "images/538-紫云.png",
     "file": "538-紫云.png",
     "size": 2146943
@@ -3776,6 +7541,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "539",
     "hex": "#4682B4",
+    "cmyk": {
+      "c": 61,
+      "m": 28,
+      "y": 0,
+      "k": 29
+    },
+    "pinyin": "qīng shuāng",
     "path": "images/539-青霜.png",
     "file": "539-青霜.png",
     "size": 1742544
@@ -3783,6 +7555,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "540",
     "hex": "#7BC092",
+    "cmyk": {
+      "c": 36,
+      "m": 0,
+      "y": 24,
+      "k": 25
+    },
+    "pinyin": "méi zi qīng",
     "path": "images/540-梅子青.png",
     "file": "540-梅子青.png",
     "size": 1189427
@@ -3790,6 +7569,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "541",
     "hex": "#F4512C",
+    "cmyk": {
+      "c": 0,
+      "m": 67,
+      "y": 82,
+      "k": 4
+    },
+    "pinyin": "huǒ yàn hóng",
     "path": "images/541-火焰红.png",
     "file": "541-火焰红.png",
     "size": 1629815
@@ -3797,6 +7583,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "542",
     "hex": "#CA6924",
+    "cmyk": {
+      "c": 0,
+      "m": 48,
+      "y": 82,
+      "k": 21
+    },
+    "pinyin": "hǔ pò",
     "path": "images/542-琥珀.png",
     "file": "542-琥珀.png",
     "size": 1552114
@@ -3804,6 +7597,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "543",
     "hex": "#D2B48C",
+    "cmyk": {
+      "c": 0,
+      "m": 14,
+      "y": 33,
+      "k": 18
+    },
+    "pinyin": "qiǎn hè sè",
     "path": "images/543-浅褐色.png",
     "file": "543-浅褐色.png",
     "size": 1566079
@@ -3811,6 +7611,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "544",
     "hex": "#708090",
+    "cmyk": {
+      "c": 22,
+      "m": 11,
+      "y": 0,
+      "k": 44
+    },
+    "pinyin": "yān qīng",
     "path": "images/544-烟青.png",
     "file": "544-烟青.png",
     "size": 1390148
@@ -3818,6 +7625,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "545",
     "hex": "#2A52BE",
+    "cmyk": {
+      "c": 78,
+      "m": 57,
+      "y": 0,
+      "k": 25
+    },
+    "pinyin": "cāng bì",
     "path": "images/545-苍碧.png",
     "file": "545-苍碧.png",
     "size": 1312264
@@ -3825,6 +7639,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "546",
     "hex": "#E0FFFF",
+    "cmyk": {
+      "c": 12,
+      "m": 0,
+      "y": 0,
+      "k": 0
+    },
+    "pinyin": "yuè huá",
     "path": "images/546-月华.png",
     "file": "546-月华.png",
     "size": 1070015
@@ -3832,6 +7653,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "547",
     "hex": "#F8F3E6",
+    "cmyk": {
+      "c": 0,
+      "m": 2,
+      "y": 7,
+      "k": 3
+    },
+    "pinyin": "líng sù bái",
     "path": "images/547-绫素白.png",
     "file": "547-绫素白.png",
     "size": 1435369
@@ -3839,6 +7667,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "548",
     "hex": "#2E2E2E",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 0,
+      "k": 82
+    },
+    "pinyin": "mò yùn hēi",
     "path": "images/548-墨韵黑.png",
     "file": "548-墨韵黑.png",
     "size": 1575293
@@ -3846,6 +7681,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "549",
     "hex": "#1D3F5A",
+    "cmyk": {
+      "c": 68,
+      "m": 30,
+      "y": 0,
+      "k": 65
+    },
+    "pinyin": "yè yán qīng",
     "path": "images/549-夜筵青.png",
     "file": "549-夜筵青.png",
     "size": 1256622
@@ -3853,6 +7695,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "550",
     "hex": "#F2F3F4",
+    "cmyk": {
+      "c": 1,
+      "m": 0,
+      "y": 0,
+      "k": 4
+    },
+    "pinyin": "shuāng bái",
     "path": "images/550-霜白.png",
     "file": "550-霜白.png",
     "size": 1033851
@@ -3860,6 +7709,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "551",
     "hex": "#C3B787",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 31,
+      "k": 24
+    },
+    "pinyin": "qiū xiāng",
     "path": "images/551-秋香.png",
     "file": "551-秋香.png",
     "size": 1373253
@@ -3867,6 +7723,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "552",
     "hex": "#E3256B",
+    "cmyk": {
+      "c": 0,
+      "m": 84,
+      "y": 53,
+      "k": 11
+    },
+    "pinyin": "fēi hóng",
     "path": "images/552-绯红.png",
     "file": "552-绯红.png",
     "size": 1171681
@@ -3874,6 +7737,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "553",
     "hex": "#FF6B6B",
+    "cmyk": {
+      "c": 0,
+      "m": 58,
+      "y": 58,
+      "k": 0
+    },
+    "pinyin": "xiá fēi",
     "path": "images/553-霞绯.png",
     "file": "553-霞绯.png",
     "size": 1479345
@@ -3881,6 +7751,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "554",
     "hex": "#424B50",
+    "cmyk": {
+      "c": 18,
+      "m": 6,
+      "y": 0,
+      "k": 69
+    },
+    "pinyin": "yā qīng",
     "path": "images/554-鸦青.png",
     "file": "554-鸦青.png",
     "size": 1213302
@@ -3888,6 +7765,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "555",
     "hex": "#0E100F",
+    "cmyk": {
+      "c": 12,
+      "m": 0,
+      "y": 6,
+      "k": 94
+    },
+    "pinyin": "xuán hēi",
     "path": "images/555-玄黑.png",
     "file": "555-玄黑.png",
     "size": 1098739
@@ -3895,6 +7779,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "556",
     "hex": "#2A475F",
+    "cmyk": {
+      "c": 56,
+      "m": 25,
+      "y": 0,
+      "k": 63
+    },
+    "pinyin": "dài qīng",
     "path": "images/556-黛青.png",
     "file": "556-黛青.png",
     "size": 1310519
@@ -3902,6 +7793,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "557",
     "hex": "#F8C471",
+    "cmyk": {
+      "c": 0,
+      "m": 21,
+      "y": 54,
+      "k": 3
+    },
+    "pinyin": "xiāng qǐ",
     "path": "images/557-缃绮.png",
     "file": "557-缃绮.png",
     "size": 1182691
@@ -3909,6 +7807,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "558",
     "hex": "#8B6D5C",
+    "cmyk": {
+      "c": 0,
+      "m": 22,
+      "y": 34,
+      "k": 45
+    },
+    "pinyin": "yān hè",
     "path": "images/558-烟褐.png",
     "file": "558-烟褐.png",
     "size": 1470433
@@ -3916,6 +7821,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "559",
     "hex": "#3E6A3D",
+    "cmyk": {
+      "c": 42,
+      "m": 0,
+      "y": 42,
+      "k": 58
+    },
+    "pinyin": "liǔ cāng",
     "path": "images/559-柳苍.png",
     "file": "559-柳苍.png",
     "size": 1486207
@@ -3923,6 +7835,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "560",
     "hex": "#86A1A7",
+    "cmyk": {
+      "c": 20,
+      "m": 4,
+      "y": 0,
+      "k": 35
+    },
+    "pinyin": "xiè ké qīng",
     "path": "images/560-蟹壳青.png",
     "file": "560-蟹壳青.png",
     "size": 1237493
@@ -3930,6 +7849,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "561",
     "hex": "#B0D8E8",
+    "cmyk": {
+      "c": 24,
+      "m": 7,
+      "y": 0,
+      "k": 9
+    },
+    "pinyin": "xuě qīng",
     "path": "images/561-雪青.png",
     "file": "561-雪青.png",
     "size": 1458873
@@ -3937,6 +7863,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "562",
     "hex": "#87CEEB",
+    "cmyk": {
+      "c": 43,
+      "m": 12,
+      "y": 0,
+      "k": 8
+    },
+    "pinyin": "yún lán",
     "path": "images/562-云蓝.png",
     "file": "562-云蓝.png",
     "size": 1346848
@@ -3944,6 +7877,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "563",
     "hex": "#B34B43",
+    "cmyk": {
+      "c": 0,
+      "m": 58,
+      "y": 63,
+      "k": 30
+    },
+    "pinyin": "méi hóng",
     "path": "images/563-梅红.png",
     "file": "563-梅红.png",
     "size": 1352781
@@ -3951,6 +7891,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "564",
     "hex": "#70C870",
+    "cmyk": {
+      "c": 44,
+      "m": 0,
+      "y": 44,
+      "k": 22
+    },
+    "pinyin": "liǔ lǜ",
     "path": "images/564-柳绿.png",
     "file": "564-柳绿.png",
     "size": 1533528
@@ -3958,6 +7905,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "565",
     "hex": "#4B6C8C",
+    "cmyk": {
+      "c": 46,
+      "m": 23,
+      "y": 0,
+      "k": 45
+    },
+    "pinyin": "gàn bì",
     "path": "images/565-绀碧.png",
     "file": "565-绀碧.png",
     "size": 1249176
@@ -3965,6 +7919,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "566",
     "hex": "#6B8E99",
+    "cmyk": {
+      "c": 30,
+      "m": 7,
+      "y": 0,
+      "k": 40
+    },
+    "pinyin": "yuè lán",
     "path": "images/566-月蓝.png",
     "file": "566-月蓝.png",
     "size": 1335985
@@ -3972,6 +7933,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "567",
     "hex": "#4A6FA6",
+    "cmyk": {
+      "c": 55,
+      "m": 33,
+      "y": 0,
+      "k": 35
+    },
+    "pinyin": "shuāng lán",
     "path": "images/567-霜蓝.png",
     "file": "567-霜蓝.png",
     "size": 1360961
@@ -3979,6 +7947,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "568",
     "hex": "#2E4B26",
+    "cmyk": {
+      "c": 39,
+      "m": 0,
+      "y": 49,
+      "k": 71
+    },
+    "pinyin": "sōng mò",
     "path": "images/568-松墨.png",
     "file": "568-松墨.png",
     "size": 1467277
@@ -3986,6 +7961,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "569",
     "hex": "#00A86B",
+    "cmyk": {
+      "c": 100,
+      "m": 0,
+      "y": 36,
+      "k": 34
+    },
+    "pinyin": "zhú qīng",
     "path": "images/569-竹青.png",
     "file": "569-竹青.png",
     "size": 1536920
@@ -3993,6 +7975,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "570",
     "hex": "#66B7D0",
+    "cmyk": {
+      "c": 51,
+      "m": 12,
+      "y": 0,
+      "k": 18
+    },
+    "pinyin": "hú lán",
     "path": "images/570-湖蓝.png",
     "file": "570-湖蓝.png",
     "size": 1328099
@@ -4000,6 +7989,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "571",
     "hex": "#6B8E9A",
+    "cmyk": {
+      "c": 31,
+      "m": 8,
+      "y": 0,
+      "k": 40
+    },
+    "pinyin": "yíng qīng",
     "path": "images/571-潆青.png",
     "file": "571-潆青.png",
     "size": 1465103
@@ -4007,6 +8003,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "572",
     "hex": "#7CB9A8",
+    "cmyk": {
+      "c": 33,
+      "m": 0,
+      "y": 9,
+      "k": 27
+    },
+    "pinyin": "shuāng qīng",
     "path": "images/572-霜青.png",
     "file": "572-霜青.png",
     "size": 1455959
@@ -4014,6 +8017,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "573",
     "hex": "#8A4B9C",
+    "cmyk": {
+      "c": 12,
+      "m": 52,
+      "y": 0,
+      "k": 39
+    },
+    "pinyin": "yān yíng zǐ",
     "path": "images/573-烟萦紫.png",
     "file": "573-烟萦紫.png",
     "size": 1428876
@@ -4021,6 +8031,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "574",
     "hex": "#A4C2A8",
+    "cmyk": {
+      "c": 15,
+      "m": 0,
+      "y": 13,
+      "k": 24
+    },
+    "pinyin": "piǎo xiāng",
     "path": "images/574-缥缃.png",
     "file": "574-缥缃.png",
     "size": 1489643
@@ -4028,6 +8045,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "575",
     "hex": "#A0D8D8",
+    "cmyk": {
+      "c": 26,
+      "m": 0,
+      "y": 0,
+      "k": 15
+    },
+    "pinyin": "lù bì",
     "path": "images/575-露碧.png",
     "file": "575-露碧.png",
     "size": 1351744
@@ -4035,6 +8059,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "576",
     "hex": "#4F84FF",
+    "cmyk": {
+      "c": 69,
+      "m": 48,
+      "y": 0,
+      "k": 0
+    },
+    "pinyin": "gàn qīng",
     "path": "images/576-绀青.png",
     "file": "576-绀青.png",
     "size": 1245104
@@ -4042,6 +8073,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "577",
     "hex": "#C9E079",
+    "cmyk": {
+      "c": 10,
+      "m": 0,
+      "y": 46,
+      "k": 12
+    },
+    "pinyin": "liǔ huáng",
     "path": "images/577-柳黄.png",
     "file": "577-柳黄.png",
     "size": 1372624
@@ -4049,6 +8087,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "578",
     "hex": "#D8C37C",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 43,
+      "k": 15
+    },
+    "pinyin": "huái huáng",
     "path": "images/578-槐黄.png",
     "file": "578-槐黄.png",
     "size": 1457070
@@ -4056,6 +8101,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "579",
     "hex": "#A8C9E4",
+    "cmyk": {
+      "c": 26,
+      "m": 12,
+      "y": 0,
+      "k": 11
+    },
+    "pinyin": "piǎo sè",
     "path": "images/579-缥色.png",
     "file": "579-缥色.png",
     "size": 1400063
@@ -4063,6 +8115,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "580",
     "hex": "#B6D7A8",
+    "cmyk": {
+      "c": 15,
+      "m": 0,
+      "y": 22,
+      "k": 16
+    },
+    "pinyin": "sōng huā",
     "path": "images/580-松花.png",
     "file": "580-松花.png",
     "size": 1813199
@@ -4070,6 +8129,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "581",
     "hex": "#7AB9C1",
+    "cmyk": {
+      "c": 37,
+      "m": 4,
+      "y": 0,
+      "k": 24
+    },
+    "pinyin": "piǎo bì",
     "path": "images/581-缥碧.png",
     "file": "581-缥碧.png",
     "size": 1877337
@@ -4077,6 +8143,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "582",
     "hex": "#4A7856",
+    "cmyk": {
+      "c": 38,
+      "m": 0,
+      "y": 28,
+      "k": 53
+    },
+    "pinyin": "hé lǜ",
     "path": "images/582-荷绿.png",
     "file": "582-荷绿.png",
     "size": 1896014
@@ -4084,6 +8157,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "583",
     "hex": "#8E443D",
+    "cmyk": {
+      "c": 0,
+      "m": 52,
+      "y": 57,
+      "k": 44
+    },
+    "pinyin": "tán hè",
     "path": "images/583-檀褐.png",
     "file": "583-檀褐.png",
     "size": 1986623
@@ -4091,6 +8171,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "584",
     "hex": "#E0E7EF",
+    "cmyk": {
+      "c": 6,
+      "m": 3,
+      "y": 0,
+      "k": 6
+    },
+    "pinyin": "yuè pò",
     "path": "images/584-月魄.png",
     "file": "584-月魄.png",
     "size": 1482351
@@ -4098,6 +8185,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "585",
     "hex": "#8EC4E9",
+    "cmyk": {
+      "c": 39,
+      "m": 16,
+      "y": 0,
+      "k": 9
+    },
+    "pinyin": "yíng lán",
     "path": "images/585-滢蓝.png",
     "file": "585-滢蓝.png",
     "size": 1442635
@@ -4105,6 +8199,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "586",
     "hex": "#70C8A4",
+    "cmyk": {
+      "c": 44,
+      "m": 0,
+      "y": 18,
+      "k": 22
+    },
+    "pinyin": "hú lǜ",
     "path": "images/586-湖绿.png",
     "file": "586-湖绿.png",
     "size": 1446085
@@ -4112,6 +8213,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "587",
     "hex": "#C92B27",
+    "cmyk": {
+      "c": 0,
+      "m": 79,
+      "y": 81,
+      "k": 21
+    },
+    "pinyin": "fēng dān",
     "path": "images/587-枫丹.png",
     "file": "587-枫丹.png",
     "size": 1408890
@@ -4119,6 +8227,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "588",
     "hex": "#CDE8F9",
+    "cmyk": {
+      "c": 18,
+      "m": 7,
+      "y": 0,
+      "k": 2
+    },
+    "pinyin": "wù xiāo",
     "path": "images/588-雾绡.png",
     "file": "588-雾绡.png",
     "size": 1324620
@@ -4126,6 +8241,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "589",
     "hex": "#F7B7C5",
+    "cmyk": {
+      "c": 0,
+      "m": 26,
+      "y": 20,
+      "k": 3
+    },
+    "pinyin": "yīng fěn",
     "path": "images/589-樱粉.png",
     "file": "589-樱粉.png",
     "size": 1470274
@@ -4133,6 +8255,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "590",
     "hex": "#B8A5D2",
+    "cmyk": {
+      "c": 12,
+      "m": 21,
+      "y": 0,
+      "k": 18
+    },
+    "pinyin": "shuāng zǐ",
     "path": "images/590-霜紫.png",
     "file": "590-霜紫.png",
     "size": 1330835
@@ -4140,6 +8269,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "591",
     "hex": "#2B5F7C",
+    "cmyk": {
+      "c": 65,
+      "m": 23,
+      "y": 0,
+      "k": 51
+    },
+    "pinyin": "piǎo qīng",
     "path": "images/591-缥青.png",
     "file": "591-缥青.png",
     "size": 1329682
@@ -4147,6 +8283,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "592",
     "hex": "#4B9CD3",
+    "cmyk": {
+      "c": 64,
+      "m": 26,
+      "y": 0,
+      "k": 17
+    },
+    "pinyin": "yáo bì",
     "path": "images/592-瑶碧.png",
     "file": "592-瑶碧.png",
     "size": 1362584
@@ -4154,6 +8297,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "593",
     "hex": "#2E4B3A",
+    "cmyk": {
+      "c": 39,
+      "m": 0,
+      "y": 23,
+      "k": 71
+    },
+    "pinyin": "mò yù",
     "path": "images/593-墨玉.png",
     "file": "593-墨玉.png",
     "size": 1361328
@@ -4161,6 +8311,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "594",
     "hex": "#3EB489",
+    "cmyk": {
+      "c": 66,
+      "m": 0,
+      "y": 24,
+      "k": 29
+    },
+    "pinyin": "yíng cuì",
     "path": "images/594-莹翠.png",
     "file": "594-莹翠.png",
     "size": 1323039
@@ -4168,6 +8325,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "595",
     "hex": "#FF4D4D",
+    "cmyk": {
+      "c": 0,
+      "m": 70,
+      "y": 70,
+      "k": 0
+    },
+    "pinyin": "qiàn sè",
     "path": "images/595-茜色.png",
     "file": "595-茜色.png",
     "size": 1429860
@@ -4175,6 +8339,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "596",
     "hex": "#F2C867",
+    "cmyk": {
+      "c": 0,
+      "m": 17,
+      "y": 57,
+      "k": 5
+    },
+    "pinyin": "é huáng",
     "path": "images/596-鹅黄.png",
     "file": "596-鹅黄.png",
     "size": 1285978
@@ -4182,6 +8353,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "597",
     "hex": "#D0E7F9",
+    "cmyk": {
+      "c": 16,
+      "m": 7,
+      "y": 0,
+      "k": 2
+    },
+    "pinyin": "shuāng huá",
     "path": "images/597-霜华.png",
     "file": "597-霜华.png",
     "size": 1438632
@@ -4189,6 +8367,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "598",
     "hex": "#FADADD",
+    "cmyk": {
+      "c": 0,
+      "m": 13,
+      "y": 12,
+      "k": 2
+    },
+    "pinyin": "fěn sè",
     "path": "images/598-粉色.png",
     "file": "598-粉色.png",
     "size": 1369411
@@ -4196,6 +8381,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "599",
     "hex": "#6C9BCA",
+    "cmyk": {
+      "c": 47,
+      "m": 23,
+      "y": 0,
+      "k": 21
+    },
+    "pinyin": "tiān qīng",
     "path": "images/599-天青.png",
     "file": "599-天青.png",
     "size": 1251635
@@ -4203,6 +8395,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "600",
     "hex": "#AED9D4",
+    "cmyk": {
+      "c": 20,
+      "m": 0,
+      "y": 2,
+      "k": 15
+    },
+    "pinyin": "tiān shuǐ bì",
     "path": "images/600-天水碧.png",
     "file": "600-天水碧.png",
     "size": 1250152
@@ -4210,6 +8409,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "601",
     "hex": "#A65F2E",
+    "cmyk": {
+      "c": 0,
+      "m": 43,
+      "y": 72,
+      "k": 35
+    },
+    "pinyin": "tán sè",
     "path": "images/601-檀色.png",
     "file": "601-檀色.png",
     "size": 1336439
@@ -4217,6 +8423,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "602",
     "hex": "#E8F4F8",
+    "cmyk": {
+      "c": 6,
+      "m": 2,
+      "y": 0,
+      "k": 3
+    },
+    "pinyin": "shuāng sè",
     "path": "images/602-霜色.png",
     "file": "602-霜色.png",
     "size": 1471340
@@ -4224,6 +8437,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "603",
     "hex": "#FF8C00",
+    "cmyk": {
+      "c": 0,
+      "m": 45,
+      "y": 100,
+      "k": 0
+    },
+    "pinyin": "chéng sè",
     "path": "images/603-橙色.png",
     "file": "603-橙色.png",
     "size": 1647546
@@ -4231,6 +8451,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "604",
     "hex": "#FFD8B3",
+    "cmyk": {
+      "c": 0,
+      "m": 15,
+      "y": 30,
+      "k": 0
+    },
+    "pinyin": "nǎi chéng sè",
     "path": "images/604-奶橙色.png",
     "file": "604-奶橙色.png",
     "size": 1234583
@@ -4238,6 +8465,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "605",
     "hex": "#3B7A57",
+    "cmyk": {
+      "c": 52,
+      "m": 0,
+      "y": 29,
+      "k": 52
+    },
+    "pinyin": "dài lǜ",
     "path": "images/605-黛绿.png",
     "file": "605-黛绿.png",
     "size": 1574806
@@ -4245,6 +8479,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "606",
     "hex": "#6D0B1E",
+    "cmyk": {
+      "c": 0,
+      "m": 90,
+      "y": 72,
+      "k": 57
+    },
+    "pinyin": "bó gěn dì hóng",
     "path": "images/606-勃艮第红.png",
     "file": "606-勃艮第红.png",
     "size": 1344204
@@ -4252,6 +8493,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "607",
     "hex": "#D92121",
+    "cmyk": {
+      "c": 0,
+      "m": 85,
+      "y": 85,
+      "k": 15
+    },
+    "pinyin": "zhū shā hóng",
     "path": "images/607-朱砂红.png",
     "file": "607-朱砂红.png",
     "size": 1452905
@@ -4259,6 +8507,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "608",
     "hex": "#C41E3A",
+    "cmyk": {
+      "c": 0,
+      "m": 85,
+      "y": 70,
+      "k": 23
+    },
+    "pinyin": "zhū qiáng",
     "path": "images/608-朱墙.png",
     "file": "608-朱墙.png",
     "size": 1308575
@@ -4266,6 +8521,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "609",
     "hex": "#E6F2FF",
+    "cmyk": {
+      "c": 10,
+      "m": 5,
+      "y": 0,
+      "k": 0
+    },
+    "pinyin": "dōng fāng jì bái",
     "path": "images/609-东方既白.png",
     "file": "609-东方既白.png",
     "size": 1243083
@@ -4273,6 +8535,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "610",
     "hex": "#D8B0C8",
+    "cmyk": {
+      "c": 0,
+      "m": 19,
+      "y": 7,
+      "k": 15
+    },
+    "pinyin": "ǒu sī",
     "path": "images/610-藕丝.png",
     "file": "610-藕丝.png",
     "size": 1797008
@@ -4280,6 +8549,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "611",
     "hex": "#F9E4A5",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 34,
+      "k": 2
+    },
+    "pinyin": "nǎi huáng sè",
     "path": "images/611-奶黄色.png",
     "file": "611-奶黄色.png",
     "size": 1280050
@@ -4287,6 +8563,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "612",
     "hex": "#C8A58E",
+    "cmyk": {
+      "c": 0,
+      "m": 17,
+      "y": 29,
+      "k": 22
+    },
+    "pinyin": "qiǎn lì zōng",
     "path": "images/612-浅栗棕.png",
     "file": "612-浅栗棕.png",
     "size": 1584195
@@ -4294,6 +8577,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "613",
     "hex": "#D9A594",
+    "cmyk": {
+      "c": 0,
+      "m": 24,
+      "y": 32,
+      "k": 15
+    },
+    "pinyin": "qiǎn jiàng",
     "path": "images/613-浅绛.png",
     "file": "613-浅绛.png",
     "size": 1663973
@@ -4301,6 +8591,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "614",
     "hex": "#2C2C2C",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 0,
+      "k": 83
+    },
+    "pinyin": "zī",
     "path": "images/614-缁.png",
     "file": "614-缁.png",
     "size": 1185445
@@ -4308,6 +8605,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "615",
     "hex": "#5C4A43",
+    "cmyk": {
+      "c": 0,
+      "m": 20,
+      "y": 27,
+      "k": 64
+    },
+    "pinyin": "zōu",
     "path": "images/615-緅.png",
     "file": "615-緅.png",
     "size": 1235506
@@ -4315,6 +8619,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "616",
     "hex": "#C79A6A",
+    "cmyk": {
+      "c": 0,
+      "m": 23,
+      "y": 47,
+      "k": 22
+    },
+    "pinyin": "yūn",
     "path": "images/616-缊.png",
     "file": "616-缊.png",
     "size": 1732336
@@ -4322,6 +8633,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "617",
     "hex": "#3B7C7F",
+    "cmyk": {
+      "c": 54,
+      "m": 2,
+      "y": 0,
+      "k": 50
+    },
+    "pinyin": "qīng zǔ yīng",
     "path": "images/617-青组缨.png",
     "file": "617-青组缨.png",
     "size": 1404484
@@ -4329,6 +8647,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "618",
     "hex": "#6B3E3C",
+    "cmyk": {
+      "c": 0,
+      "m": 42,
+      "y": 44,
+      "k": 58
+    },
+    "pinyin": "jué biàn",
     "path": "images/618-爵弁.png",
     "file": "618-爵弁.png",
     "size": 1654646
@@ -4336,6 +8661,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "619",
     "hex": "#1A1A1A",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 0,
+      "k": 90
+    },
+    "pinyin": "xuán sè",
     "path": "images/619-玄色.png",
     "file": "619-玄色.png",
     "size": 1158545
@@ -4343,6 +8675,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "620",
     "hex": "#5D3A6F",
+    "cmyk": {
+      "c": 16,
+      "m": 48,
+      "y": 0,
+      "k": 56
+    },
+    "pinyin": "dài zǐ",
     "path": "images/620-黛紫.png",
     "file": "620-黛紫.png",
     "size": 1693099
@@ -4350,6 +8689,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "621",
     "hex": "#EBCDA8",
+    "cmyk": {
+      "c": 0,
+      "m": 13,
+      "y": 29,
+      "k": 8
+    },
+    "pinyin": "qiǎn fū sè",
     "path": "images/621-浅肤色.png",
     "file": "621-浅肤色.png",
     "size": 1328194
@@ -4357,6 +8703,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "622",
     "hex": "#FF6F61",
+    "cmyk": {
+      "c": 0,
+      "m": 56,
+      "y": 62,
+      "k": 0
+    },
+    "pinyin": "hǎi táng",
     "path": "images/622-海棠.png",
     "file": "622-海棠.png",
     "size": 1346115
@@ -4364,6 +8717,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "623",
     "hex": "#2E5A6F",
+    "cmyk": {
+      "c": 59,
+      "m": 19,
+      "y": 0,
+      "k": 56
+    },
+    "pinyin": "dài qīng shān",
     "path": "images/623-黛青山.png",
     "file": "623-黛青山.png",
     "size": 1397987
@@ -4371,6 +8731,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "624",
     "hex": "#C74A4D",
+    "cmyk": {
+      "c": 0,
+      "m": 63,
+      "y": 61,
+      "k": 22
+    },
+    "pinyin": "yín hóng",
     "path": "images/624-银红.png",
     "file": "624-银红.png",
     "size": 1366512
@@ -4378,6 +8745,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "625",
     "hex": "#4A8DDA",
+    "cmyk": {
+      "c": 66,
+      "m": 35,
+      "y": 0,
+      "k": 15
+    },
+    "pinyin": "lán sè",
     "path": "images/625-蓝色.png",
     "file": "625-蓝色.png",
     "size": 1273778
@@ -4385,6 +8759,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "626",
     "hex": "#8E354A",
+    "cmyk": {
+      "c": 0,
+      "m": 63,
+      "y": 48,
+      "k": 44
+    },
+    "pinyin": "jiàng zǐ",
     "path": "images/626-绛紫.png",
     "file": "626-绛紫.png",
     "size": 1763935
@@ -4392,6 +8773,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "627",
     "hex": "#8A3A3A",
+    "cmyk": {
+      "c": 0,
+      "m": 58,
+      "y": 58,
+      "k": 46
+    },
+    "pinyin": "cù",
     "path": "images/627-醋.png",
     "file": "627-醋.png",
     "size": 1456818
@@ -4399,6 +8787,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "628",
     "hex": "#2B3A4F",
+    "cmyk": {
+      "c": 46,
+      "m": 27,
+      "y": 0,
+      "k": 69
+    },
+    "pinyin": "xuán qīng",
     "path": "images/628-玄青.png",
     "file": "628-玄青.png",
     "size": 1371238
@@ -4406,6 +8801,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "629",
     "hex": "#C73B44",
+    "cmyk": {
+      "c": 0,
+      "m": 70,
+      "y": 66,
+      "k": 22
+    },
+    "pinyin": "shuāng yè hóng",
     "path": "images/629-霜叶红.png",
     "file": "629-霜叶红.png",
     "size": 1331216
@@ -4413,6 +8815,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "630",
     "hex": "#BCE5D6",
+    "cmyk": {
+      "c": 18,
+      "m": 0,
+      "y": 7,
+      "k": 10
+    },
+    "pinyin": "zhú yuè",
     "path": "images/630-竹月.png",
     "file": "630-竹月.png",
     "size": 1676495
@@ -4420,6 +8829,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "631",
     "hex": "#A88A6F",
+    "cmyk": {
+      "c": 0,
+      "m": 18,
+      "y": 34,
+      "k": 34
+    },
+    "pinyin": "yín hè",
     "path": "images/631-银褐.png",
     "file": "631-银褐.png",
     "size": 1114716
@@ -4427,6 +8843,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "632",
     "hex": "#D2B89A",
+    "cmyk": {
+      "c": 0,
+      "m": 12,
+      "y": 27,
+      "k": 18
+    },
+    "pinyin": "qiáo mài",
     "path": "images/632-荞麦.png",
     "file": "632-荞麦.png",
     "size": 1093843
@@ -4434,6 +8857,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "633",
     "hex": "#B8C7A0",
+    "cmyk": {
+      "c": 8,
+      "m": 0,
+      "y": 20,
+      "k": 22
+    },
+    "pinyin": "chá fěn lǜ",
     "path": "images/633-茶粉绿.png",
     "file": "633-茶粉绿.png",
     "size": 1551151
@@ -4441,6 +8871,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "634",
     "hex": "#7EC0EE",
+    "cmyk": {
+      "c": 47,
+      "m": 19,
+      "y": 0,
+      "k": 7
+    },
+    "pinyin": "cháng chūn huā lán",
     "path": "images/634-长春花蓝.png",
     "file": "634-长春花蓝.png",
     "size": 1353183
@@ -4448,6 +8885,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "635",
     "hex": "#2E3439",
+    "cmyk": {
+      "c": 19,
+      "m": 9,
+      "y": 0,
+      "k": 78
+    },
+    "pinyin": "qīng lí",
     "path": "images/635-青骊.png",
     "file": "635-青骊.png",
     "size": 1055348
@@ -4455,6 +8899,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "636",
     "hex": "#8B6D47",
+    "cmyk": {
+      "c": 0,
+      "m": 22,
+      "y": 49,
+      "k": 45
+    },
+    "pinyin": "qiáo mài zōng",
     "path": "images/636-荞麦棕.png",
     "file": "636-荞麦棕.png",
     "size": 1461619
@@ -4462,6 +8913,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "637",
     "hex": "#F5F3E9",
+    "cmyk": {
+      "c": 0,
+      "m": 1,
+      "y": 5,
+      "k": 4
+    },
+    "pinyin": "chún yī",
     "path": "images/637-纯衣.png",
     "file": "637-纯衣.png",
     "size": 1036081
@@ -4469,6 +8927,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "638",
     "hex": "#3B3131",
+    "cmyk": {
+      "c": 0,
+      "m": 17,
+      "y": 17,
+      "k": 77
+    },
+    "pinyin": "zī",
     "path": "images/638-緇.png",
     "file": "638-緇.png",
     "size": 1072071
@@ -4476,6 +8941,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "639",
     "hex": "#D46A6A",
+    "cmyk": {
+      "c": 0,
+      "m": 50,
+      "y": 50,
+      "k": 17
+    },
+    "pinyin": "xūn shang",
     "path": "images/639-纁裳.png",
     "file": "639-纁裳.png",
     "size": 1169267
@@ -4483,6 +8955,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "640",
     "hex": "#A5441B",
+    "cmyk": {
+      "c": 0,
+      "m": 59,
+      "y": 84,
+      "k": 35
+    },
+    "pinyin": "mèi gé",
     "path": "images/640-韎韐.png",
     "file": "640-韎韐.png",
     "size": 1497679
@@ -4490,6 +8969,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "641",
     "hex": "#D47A5E",
+    "cmyk": {
+      "c": 0,
+      "m": 42,
+      "y": 56,
+      "k": 17
+    },
+    "pinyin": "xūn jù",
     "path": "images/641-纁屦.png",
     "file": "641-纁屦.png",
     "size": 1596514
@@ -4497,6 +8983,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "642",
     "hex": "#8B5D33",
+    "cmyk": {
+      "c": 0,
+      "m": 33,
+      "y": 63,
+      "k": 45
+    },
+    "pinyin": "pí biàn",
     "path": "images/642-皮弁.png",
     "file": "642-皮弁.png",
     "size": 1771464
@@ -4504,6 +8997,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "643",
     "hex": "#F2F0E6",
+    "cmyk": {
+      "c": 0,
+      "m": 1,
+      "y": 5,
+      "k": 5
+    },
+    "pinyin": "sù yī",
     "path": "images/643-素衣.png",
     "file": "643-素衣.png",
     "size": 1223943
@@ -4511,6 +9011,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "644",
     "hex": "#D2C8BC",
+    "cmyk": {
+      "c": 0,
+      "m": 5,
+      "y": 10,
+      "k": 18
+    },
+    "pinyin": "sù jī",
     "path": "images/644-素积.png",
     "file": "644-素积.png",
     "size": 1478074
@@ -4518,6 +9025,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "645",
     "hex": "#2E2A2D",
+    "cmyk": {
+      "c": 0,
+      "m": 9,
+      "y": 2,
+      "k": 82
+    },
+    "pinyin": "zī dài",
     "path": "images/645-缁带.png",
     "file": "645-缁带.png",
     "size": 1583340
@@ -4525,6 +9039,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "646",
     "hex": "#D6C9B8",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 14,
+      "k": 16
+    },
+    "pinyin": "sù bì",
     "path": "images/646-素鞸.png",
     "file": "646-素鞸.png",
     "size": 1602598
@@ -4532,6 +9053,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "647",
     "hex": "#F5F3E6",
+    "cmyk": {
+      "c": 0,
+      "m": 1,
+      "y": 6,
+      "k": 4
+    },
+    "pinyin": "bái jù",
     "path": "images/647-白屦.png",
     "file": "647-白屦.png",
     "size": 1405522
@@ -4539,6 +9067,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "648",
     "hex": "#2E2014",
+    "cmyk": {
+      "c": 0,
+      "m": 30,
+      "y": 57,
+      "k": 82
+    },
+    "pinyin": "zī qú yì chún",
     "path": "images/648-缁絇繶纯.png",
     "file": "648-缁絇繶纯.png",
     "size": 1351205
@@ -4546,6 +9081,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "649",
     "hex": "#F5D87E",
+    "cmyk": {
+      "c": 0,
+      "m": 12,
+      "y": 49,
+      "k": 4
+    },
+    "pinyin": "huáng shang",
     "path": "images/649-黄裳.png",
     "file": "649-黄裳.png",
     "size": 1222720
@@ -4553,6 +9095,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "650",
     "hex": "#3B7A5D",
+    "cmyk": {
+      "c": 52,
+      "m": 0,
+      "y": 24,
+      "k": 52
+    },
+    "pinyin": "qīng qú yì chún",
     "path": "images/650-青絇繶纯.png",
     "file": "650-青絇繶纯.png",
     "size": 1638348
@@ -4560,6 +9109,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "651",
     "hex": "#C2D1E0",
+    "cmyk": {
+      "c": 13,
+      "m": 7,
+      "y": 0,
+      "k": 12
+    },
+    "pinyin": "qiǎn huī lán",
     "path": "images/651-浅灰蓝.png",
     "file": "651-浅灰蓝.png",
     "size": 1204988
@@ -4567,6 +9123,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "652",
     "hex": "#7AA35A",
+    "cmyk": {
+      "c": 25,
+      "m": 0,
+      "y": 45,
+      "k": 36
+    },
+    "pinyin": "guān lǜ",
     "path": "images/652-官绿.png",
     "file": "652-官绿.png",
     "size": 1242568
@@ -4574,6 +9137,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "653",
     "hex": "#FFD700",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 100,
+      "k": 0
+    },
+    "pinyin": "míng huáng",
     "path": "images/653-明黄.png",
     "file": "653-明黄.png",
     "size": 1373920
@@ -4581,6 +9151,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "654",
     "hex": "#4A9D9C",
+    "cmyk": {
+      "c": 53,
+      "m": 0,
+      "y": 1,
+      "k": 38
+    },
+    "pinyin": "yù qīng",
     "path": "images/654-玉青.png",
     "file": "654-玉青.png",
     "size": 1586381
@@ -4588,6 +9165,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "655",
     "hex": "#B7A8A5",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 10,
+      "k": 28
+    },
+    "pinyin": "nuǎn huī",
     "path": "images/655-暖灰.png",
     "file": "655-暖灰.png",
     "size": 1554608
@@ -4595,6 +9179,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "656",
     "hex": "#1D1B1C",
+    "cmyk": {
+      "c": 0,
+      "m": 7,
+      "y": 3,
+      "k": 89
+    },
+    "pinyin": "mò sè",
     "path": "images/656-墨色.png",
     "file": "656-墨色.png",
     "size": 1300619
@@ -4602,6 +9193,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "657",
     "hex": "#1A3E72",
+    "cmyk": {
+      "c": 77,
+      "m": 46,
+      "y": 0,
+      "k": 55
+    },
+    "pinyin": "bǎo lán",
     "path": "images/657-宝蓝.png",
     "file": "657-宝蓝.png",
     "size": 1742317
@@ -4609,6 +9207,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "658",
     "hex": "#7B3F61",
+    "cmyk": {
+      "c": 0,
+      "m": 49,
+      "y": 21,
+      "k": 52
+    },
+    "pinyin": "dì wáng zǐ",
     "path": "images/658-帝王紫.png",
     "file": "658-帝王紫.png",
     "size": 1555496
@@ -4616,6 +9221,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "659",
     "hex": "#9C8B4D",
+    "cmyk": {
+      "c": 0,
+      "m": 11,
+      "y": 51,
+      "k": 39
+    },
+    "pinyin": "àn jīn",
     "path": "images/659-暗金.png",
     "file": "659-暗金.png",
     "size": 1639395
@@ -4623,6 +9235,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "660",
     "hex": "#C48A69",
+    "cmyk": {
+      "c": 0,
+      "m": 30,
+      "y": 46,
+      "k": 23
+    },
+    "pinyin": "huī chéng sè",
     "path": "images/660-灰橙色.png",
     "file": "660-灰橙色.png",
     "size": 1516846
@@ -4630,6 +9249,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "661",
     "hex": "#C70039",
+    "cmyk": {
+      "c": 0,
+      "m": 100,
+      "y": 71,
+      "k": 22
+    },
+    "pinyin": "qiàn hóng",
     "path": "images/661-茜红.png",
     "file": "661-茜红.png",
     "size": 1141333
@@ -4637,6 +9263,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "662",
     "hex": "#7BA4B8",
+    "cmyk": {
+      "c": 33,
+      "m": 11,
+      "y": 0,
+      "k": 28
+    },
+    "pinyin": "yān lán",
     "path": "images/662-烟蓝.png",
     "file": "662-烟蓝.png",
     "size": 1415564
@@ -4644,6 +9277,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "663",
     "hex": "#FA7C5E",
+    "cmyk": {
+      "c": 0,
+      "m": 50,
+      "y": 62,
+      "k": 2
+    },
+    "pinyin": "luò xiá",
     "path": "images/663-落霞.png",
     "file": "663-落霞.png",
     "size": 1137987
@@ -4651,6 +9291,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "664",
     "hex": "#D46D3A",
+    "cmyk": {
+      "c": 0,
+      "m": 49,
+      "y": 73,
+      "k": 17
+    },
+    "pinyin": "xūn sè",
     "path": "images/664-纁色.png",
     "file": "664-纁色.png",
     "size": 1562413
@@ -4658,6 +9305,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "665",
     "hex": "#5C4033",
+    "cmyk": {
+      "c": 0,
+      "m": 30,
+      "y": 45,
+      "k": 64
+    },
+    "pinyin": "zōu sè",
     "path": "images/665-緅色.png",
     "file": "665-緅色.png",
     "size": 1364831
@@ -4665,6 +9319,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "666",
     "hex": "#7BA0A5",
+    "cmyk": {
+      "c": 25,
+      "m": 3,
+      "y": 0,
+      "k": 35
+    },
+    "pinyin": "wù mái lán",
     "path": "images/666-雾霾蓝.png",
     "file": "666-雾霾蓝.png",
     "size": 1142768
@@ -4672,6 +9333,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "667",
     "hex": "#B2F0D9",
+    "cmyk": {
+      "c": 26,
+      "m": 0,
+      "y": 10,
+      "k": 6
+    },
+    "pinyin": "qiǎn bó hé lǜ",
     "path": "images/667-浅薄荷绿.png",
     "file": "667-浅薄荷绿.png",
     "size": 1121738
@@ -4679,6 +9347,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "668",
     "hex": "#C8A2C8",
+    "cmyk": {
+      "c": 0,
+      "m": 19,
+      "y": 0,
+      "k": 22
+    },
+    "pinyin": "dīng xiāng zǐ",
     "path": "images/668-丁香紫.png",
     "file": "668-丁香紫.png",
     "size": 1367537
@@ -4686,6 +9361,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "669",
     "hex": "#E4B5C4",
+    "cmyk": {
+      "c": 0,
+      "m": 21,
+      "y": 14,
+      "k": 11
+    },
+    "pinyin": "yān fěn",
     "path": "images/669-烟粉.png",
     "file": "669-烟粉.png",
     "size": 1245111
@@ -4693,6 +9375,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "670",
     "hex": "#D8B0B0",
+    "cmyk": {
+      "c": 0,
+      "m": 19,
+      "y": 19,
+      "k": 15
+    },
+    "pinyin": "huī fěn",
     "path": "images/670-灰粉.png",
     "file": "670-灰粉.png",
     "size": 1106392
@@ -4700,6 +9389,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "671",
     "hex": "#FFF8F0",
+    "cmyk": {
+      "c": 0,
+      "m": 3,
+      "y": 6,
+      "k": 0
+    },
+    "pinyin": "mián huā táng bái",
     "path": "images/671-棉花糖白.png",
     "file": "671-棉花糖白.png",
     "size": 1189110
@@ -4707,6 +9403,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "672",
     "hex": "#B8860B",
+    "cmyk": {
+      "c": 0,
+      "m": 27,
+      "y": 94,
+      "k": 28
+    },
+    "pinyin": "jīn zōng",
     "path": "images/672-金棕.png",
     "file": "672-金棕.png",
     "size": 1445223
@@ -4714,6 +9417,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "673",
     "hex": "#8B6E4F",
+    "cmyk": {
+      "c": 0,
+      "m": 21,
+      "y": 43,
+      "k": 45
+    },
+    "pinyin": "fù fāng gān cǎo",
     "path": "images/673-复方甘草.png",
     "file": "673-复方甘草.png",
     "size": 1510854
@@ -4721,6 +9431,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "674",
     "hex": "#C8D3D7",
+    "cmyk": {
+      "c": 7,
+      "m": 2,
+      "y": 0,
+      "k": 16
+    },
+    "pinyin": "tiān jì huī",
     "path": "images/674-天际灰.png",
     "file": "674-天际灰.png",
     "size": 1317265
@@ -4728,6 +9445,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "675",
     "hex": "#FEDBE1",
+    "cmyk": {
+      "c": 0,
+      "m": 14,
+      "y": 11,
+      "k": 0
+    },
+    "pinyin": "ǒu fěn",
     "path": "images/675-藕粉.png",
     "file": "675-藕粉.png",
     "size": 1575104
@@ -4735,6 +9459,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "676",
     "hex": "#9B8AE8",
+    "cmyk": {
+      "c": 33,
+      "m": 41,
+      "y": 0,
+      "k": 9
+    },
+    "pinyin": "zǐ téng luó",
     "path": "images/676-紫藤萝.png",
     "file": "676-紫藤萝.png",
     "size": 1371998
@@ -4742,6 +9473,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "677",
     "hex": "#D1B3FF",
+    "cmyk": {
+      "c": 18,
+      "m": 30,
+      "y": 0,
+      "k": 0
+    },
+    "pinyin": "qiǎn zǐ téng luó",
     "path": "images/677-浅紫藤萝.png",
     "file": "677-浅紫藤萝.png",
     "size": 1570153
@@ -4749,6 +9487,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "678",
     "hex": "#D8B0D8",
+    "cmyk": {
+      "c": 0,
+      "m": 19,
+      "y": 0,
+      "k": 15
+    },
+    "pinyin": "fěn zǐ téng luó",
     "path": "images/678-粉紫藤萝.png",
     "file": "678-粉紫藤萝.png",
     "size": 1669527
@@ -4756,6 +9501,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "679",
     "hex": "#E8F4F0",
+    "cmyk": {
+      "c": 5,
+      "m": 0,
+      "y": 2,
+      "k": 4
+    },
+    "pinyin": "bái xuě téng",
     "path": "images/679-白雪藤.png",
     "file": "679-白雪藤.png",
     "size": 1544517
@@ -4763,6 +9515,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "680",
     "hex": "#C6E3E1",
+    "cmyk": {
+      "c": 13,
+      "m": 0,
+      "y": 1,
+      "k": 11
+    },
+    "pinyin": "níng zhī lián qīng",
     "path": "images/680-凝脂莲青.png",
     "file": "680-凝脂莲青.png",
     "size": 1292005
@@ -4770,6 +9529,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "681",
     "hex": "#3B5F3A",
+    "cmyk": {
+      "c": 38,
+      "m": 0,
+      "y": 39,
+      "k": 63
+    },
+    "pinyin": "jiāo lǜ",
     "path": "images/681-焦绿.png",
     "file": "681-焦绿.png",
     "size": 1552448
@@ -4777,6 +9543,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "682",
     "hex": "#FFF8E7",
+    "cmyk": {
+      "c": 0,
+      "m": 3,
+      "y": 9,
+      "k": 0
+    },
+    "pinyin": "nǎi yóu bái",
     "path": "images/682-奶油白.png",
     "file": "682-奶油白.png",
     "size": 1280757
@@ -4784,6 +9557,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "683",
     "hex": "#B2C8A0",
+    "cmyk": {
+      "c": 11,
+      "m": 0,
+      "y": 20,
+      "k": 22
+    },
+    "pinyin": "qiǎn dòu lǜ",
     "path": "images/683-浅豆绿.png",
     "file": "683-浅豆绿.png",
     "size": 1531620
@@ -4791,6 +9571,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "684",
     "hex": "#F8F4E9",
+    "cmyk": {
+      "c": 0,
+      "m": 2,
+      "y": 6,
+      "k": 3
+    },
+    "pinyin": "mò lì bái",
     "path": "images/684-茉莉白.png",
     "file": "684-茉莉白.png",
     "size": 1564925
@@ -4798,6 +9585,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "685",
     "hex": "#2E292B",
+    "cmyk": {
+      "c": 0,
+      "m": 11,
+      "y": 7,
+      "k": 82
+    },
+    "pinyin": "zhī má hēi",
     "path": "images/685-芝麻黑.png",
     "file": "685-芝麻黑.png",
     "size": 1322308
@@ -4805,6 +9599,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "686",
     "hex": "#D4A017",
+    "cmyk": {
+      "c": 0,
+      "m": 25,
+      "y": 89,
+      "k": 17
+    },
+    "pinyin": "liú huáng",
     "path": "images/686-流黄.png",
     "file": "686-流黄.png",
     "size": 1803502
@@ -4812,6 +9613,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "687",
     "hex": "#CCFF00",
+    "cmyk": {
+      "c": 20,
+      "m": 0,
+      "y": 100,
+      "k": 0
+    },
+    "pinyin": "níng méng lǜ",
     "path": "images/687-柠檬绿.png",
     "file": "687-柠檬绿.png",
     "size": 1667113
@@ -4819,6 +9627,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "688",
     "hex": "#2E8B57",
+    "cmyk": {
+      "c": 67,
+      "m": 0,
+      "y": 37,
+      "k": 45
+    },
+    "pinyin": "qīng lǜ",
     "path": "images/688-青绿.png",
     "file": "688-青绿.png",
     "size": 1693684
@@ -4826,6 +9641,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "689",
     "hex": "#8B4513",
+    "cmyk": {
+      "c": 0,
+      "m": 50,
+      "y": 86,
+      "k": 45
+    },
+    "pinyin": "mù sè",
     "path": "images/689-木色.png",
     "file": "689-木色.png",
     "size": 1767726
@@ -4833,6 +9655,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "690",
     "hex": "#9C9CA4",
+    "cmyk": {
+      "c": 5,
+      "m": 5,
+      "y": 0,
+      "k": 36
+    },
+    "pinyin": "gāo jí huī",
     "path": "images/690-高级灰.png",
     "file": "690-高级灰.png",
     "size": 1513598
@@ -4840,6 +9669,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "691",
     "hex": "#C1C8D6",
+    "cmyk": {
+      "c": 10,
+      "m": 7,
+      "y": 0,
+      "k": 16
+    },
+    "pinyin": "yún fēng huī",
     "path": "images/691-云峰灰.png",
     "file": "691-云峰灰.png",
     "size": 1356580
@@ -4847,6 +9683,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "692",
     "hex": "#8A6E8B",
+    "cmyk": {
+      "c": 1,
+      "m": 21,
+      "y": 0,
+      "k": 45
+    },
+    "pinyin": "tán xiāng zǐ",
     "path": "images/692-檀香紫.png",
     "file": "692-檀香紫.png",
     "size": 1358437
@@ -4854,6 +9697,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "693",
     "hex": "#3B3A3E",
+    "cmyk": {
+      "c": 5,
+      "m": 6,
+      "y": 0,
+      "k": 76
+    },
+    "pinyin": "sōng yān mò",
     "path": "images/693-松烟墨.png",
     "file": "693-松烟墨.png",
     "size": 1517391
@@ -4861,6 +9711,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "694",
     "hex": "#FDDA9F",
+    "cmyk": {
+      "c": 0,
+      "m": 14,
+      "y": 37,
+      "k": 1
+    },
+    "pinyin": "xìng zi",
     "path": "images/694-杏子.png",
     "file": "694-杏子.png",
     "size": 1091289
@@ -4868,6 +9725,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "695",
     "hex": "#1E5A8F",
+    "cmyk": {
+      "c": 79,
+      "m": 37,
+      "y": 0,
+      "k": 44
+    },
+    "pinyin": "jì lán",
     "path": "images/695-霁蓝.png",
     "file": "695-霁蓝.png",
     "size": 1520768
@@ -4875,6 +9739,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "696",
     "hex": "#4B0082",
+    "cmyk": {
+      "c": 42,
+      "m": 100,
+      "y": 0,
+      "k": 49
+    },
+    "pinyin": "diàn lán",
     "path": "images/696-靛蓝.png",
     "file": "696-靛蓝.png",
     "size": 1464360
@@ -4882,6 +9753,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "697",
     "hex": "#FF007F",
+    "cmyk": {
+      "c": 0,
+      "m": 100,
+      "y": 50,
+      "k": 0
+    },
+    "pinyin": "méi hóng sè",
     "path": "images/697-玫红色.png",
     "file": "697-玫红色.png",
     "size": 1365566
@@ -4889,6 +9767,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "698",
     "hex": "#6CC788",
+    "cmyk": {
+      "c": 46,
+      "m": 0,
+      "y": 32,
+      "k": 22
+    },
+    "pinyin": "xīn lǜ",
     "path": "images/698-新绿.png",
     "file": "698-新绿.png",
     "size": 1158448
@@ -4896,6 +9781,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "699",
     "hex": "#D9CBB8",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 15,
+      "k": 15
+    },
+    "pinyin": "xìng zi huī",
     "path": "images/699-杏子灰.png",
     "file": "699-杏子灰.png",
     "size": 1494549
@@ -4903,6 +9795,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "700",
     "hex": "#F0F8FF",
+    "cmyk": {
+      "c": 6,
+      "m": 3,
+      "y": 0,
+      "k": 0
+    },
+    "pinyin": "yù sè",
     "path": "images/700-玉色.png",
     "file": "700-玉色.png",
     "size": 1103876
@@ -4910,6 +9809,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "701",
     "hex": "#E2F0CB",
+    "cmyk": {
+      "c": 6,
+      "m": 0,
+      "y": 15,
+      "k": 6
+    },
+    "pinyin": "shuāng dì",
     "path": "images/701-霜地.png",
     "file": "701-霜地.png",
     "size": 1600351
@@ -4917,6 +9823,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "702",
     "hex": "#3AB08C",
+    "cmyk": {
+      "c": 67,
+      "m": 0,
+      "y": 20,
+      "k": 31
+    },
+    "pinyin": "dài lǜ sè",
     "path": "images/702-黛绿色.png",
     "file": "702-黛绿色.png",
     "size": 1343749
@@ -4924,6 +9837,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "703",
     "hex": "#C75A6B",
+    "cmyk": {
+      "c": 0,
+      "m": 55,
+      "y": 46,
+      "k": 22
+    },
+    "pinyin": "qiàn qún",
     "path": "images/703-茜裙.png",
     "file": "703-茜裙.png",
     "size": 1410551
@@ -4931,6 +9851,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "704",
     "hex": "#3B4F5C",
+    "cmyk": {
+      "c": 36,
+      "m": 14,
+      "y": 0,
+      "k": 64
+    },
+    "pinyin": "dài sè",
     "path": "images/704-黛色.png",
     "file": "704-黛色.png",
     "size": 1217881
@@ -4938,6 +9865,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "705",
     "hex": "#A0D6B4",
+    "cmyk": {
+      "c": 25,
+      "m": 0,
+      "y": 16,
+      "k": 16
+    },
+    "pinyin": "sōng huā lǜ",
     "path": "images/705-松花绿.png",
     "file": "705-松花绿.png",
     "size": 1410602
@@ -4945,6 +9879,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "706",
     "hex": "#8A8A8A",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 0,
+      "k": 46
+    },
+    "pinyin": "huī sè",
     "path": "images/706-灰色.png",
     "file": "706-灰色.png",
     "size": 1100468
@@ -4952,6 +9893,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "707",
     "hex": "#F8F8F8",
+    "cmyk": {
+      "c": 0,
+      "m": 0,
+      "y": 0,
+      "k": 3
+    },
+    "pinyin": "bái sè",
     "path": "images/707-白色.png",
     "file": "707-白色.png",
     "size": 1417641
@@ -4959,6 +9907,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "708",
     "hex": "#3A5F4B",
+    "cmyk": {
+      "c": 39,
+      "m": 0,
+      "y": 21,
+      "k": 63
+    },
+    "pinyin": "mǎ ěr sī lǜ",
     "path": "images/708-马尔斯绿.png",
     "file": "708-马尔斯绿.png",
     "size": 1326496
@@ -4966,6 +9921,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "709",
     "hex": "#D9C6B0",
+    "cmyk": {
+      "c": 0,
+      "m": 9,
+      "y": 19,
+      "k": 15
+    },
+    "pinyin": "ǒu sī qiū bàn",
     "path": "images/709-藕丝秋半.png",
     "file": "709-藕丝秋半.png",
     "size": 1404772
@@ -4973,6 +9935,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "710",
     "hex": "#B0D4E3",
+    "cmyk": {
+      "c": 22,
+      "m": 7,
+      "y": 0,
+      "k": 11
+    },
+    "pinyin": "qiǎn lán",
     "path": "images/710-浅蓝.png",
     "file": "710-浅蓝.png",
     "size": 1488885
@@ -4980,6 +9949,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "711",
     "hex": "#4A76A8",
+    "cmyk": {
+      "c": 56,
+      "m": 30,
+      "y": 0,
+      "k": 34
+    },
+    "pinyin": "xiāng lán",
     "path": "images/711-湘蓝.png",
     "file": "711-湘蓝.png",
     "size": 1347358
@@ -4987,6 +9963,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "712",
     "hex": "#F57C00",
+    "cmyk": {
+      "c": 0,
+      "m": 49,
+      "y": 100,
+      "k": 4
+    },
+    "pinyin": "lì sè",
     "path": "images/712-荔色.png",
     "file": "712-荔色.png",
     "size": 1574942
@@ -4994,6 +9977,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "713",
     "hex": "#2F4F4F",
+    "cmyk": {
+      "c": 41,
+      "m": 0,
+      "y": 0,
+      "k": 69
+    },
+    "pinyin": "yā qīng sè",
     "path": "images/713-鸦青色.png",
     "file": "713-鸦青色.png",
     "size": 1258096
@@ -5001,6 +9991,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "714",
     "hex": "#F0D9D0",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 13,
+      "k": 6
+    },
+    "pinyin": "xìng fěn",
     "path": "images/714-杏粉.png",
     "file": "714-杏粉.png",
     "size": 1592057
@@ -5008,6 +10005,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "715",
     "hex": "#F5E6E0",
+    "cmyk": {
+      "c": 0,
+      "m": 6,
+      "y": 9,
+      "k": 4
+    },
+    "pinyin": "qiǎn xìng fěn",
     "path": "images/715-浅杏粉.png",
     "file": "715-浅杏粉.png",
     "size": 1506131
@@ -5015,6 +10019,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "716",
     "hex": "#F5F0E6",
+    "cmyk": {
+      "c": 0,
+      "m": 2,
+      "y": 6,
+      "k": 4
+    },
+    "pinyin": "mǐ bái",
     "path": "images/716-米白.png",
     "file": "716-米白.png",
     "size": 1247443
@@ -5022,6 +10033,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "717",
     "hex": "#F8F5F0",
+    "cmyk": {
+      "c": 0,
+      "m": 1,
+      "y": 3,
+      "k": 3
+    },
+    "pinyin": "lí huā bái",
     "path": "images/717-梨花白.png",
     "file": "717-梨花白.png",
     "size": 1181688
@@ -5029,6 +10047,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "718",
     "hex": "#8DB67A",
+    "cmyk": {
+      "c": 23,
+      "m": 0,
+      "y": 33,
+      "k": 29
+    },
+    "pinyin": "jì mài lǜ",
     "path": "images/718-荠麦绿.png",
     "file": "718-荠麦绿.png",
     "size": 1569034
@@ -5036,6 +10061,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "719",
     "hex": "#2E5A88",
+    "cmyk": {
+      "c": 66,
+      "m": 34,
+      "y": 0,
+      "k": 47
+    },
+    "pinyin": "liǎo lán qīng",
     "path": "images/719-蓼蓝青.png",
     "file": "719-蓼蓝青.png",
     "size": 1814236
@@ -5043,6 +10075,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "720",
     "hex": "#9D4E5C",
+    "cmyk": {
+      "c": 0,
+      "m": 50,
+      "y": 41,
+      "k": 38
+    },
+    "pinyin": "yān zhī lèi",
     "path": "images/720-胭脂泪.png",
     "file": "720-胭脂泪.png",
     "size": 1451623
@@ -5050,6 +10089,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "721",
     "hex": "#B5A0C2",
+    "cmyk": {
+      "c": 7,
+      "m": 18,
+      "y": 0,
+      "k": 24
+    },
+    "pinyin": "ǒu hé sè",
     "path": "images/721-藕荷色.png",
     "file": "721-藕荷色.png",
     "size": 1523771
@@ -5057,6 +10103,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "722",
     "hex": "#B8A996",
+    "cmyk": {
+      "c": 0,
+      "m": 8,
+      "y": 18,
+      "k": 28
+    },
+    "pinyin": "xìng zi yīn",
     "path": "images/722-杏子阴.png",
     "file": "722-杏子阴.png",
     "size": 1538133
@@ -5064,6 +10117,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "723",
     "hex": "#D8BFD8",
+    "cmyk": {
+      "c": 0,
+      "m": 12,
+      "y": 0,
+      "k": 15
+    },
+    "pinyin": "qiǎn xiàn cài zǐ",
     "path": "images/723-浅苋菜紫.png",
     "file": "723-浅苋菜紫.png",
     "size": 1520672
@@ -5071,6 +10131,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "724",
     "hex": "#C83737",
+    "cmyk": {
+      "c": 0,
+      "m": 73,
+      "y": 73,
+      "k": 22
+    },
+    "pinyin": "shè hóng pèi",
     "path": "images/724-社红配.png",
     "file": "724-社红配.png",
     "size": 1627775
@@ -5078,6 +10145,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "725",
     "hex": "#BC1E46",
+    "cmyk": {
+      "c": 0,
+      "m": 84,
+      "y": 63,
+      "k": 26
+    },
+    "pinyin": "xīng hóng",
     "path": "images/725-猩红.png",
     "file": "725-猩红.png",
     "size": 1716782
@@ -5085,6 +10159,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "726",
     "hex": "#A8D865",
+    "cmyk": {
+      "c": 22,
+      "m": 0,
+      "y": 53,
+      "k": 15
+    },
+    "pinyin": "yīng ér",
     "path": "images/726-莺儿.png",
     "file": "726-莺儿.png",
     "size": 1351757
@@ -5092,6 +10173,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "727",
     "hex": "#2A5C82",
+    "cmyk": {
+      "c": 68,
+      "m": 29,
+      "y": 0,
+      "k": 49
+    },
+    "pinyin": "qīng lán",
     "path": "images/727-青蓝.png",
     "file": "727-青蓝.png",
     "size": 1865208
@@ -5099,6 +10187,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "728",
     "hex": "#2E5D4A",
+    "cmyk": {
+      "c": 51,
+      "m": 0,
+      "y": 20,
+      "k": 64
+    },
+    "pinyin": "cāng láng",
     "path": "images/728-苍筤.png",
     "file": "728-苍筤.png",
     "size": 1566494
@@ -5106,6 +10201,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "729",
     "hex": "#2E7D32",
+    "cmyk": {
+      "c": 63,
+      "m": 0,
+      "y": 60,
+      "k": 51
+    },
+    "pinyin": "hàn xiù lǜ",
     "path": "images/729-汉绣绿.png",
     "file": "729-汉绣绿.png",
     "size": 1831286
@@ -5113,6 +10215,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "730",
     "hex": "#9E2F2F",
+    "cmyk": {
+      "c": 0,
+      "m": 70,
+      "y": 70,
+      "k": 38
+    },
+    "pinyin": "hàn xiù hóng",
     "path": "images/730-汉绣红.png",
     "file": "730-汉绣红.png",
     "size": 1782629
@@ -5120,6 +10229,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "731",
     "hex": "#D9C6B3",
+    "cmyk": {
+      "c": 0,
+      "m": 9,
+      "y": 18,
+      "k": 15
+    },
+    "pinyin": "ǒu sī qiū",
     "path": "images/731-藕丝秋.png",
     "file": "731-藕丝秋.png",
     "size": 1706740
@@ -5127,6 +10243,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "732",
     "hex": "#1A3B2E",
+    "cmyk": {
+      "c": 56,
+      "m": 0,
+      "y": 22,
+      "k": 77
+    },
+    "pinyin": "mò lǜ",
     "path": "images/732-墨绿.png",
     "file": "732-墨绿.png",
     "size": 1515652
@@ -5134,6 +10257,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "733",
     "hex": "#F8F4F0",
+    "cmyk": {
+      "c": 0,
+      "m": 2,
+      "y": 3,
+      "k": 3
+    },
+    "pinyin": "tú mí bái",
     "path": "images/733-荼蘼白.png",
     "file": "733-荼蘼白.png",
     "size": 1566950
@@ -5141,6 +10271,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "734",
     "hex": "#2E5D8C",
+    "cmyk": {
+      "c": 67,
+      "m": 34,
+      "y": 0,
+      "k": 45
+    },
+    "pinyin": "shí qīng",
     "path": "images/734-石青.png",
     "file": "734-石青.png",
     "size": 1387162
@@ -5148,6 +10285,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "735",
     "hex": "#D4AF37",
+    "cmyk": {
+      "c": 0,
+      "m": 17,
+      "y": 74,
+      "k": 17
+    },
+    "pinyin": "liú jīn",
     "path": "images/735-鎏金.png",
     "file": "735-鎏金.png",
     "size": 1365908
@@ -5155,6 +10299,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "736",
     "hex": "#0F1A20",
+    "cmyk": {
+      "c": 53,
+      "m": 19,
+      "y": 0,
+      "k": 87
+    },
+    "pinyin": "mò hēi",
     "path": "images/736-墨黑.png",
     "file": "736-墨黑.png",
     "size": 1667772
@@ -5162,6 +10313,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "737",
     "hex": "#DCC6B5",
+    "cmyk": {
+      "c": 0,
+      "m": 10,
+      "y": 18,
+      "k": 14
+    },
+    "pinyin": "ǒu sī qiū sè",
     "path": "images/737-藕丝秋色.png",
     "file": "737-藕丝秋色.png",
     "size": 1523502
@@ -5169,6 +10327,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "738",
     "hex": "#C94A5E",
+    "cmyk": {
+      "c": 0,
+      "m": 63,
+      "y": 53,
+      "k": 21
+    },
+    "pinyin": "yān zhī yūn",
     "path": "images/738-胭脂晕.png",
     "file": "738-胭脂晕.png",
     "size": 1374537
@@ -5176,6 +10341,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "739",
     "hex": "#E6C24D",
+    "cmyk": {
+      "c": 0,
+      "m": 16,
+      "y": 67,
+      "k": 10
+    },
+    "pinyin": "yā huáng",
     "path": "images/739-鸦黄.png",
     "file": "739-鸦黄.png",
     "size": 1562403
@@ -5183,6 +10355,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "740",
     "hex": "#2AAE6F",
+    "cmyk": {
+      "c": 76,
+      "m": 0,
+      "y": 36,
+      "k": 32
+    },
+    "pinyin": "cuì qīng",
     "path": "images/740-翠青.png",
     "file": "740-翠青.png",
     "size": 1638345
@@ -5190,6 +10369,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "741",
     "hex": "#1A3A5F",
+    "cmyk": {
+      "c": 73,
+      "m": 39,
+      "y": 0,
+      "k": 63
+    },
+    "pinyin": "qīng dài",
     "path": "images/741-青黛.png",
     "file": "741-青黛.png",
     "size": 1578665
@@ -5197,6 +10383,13 @@ window.TRADITIONAL_COLOR_IMAGES = [
   {
     "id": "742",
     "hex": "#0D5E3A",
+    "cmyk": {
+      "c": 86,
+      "m": 0,
+      "y": 38,
+      "k": 63
+    },
+    "pinyin": "shēn lǜ",
     "path": "images/742-深绿.png",
     "file": "742-深绿.png",
     "size": 1695881

@@ -60,6 +60,15 @@
           <a href="#skill-xxd-print-packaging" data-skill-anchor><span>10</span>进生产</a>
         </nav>
 
+        <details class="skills-install" style="margin:0 auto 1.5rem;max-width:760px;border:1px solid rgba(128,128,128,.35);padding:1rem 1.25rem;">
+          <summary style="cursor:pointer;font-weight:600;">把这些 skill 装进 Claude Code 使用</summary>
+          <p style="margin:.75rem 0 .5rem;opacity:.85;line-height:1.6;">每个 <code>xxd-*</code> 都是 Claude Code 原生 skill（带 frontmatter 的 <code>SKILL.md</code>），复制到个人 skills 目录即可使用。每个 skill 自带完整 <code>references/</code>，无需联网取数据。</p>
+          <pre style="overflow:auto;padding:.85rem 1rem;background:rgba(128,128,128,.12);border:1px solid rgba(128,128,128,.25);font-size:.85rem;line-height:1.6;margin:.5rem 0;"><code># 克隆仓库后，复制需要的 skill（或用 xxd-* 一次全装上）
+git clone https://github.com/nevertoday/zhongguo-traditional-colors.git
+cp -r zhongguo-traditional-colors/skills/xxd-* ~/.claude/skills/</code></pre>
+          <p style="margin:.5rem 0 0;opacity:.85;line-height:1.6;">装好后在 Claude Code 里直接描述任务（例如“用朱砂做一套 UI token”），或调用对应 skill 即可触发。</p>
+        </details>
+
         <div class="skills-stage">
           <div class="skills-list" aria-label="中国传统色实战 skills">
             <article class="skill-item" id="skill-xxd-color-brief" tabindex="-1" data-open="false">
