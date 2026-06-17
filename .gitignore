@@ -4,3 +4,4 @@ downloads/*.zip
 artifacts/
 node_modules/
 *.log
+.venv-tooling/

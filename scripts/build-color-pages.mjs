@@ -429,21 +429,54 @@ function renderColorPage(image, harmony, context, siblings = {}) {
 `;
 }
 
-// A lightweight, on-brand SVG share card per color (downloadable / preview asset).
-function renderShareCard(image, harmony) {
+// Resolve a color's recommended companions (辅色 + 点缀色) to {name, hex} pairs,
+// snapped to real library entries — the "配色搭档" row on the share card.
+function resolvePartners(harmony, imageById) {
+  if (!harmony) return [];
+  const ids = [...(harmony.secondary || []).slice(0, 2), ...(harmony.accent || []).slice(0, 2)];
+  const seen = new Set();
+  const partners = [];
+  for (const id of ids) {
+    if (seen.has(id)) continue;
+    seen.add(id);
+    const companion = imageById.get(id);
+    if (companion?.hex) partners.push({ name: colorName(companion), hex: companion.hex });
+  }
+  return partners.slice(0, 4);
+}
+
+// A downloadable "传统色身份证" share card (1200×630, also the og:image): name,
+// id, hue family, hex/rgb/cmyk and the color's real harmony companions — every
+// value sourced from the data layer, nothing invented.
+function renderShareCard(image, harmony, partners = []) {
   const name = colorName(image);
   const hex = image.hex;
   const ink = readableText(hex);
-  const sub = [harmony?.hueFamily, harmony?.temperature ? `${harmony.temperature}色` : '']
+  const rgb = rgbFromHex(hex) || { r: 0, g: 0, b: 0 };
+  const cmyk = image.cmyk || cmykFromRgb(rgb);
+  const heading = ['中国传统色', `No.${image.id}`, harmony?.hueFamily, harmony?.temperature ? `${harmony.temperature}色` : '']
     .filter(Boolean)
     .join(' · ');
+  const nameSize = name.length >= 6 ? 96 : name.length >= 5 ? 120 : 150;
+  const pinyinLine = image.pinyin
+    ? `\n  <text x="80" y="340" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="${ink}" opacity="0.72" letter-spacing="1">${escapeHtml(image.pinyin)}</text>`
+    : '';
+  const partnerTitle = partners.length
+    ? `\n  <text x="80" y="512" font-family="'M PLUS Rounded 1c', sans-serif" font-size="22" fill="${ink}" opacity="0.6">配色搭档 · 取自传统色库</text>`
+    : '';
+  const chips = partners.map((partner, index) => {
+    const x = 80 + index * 265;
+    return `  <rect x="${x}" y="540" width="34" height="34" fill="${escapeHtml(partner.hex)}" stroke="${ink}" stroke-opacity="0.4"/>
+  <text x="${x + 46}" y="565" font-family="'Noto Serif SC', serif" font-size="24" fill="${ink}" opacity="0.82">${escapeHtml(partner.name)}</text>`;
+  }).join('\n');
+  const chipBlock = chips ? `\n${chips}` : '';
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="${escapeHtml(`${name} ${hex}`)}">
   <rect width="1200" height="630" fill="${escapeHtml(hex)}"/>
-  <text x="80" y="120" font-family="'Noto Serif SC', serif" font-size="34" fill="${ink}" opacity="0.78">中国传统色 · No.${escapeHtml(image.id)}</text>
-  <text x="80" y="360" font-family="'Noto Serif SC', serif" font-size="180" font-weight="900" fill="${ink}">${escapeHtml(name)}</text>
-  <text x="80" y="470" font-family="'M PLUS Rounded 1c', sans-serif" font-size="64" fill="${ink}" letter-spacing="4">${escapeHtml(hex)}</text>
-  <text x="80" y="545" font-family="'M PLUS Rounded 1c', sans-serif" font-size="34" fill="${ink}" opacity="0.7">${escapeHtml(sub)}</text>
-  <text x="1120" y="560" text-anchor="end" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="${ink}" opacity="0.6">colors.xiaoxiaodong.ai</text>
+  <text x="80" y="96" font-family="'Noto Serif SC', serif" font-size="30" fill="${ink}" opacity="0.78">${escapeHtml(heading)}</text>
+  <text x="80" y="288" font-family="'Noto Serif SC', serif" font-size="${nameSize}" font-weight="900" fill="${ink}">${escapeHtml(name)}</text>${pinyinLine}
+  <text x="80" y="404" font-family="'M PLUS Rounded 1c', sans-serif" font-size="56" fill="${ink}" letter-spacing="4">${escapeHtml(hex)}</text>
+  <text x="80" y="458" font-family="'M PLUS Rounded 1c', sans-serif" font-size="30" fill="${ink}" opacity="0.72">RGB ${rgb.r} ${rgb.g} ${rgb.b}　CMYK ${cmyk.c} ${cmyk.m} ${cmyk.y} ${cmyk.k}</text>${partnerTitle}${chipBlock}
+  <text x="1120" y="600" text-anchor="end" font-family="'M PLUS Rounded 1c', sans-serif" font-size="28" fill="${ink}" opacity="0.55">colors.xiaoxiaodong.ai</text>
 </svg>
 `;
 }
@@ -633,7 +666,8 @@ async function main() {
     const slug = colorSlug(image);
     const siblings = { prev: images[i - 1], next: images[i + 1] };
     await writeFile(path.join(COLORS_DIR, `${slug}.html`), renderColorPage(image, harmony, context, siblings), 'utf8');
-    await writeFile(path.join(CARDS_DIR, `${image.id}.svg`), renderShareCard(image, harmony), 'utf8');
+    const partners = resolvePartners(harmony, imageById);
+    await writeFile(path.join(CARDS_DIR, `${image.id}.svg`), renderShareCard(image, harmony, partners), 'utf8');
     written += 1;
   }
 

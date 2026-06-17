@@ -15,6 +15,7 @@
   const themeIcon = document.querySelector('[data-theme-icon]');
   const themeLabel = document.querySelector('[data-theme-label]');
   const themeColorMeta = document.querySelector('[data-theme-color]');
+  const modeButtons = [...root.querySelectorAll('[data-mode-switch] button')];
   let state = { id: null, mode: currentTheme(), view: 'overview' };
 
   function currentTheme() {
@@ -27,6 +28,7 @@
     if (themeLabel) themeLabel.textContent = theme === 'dark' ? '亮色' : '暗色';
     themeIcon?.setAttribute('icon', theme === 'dark' ? 'lucide:sun' : 'lucide:moon');
     themeColorMeta?.setAttribute('content', theme === 'dark' ? '#11100e' : '#f7f7f4');
+    modeButtons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === theme)));
   }
 
   function setSiteTheme(theme) {
@@ -138,6 +140,7 @@
     if (hit) { setAnchor(hit); syncQuick(hit); }
   });
   themeToggle?.addEventListener('click', () => setSiteTheme(currentTheme() === 'dark' ? 'light' : 'dark'));
+  modeButtons.forEach((b) => b.addEventListener('click', () => setSiteTheme(b.dataset.mode)));
   new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   $('[data-random]').addEventListener('click', () => { const c = ALL[Math.floor(Math.random() * ALL.length)]; setAnchor(c.id); syncQuick(c.id); });
   $('[data-copy]').addEventListener('click', function () {
@@ -156,7 +159,8 @@
     qWrap.appendChild(b);
   });
 
-  const startId = byName['竹青'] || (qWrap.querySelector('button') || {}).dataset?.qid || ALL[0].id;
+  const urlAnchor = new URLSearchParams(location.search).get('anchor');
+  const startId = (urlAnchor && REC(urlAnchor) ? urlAnchor : '') || byName['竹青'] || (qWrap.querySelector('button') || {}).dataset?.qid || ALL[0].id;
   setSiteTheme(currentTheme());
   setAnchor(startId); syncQuick(startId); setView('overview');
 })();
