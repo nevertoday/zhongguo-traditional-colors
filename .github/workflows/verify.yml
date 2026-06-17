@@ -27,22 +27,27 @@ jobs:
       - name: Verify manifest join
         run: npm run verify:manifest
 
-      # 2. Rebuild every deterministic generated artifact, then fail if the
-      #    working tree drifted. images.js is intentionally NOT rebuilt here —
-      #    its generatedAt timestamp is non-deterministic; its integrity is
-      #    already covered by verify:manifest above.
-      - name: Rebuild deterministic artifacts
+      # 2. Rebuild every generated artifact from source, then fail if the working
+      #    tree drifted. images.js is now a pure function of its inputs (no
+      #    timestamp), so it is rebuilt and diffed like everything else — this
+      #    also catches a committed images.js that is stale vs the images/ dir.
+      - name: Rebuild generated artifacts
         run: |
+          npm run manifest
           npm run harmonies
           npm run harmony:uses
           npm run colorpages
           npm run preview:syntax
           npm run readme
 
+      # `git add -A` then `git diff --cached --exit-code` so NEW generated files
+      # (e.g. a new color's page/card) are caught too — plain `git diff` ignores
+      # untracked files and would pass green on a missing committed artifact.
       - name: Fail on uncommitted artifact drift
         run: |
-          if ! git diff --exit-code -- . ':(exclude)assets/data/images.js'; then
-            echo "::error::Generated artifacts are out of date. Run 'npm run prepare:release' and commit the result."
+          git add -A
+          if ! git diff --cached --exit-code; then
+            echo "::error::Generated artifacts are out of date or uncommitted. Run 'npm run prepare:release' and commit the result."
             exit 1
           fi
 

@@ -14,6 +14,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
+import { loadMasterList, parseImageName, cmykFromHex } from './lib/color-data.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MANIFEST = 'assets/data/images.js';
@@ -33,36 +34,8 @@ function loadBrowserData(relPath, key) {
   return sandbox.window[key];
 }
 
-function loadMasterList(relPath) {
-  const entries = [];
-  for (const line of read(relPath).split(/\r?\n/)) {
-    const match = line.trim().match(/^(.+?)\s+(#[0-9A-Fa-f]{6})$/);
-    if (match) entries.push({ name: match[1], hex: match[2].toUpperCase() });
-  }
-  return entries;
-}
-
-function colorNameFromFile(file) {
-  return file.replace(/^\d{3}-/, '').replace(/\.[^.]+$/, '');
-}
-
-function cmykFromHex(hex) {
-  const v = hex.replace('#', '');
-  const r = parseInt(v.slice(0, 2), 16) / 255;
-  const g = parseInt(v.slice(2, 4), 16) / 255;
-  const b = parseInt(v.slice(4, 6), 16) / 255;
-  const k = 1 - Math.max(r, g, b);
-  if (k === 1) return { c: 0, m: 0, y: 0, k: 100 };
-  return {
-    c: Math.round(((1 - r - k) / (1 - k)) * 100),
-    m: Math.round(((1 - g - k) / (1 - k)) * 100),
-    y: Math.round(((1 - b - k) / (1 - k)) * 100),
-    k: Math.round(k * 100),
-  };
-}
-
 const images = loadBrowserData(MANIFEST, 'TRADITIONAL_COLOR_IMAGES') || [];
-const master = loadMasterList(MASTER_LIST);
+const master = loadMasterList(read(MASTER_LIST));
 
 if (!images.length) fail(`${MANIFEST}: no colors loaded — run \`npm run manifest\``);
 if (!master.length) fail(`${MASTER_LIST}: no entries parsed`);
@@ -103,21 +76,21 @@ for (const image of images) {
     }
   }
 
-  // filename must follow NNN-色名.ext and its number must equal the id.
-  const m = (image.file || '').match(/^(\d{3})-(.+)\.[^.]+$/);
-  if (!m) {
+  // filename must parse as NNN-色名.ext (same parser the manifest builder uses,
+  // so producer and verifier can't disagree on filename semantics) and its
+  // number must equal the id.
+  const parsed = parseImageName(image.file || '');
+  if (!parsed) {
     fail(`filename: "${image.file}" must match NNN-色名.ext`);
-  } else if (m[1] !== image.id) {
-    fail(`filename/id drift: file "${image.file}" carries ${m[1]} but id is ${image.id}`);
+  } else if (parsed.id !== image.id) {
+    fail(`filename/id drift: file "${image.file}" carries ${parsed.id} but id is ${image.id}`);
   }
 
   // The color name must agree with the master-list entry at this position.
-  const idx = Number(image.id) - 1;
-  const entry = master[idx];
-  if (entry) {
-    const fileName = colorNameFromFile(image.file || '');
-    if (entry.name !== fileName) {
-      fail(`name drift: No.${image.id} file="${fileName}" but master-list[#${image.id}]="${entry.name}"`);
+  const entry = master[Number(image.id) - 1];
+  if (entry && parsed) {
+    if (entry.name !== parsed.name) {
+      fail(`name drift: No.${image.id} file="${parsed.name}" but master-list[#${image.id}]="${entry.name}"`);
     }
     if (image.hex && entry.hex !== image.hex) {
       fail(`hex drift: No.${image.id} manifest=${image.hex} but master-list=${entry.hex}`);

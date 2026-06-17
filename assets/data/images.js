@@ -2,7 +2,6 @@
 window.TRADITIONAL_COLOR_PROJECT = {
   "count": 742,
   "totalBytes": 1046035317,
-  "generatedAt": "2026-06-17T04:01:29.647Z",
   "archiveName": "zhongguo-traditional-colors-images.zip"
 };
 

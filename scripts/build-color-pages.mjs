@@ -432,7 +432,7 @@ function renderShareCard(image, harmony, partners = []) {
     .join(' · ');
   const nameSize = name.length >= 6 ? 96 : name.length >= 5 ? 120 : 150;
   const partnerTitle = partners.length
-    ? `\n  <text x="80" y="512" font-family="'M PLUS Rounded 1c', sans-serif" font-size="22" fill="${ink}" opacity="0.6">配色搭档 · 取自 742 色库</text>`
+    ? `\n  <text x="80" y="512" font-family="'M PLUS Rounded 1c', sans-serif" font-size="22" fill="${ink}" opacity="0.6">配色搭档 · 取自传统色库</text>`
     : '';
   const chips = partners.map((partner, index) => {
     const x = 80 + index * 265;
