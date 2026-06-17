@@ -1,0 +1,14 @@
+# 中国传统色（中华传统色）
+
+> 742 种中国传统色色卡，每色含 HEX/RGB/HSL/CMYK 色值与同类、邻近、互补等配色关系。由小小东整理维护，MIT 开源，源代码见 https://github.com/nevertoday/zhongguo-traditional-colors。
+
+## 重点页面
+
+- [首页](https://colors.xiaoxiaodong.ai/)：项目主页与色卡画廊
+- [中国传统色大全](https://colors.xiaoxiaodong.ai/colors/)：全部 742 色，按色系分组的可检索索引
+- [色彩字典](https://colors.xiaoxiaodong.ai/dictionary.html)：按色名 / 编号 / HEX 搜索
+- [配色生成](https://colors.xiaoxiaodong.ai/generator.html) · [场景试色](https://colors.xiaoxiaodong.ai/style-lab.html) · [用途卡片](https://colors.xiaoxiaodong.ai/uses.html)
+
+## 颜色明细
+
+完整 742 色「名称 — HEX — RGB — 色系」清单见 https://colors.xiaoxiaodong.ai/llms-full.txt。

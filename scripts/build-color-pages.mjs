@@ -44,6 +44,23 @@ const LASTMOD = '2026-06-17';
 // dictionary hue filter (红 → 中性). Any family not listed falls to the end.
 const HUE_FAMILY_ORDER = ['红色系', '橙色系', '黄色系', '绿色系', '青色系', '蓝色系', '紫色系', '中性色'];
 
+// Shared entity nodes for structured data — consolidates the site, author and
+// term set so Google/LLMs can resolve one brand entity. sameAs links the
+// 1k-star GitHub repo and the author's X profile.
+const REPO_URL = 'https://github.com/nevertoday/zhongguo-traditional-colors';
+const AUTHOR_NODE = {
+  '@type': 'Person',
+  name: '小小东',
+  url: `${SITE}/`,
+  sameAs: ['https://x.com/xiaoxiaodong01', REPO_URL],
+};
+const TERM_SET_NODE = {
+  '@type': 'DefinedTermSet',
+  '@id': `${SITE}/dictionary.html#termset`,
+  name: '中国传统色 742 色',
+  url: `${SITE}/dictionary.html`,
+};
+
 // Root-level pages that also belong in the sitemap, with crawl priority hints.
 const MAIN_PAGES = [
   { path: '', priority: '1.0', changefreq: 'weekly' },
@@ -163,6 +180,26 @@ function readableText(hex) {
   return luminance > 0.5 ? '#1a1a1a' : '#f7f7f4';
 }
 
+// WCAG relative luminance of an {r,g,b} (0–1).
+function relativeLuminance({ r, g, b }) {
+  const [rl, gl, bl] = [r, g, b].map((channel) => {
+    const value = channel / 255;
+    return value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * rl + 0.7152 * gl + 0.0722 * bl;
+}
+
+// WCAG contrast ratio between two hex colors (1–21), or null if unparseable.
+function contrastRatio(hexA, hexB) {
+  const a = rgbFromHex(hexA);
+  const b = rgbFromHex(hexB);
+  if (!a || !b) return null;
+  const la = relativeLuminance(a);
+  const lb = relativeLuminance(b);
+  const [hi, lo] = la >= lb ? [la, lb] : [lb, la];
+  return (hi + 0.05) / (lo + 0.05);
+}
+
 function lightnessLabel(lightness) {
   if (lightness >= 82) return '高明度';
   if (lightness >= 62) return '中高明度';
@@ -229,6 +266,29 @@ function renderColorPage(image, harmony, context, siblings = {}) {
   const slug = colorSlug(image);
   const canonical = colorPageUrl(image);
   const ogImage = `${SITE}/${encodeURI(image.path)}`;
+  const cmyk = image.cmyk || (rgb ? cmykFromRgb(rgb) : null);
+  const thumbUrl = `${SITE}/thumbnails/color-card-${image.id}.jpg`;
+
+  // Per-color uniqueness inputs (all data-derived, nothing fabricated): the
+  // color's rank within its hue family, its first named harmony partners, and
+  // the WCAG contrast of readable text over the swatch. These make every page's
+  // prose differ by family, position, partner names and contrast numbers.
+  const rank = context.familyRank?.get(image.id);
+  const firstOf = (key) => {
+    const ids = Array.isArray(harmony?.[key]) ? harmony[key] : [];
+    for (const id of ids) {
+      const found = imageById.get(id);
+      if (found) return found;
+    }
+    return null;
+  };
+  const comp = firstOf('complementary');
+  const ana = firstOf('analogous');
+  const textWhite = contrastRatio(hex, '#ffffff');
+  const textBlack = contrastRatio(hex, '#1a1a1a');
+  const useWhiteText = (textWhite ?? 0) >= (textBlack ?? 0);
+  const bestContrast = useWhiteText ? textWhite : textBlack;
+  const aaLabel = !bestContrast ? '' : bestContrast >= 4.5 ? '达到' : bestContrast >= 3 ? '接近' : '低于';
 
   const metaChips = [];
   if (hueFamily) metaChips.push(hueFamily);
@@ -241,6 +301,7 @@ function renderColorPage(image, harmony, context, siblings = {}) {
   const description = `中国传统色「${name}」的色值与配色：HEX ${hex}`
     + `${values[1] ? `、${values[1].value}` : ''}`
     + `${hueFamily ? `，${hueFamily}` : ''}${temperature ? `、${temperature}色调` : ''}。`
+    + `${comp ? `互补色可搭配「${colorName(comp)} ${comp.hex}」，` : ''}`
     + `查看同类、邻近、互补等配色关系，并一键用于配色生成、场景试色与用途卡片。`;
 
   const valuesMarkup = values.map((entry) => `
@@ -290,25 +351,75 @@ function renderColorPage(image, harmony, context, siblings = {}) {
     ],
   };
 
+  const additionalProperty = [
+    { '@type': 'PropertyValue', name: 'HEX', value: hex },
+    rgb && { '@type': 'PropertyValue', name: 'RGB', value: `${rgb.r}, ${rgb.g}, ${rgb.b}` },
+    hsl && { '@type': 'PropertyValue', name: 'HSL', value: `${hsl.h}, ${hsl.s}%, ${hsl.l}%` },
+    cmyk && { '@type': 'PropertyValue', name: 'CMYK', value: `${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%` },
+    hueFamily && { '@type': 'PropertyValue', name: '色系', value: hueFamily },
+    temperature && { '@type': 'PropertyValue', name: '冷暖', value: `${temperature}色` },
+  ].filter(Boolean);
+
   const colorJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     name: `${name}`,
     alternateName: hex,
     url: canonical,
-    image: ogImage,
+    image: {
+      '@type': 'ImageObject',
+      contentUrl: ogImage,
+      thumbnailUrl: thumbUrl,
+      caption: `中国传统色 ${name} ${hex} 色卡`,
+    },
     inLanguage: 'zh-CN',
     description,
     color: hex,
+    creator: AUTHOR_NODE,
     isPartOf: { '@type': 'CreativeWorkSeries', name: '中国传统色 742 色', url: `${SITE}/dictionary.html` },
+    additionalProperty,
+  };
+
+  // Each color is also a DefinedTerm in the 742-color set — the purpose-built
+  // schema for a 色彩字典, and a strong entity signal for AI/LLM citation.
+  const definedTermJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTerm',
+    name,
+    termCode: hex,
+    url: canonical,
+    inLanguage: 'zh-CN',
+    inDefinedTermSet: TERM_SET_NODE,
   };
 
   // JSON-LD is embedded as text; escape the closing tag sequence defensively.
-  const jsonLd = [breadcrumbJsonLd, colorJsonLd]
+  const jsonLd = [breadcrumbJsonLd, colorJsonLd, definedTermJsonLd]
     .map((data) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`)
     .join('\n    ');
 
   const note = toneNote(hsl, temperature);
+
+  // Data-derived "关于" paragraph — unique per color because it weaves in the
+  // family rank, named harmony partners and contrast ratio (no fabrication).
+  const aboutSentences = [
+    `「${name}」是中国传统色之一${hueFamily ? `，属${hueFamily}` : ''}${temperature ? `、${temperature}调` : ''}，`
+      + `色值 HEX ${hex}${rgb ? `、RGB ${rgb.r},${rgb.g},${rgb.b}` : ''}${hsl ? `、HSL ${hsl.h},${hsl.s}%,${hsl.l}%` : ''}${cmyk ? `、CMYK ${cmyk.c},${cmyk.m},${cmyk.y},${cmyk.k}` : ''}。`,
+    rank && hueFamily ? `在${hueFamily}的 ${rank.total} 种传统色中，它按色序排第 ${rank.index} 位。` : '',
+    (comp || ana)
+      ? `配色上，其互补方向可取「${comp ? `${colorName(comp)} ${comp.hex}` : ''}」${ana ? `，邻近色可取「${colorName(ana)} ${ana.hex}」` : ''}。`
+      : '',
+    bestContrast ? `作为底色时，搭配${useWhiteText ? '白' : '深'}色文字对比度约 ${bestContrast.toFixed(1)}∶1，${aaLabel} WCAG AA 正文标准（4.5∶1）。` : '',
+  ].filter(Boolean).join('');
+
+  const aboutSection = `
+      <section class="color-section" aria-labelledby="about-title">
+        <h2 id="about-title">关于「${escapeHtml(name)}」</h2>
+        <p class="color-section-lede">${escapeHtml(aboutSentences)}</p>
+        <figure class="color-card-figure" style="margin:1.25rem 0 0; max-width:270px;">
+          <img src="../thumbnails/color-card-${escapeHtml(image.id)}.jpg" width="270" height="360" loading="lazy" decoding="async" alt="${escapeHtml(`中国传统色 ${name} ${hex} 色卡`)}" style="display:block; width:100%; height:auto;">
+          <figcaption class="color-section-lede" style="margin-top:0.5rem;">「${escapeHtml(name)}」色卡 · ${escapeHtml(hex)}</figcaption>
+        </figure>
+      </section>`;
 
   // Static prev/next + all-colors links. These keep every page reachable by
   // sequential traversal (id order) and give one hop to the full index, so the
@@ -393,6 +504,7 @@ function renderColorPage(image, harmony, context, siblings = {}) {
           <p class="color-hero-note">${escapeHtml(note)}</p>
         </div>
       </header>
+${aboutSection}
 
       <section class="color-section" aria-labelledby="values-title">
         <h2 id="values-title">色值</h2>
@@ -489,7 +601,8 @@ function renderShareCard(image, harmony, partners = []) {
 function renderColorIndex(images, harmonies) {
   const canonical = `${SITE}/colors/`;
   const ogImage = `${SITE}/docs/screenshots/home-gallery.png`;
-  const description = `中国传统色完整索引：${images.length} 种传统色色卡，按红橙黄绿青蓝紫与中性色系分组，每色含 HEX 色值并链接到独立色彩详情页。`;
+  const description = `中国传统色大全：${images.length} 种中华传统色色卡一览，按红橙黄绿青蓝紫与中性色系分组，每色含 HEX/RGB 色值并链接到独立色彩详情页。由小小东整理维护，MIT 开源。`;
+  const intro = `这里收录 ${images.length} 种中国传统色（中华传统色），按色系分组排列，是一份可检索的传统色色卡大全。每个颜色都有独立页面，列出 HEX、RGB、HSL、CMYK 色值与同类、邻近、互补等配色关系。色值来自项目维护的 742 色清单，由小小东整理、MIT 开源。`;
 
   // Bucket colors by hue family, preserving the manifest's id order within each.
   const groups = new Map(HUE_FAMILY_ORDER.map((family) => [family, []]));
@@ -530,13 +643,24 @@ function renderColorIndex(images, harmonies) {
   const collectionJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: '中国传统色索引',
+    name: '中国传统色大全',
     url: canonical,
     inLanguage: 'zh-CN',
     description,
     isPartOf: { '@type': 'WebSite', name: '中国传统配色', url: `${SITE}/` },
-    about: { '@type': 'CreativeWorkSeries', name: '中国传统色 742 色', url: `${SITE}/dictionary.html` },
+    about: TERM_SET_NODE,
+    author: AUTHOR_NODE,
     numberOfItems: images.length,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: images.length,
+      itemListElement: images.map((image, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: colorPageUrl(image),
+        name: `${colorName(image)} ${image.hex}`,
+      })),
+    },
   };
   const jsonLd = [breadcrumbJsonLd, collectionJsonLd]
     .map((data) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`)
@@ -549,17 +673,17 @@ function renderColorIndex(images, harmonies) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="${escapeHtml(description)}">
     <meta name="theme-color" content="#f7f7f4" data-theme-color>
-    <title>中国传统色索引 · 全部 ${images.length} 色色卡 | 中国传统配色</title>
+    <title>中国传统色大全 · 全部 ${images.length} 色色卡 | 中国传统配色</title>
     <link rel="canonical" href="${escapeHtml(canonical)}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="中国传统配色">
-    <meta property="og:title" content="中国传统色索引 · 全部 ${images.length} 色">
+    <meta property="og:title" content="中国传统色大全 · 全部 ${images.length} 色">
     <meta property="og:description" content="${escapeHtml(description)}">
     <meta property="og:url" content="${escapeHtml(canonical)}">
     <meta property="og:image" content="${escapeHtml(ogImage)}">
     <meta property="og:locale" content="zh_CN">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="中国传统色索引 · 全部 ${images.length} 色">
+    <meta name="twitter:title" content="中国传统色大全 · 全部 ${images.length} 色">
     <meta name="twitter:description" content="${escapeHtml(description)}">
     <meta name="twitter:image" content="${escapeHtml(ogImage)}">
     <link rel="icon" href="../favicon.svg?v=20260610-6" type="image/svg+xml">
@@ -600,8 +724,8 @@ function renderColorIndex(images, harmonies) {
       <header class="color-hero" style="--swatch: #f7f7f4; --swatch-ink: #1a1a1a;">
         <div class="color-hero-copy">
           <p class="color-hero-id">中国传统色 · 全部 ${images.length} 色</p>
-          <h1>中国传统色索引</h1>
-          <p class="color-hero-note">${escapeHtml(images.length + ' 种中国传统色，按色系分组。点击任意色名进入它的色值与配色详情页。')}</p>
+          <h1>中国传统色大全</h1>
+          <p class="color-hero-note">${escapeHtml(intro)}</p>
         </div>
       </header>
 
@@ -620,6 +744,34 @@ function renderColorIndex(images, harmonies) {
 `;
 }
 
+// llms.txt + llms-full.txt — the canonical AI-discovery files for a reference
+// dataset. llms.txt is a concise map; llms-full.txt inlines the whole color
+// table so an LLM can answer "X 是什么颜色 / X 的 HEX" from a single fetch.
+function renderLlmsTxt(images, harmonies) {
+  const lead = `# 中国传统色（中华传统色）\n\n`
+    + `> ${images.length} 种中国传统色色卡，每色含 HEX/RGB/HSL/CMYK 色值与同类、邻近、互补等配色关系。`
+    + `由小小东整理维护，MIT 开源，源代码见 ${REPO_URL}。\n`;
+  const keyPages = [
+    `- [首页](${SITE}/)：项目主页与色卡画廊`,
+    `- [中国传统色大全](${SITE}/colors/)：全部 ${images.length} 色，按色系分组的可检索索引`,
+    `- [色彩字典](${SITE}/dictionary.html)：按色名 / 编号 / HEX 搜索`,
+    `- [配色生成](${SITE}/generator.html) · [场景试色](${SITE}/style-lab.html) · [用途卡片](${SITE}/uses.html)`,
+  ].join('\n');
+  const short = `${lead}\n## 重点页面\n\n${keyPages}\n\n## 颜色明细\n\n`
+    + `完整 ${images.length} 色「名称 — HEX — RGB — 色系」清单见 ${SITE}/llms-full.txt。\n`;
+
+  const rows = images.map((image) => {
+    const h = harmonies[image.id] || {};
+    const rgb = rgbFromHex(image.hex);
+    return `- ${colorName(image)} — ${image.hex}`
+      + `${rgb ? ` — RGB ${rgb.r},${rgb.g},${rgb.b}` : ''}`
+      + `${h.hueFamily ? ` — ${h.hueFamily}` : ''}${h.temperature ? `（${h.temperature}色）` : ''}`
+      + ` — ${colorPageUrl(image)}`;
+  }).join('\n');
+  const full = `${lead}\n## 全部 ${images.length} 色（名称 — HEX — RGB — 色系 — 链接）\n\n${rows}\n`;
+  return { short, full };
+}
+
 function renderSitemap(images) {
   const urls = [];
   for (const page of MAIN_PAGES) {
@@ -628,16 +780,31 @@ function renderSitemap(images) {
   // The static all-colors index — the crawlable hub that links to every color page.
   urls.push({ loc: `${SITE}/colors/`, priority: '0.9', changefreq: 'weekly' });
   for (const image of images) {
-    urls.push({ loc: colorPageUrl(image), priority: '0.6', changefreq: 'monthly' });
+    // Each color page carries its color-card thumbnail as an <image:image> so the
+    // 742 swatches become eligible for Google Images (a natural channel for a
+    // color-card site that the og:image meta alone does not unlock).
+    urls.push({
+      loc: colorPageUrl(image),
+      priority: '0.6',
+      changefreq: 'monthly',
+      image: {
+        loc: `${SITE}/thumbnails/color-card-${image.id}.jpg`,
+        title: `中国传统色 ${colorName(image)} ${image.hex} 色卡`,
+      },
+    });
   }
   const body = urls.map((url) => `  <url>
     <loc>${escapeHtml(url.loc)}</loc>
     <lastmod>${LASTMOD}</lastmod>
     <changefreq>${url.changefreq}</changefreq>
-    <priority>${url.priority}</priority>
+    <priority>${url.priority}</priority>${url.image ? `
+    <image:image>
+      <image:loc>${escapeHtml(url.image.loc)}</image:loc>
+      <image:title>${escapeHtml(url.image.title)}</image:title>
+    </image:image>` : ''}
   </url>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${body}
 </urlset>
 `;
@@ -655,7 +822,21 @@ async function main() {
   if (!images.length) throw new Error('No images found in images.js');
 
   const imageById = new Map(images.map((image) => [image.id, image]));
-  const context = { usage, imageById };
+
+  // Per-color rank within its hue family (id order) — feeds the unique "关于"
+  // prose on each color page so two colors in the same family read differently.
+  const familyRank = new Map();
+  const familyGroups = new Map();
+  for (const image of images) {
+    const family = harmonies[image.id]?.hueFamily || '其他';
+    if (!familyGroups.has(family)) familyGroups.set(family, []);
+    familyGroups.get(family).push(image);
+  }
+  for (const list of familyGroups.values()) {
+    list.forEach((image, i) => familyRank.set(image.id, { index: i + 1, total: list.length }));
+  }
+
+  const context = { usage, imageById, familyRank };
 
   // Rebuild the colors directory from scratch so renamed/removed colors never leave stragglers.
   await rm(COLORS_DIR, { recursive: true, force: true });
@@ -678,8 +859,14 @@ async function main() {
 
   await writeFile(SITEMAP_FILE, renderSitemap(images), 'utf8');
 
+  // AI-discovery files at the site root.
+  const llms = renderLlmsTxt(images, harmonies);
+  await writeFile(path.join(ROOT, 'llms.txt'), llms.short, 'utf8');
+  await writeFile(path.join(ROOT, 'llms-full.txt'), llms.full, 'utf8');
+
   console.log(`Generated ${written} color pages + share cards under colors/`);
   console.log('Wrote colors/index.html (static all-colors index)');
+  console.log('Wrote llms.txt + llms-full.txt');
   console.log(`Wrote sitemap.xml with ${MAIN_PAGES.length + 1 + images.length} URLs`);
 }
 
