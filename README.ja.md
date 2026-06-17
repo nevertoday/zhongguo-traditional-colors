@@ -106,6 +106,20 @@
 
 各 `xxd-*` skill フォルダには、完全な `references/chinese-color-master-list.md`、`references/chinese-color-harmony.md`、`references/chinese-color-harmony.csv` を同梱しています。単独で skill を使う場合でも、742 色リストと各色の配色関係を参照できます。
 
+### Claude Code への導入
+
+各 `xxd-*` は Claude Code ネイティブの skill（frontmatter 付き `SKILL.md`）なので、そのまま自分の Claude Code に導入できます。
+
+```bash
+# クローン後、使いたい skill を個人の skills フォルダにコピー
+git clone https://github.com/nevertoday/zhongguo-traditional-colors.git
+cp -r zhongguo-traditional-colors/skills/xxd-palette-builder ~/.claude/skills/
+# すべて導入する場合:
+cp -r zhongguo-traditional-colors/skills/xxd-* ~/.claude/skills/
+```
+
+各 skill は `references/` を同梱しているため、ネットワークなしで単独動作します。導入後は Claude Code でタスクを説明する（例:「朱砂で UI token を作って」）か、対応する skill を呼び出すと起動します。
+
 | Skill | 用途 |
 | --- | --- |
 | [`xxd-color-brief`](skills/xxd-color-brief/SKILL.md) | 高級、東洋的、若い、抑制的などの曖昧な語を、寒暖、明度、彩度、対比、リスク条件に翻訳 |
