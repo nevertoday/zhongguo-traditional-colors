@@ -352,7 +352,8 @@
   function pairWithCss(pair) {
     return {
       ...pair,
-      css: `linear-gradient(90deg, ${pair.from.hex} 0%, ${pair.to.hex} 100%)`,
+      // OKLab 感知插值（浏览器原生）：双色渐变中段不发灰；与页面 swatch 同一套渲染，所见即所复制。
+      css: `linear-gradient(90deg in oklab, ${pair.from.hex} 0%, ${pair.to.hex} 100%)`,
     };
   }
 
