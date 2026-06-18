@@ -19,7 +19,7 @@
   'use strict';
   const CC = window.ZH_COLOR_CORE;
   if (!CC) { console.error('[Terminal] 需要先加载 assets/js/color-core.js'); return; }
-  const { hexOklab, oklabHex, contrast, ensure, boostChroma, hueOf, chromaOf, hueDist, pickNeutral, REC } = CC;
+  const { hexOklab, oklabHex, contrast, ensure, boostChroma, hueOf, chromaOf, hueDist, REC } = CC;
   const ALL = CC.ALL();
 
   /* ── 可读性契约（性格旋钮）── */
@@ -42,6 +42,28 @@
     light: { bg: .965, fg: .25, black: .255, brightBlack: .52, white: .80, brightWhite: .965, colorWin: [.40, .62], sel: .82 },
   };
 
+  /* ── 素地敷彩的「染色量」：在目标明度上注入的锚色彩度（OKLab）基准值，再乘以 DEPTH.mul。
+     深色端（bg/black）可略重；浅色端（white/bright_white）彩度更显，要更轻；高亮条 sel 可稍重。 */
+  const TINT = { bg: .020, fg: .015, black: .020, brightBlack: .024, light: .013, sel: .030 };
+
+  /* ── 底色浓度三档（终端配色不必是「近黑」：Tomorrow Night Blue/Solarized 都是深彩底）。
+     mul 放大整套素地的染色量；bgL 单独抬高 background 明度，让深彩底「读得出是颜色」而非死黑。
+     对比度由明度主导，故加饱和几乎不损可读性（实测浅前景对比仍 ~14，底线才 7）。
+     素=近黑微染（最冷静，底名多落玄黑）；中=深彩底（偏 Tomorrow Night Blue，默认）；浓=饱满深彩。 */
+  const DEPTH = {
+    plain:  { mul: 1.0, bgL: { dark: .165, light: .965 } },
+    medium: { mul: 3.0, bgL: { dark: .200, light: .955 } },
+    deep:   { mul: 5.0, bgL: { dark: .210, light: .945 } },
+  };
+
+  // 给合成的素地起名：取全库中 OKLab 最近的真传统色名（不限中性）。
+  // 近黑档多落「玄黑」是该明度的真相；深彩档会落到真·深彩传统色（钢蓝/茄皮紫/云杉绿…），名字随锚色变多。
+  const nearestColorName = hex => {
+    const o = hexOklab(hex); let best = null, bd = Infinity;
+    for (const x of LAB) { const d = Math.hypot(x.L - o.L, x.a - o.a, x.b - o.b); if (d < bd) { bd = d; best = x.rec; } }
+    return best ? best.name : null;
+  };
+
   /* ── 6 个 ANSI 色相槽的标准目标色相（取纯原色在 OKLab 下的色相）── */
   const HUE = { red: hueOf('#ff0000'), yellow: hueOf('#ffff00'), green: hueOf('#00ff00'),
                 cyan: hueOf('#00ffff'), blue: hueOf('#0000ff'), magenta: hueOf('#ff00ff') };
@@ -51,8 +73,8 @@
     'bright_black', 'bright_red', 'bright_green', 'bright_yellow', 'bright_blue', 'bright_magenta', 'bright_cyan', 'bright_white'];
   const UI_ORDER = ['background', 'foreground', 'cursor', 'selection'];
 
-  // 预算全库的 OKLab 明度/彩度/色相，避免每槽重算。
-  const LAB = ALL.map(c => ({ rec: c, L: hexOklab(c.hex).L, C: chromaOf(c.hex), h: hueOf(c.hex) }));
+  // 预算全库的 OKLab 明度/a/b/彩度/色相，避免每槽重算。
+  const LAB = ALL.map(c => { const o = hexOklab(c.hex); return { rec: c, L: o.L, a: o.a, b: o.b, C: chromaOf(c.hex), h: hueOf(c.hex) }; });
 
   const named = rec => ({ hex: rec.hex, name: rec.name, id: rec.id, nudged: false });
 
@@ -139,31 +161,35 @@
     return { hex: e.hex, name: normal.name || null, id: null, nudged: true };       // 保留常规色名：bright 是「该色的亮版」，可溯源
   }
 
-  // 中性槽点名 + 按 floor 兜底。
-  function neutralSlot(key, targetL, anchorHue, bgHex, mode) {
-    const n = pickNeutral(targetL, anchorHue);
+  /* ── 素地敷彩：从锚色合成一缕染色的表面色（近黑/深彩/近白）──
+     旧法 pickNeutral 从「明度最近的固定 6 个中性色」里挑 —— 锚色只当 hue tiebreaker，
+     于是 742 个锚色的 background/foreground/black/white… 全坍缩到 6 个值（占满屏 ~85% 面积却几乎不随锚色变）。
+     新法：在 OKLCH 里按 目标明度 + 锚色色相 + 一缕彩度（tint，含 DEPTH.mul）合成表面 —— 每个锚色都不同（hex 不坍缩）。
+     不向库 snap hex（库里近黑只 6 支，snap 会重新坍缩）；「起名」认领全库 OKLab 最近的真传统色，
+     标 surface=true（素地：合成表面色，可溯源到该真色但 hex 调过，nudged，不计入「无名兜底」）。 */
+  function surfaceFromAnchor(key, targetL, tint, aRec, bgHex, mode) {
+    const rad = hueOf(aRec.hex) * Math.PI / 180;
+    let hex = oklabHex({ L: targetL, a: tint * Math.cos(rad), b: tint * Math.sin(rad) });
+    // 对比度兜底：floor 不满足才提亮/压暗（合成值通常已达标，这里只是守门）
     const floor = floorFor(key, mode);
-    if (floor && contrast(n.hex, bgHex) < floor) {
-      const e = ensure(n.hex, bgHex, floor);
-      return { hex: e.hex, name: n.name, id: e.nudged ? null : n.id, nudged: e.nudged };   // 保留来源中性色名
-    }
-    return named(n);
+    if (floor && contrast(hex, bgHex) < floor) hex = ensure(hex, bgHex, floor).hex;
+    return { hex, name: nearestColorName(hex), id: null, nudged: true, surface: true };
   }
 
-  /* ── 核心：一个锚色 → 一整套终端调色板 ── */
-  function build(anchorId, mode) {
+  /* ── 核心：一个锚色 → 一整套终端调色板（depth：plain/medium/deep 底色浓度）── */
+  function build(anchorId, mode, depth) {
     const A = REC(anchorId);
     if (!A) return null;
     const aHue = hueOf(A.hex), aTemp = A.temperature, S = TSURF[mode];
+    const D = DEPTH[depth] || DEPTH.medium;                     // 默认中等深彩
+    const m = D.mul;
 
-    // 1. 素地：background / foreground
-    const bg = pickNeutral(S.bg, aHue);
-    const bgHex = bg.hex;
-    const fgN = pickNeutral(S.fg, aHue);
-    const fgE = ensure(fgN.hex, bgHex, LEGIBILITY.fgBg);
+    // 1. 素地：从锚色合成染色表面（background 用 depth 抬高的明度 + 放大的染色量 → 深彩底；其余沿各自目标明度，染色量同乘 m）
+    const bgSurf = surfaceFromAnchor('background', D.bgL[mode], TINT.bg * m, A, null, mode);
+    const bgHex = bgSurf.hex;
     const ui = {
-      background: named(bg),
-      foreground: { hex: fgE.hex, name: fgN.name, id: fgE.nudged ? null : fgN.id, nudged: fgE.nudged },
+      background: bgSurf,
+      foreground: surfaceFromAnchor('foreground', S.fg, TINT.fg * m, A, bgHex, mode),
     };
 
     // 2. 锚色族（用于补色加成）
@@ -181,18 +207,18 @@
       ansi[k] = k === anchorSlot ? placeAnchor(A, bgHex) : pickChromatic(HUE[k], aHue, aTemp, family, bgHex, mode);
     }
     // 5. 中性端（黑/白/亮黑/亮白）
-    ansi.black = neutralSlot('black', S.black, aHue, bgHex, mode);
-    ansi.white = neutralSlot('white', S.white, aHue, bgHex, mode);
-    ansi.bright_black = neutralSlot('bright_black', S.brightBlack, aHue, bgHex, mode);
-    ansi.bright_white = neutralSlot('bright_white', S.brightWhite, aHue, bgHex, mode);
+    ansi.black = surfaceFromAnchor('black', S.black, TINT.black * m, A, bgHex, mode);
+    ansi.white = surfaceFromAnchor('white', S.white, TINT.light * m, A, bgHex, mode);
+    ansi.bright_black = surfaceFromAnchor('bright_black', S.brightBlack, TINT.brightBlack * m, A, bgHex, mode);
+    ansi.bright_white = surfaceFromAnchor('bright_white', S.brightWhite, TINT.light * m, A, bgHex, mode);
     // 6. bright 彩色 = 常规彩色的更亮真实色
     for (const k of CHROMA) ansi['bright_' + k] = brighten(ansi[k], bgHex);
 
     // 7. 锚色露脸：cursor 用锚色槽的色（保证可见）；selection 取锚色暗/亮调，校验正文可读
     ui.cursor = { ...ansi[anchorSlot] };
     {
-      const selN = pickNeutral(S.sel, aHue);                    // 锚色染过的中性条
-      let selHex = selN.hex, nud = false;
+      const selN = surfaceFromAnchor('selection', S.sel, TINT.sel * m, A, bgHex, mode);   // 锚色染过的高亮条（合成）
+      let selHex = selN.hex, nud = selN.nudged;
       // 先让高亮带相对背景可见（不止「其上正文可读」）
       if (contrast(selHex, bgHex) < LEGIBILITY.selVisible) {
         const e = ensure(selHex, bgHex, LEGIBILITY.selVisible);
@@ -203,7 +229,7 @@
         const e = ensure(selHex, ui.foreground.hex, LEGIBILITY.selection);
         selHex = e.hex; if (e.nudged) nud = true;
       }
-      ui.selection = { hex: selHex, name: selN.name, id: nud ? null : selN.id, nudged: nud };   // 保留来源色名
+      ui.selection = { hex: selHex, name: nearestColorName(selHex), id: null, nudged: nud, surface: true };   // 素地·锚色染的高亮条（名认领全库最近真色）
     }
 
     // 汇总 provenance（16 ANSI + 4 UI）
@@ -214,5 +240,5 @@
     return { anchor: A, mode, ansi, ui, order: ANSI_ORDER, uiOrder: UI_ORDER, anchorSlot, slots };
   }
 
-  window.ZH_TERMINAL = { build, ANSI_ORDER, UI_ORDER, LEGIBILITY, HUE, floorFor, REC, ALL: () => ALL };
+  window.ZH_TERMINAL = { build, ANSI_ORDER, UI_ORDER, LEGIBILITY, HUE, DEPTHS: Object.keys(DEPTH), floorFor, REC, ALL: () => ALL };
 })();
