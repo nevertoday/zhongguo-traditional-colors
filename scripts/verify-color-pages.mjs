@@ -34,10 +34,20 @@ const colorsDir = path.join(ROOT, 'colors');
 if (!existsSync(colorsDir)) {
   fail('colors/: directory missing — run build-color-pages.mjs');
 } else {
-  // index.html is the static all-colors index, not a per-color page.
-  const htmlFiles = readdirSync(colorsDir).filter((file) => file.endsWith('.html') && file !== 'index.html');
+  // index.html (大全) and family-*.html (hue hubs) are not per-color pages.
+  const htmlFiles = readdirSync(colorsDir).filter((file) => file.endsWith('.html') && file !== 'index.html' && !file.startsWith('family-'));
   if (htmlFiles.length !== images.length) {
     fail(`colors/: expected ${images.length} HTML pages, found ${htmlFiles.length}`);
+  }
+  // 8 hue-family hub pages must exist with list + collection schema + breadcrumb.
+  const HUB_SLUGS = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple', 'neutral'];
+  for (const s of HUB_SLUGS) {
+    const hubPath = path.join(colorsDir, `family-${s}.html`);
+    if (!existsSync(hubPath)) { fail(`colors/family-${s}.html: hue hub missing`); continue; }
+    const hub = readFileSync(hubPath, 'utf8');
+    for (const token of ['"@type":"CollectionPage"', '"@type":"ItemList"', '"@type":"BreadcrumbList"', 'class="relation-swatch"', `${SITE}/colors/family-${s}.html`]) {
+      if (!hub.includes(token)) fail(`colors/family-${s}.html: missing ${token}`);
+    }
   }
   const cardsDir = path.join(colorsDir, 'cards');
   const svgFiles = existsSync(cardsDir) ? readdirSync(cardsDir).filter((file) => file.endsWith('.svg')) : [];
@@ -76,6 +86,8 @@ if (!existsSync(colorsDir)) {
       '"@type":"DefinedTerm"',
       '"@type":"ImageObject"',
       'loading="lazy"',
+      '中国传统色大全',
+      'family-',
     ];
     for (const token of requiredTokens) {
       if (!page.includes(token)) fail(`colors/${slug}.html: missing ${token}`);
@@ -119,7 +131,7 @@ if (!existsSync(path.join(ROOT, 'sitemap.xml'))) {
     fail('sitemap.xml: wrong/missing urlset namespace');
   }
   const locCount = (sitemap.match(/<loc>/g) || []).length;
-  const expected = images.length + 12; // 11 indexable main pages + colors/ index (favorites excluded)
+  const expected = images.length + 20; // 11 main pages + colors/ index + 8 hue hubs (favorites excluded)
   if (locCount !== expected) {
     fail(`sitemap.xml: expected ${expected} <loc> entries, found ${locCount}`);
   }
