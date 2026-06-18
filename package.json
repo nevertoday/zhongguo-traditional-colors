@@ -14,6 +14,7 @@
     "harmony:uses": "node scripts/build-harmony-use-cases.mjs",
     "colorpages": "node scripts/build-color-pages.mjs",
     "verify:colorpages": "node scripts/verify-color-pages.mjs",
+    "submit:indexnow": "node scripts/submit-indexnow.mjs",
     "preview:syntax": "node scripts/build-preview-syntax.mjs",
     "terminal:audit": "node scripts/verify-terminal-palette.mjs",
     "package:images": "node scripts/package-images.mjs",

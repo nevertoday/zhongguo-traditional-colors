@@ -44,6 +44,21 @@ const LASTMOD = '2026-06-17';
 // dictionary hue filter (红 → 中性). Any family not listed falls to the end.
 const HUE_FAMILY_ORDER = ['红色系', '橙色系', '黄色系', '绿色系', '青色系', '蓝色系', '紫色系', '中性色'];
 
+// Per-family hub metadata: URL slug + a short, data-grounded visual blurb (no
+// fabricated history). Drives the colors/family-<slug>.html pillar pages that
+// sit between the 大全 index and the 742 detail spokes.
+const HUE_FAMILY_META = {
+  '红色系': { slug: 'red', blurb: '从浅粉红到深绛紫的暖红色调。' },
+  '橙色系': { slug: 'orange', blurb: '红黄之间的暖调，多为中高明度。' },
+  '黄色系': { slug: 'yellow', blurb: '明度偏高的暖黄色调。' },
+  '绿色系': { slug: 'green', blurb: '草木自然的绿色调。' },
+  '青色系': { slug: 'cyan', blurb: '介于绿与蓝之间的青色调，东方特有的色彩范畴。' },
+  '蓝色系': { slug: 'blue', blurb: '从天青到靛蓝的清冷色调。' },
+  '紫色系': { slug: 'purple', blurb: '红蓝相融、含蓄的紫色调。' },
+  '中性色': { slug: 'neutral', blurb: '低饱和的黑白灰与近中性色，版面留白与结构的基底。' },
+};
+const hueFamilySlug = (family) => HUE_FAMILY_META[family]?.slug || null;
+
 // Shared entity nodes for structured data — consolidates the site, author and
 // term set so Google/LLMs can resolve one brand entity. sameAs links the
 // 1k-star GitHub repo and the author's X profile.
@@ -113,6 +128,15 @@ function escapeHtml(value) {
 
 function colorName(image) {
   return image.file.replace(/\.[^.]+$/, '').replace(/^\d{3}-/, '');
+}
+
+// Serialize JSON-LD nodes into <script> tags. Escapes "<" → < so an embedded
+// "</script>" or "<" can never break out of the script element (the one place this
+// rule lives — used by every page renderer).
+function jsonLdScripts(nodes) {
+  return nodes
+    .map((data) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`)
+    .join('\n    ');
 }
 
 function rgbFromHex(hex) {
@@ -261,6 +285,7 @@ function renderColorPage(image, harmony, context, siblings = {}) {
   const rgb = rgbFromHex(hex);
   const hsl = harmony?.hsl || (rgb ? hslFromRgb(rgb) : null);
   const hueFamily = harmony?.hueFamily || '';
+  const familySlug = hueFamilySlug(hueFamily);
   const temperature = harmony?.temperature || '';
   const values = colorValues(hex, rgb, hsl);
   const slug = colorSlug(image);
@@ -341,14 +366,18 @@ function renderColorPage(image, harmony, context, siblings = {}) {
           </section>`;
   }).filter(Boolean).join('');
 
+  const crumbs = [
+    { '@type': 'ListItem', position: 1, name: '首页', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: '中国传统色大全', item: `${SITE}/colors/` },
+  ];
+  if (familySlug) {
+    crumbs.push({ '@type': 'ListItem', position: crumbs.length + 1, name: hueFamily, item: `${SITE}/colors/family-${familySlug}.html` });
+  }
+  crumbs.push({ '@type': 'ListItem', position: crumbs.length + 1, name: `${name} ${hex}`, item: canonical });
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: '首页', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: '色彩字典', item: `${SITE}/dictionary.html` },
-      { '@type': 'ListItem', position: 3, name: `${name} ${hex}`, item: canonical },
-    ],
+    itemListElement: crumbs,
   };
 
   const additionalProperty = [
@@ -392,10 +421,7 @@ function renderColorPage(image, harmony, context, siblings = {}) {
     inDefinedTermSet: TERM_SET_NODE,
   };
 
-  // JSON-LD is embedded as text; escape the closing tag sequence defensively.
-  const jsonLd = [breadcrumbJsonLd, colorJsonLd, definedTermJsonLd]
-    .map((data) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`)
-    .join('\n    ');
+  const jsonLd = jsonLdScripts([breadcrumbJsonLd, colorJsonLd, definedTermJsonLd]);
 
   const note = toneNote(hsl, temperature);
 
@@ -411,10 +437,13 @@ function renderColorPage(image, harmony, context, siblings = {}) {
     bestContrast ? `作为底色时，搭配${useWhiteText ? '白' : '深'}色文字对比度约 ${bestContrast.toFixed(1)}∶1，${aaLabel} WCAG AA 正文标准（4.5∶1）。` : '',
   ].filter(Boolean).join('');
 
+  const familyHubLink = familySlug
+    ? `\n        <p class="color-about-hub"><a href="family-${familySlug}.html">浏览${escapeHtml(hueFamily)}全部${rank ? ` ${rank.total} ` : ''}色 →</a></p>`
+    : '';
   const aboutSection = `
       <section class="color-section" aria-labelledby="about-title">
         <h2 id="about-title">关于「${escapeHtml(name)}」</h2>
-        <p class="color-section-lede">${escapeHtml(aboutSentences)}</p>
+        <p class="color-section-lede">${escapeHtml(aboutSentences)}</p>${familyHubLink}
         <figure class="color-card-figure" style="margin:1.25rem 0 0; max-width:270px;">
           <img src="../thumbnails/color-card-${escapeHtml(image.id)}.jpg" width="270" height="360" loading="lazy" decoding="async" alt="${escapeHtml(`中国传统色 ${name} ${hex} 色卡`)}" style="display:block; width:100%; height:auto;">
           <figcaption class="color-section-lede" style="margin-top:0.5rem;">「${escapeHtml(name)}」色卡 · ${escapeHtml(hex)}</figcaption>
@@ -487,8 +516,10 @@ function renderColorPage(image, harmony, context, siblings = {}) {
       <nav class="color-breadcrumb" aria-label="面包屑导航">
         <a href="../index.html">首页</a>
         <span aria-hidden="true">/</span>
-        <a href="../dictionary.html">色彩字典</a>
-        <span aria-hidden="true">/</span>
+        <a href="index.html">中国传统色大全</a>
+        <span aria-hidden="true">/</span>${familySlug ? `
+        <a href="family-${familySlug}.html">${escapeHtml(hueFamily)}</a>
+        <span aria-hidden="true">/</span>` : ''}
         <span aria-current="page">${escapeHtml(name)}</span>
       </nav>
 
@@ -624,9 +655,13 @@ function renderColorIndex(images, harmonies) {
                 <span class="relation-swatch-hex">${escapeHtml(image.hex)}</span>
               </a>`;
       }).join('');
+      const hubSlug = hueFamilySlug(family);
+      const hubLink = hubSlug
+        ? ` <a class="relation-hub-link" href="family-${hubSlug}.html">查看${escapeHtml(family)} →</a>`
+        : '';
       return `
           <section class="relation-block">
-            <h2>${escapeHtml(family)}<span class="relation-intent">（${list.length} 色）</span></h2>
+            <h2>${escapeHtml(family)}<span class="relation-intent">（${list.length} 色）</span>${hubLink}</h2>
             <div class="relation-swatches">${swatches}</div>
           </section>`;
     }).join('');
@@ -662,9 +697,7 @@ function renderColorIndex(images, harmonies) {
       })),
     },
   };
-  const jsonLd = [breadcrumbJsonLd, collectionJsonLd]
-    .map((data) => `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`)
-    .join('\n    ');
+  const jsonLd = jsonLdScripts([breadcrumbJsonLd, collectionJsonLd]);
 
   return `<!doctype html>
 <html lang="zh-CN">
@@ -744,6 +777,158 @@ function renderColorIndex(images, harmonies) {
 `;
 }
 
+// A hue-family hub/pillar page (colors/family-<slug>.html). Sits between the
+// 大全 index and the 742 detail spokes: a rankable landing page for "{色系}传统色"
+// queries that consolidates internal-link equity for its family. Flat under
+// colors/ (same depth as detail pages) so all ../ paths match.
+function renderHueHub(family, list, totalCount) {
+  const meta = HUE_FAMILY_META[family];
+  const slug = meta.slug;
+  const count = list.length;
+  const pct = Math.round((count / totalCount) * 100);
+  const canonical = `${SITE}/colors/family-${slug}.html`;
+  const ogImage = `${SITE}/docs/screenshots/home-gallery.png`;
+  const title = `${family}中国传统色`;
+  const description = `${family}收录 ${count} 种中国传统色色卡（约占 742 色的 ${pct}%），含 HEX/RGB 色值与配色关系。${meta.blurb}`;
+  const intro = `「${family}」收录 ${count} 种中国传统色，约占全部 742 色的 ${pct}%。${meta.blurb}下面按色序列出该色系的全部色卡，点击任意色名查看它的 HEX、RGB、HSL、CMYK 色值与同类、邻近、互补等配色关系。`;
+
+  const swatches = list.map((image) => {
+    const href = `${encodeURIComponent(colorSlug(image))}.html`;
+    return `
+              <a class="relation-swatch" href="${href}" style="--swatch: ${escapeHtml(image.hex)}; --swatch-ink: ${readableText(image.hex)};">
+                <span class="relation-swatch-name">${escapeHtml(colorName(image))}</span>
+                <span class="relation-swatch-hex">${escapeHtml(image.hex)}</span>
+              </a>`;
+  }).join('');
+
+  // Cross-links to the other family hubs.
+  const hueNav = HUE_FAMILY_ORDER.filter((f) => HUE_FAMILY_META[f]).map((f) => {
+    const s = HUE_FAMILY_META[f].slug;
+    const current = f === family;
+    return current
+      ? `<span class="button button-secondary" aria-current="page" style="opacity:.55">${escapeHtml(f)}</span>`
+      : `<a class="button button-secondary" href="family-${s}.html">${escapeHtml(f)}</a>`;
+  }).join('\n          ');
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: '中国传统色大全', item: `${SITE}/colors/` },
+      { '@type': 'ListItem', position: 3, name: family, item: canonical },
+    ],
+  };
+  const collectionJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: title,
+    url: canonical,
+    inLanguage: 'zh-CN',
+    description,
+    isPartOf: { '@type': 'WebSite', name: '中国传统配色', url: `${SITE}/` },
+    about: TERM_SET_NODE,
+    author: AUTHOR_NODE,
+    numberOfItems: count,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: count,
+      itemListElement: list.map((image, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: colorPageUrl(image),
+        name: `${colorName(image)} ${image.hex}`,
+      })),
+    },
+  };
+  const jsonLd = jsonLdScripts([breadcrumbJsonLd, collectionJsonLd]);
+
+  return `<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="${escapeHtml(description)}">
+    <meta name="theme-color" content="#f7f7f4" data-theme-color>
+    <title>${escapeHtml(`${title} · ${count} 色色卡大全 | 中国传统配色`)}</title>
+    <link rel="canonical" href="${escapeHtml(canonical)}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="中国传统配色">
+    <meta property="og:title" content="${escapeHtml(`${title} · ${count} 色`)}">
+    <meta property="og:description" content="${escapeHtml(description)}">
+    <meta property="og:url" content="${escapeHtml(canonical)}">
+    <meta property="og:image" content="${escapeHtml(ogImage)}">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(`${title} · ${count} 色`)}">
+    <meta name="twitter:description" content="${escapeHtml(description)}">
+    <meta name="twitter:image" content="${escapeHtml(ogImage)}">
+    <link rel="icon" href="../favicon.svg?v=20260610-6" type="image/svg+xml">
+    ${jsonLd}
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('theme');
+          if (theme === 'dark' || theme === 'light') {
+            document.documentElement.dataset.theme = theme;
+          }
+        } catch (error) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=${SHARED_STYLE_VERSION}">
+    <link rel="stylesheet" href="../assets/css/color-page.css?v=${ASSET_VERSION}">
+    <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
+  </head>
+  <body data-current-page="dictionary" data-base="../">
+    <a class="skip-link" href="#hue-hub-main">跳到色卡列表</a>
+
+    <div data-shared-header></div>
+
+    <main id="hue-hub-main" class="color-detail-page">
+      <nav class="color-breadcrumb" aria-label="面包屑导航">
+        <a href="../index.html">首页</a>
+        <span aria-hidden="true">/</span>
+        <a href="index.html">中国传统色大全</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">${escapeHtml(family)}</span>
+      </nav>
+
+      <header class="color-hero" style="--swatch: ${escapeHtml(list[0]?.hex || '#f7f7f4')}; --swatch-ink: ${readableText(list[0]?.hex || '#f7f7f4')};">
+        <div class="color-hero-copy">
+          <p class="color-hero-id">中国传统色 · ${family} · ${count} 色</p>
+          <h1>${escapeHtml(title)}</h1>
+          <p class="color-hero-note">${escapeHtml(intro)}</p>
+        </div>
+      </header>
+
+      <section class="color-section" aria-labelledby="hue-nav-title">
+        <h2 id="hue-nav-title">按色系浏览</h2>
+        <div class="color-tools">
+          <a class="button button-primary" href="index.html">全部 742 色大全</a>
+          ${hueNav}
+        </div>
+      </section>
+
+      <section class="color-section" aria-labelledby="hue-list-title">
+        <h2 id="hue-list-title">${escapeHtml(family)}全部色卡（${count}）</h2>
+        <div class="relation-swatches">${swatches}
+        </div>
+      </section>
+    </main>
+
+    <div data-shared-footer></div>
+
+    <script src="../assets/js/shared-chrome.js?v=${SHARED_CHROME_VERSION}" defer></script>
+  </body>
+</html>
+`;
+}
+
 // llms.txt + llms-full.txt — the canonical AI-discovery files for a reference
 // dataset. llms.txt is a concise map; llms-full.txt inlines the whole color
 // table so an LLM can answer "X 是什么颜色 / X 的 HEX" from a single fetch.
@@ -772,13 +957,18 @@ function renderLlmsTxt(images, harmonies) {
   return { short, full };
 }
 
-function renderSitemap(images) {
+function renderSitemap(images, hubSlugs = []) {
   const urls = [];
   for (const page of MAIN_PAGES) {
     urls.push({ loc: `${SITE}/${page.path}`, priority: page.priority, changefreq: page.changefreq });
   }
   // The static all-colors index — the crawlable hub that links to every color page.
   urls.push({ loc: `${SITE}/colors/`, priority: '0.9', changefreq: 'weekly' });
+  // Hue-family hub/pillar pages — only the ones actually written (same source as
+  // the write loop in main), so the sitemap never advertises a 404.
+  for (const slug of hubSlugs) {
+    urls.push({ loc: `${SITE}/colors/family-${slug}.html`, priority: '0.8', changefreq: 'weekly' });
+  }
   for (const image of images) {
     // Each color page carries its color-card thumbnail as an <image:image> so the
     // 742 swatches become eligible for Google Images (a natural channel for a
@@ -857,7 +1047,18 @@ async function main() {
   // The static all-colors index lives at colors/index.html (served as /colors/).
   await writeFile(path.join(COLORS_DIR, 'index.html'), renderColorIndex(images, harmonies), 'utf8');
 
-  await writeFile(SITEMAP_FILE, renderSitemap(images), 'utf8');
+  // Hue-family hub/pillar pages (colors/family-<slug>.html) — only for families
+  // that actually have colors. The same list drives the sitemap, so written
+  // files and advertised URLs can never diverge.
+  const hubFamilies = HUE_FAMILY_ORDER.filter((f) => HUE_FAMILY_META[f] && familyGroups.get(f)?.length);
+  for (const family of hubFamilies) {
+    const slug = HUE_FAMILY_META[family].slug;
+    await writeFile(path.join(COLORS_DIR, `family-${slug}.html`), renderHueHub(family, familyGroups.get(family), images.length), 'utf8');
+  }
+  const hubSlugs = hubFamilies.map((f) => HUE_FAMILY_META[f].slug);
+  const hubs = hubFamilies.length;
+
+  await writeFile(SITEMAP_FILE, renderSitemap(images, hubSlugs), 'utf8');
 
   // AI-discovery files at the site root.
   const llms = renderLlmsTxt(images, harmonies);
@@ -866,8 +1067,9 @@ async function main() {
 
   console.log(`Generated ${written} color pages + share cards under colors/`);
   console.log('Wrote colors/index.html (static all-colors index)');
+  console.log(`Wrote ${hubs} hue-family hub pages (colors/family-*.html)`);
   console.log('Wrote llms.txt + llms-full.txt');
-  console.log(`Wrote sitemap.xml with ${MAIN_PAGES.length + 1 + images.length} URLs`);
+  console.log(`Wrote sitemap.xml with ${MAIN_PAGES.length + 1 + hubs + images.length} URLs`);
 }
 
 main().catch((error) => {
