@@ -15,7 +15,7 @@
   const colorDialogSearch = document.querySelector('[data-terminal-color-search]');
   const colorDialogGrid = document.querySelector('[data-terminal-color-grid]');
   const colorDialogCurrent = document.querySelector('[data-terminal-color-current]');
-  let state = { id: null, mode: 'dark', fmt: 'ghostty' };
+  let state = { id: null, mode: 'dark', fmt: 'ghostty', depth: 'medium' };
   let current = null;
 
   /* ── 一页连续的「真终端会话」：fastfetch → ls → git → bat → glow，一路下滚，无 tab。──
@@ -83,7 +83,7 @@
 
   /* ── 渲染调色板 ── */
   function render() {
-    const p = T.build(state.id, state.mode);
+    const p = T.build(state.id, state.mode, state.depth);
     current = p;
     root.dataset.mode = state.mode;
     // 灌 CSS 变量（换锚色 = 改这几十个变量，零节点重渲染）
@@ -104,20 +104,22 @@
     $('[data-anchor-oklch]').textContent = window.ZH_COLOR_CORE.oklchStr(p.anchor.hex);
     $('[data-anchor-slot]').textContent = '占 ' + p.anchorSlot + ' 槽';
 
-    // 三态：点名（精确库色）/ 微调（有名色，为可读性改过 hex）/ 兜底（无名，凭空算出）
-    const adjusted = s => s.nudged && s.name, fabricated = s => s.nudged && !s.name;
+    // 四态：点名（精确库色）/ 素地（自锚色染的合成表面色）/ 微调（有名色，为可读性改过 hex）/ 兜底（无名，凭空算出）
+    const surface = s => s.surface, adjusted = s => s.nudged && s.name && !s.surface, fabricated = s => s.nudged && !s.name;
 
-    // 16 色板带（角标只标真·无名兜底；微调仍是有名色，不打标记保持整洁）
+    // 16 色板带（角标只标真·无名兜底；素地/微调仍有名，不打标记保持整洁）
     $('[data-strip]').innerHTML = p.order.map((k, i) => {
       const t = p.ansi[k];
-      const tag = t.nudged ? (t.name ? '微调' : '算法兜底') : '点名';
-      return `<span class="chip${fabricated(t) ? ' nud' : ''}" title="${k} · ${t.name || '算法兜底'}（${tag}） ${t.hex.toUpperCase()}">`
+      const tag = t.surface ? '素地' : t.nudged ? (t.name ? '微调' : '算法兜底') : '点名';
+      const srcName = t.surface ? `${t.name}染` : (t.name || '算法兜底');
+      return `<span class="chip${fabricated(t) ? ' nud' : ''}" title="${k} · ${srcName}（${tag}） ${t.hex.toUpperCase()}">`
         + `<i style="background:${t.hex}"></i><b>${i}</b></span>`;
     }).join('');
 
     // 标本（16 ANSI + 4 UI）
     $('[data-specimen]').innerHTML = p.slots.map(s => {
       const src = fabricated(s) ? `<span class="algo">算法兜底</span>`
+        : surface(s) ? `<span class="nm">${s.name}</span><span class="adj" title="素地敷彩：按角色明度合成、染上锚色「${s.name}」的色相 —— 表面色，非库中原色">素地</span>`
         : adjusted(s) ? `<span class="nm">${s.name}</span><span class="adj" title="可溯源到该传统色，为可读性微调了色值">微调</span>`
         : `<span class="nm">${s.name || '—'}</span>`;
       const fl = T.floorFor(s.key, state.mode);
@@ -129,8 +131,9 @@
     }).join('');
 
     const exact = p.slots.filter(s => !s.nudged).length;
+    const surf = p.slots.filter(surface).length;
     const adj = p.slots.filter(adjusted).length, fab = p.slots.filter(fabricated).length;
-    const prov = `点名 ${exact}` + (adj ? ` · 微调 ${adj}` : '') + (fab ? ` · 兜底 ${fab}` : '');
+    const prov = `点名 ${exact}` + (surf ? ` · 素地 ${surf}` : '') + (adj ? ` · 微调 ${adj}` : '') + (fab ? ` · 兜底 ${fab}` : '');
     $('[data-stat]').textContent = `${p.slots.length} 槽 · ${prov}`;
     // fetch 屏的动态信息
     const ft = $('[data-fetch-theme]'); if (ft) ft.textContent = `${p.anchor.name} · NO.${p.anchor.id} · ${state.mode === 'dark' ? '暗色' : '亮色'}`;
@@ -257,6 +260,11 @@
   root.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => {
     state.mode = b.dataset.mode;
     root.querySelectorAll('[data-mode]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    render();
+  }));
+  root.querySelectorAll('[data-depth]').forEach(b => b.addEventListener('click', () => {
+    state.depth = b.dataset.depth;
+    root.querySelectorAll('[data-depth]').forEach(x => x.setAttribute('aria-pressed', x === b));
     render();
   }));
   $('[data-random]').addEventListener('click', () => { const c = ALL[Math.floor(Math.random() * ALL.length)]; setAnchor(c.id); syncQuick(c.id); });
