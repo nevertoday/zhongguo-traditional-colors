@@ -275,9 +275,28 @@ code {
 }
 
 .brand-mark strong {
+  position: relative;
+  z-index: 0;
   font-size: 0.95rem;
-  font-weight: 600;
-  transition: color 180ms ease, background-position 380ms var(--ease-out-quart);
+  font-weight: 700;
+  letter-spacing: 0;
+  transition: color 180ms ease;
+}
+
+.brand-mark strong::after {
+  position: absolute;
+  right: -3px;
+  bottom: -4px;
+  left: -3px;
+  z-index: -1;
+  height: 7px;
+  background:
+    linear-gradient(90deg, var(--brand-hover-a), var(--brand-hover-b), var(--brand-hover-c));
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.72) translateY(2px);
+  transform-origin: left center;
+  transition: opacity 180ms ease, transform 300ms var(--ease-out-quart);
 }
 
 .brand-mark:hover span,
@@ -287,21 +306,20 @@ code {
   transform: translateY(-1px);
 }
 
+.brand-mark:hover strong,
+.brand-mark:focus-visible strong {
+  color: var(--ink);
+}
+
+.brand-mark:hover strong::after,
+.brand-mark:focus-visible strong::after {
+  opacity: 0.82;
+  transform: scaleX(1) translateY(0);
+}
+
 .brand-mark:focus-visible {
   outline: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
   outline-offset: 4px;
-}
-
-@supports ((background-clip: text) or (-webkit-background-clip: text)) {
-  .brand-mark:hover strong,
-  .brand-mark:focus-visible strong {
-    color: transparent;
-    background: linear-gradient(90deg, var(--brand-hover-a), var(--brand-hover-b), var(--brand-hover-c));
-    background-size: 180% 100%;
-    background-position: 100% 50%;
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
 }
 
 .nav-current-chip {

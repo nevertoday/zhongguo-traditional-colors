@@ -178,22 +178,59 @@
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
   }
 
+  function contrastRatio(firstLuminance, secondLuminance) {
+    const lighter = Math.max(firstLuminance, secondLuminance);
+    const darker = Math.min(firstLuminance, secondLuminance);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+
+  function minimumContrast(colors, ink) {
+    const inkLuminance = relativeLuminance(ink);
+    return colors.reduce((lowest, color) => (
+      Math.min(lowest, contrastRatio(relativeLuminance(color.hex), inkLuminance))
+    ), Number.POSITIVE_INFINITY);
+  }
+
+  function readableInkForColors(colors) {
+    const darkInk = '#111111';
+    const lightInk = '#f7f7f4';
+    const darkContrast = minimumContrast(colors, darkInk);
+    const lightContrast = minimumContrast(colors, lightInk);
+    return darkContrast >= lightContrast
+      ? { ink: darkInk, contrast: darkContrast }
+      : { ink: lightInk, contrast: lightContrast };
+  }
+
   function randomBrandColors() {
-    const pool = [...brandHoverColors];
-    for (let index = pool.length - 1; index > 0; index -= 1) {
-      const swapIndex = Math.floor(Math.random() * (index + 1));
-      [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
+    let bestColors = brandHoverColors.slice(0, 3);
+    let bestContrast = 0;
+
+    for (let attempt = 0; attempt < 48; attempt += 1) {
+      const pool = [...brandHoverColors];
+      for (let index = pool.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
+      }
+
+      const colors = pool.slice(0, 3);
+      const { contrast } = readableInkForColors(colors);
+      if (contrast > bestContrast) {
+        bestColors = colors;
+        bestContrast = contrast;
+      }
+      if (contrast >= 4.5) return colors;
     }
-    return pool.slice(0, 3);
+
+    return bestColors;
   }
 
   function setBrandHoverColors(brand) {
     const colors = randomBrandColors();
-    const averageLuminance = colors.reduce((total, color) => total + relativeLuminance(color.hex), 0) / colors.length;
+    const { ink } = readableInkForColors(colors);
     brand.style.setProperty('--brand-hover-a', colors[0].hex);
     brand.style.setProperty('--brand-hover-b', colors[1].hex);
     brand.style.setProperty('--brand-hover-c', colors[2].hex);
-    brand.style.setProperty('--brand-hover-ink', averageLuminance > 0.56 ? '#111111' : '#f7f7f4');
+    brand.style.setProperty('--brand-hover-ink', ink);
     brand.dataset.brandColors = colors.map((color) => `${color.name} ${color.hex}`).join(' / ');
   }
 
