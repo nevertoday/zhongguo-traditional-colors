@@ -16,6 +16,8 @@ const featuredColorIds = [
 const siteUrl = "https://colors.xiaoxiaodong.ai/";
 const styleLabUrl = `${siteUrl}style-lab.html`;
 const generatorUrl = `${siteUrl}generator.html`;
+const themeForgeUrl = `${siteUrl}theme-forge.html`;
+const terminalUrl = `${siteUrl}terminal.html`;
 const paletteUrl = `${siteUrl}palettes.html`;
 const gradientUrl = `${siteUrl}gradients.html`;
 const usesUrl = `${siteUrl}uses.html`;
@@ -249,13 +251,15 @@ ${languageSwitch("zh")}
 
 如果你在做设计、写内容、做课件、搭建网页主题，常常需要一套稳妥、好看、能直接落版的中国色参考，这个仓库就是为这件事整理的。
 
-这里收录 ${project.count} 张中华传统色高清色卡，已按原始 742 色清单完整覆盖。每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词。现在它不只是素材库，也是一套可交互的中国色工作台：可以查色、试场景、生成色板、浏览配色关系、查看渐变逻辑、制作用途卡片，并把喜欢的色卡和整组方案收藏到本机。
+这里收录 ${project.count} 张中华传统色高清色卡，已按原始 742 色清单完整覆盖。每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词。现在它不只是素材库，也是一套可交互的中国色工作台：可以查色、试场景、生成色板、浏览配色关系、查看渐变逻辑、制作用途卡片、生成 shadcn 主题、配置终端调色板，并把喜欢的色卡和整组方案收藏到本机。
 
 ## 快速入口
 
 - [在线浏览色卡](${siteUrl})
 - [场景试色工作台](${styleLabUrl})
 - [中国色配色生成](${generatorUrl})
+- [中国色生成 shadcn 主题](${themeForgeUrl})
+- [中国色终端配色方案](${terminalUrl})
 - [中国色配色灵感](${paletteUrl})
 - [渐变逻辑卡片](${gradientUrl})
 - [用途卡片](${usesUrl})
@@ -278,6 +282,8 @@ ${languageSwitch("zh")}
 | 搭建色彩资料库 | 文件名与 742 色清单一一对应 |
 | 做网页、PPT、封面、海报、品牌板 | 场景试色会把主色拆成背景、标题、正文、按钮和点缀角色 |
 | 快速产出一组可用 palette | 配色生成支持锁定、替换、轮换、复制、导出和收藏 |
+| 生成可直接接入的 UI 主题 | 主题生成把锚色映射成整套 shadcn 语义主题，含日间/夜间与 OKLCH，预览组件并导出 globals.css |
+| 配置终端调色板 | 终端配色生成 16 色 ANSI + 背景/前景/光标/选区，过 WCAG 对比度，一键复制 Ghostty / Alacritty / kitty 配置 |
 | 找配色关系和灵感 | 按同类、邻近、互补、三角、冷暖、明暗、灰调等关系浏览 8,904 组配色 |
 | 理解单色渐变逻辑 | 每个传统色生成浅阶、本色、邻近、深阶、双色切片和渐变路径 |
 | 做背景/文字/按钮用途卡 | 用途卡片会检查对比度，并支持复制、换相近和收藏整组双色方案 |
@@ -677,13 +683,15 @@ ${languageSwitch("en")}
 
 If you design interfaces, write visual content, build course material, or put together a cultural website, you often need Chinese colors that look good and can survive a real layout. This repository was organized for that moment.
 
-It collects ${project.count} high-resolution Chinese traditional color cards, mapped one by one to the original 742-color list. Each card keeps the color name, HEX, RGB, CMYK, palette notes, and mood keywords. The website is more than an image archive: you can search colors, test them in real scenes, generate palettes, browse harmony relationships, inspect gradient logic, build background/text usage cards, and save the colors or schemes you want to keep.
+It collects ${project.count} high-resolution Chinese traditional color cards, mapped one by one to the original 742-color list. Each card keeps the color name, HEX, RGB, CMYK, palette notes, and mood keywords. The website is more than an image archive: you can search colors, test them in real scenes, generate palettes, browse harmony relationships, inspect gradient logic, build background/text usage cards, forge shadcn themes, configure terminal palettes, and save the colors or schemes you want to keep.
 
 ## Quick Links
 
 - [Browse the online gallery](${siteUrl})
 - [Open the scene testing workbench](${styleLabUrl})
 - [Open the palette generator](${generatorUrl})
+- [Forge a shadcn theme from a Chinese color](${themeForgeUrl})
+- [Build a terminal color scheme](${terminalUrl})
 - [Open the Chinese color palette board](${paletteUrl})
 - [Open gradient logic cards](${gradientUrl})
 - [Open usage cards](${usesUrl})
@@ -706,6 +714,8 @@ It collects ${project.count} high-resolution Chinese traditional color cards, ma
 | Build a local color library | Filenames matched to the 742-color source list |
 | Try colors in websites, slides, covers, posters, or brand boards | Scene testing maps one anchor color into background, title, body, button, and accent roles |
 | Produce a usable palette quickly | The generator lets you lock, replace, rotate, copy, export, and favorite full schemes |
+| Ship a usable UI theme | Theme Forge maps an anchor color into a full shadcn semantic theme with light/dark and OKLCH, component preview, and globals.css export |
+| Configure a terminal palette | Terminal builds a 16-color ANSI set plus background/foreground/cursor/selection, passes WCAG contrast, and copies Ghostty / Alacritty / kitty configs |
 | Look for harmony and inspiration | Browse 8,904 palettes across same-color, analogous, complementary, triadic, warm/cool, light/dark, gray-tone, and neutral relationships |
 | Understand one color as a gradient system | Each traditional color becomes light, anchor, nearby, deep, two-tone, and gradient-path cards |
 | Test background/text/button use | Usage cards check contrast and support copy, remix, nearby-color replacement, and favorites |
@@ -827,13 +837,15 @@ ${languageSwitch("ja")}
 
 このリポジトリは、デザイン、教材、記事、Web テーマ、文化研究でそのまま使える中国伝統色の資料兼ワークベンチです。
 
-${project.count} 枚の高解像度カラーカードを収録し、元の 742 色リストと対応させています。各カードには色名、HEX、RGB、CMYK、配色の参考、雰囲気のキーワードをまとめています。現在のサイトでは、色カード閲覧だけでなく、実際のレイアウトでの試色、配色生成、配色関係の閲覧、グラデーションロジックの確認、用途カード作成、気に入った色や配色のローカル保存もできます。
+${project.count} 枚の高解像度カラーカードを収録し、元の 742 色リストと対応させています。各カードには色名、HEX、RGB、CMYK、配色の参考、雰囲気のキーワードをまとめています。現在のサイトでは、色カード閲覧だけでなく、実際のレイアウトでの試色、配色生成、配色関係の閲覧、グラデーションロジックの確認、用途カード作成、shadcn テーマ生成、ターミナル配色の設定、気に入った色や配色のローカル保存もできます。
 
 ## クイックリンク
 
 - [オンラインギャラリーを見る](${siteUrl})
 - [シーン試色ワークベンチを見る](${styleLabUrl})
 - [配色ジェネレーターを見る](${generatorUrl})
+- [中国色から shadcn テーマを生成](${themeForgeUrl})
+- [ターミナル配色を作成](${terminalUrl})
 - [中国色パレットボードを見る](${paletteUrl})
 - [グラデーションロジックカードを見る](${gradientUrl})
 - [用途カードを見る](${usesUrl})
@@ -856,6 +868,8 @@ ${project.count} 枚の高解像度カラーカードを収録し、元の 742 �
 | ローカルの色資料ライブラリを作る | 742 色リストに対応したファイル名 |
 | Web、スライド、表紙、ポスター、ブランド案に使う | シーン試色で主色を背景、タイトル、本文、ボタン、アクセントに分解 |
 | すぐ使えるパレットを作る | 配色ジェネレーターで固定、差し替え、順序変更、コピー、書き出し、お気に入り保存 |
+| そのまま使える UI テーマを作る | 主题生成 がアンカー色を shadcn のセマンティックテーマ一式（昼/夜・OKLCH）に変換し、コンポーネントプレビューと globals.css 書き出しに対応 |
+| ターミナル配色を設定する | 终端配色 が 16 色 ANSI と背景/前景/カーソル/選択範囲を生成し、WCAG コントラストを満たして Ghostty / Alacritty / kitty 設定をコピー |
 | 配色関係から探す | 同系、隣接、補色、三角、寒暖、明暗、灰調、中性など 8,904 組の配色を閲覧 |
 | 単色のグラデーションを理解する | 各伝統色を浅階、本色、隣接、深階、2 tone、gradation のカードとして表示 |
 | 背景/文字の用途を試す | 用途カードでコントラストを確認し、2 色スキームをコピー、再生成、お気に入り保存 |

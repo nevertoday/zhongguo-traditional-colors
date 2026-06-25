@@ -4,13 +4,15 @@
 
 If you design interfaces, write visual content, build course material, or put together a cultural website, you often need Chinese colors that look good and can survive a real layout. This repository was organized for that moment.
 
-It collects 742 high-resolution Chinese traditional color cards, mapped one by one to the original 742-color list. Each card keeps the color name, HEX, RGB, CMYK, palette notes, and mood keywords. The website is more than an image archive: you can search colors, test them in real scenes, generate palettes, browse harmony relationships, inspect gradient logic, build background/text usage cards, and save the colors or schemes you want to keep.
+It collects 742 high-resolution Chinese traditional color cards, mapped one by one to the original 742-color list. Each card keeps the color name, HEX, RGB, CMYK, palette notes, and mood keywords. The website is more than an image archive: you can search colors, test them in real scenes, generate palettes, browse harmony relationships, inspect gradient logic, build background/text usage cards, forge shadcn themes, configure terminal palettes, and save the colors or schemes you want to keep.
 
 ## Quick Links
 
 - [Browse the online gallery](https://colors.xiaoxiaodong.ai/)
 - [Open the scene testing workbench](https://colors.xiaoxiaodong.ai/style-lab.html)
 - [Open the palette generator](https://colors.xiaoxiaodong.ai/generator.html)
+- [Forge a shadcn theme from a Chinese color](https://colors.xiaoxiaodong.ai/theme-forge.html)
+- [Build a terminal color scheme](https://colors.xiaoxiaodong.ai/terminal.html)
 - [Open the Chinese color palette board](https://colors.xiaoxiaodong.ai/palettes.html)
 - [Open gradient logic cards](https://colors.xiaoxiaodong.ai/gradients.html)
 - [Open usage cards](https://colors.xiaoxiaodong.ai/uses.html)
@@ -33,6 +35,8 @@ It collects 742 high-resolution Chinese traditional color cards, mapped one by o
 | Build a local color library | Filenames matched to the 742-color source list |
 | Try colors in websites, slides, covers, posters, or brand boards | Scene testing maps one anchor color into background, title, body, button, and accent roles |
 | Produce a usable palette quickly | The generator lets you lock, replace, rotate, copy, export, and favorite full schemes |
+| Ship a usable UI theme | Theme Forge maps an anchor color into a full shadcn semantic theme with light/dark and OKLCH, component preview, and globals.css export |
+| Configure a terminal palette | Terminal builds a 16-color ANSI set plus background/foreground/cursor/selection, passes WCAG contrast, and copies Ghostty / Alacritty / kitty configs |
 | Look for harmony and inspiration | Browse 8,904 palettes across same-color, analogous, complementary, triadic, warm/cool, light/dark, gray-tone, and neutral relationships |
 | Understand one color as a gradient system | Each traditional color becomes light, anchor, nearby, deep, two-tone, and gradient-path cards |
 | Test background/text/button use | Usage cards check contrast and support copy, remix, nearby-color replacement, and favorites |
