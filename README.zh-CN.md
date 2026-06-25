@@ -4,13 +4,15 @@
 
 如果你在做设计、写内容、做课件、搭建网页主题，常常需要一套稳妥、好看、能直接落版的中国色参考，这个仓库就是为这件事整理的。
 
-这里收录 742 张中华传统色高清色卡，已按原始 742 色清单完整覆盖。每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词。现在它不只是素材库，也是一套可交互的中国色工作台：可以查色、试场景、生成色板、浏览配色关系、查看渐变逻辑、制作用途卡片，并把喜欢的色卡和整组方案收藏到本机。
+这里收录 742 张中华传统色高清色卡，已按原始 742 色清单完整覆盖。每张色卡包含色名、HEX、RGB、CMYK、配色推荐和气质关键词。现在它不只是素材库，也是一套可交互的中国色工作台：可以查色、试场景、生成色板、浏览配色关系、查看渐变逻辑、制作用途卡片、生成 shadcn 主题、配置终端调色板，并把喜欢的色卡和整组方案收藏到本机。
 
 ## 快速入口
 
 - [在线浏览色卡](https://colors.xiaoxiaodong.ai/)
 - [场景试色工作台](https://colors.xiaoxiaodong.ai/style-lab.html)
 - [中国色配色生成](https://colors.xiaoxiaodong.ai/generator.html)
+- [中国色生成 shadcn 主题](https://colors.xiaoxiaodong.ai/theme-forge.html)
+- [中国色终端配色方案](https://colors.xiaoxiaodong.ai/terminal.html)
 - [中国色配色灵感](https://colors.xiaoxiaodong.ai/palettes.html)
 - [渐变逻辑卡片](https://colors.xiaoxiaodong.ai/gradients.html)
 - [用途卡片](https://colors.xiaoxiaodong.ai/uses.html)
@@ -33,6 +35,8 @@
 | 搭建色彩资料库 | 文件名与 742 色清单一一对应 |
 | 做网页、PPT、封面、海报、品牌板 | 场景试色会把主色拆成背景、标题、正文、按钮和点缀角色 |
 | 快速产出一组可用 palette | 配色生成支持锁定、替换、轮换、复制、导出和收藏 |
+| 生成可直接接入的 UI 主题 | 主题生成把锚色映射成整套 shadcn 语义主题，含日间/夜间与 OKLCH，预览组件并导出 globals.css |
+| 配置终端调色板 | 终端配色生成 16 色 ANSI + 背景/前景/光标/选区，过 WCAG 对比度，一键复制 Ghostty / Alacritty / kitty 配置 |
 | 找配色关系和灵感 | 按同类、邻近、互补、三角、冷暖、明暗、灰调等关系浏览 8,904 组配色 |
 | 理解单色渐变逻辑 | 每个传统色生成浅阶、本色、邻近、深阶、双色切片和渐变路径 |
 | 做背景/文字/按钮用途卡 | 用途卡片会检查对比度，并支持复制、换相近和收藏整组双色方案 |
