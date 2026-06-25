@@ -30,7 +30,7 @@ const CARDS_DIR = path.join(COLORS_DIR, 'cards');
 const SITEMAP_FILE = path.join(ROOT, 'sitemap.xml');
 
 const SITE = 'https://colors.xiaoxiaodong.ai';
-const ASSET_VERSION = '20260616-1';
+const ASSET_VERSION = '20260625-1';
 const SHARED_STYLE_VERSION = '20260616-1';
 const SHARED_CHROME_VERSION = '20260616-1';
 
@@ -39,6 +39,14 @@ const SHARED_CHROME_VERSION = '20260616-1';
 // stay a deterministic function of their inputs. The verify workflow rebuilds and
 // diffs every artifact; a build-time clock would drift each day and fail CI.
 const LASTMOD = '2026-06-17';
+
+// Schema dates for the color pages. datePublished = first generation of the static
+// /colors/ pages; dateModified tracks the content (kept == LASTMOD). Both are
+// constants for the same determinism reason as LASTMOD — recency is a strong
+// AI-search citation signal, so these feed CreativeWork.datePublished/dateModified
+// and a visible "数据更新于" line. Bump DATE_MODIFIED with LASTMOD on content changes.
+const DATE_PUBLISHED = '2026-06-16';
+const DATE_MODIFIED = LASTMOD;
 
 // Hue families grouped on the static colors/index.html, ordered to match the
 // dictionary hue filter (红 → 中性). Any family not listed falls to the end.
@@ -315,6 +323,49 @@ function renderColorPage(image, harmony, context, siblings = {}) {
   const bestContrast = useWhiteText ? textWhite : textBlack;
   const aaLabel = !bestContrast ? '' : bestContrast >= 4.5 ? '达到' : bestContrast >= 3 ? '接近' : '低于';
 
+  // Question-led FAQ, all answers data-derived (matches the on-page text exactly so
+  // the FAQPage JSON-LD never claims content the page doesn't show). Question
+  // headings mirror real search queries ("X 是什么颜色"), the format AI search
+  // surfaces preferentially extract. Defined before the JSON-LD block so both the
+  // visible 常见问题 section and the FAQPage schema read from one source.
+  const faqItems = [
+    {
+      q: `「${name}」是什么颜色？`,
+      a: `「${name}」是中国传统色之一${hueFamily ? `，属${hueFamily}` : ''}${temperature ? `、偏${temperature}调` : ''}，`
+        + `色值为 HEX ${hex}${rgb ? `（RGB ${rgb.r},${rgb.g},${rgb.b}）` : ''}。`
+        + `${rank && hueFamily ? `在${hueFamily}的 ${rank.total} 种传统色中按色序排第 ${rank.index} 位。` : ''}`,
+    },
+    {
+      q: `「${name}」的 RGB、HSL、CMYK 值是多少？`,
+      a: `「${name}」的色值为 HEX ${hex}`
+        + `${rgb ? `、RGB ${rgb.r},${rgb.g},${rgb.b}` : ''}`
+        + `${hsl ? `、HSL ${hsl.h},${hsl.s}%,${hsl.l}%` : ''}`
+        + `${cmyk ? `、CMYK ${cmyk.c},${cmyk.m},${cmyk.y},${cmyk.k}` : ''}。`,
+    },
+    (comp || ana) && {
+      q: `「${name}」适合搭配什么颜色？`,
+      a: `以「${name}」为锚点，从 742 色库推导：`
+        + `${comp ? `互补方向可取「${colorName(comp)} ${comp.hex}」` : ''}`
+        + `${comp && ana ? '，' : ''}${ana ? `邻近色可取「${colorName(ana)} ${ana.hex}」` : ''}。`
+        + `更多同类、分裂互补、三角等配色关系见本页「配色关系」。`,
+    },
+    {
+      q: `「${name}」的色卡可以免费下载吗？`,
+      a: `可以。本页提供「${name}」的 PNG 高清色卡与 SVG 分享卡免费下载，项目由小小东整理维护、MIT 开源。`,
+    },
+  ].filter(Boolean);
+
+  const faqSection = `
+      <section class="color-section" aria-labelledby="faq-title">
+        <h2 id="faq-title">常见问题</h2>
+        <div class="color-faq">${faqItems.map((item) => `
+          <details class="color-faq-item">
+            <summary><h3>${escapeHtml(item.q)}</h3></summary>
+            <p>${escapeHtml(item.a)}</p>
+          </details>`).join('')}
+        </div>
+      </section>`;
+
   const metaChips = [];
   if (hueFamily) metaChips.push(hueFamily);
   if (temperature) metaChips.push(`${temperature}色`);
@@ -329,11 +380,14 @@ function renderColorPage(image, harmony, context, siblings = {}) {
     + `${comp ? `互补色可搭配「${colorName(comp)} ${comp.hex}」，` : ''}`
     + `查看同类、邻近、互补等配色关系，并一键用于配色生成、场景试色与用途卡片。`;
 
+  // Color values as a real <table> — tabular data is preferentially extracted by
+  // AI-search/Google, and the copy affordance lives on a button per row so the
+  // interactivity (data-copy-value) is preserved.
   const valuesMarkup = values.map((entry) => `
-            <button type="button" class="color-value" data-copy-value="${escapeHtml(entry.value)}" title="复制 ${escapeHtml(entry.label)}">
-              <span class="color-value-label">${escapeHtml(entry.label)}</span>
-              <span class="color-value-text">${escapeHtml(entry.value)}</span>
-            </button>`).join('');
+              <tr>
+                <th scope="row" class="color-value-label">${escapeHtml(entry.label)}</th>
+                <td><button type="button" class="color-value-copy" data-copy-value="${escapeHtml(entry.value)}" title="复制 ${escapeHtml(entry.label)}"><span class="color-value-text">${escapeHtml(entry.value)}</span><span class="color-value-copy-hint" aria-hidden="true">复制</span></button></td>
+              </tr>`).join('');
 
   const chipsMarkup = metaChips
     .map((chip) => `<span class="color-chip">${escapeHtml(chip)}</span>`)
@@ -404,9 +458,23 @@ function renderColorPage(image, harmony, context, siblings = {}) {
     inLanguage: 'zh-CN',
     description,
     color: hex,
+    datePublished: DATE_PUBLISHED,
+    dateModified: DATE_MODIFIED,
     creator: AUTHOR_NODE,
     isPartOf: { '@type': 'CreativeWorkSeries', name: '中国传统色 742 色', url: `${SITE}/dictionary.html` },
     additionalProperty,
+  };
+
+  // FAQPage mirrors the visible 常见问题 block one-to-one — answers are the same
+  // strings rendered on the page (Google requires the answer text be present).
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
   };
 
   // Each color is also a DefinedTerm in the 742-color set — the purpose-built
@@ -421,7 +489,7 @@ function renderColorPage(image, harmony, context, siblings = {}) {
     inDefinedTermSet: TERM_SET_NODE,
   };
 
-  const jsonLd = jsonLdScripts([breadcrumbJsonLd, colorJsonLd, definedTermJsonLd]);
+  const jsonLd = jsonLdScripts([breadcrumbJsonLd, colorJsonLd, definedTermJsonLd, faqJsonLd]);
 
   const note = toneNote(hsl, temperature);
 
@@ -533,15 +601,22 @@ function renderColorPage(image, harmony, context, siblings = {}) {
           <p class="color-hero-hex">${escapeHtml(hex)}</p>
           <div class="color-chips">${chipsMarkup}</div>
           <p class="color-hero-note">${escapeHtml(note)}</p>
+          <p class="color-hero-updated">数据更新于 <time datetime="${DATE_MODIFIED}">${DATE_MODIFIED}</time></p>
         </div>
       </header>
 ${aboutSection}
 
       <section class="color-section" aria-labelledby="values-title">
         <h2 id="values-title">色值</h2>
-        <p class="color-section-lede">点击任意色值即可复制。</p>
-        <div class="color-values">${valuesMarkup}
-        </div>
+        <p class="color-section-lede">「${escapeHtml(name)}」的 HEX、RGB、HSL、CMYK 色值，点击任意数值即可复制。</p>
+        <table class="color-value-table">
+          <caption class="sr-only">${escapeHtml(`中国传统色 ${name} ${hex} 的色值对照`)}</caption>
+          <thead>
+            <tr><th scope="col">格式</th><th scope="col">色值</th></tr>
+          </thead>
+          <tbody>${valuesMarkup}
+          </tbody>
+        </table>
       </section>
 
       <section class="color-section" aria-labelledby="tools-title">
@@ -561,6 +636,7 @@ ${aboutSection}
         <div class="relation-grid">${relationSections}
         </div>
       </section>
+${faqSection}
       ${pager}
     </main>
 

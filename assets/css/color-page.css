@@ -286,8 +286,156 @@
   }
 }
 
+/* Color value table — tabular color values (AI/Google extractable) with a
+   per-row copy button. Sharp corners only, matching the design language. */
+.color-value-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-rounded);
+  max-width: 520px;
+}
+
+.color-value-table caption {
+  text-align: left;
+}
+
+.color-value-table th,
+.color-value-table td {
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.color-value-table thead th {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  background: var(--panel);
+}
+
+.color-value-table tbody th.color-value-label {
+  width: 6.5rem;
+  font-size: 0.86rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  background: var(--panel);
+}
+
+.color-value-table td {
+  padding: 0;
+}
+
+.color-value-copy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 160ms ease;
+}
+
+.color-value-copy:hover {
+  background: var(--panel);
+}
+
+.color-value-copy:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.color-value-copy-hint {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.color-value-copy:hover .color-value-copy-hint,
+.color-value-copy:focus-visible .color-value-copy-hint {
+  opacity: 1;
+}
+
+.color-hero-updated {
+  margin-top: 10px;
+  font-family: var(--font-rounded);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* FAQ — question-led <details> blocks (question H3s match AI search queries). */
+.color-faq {
+  display: grid;
+  gap: 0;
+  max-width: 760px;
+}
+
+.color-faq-item {
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  background: var(--panel);
+}
+
+.color-faq-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.color-faq-item > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.color-faq-item > summary::-webkit-details-marker {
+  display: none;
+}
+
+.color-faq-item > summary::after {
+  content: "+";
+  font-family: var(--font-rounded);
+  font-size: 1.2rem;
+  color: var(--muted);
+  flex: none;
+}
+
+.color-faq-item[open] > summary::after {
+  content: "–";
+}
+
+.color-faq-item > summary h3 {
+  margin: 0;
+  font-family: var(--font-rounded);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.color-faq-item[open] > summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.color-faq-item > p {
+  margin: 0;
+  padding: 16px 18px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .color-value,
+  .color-value-copy,
+  .color-faq-item > summary::after,
+  .color-faq-item > p,
   .relation-swatch,
   .color-toast {
     transition: none;
