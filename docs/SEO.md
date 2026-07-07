@@ -8,7 +8,7 @@
 
 - `colors/{编号}-{色名}.html` — 742 个颜色长尾页，每页含独立 `title` / `description` / `canonical` / Open Graph / Twitter Card / JSON-LD（BreadcrumbList + CreativeWork），以及指向相关颜色的内链网络。
 - `colors/cards/{编号}.svg` — 每色一张 1200×630 分享卡（可作为社媒图或下载素材）。
-- `sitemap.xml` — 7 个可索引主页面 + 742 个颜色页（共 749 条；`favorites.html` 因内容为本机收藏、对爬虫为空，已排除并标记 `noindex`）。
+- `sitemap.xml` — 12 个可索引主页面 + `colors/` 全量索引页 + 8 个色系 hub + 742 个颜色页（共 763 条；`favorites.html` 因内容为本机收藏、对爬虫为空，已排除并标记 `noindex`）。
 
 `robots.txt` 为静态文件，已声明 sitemap 位置。
 
@@ -16,7 +16,7 @@
 
 ## 各页面元信息
 
-8 个主页面均已补齐 `canonical`、Open Graph、Twitter Card；首页额外带 `WebSite` + `SearchAction` JSON-LD（站内搜索框，指向 `dictionary.html?q=`，字典页已支持读取 `?q=` 预填搜索）。
+12 个可索引主页面均已补齐 `canonical`、Open Graph、Twitter Card；首页额外带 `WebSite` + `SearchAction` JSON-LD（站内搜索框，指向 `dictionary.html?q=`，字典页已支持读取 `?q=` 预填搜索），`daily-color-playground.html` 带 `WebApplication` JSON-LD。
 
 ## 上线后一次性操作（需账号权限，无法在仓库内完成）
 
