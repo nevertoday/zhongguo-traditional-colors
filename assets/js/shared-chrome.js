@@ -10,6 +10,7 @@
     { key: 'palettes', label: '配色灵感', href: 'palettes.html' },
     { key: 'gradients', label: '渐变逻辑', href: 'gradients.html' },
     { key: 'uses', label: '用途卡片', href: 'uses.html' },
+    { key: 'daily', label: '每日一色', href: 'daily-color-playground.html' },
     { key: 'favorites', label: '收藏', href: 'favorites.html' },
     { key: 'skills', label: 'Skills', href: 'skills.html' },
   ];
@@ -64,6 +65,7 @@
     if (path === 'palettes.html') return 'palettes';
     if (path === 'gradients.html') return 'gradients';
     if (path === 'uses.html') return 'uses';
+    if (path === 'daily-color-playground.html') return 'daily';
     if (path === 'favorites.html') return 'favorites';
     if (path === 'skills.html') return 'skills';
     return 'home';

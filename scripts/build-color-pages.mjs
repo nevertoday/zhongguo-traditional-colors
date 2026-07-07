@@ -38,7 +38,7 @@ const SHARED_CHROME_VERSION = '20260616-1';
 // pages change — kept as a constant, NOT new Date(), so the generated artifacts
 // stay a deterministic function of their inputs. The verify workflow rebuilds and
 // diffs every artifact; a build-time clock would drift each day and fail CI.
-const LASTMOD = '2026-06-17';
+const LASTMOD = '2026-07-07';
 
 // Schema dates for the color pages. datePublished = first generation of the static
 // /colors/ pages; dateModified tracks the content (kept == LASTMOD). Both are
@@ -96,6 +96,7 @@ const MAIN_PAGES = [
   { path: 'style-lab.html', priority: '0.8', changefreq: 'weekly' },
   { path: 'gradients.html', priority: '0.7', changefreq: 'weekly' },
   { path: 'uses.html', priority: '0.7', changefreq: 'weekly' },
+  { path: 'daily-color-playground.html', priority: '0.7', changefreq: 'weekly' },
   { path: 'skills.html', priority: '0.7', changefreq: 'monthly' },
   // favorites.html is intentionally excluded: its content is per-visitor
   // localStorage, so it is empty for crawlers and marked noindex.
@@ -513,7 +514,7 @@ function renderColorPage(image, harmony, context, siblings = {}) {
         <h2 id="about-title">关于「${escapeHtml(name)}」</h2>
         <p class="color-section-lede">${escapeHtml(aboutSentences)}</p>${familyHubLink}
         <figure class="color-card-figure" style="margin:1.25rem 0 0; max-width:270px;">
-          <img src="../thumbnails/color-card-${escapeHtml(image.id)}.jpg" width="270" height="360" loading="lazy" decoding="async" alt="${escapeHtml(`中国传统色 ${name} ${hex} 色卡`)}" style="display:block; width:100%; height:auto;">
+          <img src="../thumbnails/color-card-${escapeHtml(image.id)}.jpg" width="270" height="360" fetchpriority="high" decoding="async" alt="${escapeHtml(`中国传统色 ${name} ${hex} 色卡`)}" style="display:block; width:100%; height:auto;">
           <figcaption class="color-section-lede" style="margin-top:0.5rem;">「${escapeHtml(name)}」色卡 · ${escapeHtml(hex)}</figcaption>
         </figure>
       </section>`;

@@ -85,7 +85,7 @@ if (!existsSync(colorsDir)) {
       'id="about-title"',
       '"@type":"DefinedTerm"',
       '"@type":"ImageObject"',
-      'loading="lazy"',
+      'fetchpriority="high"',
       '中国传统色大全',
       'family-',
     ];
@@ -95,6 +95,9 @@ if (!existsSync(colorsDir)) {
     // Image SEO: every color page must carry a thumbnail <img> with non-empty alt.
     if (!/<img [^>]*alt="[^"]+"/.test(page)) {
       fail(`colors/${slug}.html: missing <img> with non-empty alt (Google Images)`);
+    }
+    if (/<img [^>]*loading="lazy"/.test(page)) {
+      fail(`colors/${slug}.html: above-the-fold color card should not be lazy-loaded`);
     }
   }
 
@@ -131,11 +134,12 @@ if (!existsSync(path.join(ROOT, 'sitemap.xml'))) {
     fail('sitemap.xml: wrong/missing urlset namespace');
   }
   const locCount = (sitemap.match(/<loc>/g) || []).length;
-  const expected = images.length + 20; // 11 main pages + colors/ index + 8 hue hubs (favorites excluded)
+  const expected = images.length + 21; // 12 main pages + colors/ index + 8 hue hubs (favorites excluded)
   if (locCount !== expected) {
     fail(`sitemap.xml: expected ${expected} <loc> entries, found ${locCount}`);
   }
   if (!sitemap.includes(`<loc>${SITE}/</loc>`)) fail('sitemap.xml: missing homepage URL');
+  if (!sitemap.includes(`<loc>${SITE}/daily-color-playground.html</loc>`)) fail('sitemap.xml: missing daily-color-playground.html URL');
   if (!sitemap.includes(`<loc>${SITE}/colors/</loc>`)) fail('sitemap.xml: missing colors/ index URL');
   if (sitemap.includes('favorites.html')) fail('sitemap.xml: favorites.html should be excluded');
   // Image sitemap: namespace + one image:image per color page.
@@ -150,6 +154,9 @@ if (!existsSync(path.join(ROOT, 'sitemap.xml'))) {
   const lastmodCount = (sitemap.match(/<lastmod>/g) || []).length;
   if (lastmodCount !== locCount) {
     fail(`sitemap.xml: expected a <lastmod> on every URL (${locCount}), found ${lastmodCount}`);
+  }
+  if (!sitemap.includes('<lastmod>2026-07-07</lastmod>')) {
+    fail('sitemap.xml: lastmod should be bumped to 2026-07-07');
   }
 }
 
@@ -181,7 +188,7 @@ if (existsSync(path.join(ROOT, 'llms-full.txt'))) {
 }
 
 // 4. Main pages carry canonical + Open Graph; favorites is noindex.
-const indexablePages = ['index.html', 'explorer.html', 'dictionary.html', 'palettes.html', 'generator.html', 'theme-forge.html', 'terminal.html', 'style-lab.html', 'gradients.html', 'uses.html', 'skills.html'];
+const indexablePages = ['index.html', 'explorer.html', 'dictionary.html', 'palettes.html', 'generator.html', 'theme-forge.html', 'terminal.html', 'style-lab.html', 'gradients.html', 'uses.html', 'daily-color-playground.html', 'skills.html'];
 for (const page of indexablePages) {
   const source = read(page);
   if (!source.includes('<link rel="canonical"')) fail(`${page}: missing canonical`);
@@ -189,6 +196,13 @@ for (const page of indexablePages) {
   if (!source.includes('name="twitter:card"')) fail(`${page}: missing twitter:card`);
 }
 if (read('index.html').indexOf('"@type":"WebSite"') === -1) fail('index.html: missing WebSite JSON-LD');
+{
+  const dictionary = read('dictionary.html');
+  for (const token of ['<h1 id="dictionary-title">中国传统色 742 色彩字典</h1>', '"@type":"CollectionPage"', '"@type":"ItemList"', '"@type":"DefinedTermSet"']) {
+    if (!dictionary.includes(token)) fail(`dictionary.html: missing ${token}`);
+  }
+}
+if (!read('daily-color-playground.html').includes('"@type":"WebApplication"')) fail('daily-color-playground.html: missing WebApplication JSON-LD');
 if (!read('favorites.html').includes('content="noindex')) fail('favorites.html: should be noindex');
 
 // Color pages follow the site's sharp-corner design language: no rounded
