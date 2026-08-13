@@ -14,6 +14,8 @@
 
 数据更新（新增/重命名颜色）后，重新运行 `npm run colorpages && npm run verify:colorpages` 即可全量重建并校验。
 
+`palettes.html?view=demo` 提供可索引页面内的单页配色演示；URL 中的 `palette` 参数只同步当前方案，不生成重复的独立落地页。
+
 ## 各页面元信息
 
 12 个可索引主页面均已补齐 `canonical`、Open Graph、Twitter Card；首页额外带 `WebSite` + `SearchAction` JSON-LD（站内搜索框，指向 `dictionary.html?q=`，字典页已支持读取 `?q=` 预填搜索），`daily-color-playground.html` 带 `WebApplication` JSON-LD。

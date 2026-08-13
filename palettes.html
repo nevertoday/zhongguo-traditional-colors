@@ -36,17 +36,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css?v=20260616-9">
-    <link rel="stylesheet" href="assets/css/palettes.css?v=20260616-1">
+    <link rel="stylesheet" href="assets/css/palettes.css?v=20260813-1">
     <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260616-3">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
   </head>
   <body data-current-page="palettes">
     <a class="skip-link" href="#palette-grid">跳到配色列表</a>
+    <a class="skip-link" href="#palette-demo-preview">跳到配色演示</a>
 
     <div data-shared-header></div>
 
-    <main class="palette-shell">
+    <main class="palette-shell" data-palette-shell data-view="grid">
       <aside class="palette-rail" aria-label="配色筛选">
         <div class="rail-block">
           <span class="rail-title">浏览方式</span>
@@ -77,17 +78,38 @@
           </label>
           <button class="toolbar-button" type="button" data-shuffle>
             <iconify-icon icon="lucide:shuffle" aria-hidden="true"></iconify-icon>
-            换一批
+            <span class="toolbar-label">换一批</span>
+          </button>
+          <button class="toolbar-button" type="button" data-view-mode="grid" aria-pressed="true">
+            <iconify-icon icon="lucide:grid-2x2" aria-hidden="true"></iconify-icon>
+            <span class="toolbar-label">色卡网格</span>
+          </button>
+          <button class="toolbar-button" type="button" data-view-mode="demo" aria-pressed="false">
+            <iconify-icon icon="lucide:layout-template" aria-hidden="true"></iconify-icon>
+            <span class="toolbar-label">配色演示</span>
           </button>
           <button class="toolbar-button" type="button" data-copy-selected>
             <iconify-icon icon="lucide:copy" aria-hidden="true"></iconify-icon>
-            复制当前
+            <span class="toolbar-label">复制当前</span>
           </button>
           <button class="toolbar-button" type="button" data-export-favorites hidden disabled>
             <iconify-icon icon="lucide:download" aria-hidden="true"></iconify-icon>
-            导出收藏
+            <span class="toolbar-label">导出收藏</span>
           </button>
         </div>
+
+        <section class="palette-demo-shell" id="palette-demo-preview" data-demo-shell hidden aria-label="中国传统配色网页演示">
+          <aside class="palette-demo-rail" data-demo-rail aria-label="配色列表">
+            <span class="sr-only" data-demo-result-count>正在读取配色</span>
+            <div class="palette-demo-rail-list" data-demo-palette-list></div>
+            <div class="palette-demo-empty" data-demo-empty hidden>
+              <strong>没有匹配的配色</strong>
+              <span>换一个关键词、关系或色彩气质试试。</span>
+            </div>
+          </aside>
+
+          <article class="palette-demo-page" data-demo-page aria-label="配色网页演示"></article>
+        </section>
 
         <div class="palette-meta">
           <span data-result-count>正在读取配色</span>
@@ -108,12 +130,13 @@
     <div data-shared-footer></div>
 
     <div class="palette-toast" data-toast role="status" aria-live="polite"></div>
+    <div class="palette-toast" data-demo-toast role="status" aria-live="polite"></div>
 
     <script src="assets/js/shared-chrome.js?v=20260616-1" defer></script>
     <script src="assets/js/favorites-store.js?v=20260612-1" defer></script>
     <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
     <script src="assets/js/color-search-suggestions.js?v=20260616-3" defer></script>
-    <script src="assets/js/palettes.js?v=20260616-5" defer></script>
+    <script src="assets/js/palettes.js?v=20260813-1" defer></script>
   </body>
 </html>

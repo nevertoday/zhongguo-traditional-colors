@@ -18,11 +18,19 @@ const searchInput = document.querySelector('[data-search]');
 const shuffleButton = document.querySelector('[data-shuffle]');
 const copySelectedButton = document.querySelector('[data-copy-selected]');
 const exportFavoritesButton = document.querySelector('[data-export-favorites]');
+const viewModeButtons = document.querySelectorAll('[data-view-mode]');
 const paletteGrid = document.querySelector('[data-palette-grid]');
+const paletteShell = document.querySelector('[data-palette-shell]');
 const resultCount = document.querySelector('[data-result-count]');
 const loadMoreButton = document.querySelector('[data-load-more]');
 const inspector = document.querySelector('[data-inspector]');
 const toast = document.querySelector('[data-toast]');
+const demoShell = document.querySelector('[data-demo-shell]');
+const demoPaletteList = document.querySelector('[data-demo-palette-list]');
+const demoResultCount = document.querySelector('[data-demo-result-count]');
+const demoPage = document.querySelector('[data-demo-page]');
+const demoEmpty = document.querySelector('[data-demo-empty]');
+const demoToast = document.querySelector('[data-demo-toast]');
 const debounce = window.ZH_UTILS?.debounce || ((fn, delay) => {
   let timer;
   return (...args) => {
@@ -76,6 +84,57 @@ const TONES = [
   { key: 'neutralHue', label: '灰', icon: '灰' },
 ];
 
+const DEMO_ROLES = [
+  { key: 'background', label: '背景', variable: '--demo-background', usage: '整页底色、首屏留白和阅读底' },
+  { key: 'headline', label: '标题', variable: '--demo-headline', usage: '主标题、导航重点和卡片题名' },
+  { key: 'paragraph', label: '正文', variable: '--demo-paragraph', usage: '段落、说明文字和次级信息' },
+  { key: 'button', label: '按钮', variable: '--demo-button', usage: '主操作、标签底和强调入口' },
+  { key: 'buttonText', label: '按钮文字', variable: '--demo-button-text', usage: '按钮、深色标签和反色文字' },
+  { key: 'card', label: '卡片', variable: '--demo-card', usage: '内容卡、表单和浅层模块背景' },
+  { key: 'cardText', label: '卡片文字', variable: '--demo-card-text', usage: '卡片内标题和正文' },
+  { key: 'accent', label: '强调', variable: '--demo-accent', usage: '局部高亮、序号和重点色块' },
+  { key: 'line', label: '边线', variable: '--demo-line', usage: '边框、分割线和图形描边' },
+  { key: 'soft', label: '柔底', variable: '--demo-soft', usage: '交替区块、提示底和轻量背景' },
+];
+
+const DEMO_RATIO_BY_RELATION = {
+  curated: [60, 25, 10, 5],
+  same: [72, 23, 4, 1],
+  analogous: [60, 32, 6, 2],
+  complementary: [75, 15, 8, 2],
+  splitComplementary: [66, 20, 10, 4],
+  triadic: [55, 25, 15, 5],
+  tetradic: [50, 24, 16, 10],
+  temperatureContrast: [64, 22, 10, 4],
+  lighter: [82, 12, 4, 2],
+  darker: [62, 22, 10, 6],
+  grayTone: [72, 18, 7, 3],
+  neutral: [78, 16, 4, 2],
+};
+
+const DEMO_RELATION_GUIDANCE = {
+  curated: {
+    rationale: '先定底色和文字，再用主色建立识别，用印色承担行动入口。',
+    risk: '主色和印色都抢眼时会显乱，按钮和标签只保留一个最高优先级。',
+    action: '适合网页、PPT 和品牌起稿，先用主色做 10-25% 的识别面积。',
+  },
+  same: {
+    rationale: '同类色保持文化气质稳定，用明暗和留白建立层级。',
+    risk: '画面容易过平，标题和正文必须拉开明度差。',
+    action: '适合系列封面、文化长文和品牌延展。',
+  },
+  complementary: {
+    rationale: '互补色只做焦点，主体仍由底色和文字维持秩序。',
+    risk: '大面积互补会刺眼，强调色应控制在小面积。',
+    action: '适合 CTA、价格数字、重点标签和海报标题。',
+  },
+  neutral: {
+    rationale: '中性色负责骨架和呼吸感，让传统色以更低噪声进入界面。',
+    risk: '中性色过近会层级不清，需要用字号、边框和明度补足。',
+    action: '适合资料页、表格、后台和长时间阅读界面。',
+  },
+};
+
 const ROLE_LABELS = ['主色', '辅助', '强调', '底色'];
 const TITLE_TONE_MAP = [
   { match: ['inspector', '当前', '选一组'], hues: ['blue', 'cyan', 'green', 'purple'] },
@@ -93,6 +152,7 @@ const STACK_PATTERNS = [
   [39, 28, 18, 15],
 ];
 const PALETTE_LIMIT_STEP = 36;
+const DEMO_RAIL_LIMIT = 72;
 const FAVORITE_STORAGE_KEY = 'zhongguoPaletteFavorites';
 const ZIP_TEXT_ENCODER = new TextEncoder();
 
@@ -101,9 +161,12 @@ let currentRelation = 'all';
 let currentTone = 'all';
 let visibleCount = PALETTE_LIMIT_STEP;
 let selectedPaletteId = '';
+let currentViewMode = 'grid';
+let selectedDemoPaletteId = '';
 let favorites = readFavorites();
 let randomRanks = new Map();
 let toastTimer;
+let demoToastTimer;
 let footerCopyTimer;
 let navResizeFrame;
 let paletteAutoObserver;
@@ -188,7 +251,11 @@ function relativeLuminance(hex) {
 }
 
 function readableTextColor(hex) {
-  return relativeLuminance(hex) > 0.54 ? '#111111' : '#f7f7f4';
+  const background = rgbFromHex(hex);
+  if (!background) return '#111111';
+  const dark = rgbFromHex('#111111');
+  const light = rgbFromHex('#f7f7f4');
+  return contrastRatio(dark, background) >= contrastRatio(light, background) ? '#111111' : '#f7f7f4';
 }
 
 function parseRgbColor(value) {
@@ -667,6 +734,512 @@ function paletteCss(palette) {
   ].join('\n');
 }
 
+function demoRatioForRelation(relationKey = 'curated') {
+  return DEMO_RATIO_BY_RELATION[relationKey] || DEMO_RATIO_BY_RELATION.curated;
+}
+
+function demoUseCaseForPalette(palette) {
+  const relation = relationInfo(palette?.relationKey);
+  const guidance = DEMO_RELATION_GUIDANCE[palette?.relationKey] || {
+    rationale: `${relation.label}关系用于${relation.use}，先定义主次，再限制强调色面积。`,
+    risk: '同屏色彩过多会削弱传统色气质，需要用留白、字号和明度差控制层级。',
+    action: relation.use,
+  };
+
+  return {
+    rationale: guidance.rationale,
+    risk: guidance.risk,
+    action: guidance.action,
+  };
+}
+
+function demoRoleByKey(roles, key) {
+  return roles.find((role) => role.key === key) || roles[0];
+}
+
+function colorRole(role, color, usageOverride = '', hexOverride = '', sourceNameOverride = '') {
+  return {
+    ...role,
+    sourceName: sourceNameOverride || color?.name || '',
+    sourceId: color?.id || '',
+    hex: hexOverride || color?.hex || '#111111',
+    usage: usageOverride || role.usage,
+  };
+}
+
+function roleSourceForHex(colors, hex, fallbackColor) {
+  const match = colors.find((color) => color.hex.toLowerCase() === String(hex).toLowerCase());
+  if (match) return { color: match, sourceName: '' };
+  return {
+    color: fallbackColor,
+    sourceName: String(hex).toLowerCase() === '#ffffff' ? '白色' : '墨色',
+  };
+}
+
+function lightestColor(colors) {
+  return [...colors].sort((first, second) => relativeLuminance(second.hex) - relativeLuminance(first.hex))[0] || colors[0];
+}
+
+function darkestColor(colors) {
+  return [...colors].sort((first, second) => relativeLuminance(first.hex) - relativeLuminance(second.hex))[0] || colors[0];
+}
+
+function readablePairForRole(backgroundRole, candidates = []) {
+  const background = rgbFromHex(backgroundRole?.hex);
+  const fallback = readableTextColor(backgroundRole?.hex);
+  if (!background) return fallback;
+
+  const readable = candidates.find((candidate) => {
+    const color = rgbFromHex(candidate?.hex);
+    return color && contrastRatio(color, background) >= 4.5;
+  });
+  return readable?.hex || fallback;
+}
+
+function demoRolesForPalette(palette) {
+  const colors = palette.colors;
+  const [anchor, secondary, accent, support] = colors;
+  const background = lightestColor(colors);
+  const headline = darkestColor(colors);
+  const paragraph = support || secondary || headline;
+  const card = secondary || background;
+  const button = anchor;
+  const line = secondary || support || headline;
+  const soft = support || card;
+  const backgroundRole = colorRole(DEMO_ROLES.find((role) => role.key === 'background'), background);
+  const headlineHex = readablePairForRole(backgroundRole, colors);
+  const headlineSource = roleSourceForHex(colors, headlineHex, headline);
+  const paragraphHex = readablePairForRole(backgroundRole, [paragraph, headlineSource.color, ...colors]);
+  const paragraphSource = roleSourceForHex(colors, paragraphHex, paragraph);
+  const buttonTextHex = readablePairForRole(colorRole(DEMO_ROLES.find((role) => role.key === 'button'), button), colors);
+  const buttonTextSource = roleSourceForHex(colors, buttonTextHex, button);
+  const cardTextHex = readablePairForRole(colorRole(DEMO_ROLES.find((role) => role.key === 'card'), card), colors);
+  const cardTextSource = roleSourceForHex(colors, cardTextHex, card);
+
+  return [
+    backgroundRole,
+    colorRole(DEMO_ROLES.find((role) => role.key === 'headline'), headlineSource.color, '', headlineHex, headlineSource.sourceName),
+    colorRole(DEMO_ROLES.find((role) => role.key === 'paragraph'), paragraphSource.color, '', paragraphHex, paragraphSource.sourceName),
+    colorRole(DEMO_ROLES.find((role) => role.key === 'button'), button),
+    colorRole(DEMO_ROLES.find((role) => role.key === 'buttonText'), buttonTextSource.color, '', buttonTextHex, buttonTextSource.sourceName),
+    colorRole(DEMO_ROLES.find((role) => role.key === 'card'), card),
+    colorRole(DEMO_ROLES.find((role) => role.key === 'cardText'), cardTextSource.color, '', cardTextHex, cardTextSource.sourceName),
+    colorRole(DEMO_ROLES.find((role) => role.key === 'accent'), accent || anchor),
+    colorRole(DEMO_ROLES.find((role) => role.key === 'line'), line),
+    colorRole(DEMO_ROLES.find((role) => role.key === 'soft'), soft),
+  ];
+}
+
+function demoRoleCssText(roles) {
+  return roles
+    .map((role) => `${role.variable}: ${role.hex}; /* ${role.label} · ${role.sourceName} ${role.sourceId} */`)
+    .join('\n');
+}
+
+function currentDemoPalette() {
+  return findPalette(selectedDemoPaletteId || selectedPaletteId);
+}
+
+function demoPaletteRailItems(palettes) {
+  const selected = palettes.find((palette) => palette.id === selectedDemoPaletteId);
+  const unique = [];
+  const anchorIds = new Set();
+
+  if (selected) {
+    unique.push(selected);
+    anchorIds.add(selected.anchorId);
+  }
+
+  for (const palette of palettes) {
+    if (anchorIds.has(palette.anchorId)) continue;
+    unique.push(palette);
+    anchorIds.add(palette.anchorId);
+    if (unique.length >= DEMO_RAIL_LIMIT) break;
+  }
+
+  return unique;
+}
+
+function demoJsonTokens(palette) {
+  const roles = demoRolesForPalette(palette);
+  return JSON.stringify({
+    paletteId: palette.id,
+    anchor: palette.anchor.name,
+    relation: palette.relationLabel,
+    roles: roles.map((role) => ({
+      key: role.key,
+      label: role.label,
+      token: role.variable,
+      sourceName: role.sourceName,
+      sourceId: role.sourceId,
+      hex: role.hex,
+      usage: role.usage,
+    })),
+  }, null, 2);
+}
+
+function demoBriefText(palette) {
+  const guidance = demoUseCaseForPalette(palette);
+  const ratios = demoRatioForRelation(palette.relationKey);
+  return [
+    `锚点色：${palette.anchor.name} ${palette.anchor.hex}`,
+    `配色关系：${palette.relationLabel}（${palette.relationShort}）`,
+    `面积建议：背景 ${ratios[0]}%，主/辅色 ${ratios[1]}%，强调 ${ratios[2]}%，边线 ${ratios[3]}%。`,
+    `使用动作：${guidance.action}`,
+    `判断依据：${guidance.rationale}`,
+    `风险提醒：${guidance.risk}`,
+  ].join('\n');
+}
+
+function showDemoToast(message) {
+  const target = demoToast || toast;
+  if (!target) return;
+  window.clearTimeout(demoToastTimer);
+  target.textContent = message;
+  target.dataset.visible = 'true';
+  demoToastTimer = window.setTimeout(() => {
+    target.dataset.visible = 'false';
+  }, 1600);
+}
+
+function applyDemoPaletteRoles(palette) {
+  if (!demoPage || !palette) return;
+  const roles = demoRolesForPalette(palette);
+  roles.forEach((role) => {
+    demoPage.style.setProperty(role.variable, role.hex);
+  });
+  const footerBackground = demoRoleByKey(roles, 'headline');
+  demoPage.style.setProperty('--demo-footer-text', readableTextColor(footerBackground.hex));
+}
+
+function roleCopyText(role) {
+  return `${role.label}：${role.sourceName} ${role.hex}`;
+}
+
+function renderDemoSectionHues(title, groups, roles) {
+  return `
+    <aside class="demo-section-hues" aria-label="${escapeHtml(title)}本节用色">
+      <h3>本节用色</h3>
+      <p>点击复制 HEX 色值</p>
+      ${groups.map((group) => `
+        <h4>${escapeHtml(group.title)}</h4>
+        <div class="demo-hues-wrap">
+          ${group.keys.map((key) => {
+            const role = demoRoleByKey(roles, key);
+            return `
+              <button class="demo-hue-row" type="button" data-demo-copy-hue="${escapeHtml(role.key)}" style="--hue-color: ${escapeHtml(role.hex)};">
+                <span>
+                  <i aria-hidden="true"></i>
+                  <strong>${escapeHtml(role.label)}</strong>
+                </span>
+                <em>${escapeHtml(role.hex)}</em>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `).join('')}
+    </aside>
+  `;
+}
+
+function renderPaletteDemoPage(palette = currentDemoPalette()) {
+  if (!demoPage || !palette) return;
+  const roles = demoRolesForPalette(palette);
+  const guidance = demoUseCaseForPalette(palette);
+  const ratios = demoRatioForRelation(palette.relationKey);
+  const ratioRoles = ['button', 'headline', 'accent', 'card'].map((key) => demoRoleByKey(roles, key));
+
+  demoPage.innerHTML = `
+    <section class="palette-demo-section palette-demo-hero">
+      <nav class="palette-demo-nav" aria-label="演示页导航">
+        <strong>${escapeHtml(palette.anchor.name)}</strong>
+        <span>色谱</span>
+        <span>用法</span>
+        <span>笔记</span>
+      </nav>
+      <div class="palette-demo-hero-grid">
+        <div class="palette-demo-copy">
+          <span>${escapeHtml(palette.relationLabel)} · ${escapeHtml(palette.relationShort)}</span>
+          <h2>${escapeHtml(palette.anchor.name)}放进一个网页后是什么样</h2>
+          <p>用一组传统色搭出干净首屏，留白给阅读，重点色只落在按钮、卡片和小面积标记上。</p>
+          <button class="palette-demo-button" type="button" data-demo-copy-brief>复制配色说明</button>
+        </div>
+        <div class="palette-demo-visual" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      ${renderDemoSectionHues('首屏', [
+        { title: '元素', keys: ['background', 'headline', 'paragraph', 'button', 'buttonText'] },
+        { title: '装饰', keys: ['line', 'card', 'accent', 'soft'] },
+      ], roles)}
+    </section>
+
+    <section class="palette-demo-section palette-demo-section--soft palette-demo-terms">
+      <div class="palette-demo-section-head">
+        <h2>传统配色的网页角色</h2>
+        <p>先看每个颜色承担什么职责，再决定它要占多少面积。</p>
+      </div>
+      <div class="palette-demo-card-grid">
+        ${[
+          ['背景', '决定页面呼吸感，面积最大，必须让正文能长期阅读。背景色优先选明度稳定、纯度较低的传统色。'],
+          ['标题', '负责识别和层级，通常选明度更稳、更有重量的颜色，让第一眼能抓住主题。'],
+          ['正文', '承载解释和知识信息，需要和背景保持足够对比，不用高纯度颜色做大段阅读。'],
+          ['按钮', '只承担最重要动作，面积小但要有明确注意力，适合放锚点色或强调色。'],
+          ['卡片', '承接内容密度，和背景拉开一点层次即可，不必每张卡都换色。'],
+          ['边线', '用来控制秩序和节奏，颜色要克制，避免抢走标题和按钮的优先级。'],
+        ].map(([cardTitle, copy]) => `
+          <article class="palette-demo-card">
+            <span aria-hidden="true"></span>
+            <h3>${cardTitle}</h3>
+            <p>${copy}</p>
+          </article>
+        `).join('')}
+      </div>
+      <div class="palette-demo-knowledge-grid" aria-label="传统配色知识">
+        <article>
+          <h3>先看色相</h3>
+          <p>色相决定气质方向：红、黄更有仪式感和热度，青、蓝更安静，绿更贴近植物和器物感。</p>
+        </article>
+        <article>
+          <h3>再看明度</h3>
+          <p>明度决定层级。浅色适合做底，深色适合做标题和正文；按钮文字必须先保证对比度。</p>
+        </article>
+        <article>
+          <h3>最后看纯度</h3>
+          <p>纯度越高越容易夺目。传统色进入网页时，高纯度只放在小面积标签、按钮或重点数字上。</p>
+        </article>
+        <article>
+          <h3>留白是底色的一部分</h3>
+          <p>不要把每一块区域都填满颜色。留白能让传统色更雅，也能让信息更容易扫读。</p>
+        </article>
+        <article>
+          <h3>传统色名要保留</h3>
+          <p>传统色名不是装饰，它记录来源和文化记忆；交付给设计或开发时，色名与 HEX 应一起出现。</p>
+        </article>
+        <article>
+          <h3>长期阅读优先</h3>
+          <p>内容页先检查正文，再检查按钮。能长时间阅读的配色，才适合扩展成组件规范。</p>
+        </article>
+      </div>
+      <article class="palette-demo-specimen">
+        <header>
+          <span>传统色观察 · 第 01 期</span>
+          <strong>${escapeHtml(palette.anchor.name)}</strong>
+        </header>
+        <div class="palette-demo-specimen-body">
+          <blockquote>颜色不必铺满页面。真正有分量的传统色，常常只在标题、印记和一处行动上出现。</blockquote>
+          <div>
+            <p>这是一段接近真实内容网站的中文正文样张。它用标题色建立秩序，用正文色承载长阅读，再以锚点色提示关键动作。</p>
+            <dl>
+              <div><dt>主色</dt><dd>${escapeHtml(palette.anchor.name)}</dd></div>
+              <div><dt>关系</dt><dd>${escapeHtml(palette.relationLabel)}</dd></div>
+              <div><dt>适合</dt><dd>${escapeHtml(guidance.action)}</dd></div>
+            </dl>
+          </div>
+        </div>
+      </article>
+      ${renderDemoSectionHues('角色', [
+        { title: '页面', keys: ['background', 'headline', 'paragraph'] },
+        { title: '卡片', keys: ['card', 'cardText', 'line', 'accent'] },
+      ], roles)}
+    </section>
+
+    <section class="palette-demo-section palette-demo-philosophy">
+      <div class="palette-demo-section-head">
+        <h2>面积比颜色数量更重要</h2>
+        <p>${escapeHtml(guidance.rationale)}</p>
+      </div>
+      <div class="palette-demo-ratio">
+        ${ratios.map((ratio, index) => {
+          const role = ratioRoles[index] || ratioRoles[0];
+          return `<span style="--ratio:${ratio}; --ratio-bg: ${escapeHtml(role.hex)}; --ratio-text: ${escapeHtml(readableTextColor(role.hex))};">${ratio}%</span>`;
+        }).join('')}
+      </div>
+      <div class="palette-demo-note-list">
+        <article>
+          <h3>适合方向</h3>
+          <p>${escapeHtml(guidance.action)}</p>
+        </article>
+        <article>
+          <h3>风险提醒</h3>
+          <p>${escapeHtml(guidance.risk)}</p>
+        </article>
+        <article>
+          <h3>落地检查</h3>
+          <p>先检查标题与背景、按钮与按钮文字，再检查卡片和正文是否互相抢戏。</p>
+        </article>
+      </div>
+      ${renderDemoSectionHues('面积', [
+        { title: '结构', keys: ['background', 'soft', 'line'] },
+        { title: '重点', keys: ['headline', 'button', 'accent'] },
+      ], roles)}
+    </section>
+
+    <section class="palette-demo-section palette-demo-section--soft palette-demo-about">
+      <div class="palette-demo-about-grid">
+        <div>
+          <span class="palette-demo-kicker">${escapeHtml(palette.anchor.hex)}</span>
+          <h2>把这组颜色继续拆成可执行规范</h2>
+          <p>保留中国传统色名，直接复制 HEX、CSS 变量或 JSON，方便在设计稿、网页和组件库里复用。</p>
+        </div>
+        <form class="palette-demo-newsletter">
+          <label>
+            <span>方案名</span>
+            <input type="text" value="${escapeHtml(palette.anchor.name)} ${escapeHtml(palette.relationLabel)}" readonly>
+          </label>
+          <button type="button" data-demo-copy-css>复制 CSS 变量</button>
+          <button type="button" data-demo-copy-json>复制 JSON</button>
+        </form>
+      </div>
+      <div class="palette-demo-projects">
+        <article><h3>网页首屏</h3><p>标题、正文、按钮和图形装饰同源。</p></article>
+        <article><h3>内容栏目</h3><p>卡片和标签沿用同一套角色。</p></article>
+        <article><h3>长期规范</h3><p>以传统色名记录来源，避免只剩随机 HEX。</p></article>
+      </div>
+      ${renderDemoSectionHues('规范', [
+        { title: '表单', keys: ['card', 'headline', 'paragraph', 'button', 'buttonText'] },
+        { title: '链接', keys: ['accent', 'line', 'soft'] },
+      ], roles)}
+    </section>
+
+    <footer class="palette-demo-footer">
+      <strong>中国传统配色</strong>
+      <span>${escapeHtml(palette.anchor.name)} / ${escapeHtml(palette.relationLabel)}</span>
+    </footer>
+  `;
+}
+
+function renderDemoPaletteRail() {
+  if (!demoPaletteList) return;
+  const palettes = currentPaletteList();
+  if (!selectedDemoPaletteId || !palettes.some((palette) => palette.id === selectedDemoPaletteId)) {
+    selectedDemoPaletteId = palettes.find((palette) => palette.id === selectedPaletteId)?.id || palettes[0]?.id || '';
+  }
+  if (demoResultCount) {
+    demoResultCount.textContent = `${Math.min(DEMO_RAIL_LIMIT, palettes.length).toLocaleString('zh-CN')} 组精选，共 ${palettes.length.toLocaleString('zh-CN')} 组`;
+  }
+  if (demoEmpty) demoEmpty.hidden = palettes.length > 0;
+  if (demoPage) demoPage.hidden = palettes.length === 0;
+
+  const railPalettes = demoPaletteRailItems(palettes);
+  demoPaletteList.innerHTML = railPalettes.map((palette) => `
+    <button class="palette-demo-item" type="button" data-demo-palette-id="${escapeHtml(palette.id)}" aria-label="${escapeHtml(palette.anchor.name)}，${escapeHtml(palette.anchor.hex)}，${escapeHtml(palette.relationLabel)}" title="${escapeHtml(palette.anchor.name)} ${escapeHtml(palette.anchor.hex)}" aria-pressed="${palette.id === selectedDemoPaletteId ? 'true' : 'false'}">
+      <span class="palette-demo-swatches" aria-hidden="true">
+        ${palette.colors.map((color) => `<i class="palette-demo-swatch" style="--swatch: ${escapeHtml(color.hex)}"></i>`).join('')}
+      </span>
+    </button>
+  `).join('');
+
+  const selected = palettes.find((palette) => palette.id === selectedDemoPaletteId) || null;
+  if (selected) selectDemoPalette(selected.id, { syncUrl: false, scroll: false });
+}
+
+function scrollDemoPaletteIntoView(button) {
+  if (!button || !demoPaletteList || !demoShell) return;
+  const mobile = window.matchMedia('(max-width: 860px)').matches;
+  const scroller = mobile ? demoPaletteList : demoShell.querySelector('[data-demo-rail]');
+  if (!scroller) return;
+
+  const itemRect = button.getBoundingClientRect();
+  const scrollerRect = scroller.getBoundingClientRect();
+  if (mobile) {
+    if (itemRect.left < scrollerRect.left) scroller.scrollBy({ left: itemRect.left - scrollerRect.left - 8 });
+    if (itemRect.right > scrollerRect.right) scroller.scrollBy({ left: itemRect.right - scrollerRect.right + 8 });
+    return;
+  }
+  if (itemRect.top < scrollerRect.top) scroller.scrollBy({ top: itemRect.top - scrollerRect.top - 8 });
+  if (itemRect.bottom > scrollerRect.bottom) scroller.scrollBy({ top: itemRect.bottom - scrollerRect.bottom + 8 });
+}
+
+function selectDemoPalette(id, options = {}) {
+  const palette = findPalette(id);
+  if (!palette) return;
+  selectedDemoPaletteId = palette.id;
+  selectedPaletteId = palette.id;
+  applyDemoPaletteRoles(palette);
+  renderPaletteDemoPage(palette);
+  demoPaletteList?.querySelectorAll('[data-demo-palette-id]').forEach((button) => {
+    const active = button.dataset.demoPaletteId === palette.id;
+    button.setAttribute('aria-pressed', String(active));
+    if (active && options.scroll !== false) scrollDemoPaletteIntoView(button);
+  });
+  if (options.syncUrl !== false) syncDemoUrlState();
+}
+
+function setViewMode(mode, options = {}) {
+  currentViewMode = mode === 'demo' ? 'demo' : 'grid';
+  if (paletteShell) paletteShell.dataset.view = currentViewMode;
+  viewModeButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', String(button.dataset.viewMode === currentViewMode));
+  });
+  if (demoShell) demoShell.hidden = currentViewMode !== 'demo';
+  if (paletteGrid) paletteGrid.hidden = currentViewMode !== 'grid';
+  loadMoreButton?.closest('.palette-more')?.toggleAttribute('hidden', currentViewMode !== 'grid');
+  if (currentViewMode === 'demo') renderDemoPaletteRail();
+  if (options.syncUrl !== false) syncDemoUrlState();
+}
+
+function syncDemoUrlState() {
+  if (!window.history?.replaceState) return;
+  const params = new URLSearchParams(window.location.search);
+  if (currentViewMode === 'demo') {
+    params.set('view', 'demo');
+    params.set('palette', selectedDemoPaletteId || selectedPaletteId);
+  } else {
+    params.delete('view');
+  }
+  const query = params.toString();
+  window.history.replaceState(null, '', `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`);
+}
+
+function readDemoUrlState() {
+  const params = new URLSearchParams(window.location.search);
+  const paletteId = params.get('palette');
+  if (paletteId) {
+    selectedPaletteId = paletteId;
+    selectedDemoPaletteId = paletteId;
+  }
+  if (params.get('view') === 'demo' || params.get('view') === 'context') currentViewMode = 'demo';
+}
+
+async function copyDemoHue(roleKey) {
+  const palette = currentDemoPalette();
+  if (!palette) return;
+  const role = demoRolesForPalette(palette).find((item) => item.key === roleKey);
+  if (!role) return;
+  const text = roleCopyText(role);
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (error) {
+    await writeClipboard(text);
+  }
+  showDemoToast(`已复制：${role.sourceName} ${role.hex}`);
+}
+
+async function copyDemoCssVars() {
+  const palette = currentDemoPalette();
+  if (!palette) return;
+  const roles = demoRolesForPalette(palette);
+  const backgroundToken = roles.find((role) => role.variable === '--demo-background');
+  const text = `.traditional-palette-demo {\n${demoRoleCssText(roles).replace(/^/gm, '  ')}\n  /* ${backgroundToken?.variable}: ${backgroundToken?.hex}; */\n}`;
+  await writeClipboard(text);
+  showDemoToast('已复制 CSS 变量');
+}
+
+async function copyDemoJsonTokens() {
+  const palette = currentDemoPalette();
+  if (!palette) return;
+  await writeClipboard(demoJsonTokens(palette));
+  showDemoToast('已复制 JSON tokens');
+}
+
+async function copyDemoBrief() {
+  const palette = currentDemoPalette();
+  if (!palette) return;
+  await writeClipboard(demoBriefText(palette));
+  showDemoToast('已复制配色说明');
+}
+
 function favoritePalettes() {
   const paletteMap = new Map(allPalettes().map((palette) => [palette.id, palette]));
   return [...favorites].map((id) => paletteMap.get(id)).filter(Boolean);
@@ -991,6 +1564,13 @@ function renderGrid() {
   renderInspector(findPalette(selectedPaletteId));
 }
 
+function renderPalettes(resetVisible = true) {
+  if (resetVisible) visibleCount = PALETTE_LIMIT_STEP;
+  renderOptions();
+  renderGrid();
+  if (currentViewMode === 'demo') renderDemoPaletteRail();
+}
+
 function setupAutoLoad() {
   if (!paletteGrid || !loadMoreButton || !('IntersectionObserver' in window)) return;
 
@@ -1073,9 +1653,7 @@ function renderInspector(palette) {
 }
 
 function rerender(resetVisible = true) {
-  if (resetVisible) visibleCount = PALETTE_LIMIT_STEP;
-  renderOptions();
-  renderGrid();
+  renderPalettes(resetVisible);
 }
 
 async function copyColorById(id) {
@@ -1094,7 +1672,9 @@ async function copyPaletteById(id) {
 
 function selectPalette(id) {
   selectedPaletteId = id;
+  selectedDemoPaletteId = id;
   renderGrid();
+  if (currentViewMode === 'demo') selectDemoPalette(id);
 }
 
 function toggleFavorite(id, button) {
@@ -1126,10 +1706,11 @@ function bindOptionClicks(container, selector, callback) {
   });
 }
 
+readDemoUrlState();
 setTheme(currentTheme());
 buildFooterSpectrum();
-renderOptions();
-renderGrid();
+renderPalettes();
+setViewMode(currentViewMode, { syncUrl: false });
 bindTitleColorHover();
 
 themeToggle?.addEventListener('click', () => {
@@ -1195,6 +1776,46 @@ copySelectedButton?.addEventListener('click', () => {
   if (selectedPaletteId) copyPaletteById(selectedPaletteId);
 });
 exportFavoritesButton?.addEventListener('click', exportFavoritePalettes);
+
+viewModeButtons.forEach((button) => {
+  button.addEventListener('click', () => setViewMode(button.dataset.viewMode));
+});
+
+demoPaletteList?.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-demo-palette-id]');
+  if (!button) return;
+  selectDemoPalette(button.dataset.demoPaletteId);
+});
+
+demoPaletteList?.addEventListener('keydown', (event) => {
+  const button = event.target.closest('[data-demo-palette-id]');
+  if (!button) return;
+  const buttons = [...demoPaletteList.querySelectorAll('[data-demo-palette-id]')];
+  const index = buttons.indexOf(button);
+
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    selectDemoPalette(button.dataset.demoPaletteId);
+  }
+
+  if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+    event.preventDefault();
+    buttons[Math.min(index + 1, buttons.length - 1)]?.focus();
+  }
+
+  if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+    event.preventDefault();
+    buttons[Math.max(index - 1, 0)]?.focus();
+  }
+});
+
+demoPage?.addEventListener('click', (event) => {
+  const hueButton = event.target.closest('[data-demo-copy-hue]');
+  if (hueButton) copyDemoHue(hueButton.dataset.demoCopyHue);
+  if (event.target.closest('[data-demo-copy-css]')) copyDemoCssVars();
+  if (event.target.closest('[data-demo-copy-json]')) copyDemoJsonTokens();
+  if (event.target.closest('[data-demo-copy-brief]')) copyDemoBrief();
+});
 
 loadMoreButton?.addEventListener('click', () => {
   appendPalettes(PALETTE_LIMIT_STEP);
