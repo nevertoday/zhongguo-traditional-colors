@@ -2,7 +2,11 @@
   color-scheme: light;
   --ink: #111111;
   --ink-soft: #4b4b4b;
-  --muted: #777777;
+  /* AA 下限由最暗的承载面 --panel-soft 决定，不是 --paper：
+     #777777 在 paper/panel/panel-soft 上分别只有 4.17 / 4.48 / 3.86，三面皆不过。
+     #6c6c6c 是刚好及格的值，取 #6a6a6a 留余量（最坏面 4.66:1）。
+     由 scripts/verify-contrast.mjs 看守。 */
+  --muted: #6a6a6a;
   --paper: #f7f7f4;
   --panel: #ffffff;
   --panel-soft: #f0eee9;

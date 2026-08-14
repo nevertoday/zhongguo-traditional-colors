@@ -18,7 +18,7 @@ toggled by the shared header's `[data-theme-toggle]`.
 |---|---|---|
 | `--ink` | `#111111` | primary text, borders, primary button bg |
 | `--ink-soft` | `#4b4b4b` | secondary text |
-| `--muted` | `#777777` | tertiary text / captions |
+| `--muted` | `#6a6a6a` | tertiary text / captions |
 | `--paper` | `#f7f7f4` | body background (warm off-white) |
 | `--panel` | `#ffffff` | raised surfaces |
 | `--panel-soft` | `#f0eee9` | inset / secondary surfaces |
@@ -28,7 +28,19 @@ toggled by the shared header's `[data-theme-toggle]`.
 | `--shadow-card` / `--shadow-soft` | soft 8% | elevation |
 
 Dark theme provides the same token names; reference tokens and dark "just works".
-Body text ≥ 4.5:1; the muted/line tokens are tuned to pass on `--paper`.
+
+**Contrast is a gate, not a claim.** Every text token must clear 4.5:1 against
+**all three** surfaces it can land on — `--paper`, `--panel`, `--panel-soft` —
+in both themes. The binding constraint is `--panel-soft`, not `--paper`; a token
+tuned only against `--paper` will silently fail on inset surfaces. Enforced by
+`npm run verify:contrast` (`scripts/verify-contrast.mjs`), which fails the build
+rather than trusting this paragraph.
+
+Known open item: the two ramps are not the same shape. Light steps down
+17.6 → 8.1 → 4.7 (≈2.2× then ≈1.7×); dark steps 16.7 → 12.2 → 6.5 (≈1.4× then
+≈1.9×). The near-flat first step in dark means `--ink` and `--ink-soft` read as
+one level there, so dark carries one fewer tier of hierarchy than light. Light is
+the better ramp; dark should be re-derived to match it.
 
 ## Typography
 
