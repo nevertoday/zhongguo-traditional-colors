@@ -14,6 +14,7 @@
     "harmony:uses": "node scripts/build-harmony-use-cases.mjs",
     "colorpages": "node scripts/build-color-pages.mjs",
     "verify:colorpages": "node scripts/verify-color-pages.mjs",
+    "verify:contrast": "node scripts/verify-contrast.mjs",
     "verify:palette-context": "node scripts/verify-palette-context-structure.mjs && node scripts/verify-palette-context-role-model.mjs && node scripts/verify-palette-context-scenes.mjs && node scripts/verify-palette-context-copy-export.mjs && node scripts/verify-palette-context-responsive.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs",
     "preview:syntax": "node scripts/build-preview-syntax.mjs",
