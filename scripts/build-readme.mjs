@@ -976,9 +976,266 @@ http://localhost:5173
 `;
 }
 
+function renderZhReaderFirst(project, images) {
+  const totalMb = Math.round(project.totalBytes / 1024 / 1024);
+  const zipUrl = `${repoUrl}/releases/latest/download/${project.archiveName}`;
+  const previewImages = selectFeaturedImages(images).slice(0, 12);
+
+  return `# 中国传统配色
+
+${languageSwitch("zh")}
+
+> 不是又一份“好看但不知道怎么用”的中国色色值表。
+>
+> 这是一张从 **找色、配色、试色到交付** 的中国传统色工作台：742 张高清色卡、8,904 组配色关系，还能把一个颜色直接放进网页、PPT、封面、UI 主题和终端里试。
+
+[**在线开始试色 →**](${siteUrl}) · [用一个颜色生成配色](${generatorUrl}) · [下载全部高清色卡](${zipUrl})
+
+<p align="center">
+  <a href="${siteUrl}"><img src="docs/screenshots/home-gallery.png" alt="742 张中国传统色卡在线资料库"></a>
+</p>
+
+## 找到好看的中国色不难，难的是把它用对
+
+真正做项目时，你很少只缺一个 HEX。更常见的是：
+
+- 知道“月白”好看，却不知道它适合当背景、正文，还是点缀色；
+- 选定了一个主色，还要在几百个颜色中反复试辅色；
+- 色板单独看很和谐，一放到标题、按钮和正文上就发灰、抢戏或看不清；
+- 设计定了，交给开发时却又要重新补 token、深色模式和对比度。
+
+这个项目把这些原本分散的步骤接在一起：**先帮你找到颜色，再帮你判断它能不能真正落地。**
+
+## 你正在做什么，就从哪里开始
+
+| 你手上的任务 | 直接用 | 你会得到 |
+| --- | --- | --- |
+| 想找一个有名字、有气质的中国色 | [色卡资料库](${siteUrl}#gallery) | 按色名、编号、HEX 或色相搜索，复制色值或下载原图 |
+| 已经有主色，但不知道怎么配 | [配色生成器](${generatorUrl}) | 五色方案，可锁定、替换、轮换、复制与导出 |
+| 不确定颜色放到成品里好不好看 | [场景试色](${styleLabUrl}) | 直接看网页、PPT、封面、海报和品牌板效果 |
+| 想看一个颜色的相邻、互补或明暗关系 | [配色灵感](${paletteUrl}) | 8,904 组可浏览、随机、复制和收藏的配色 |
+| 要做背景、正文或按钮组合 | [用途卡片](${usesUrl}) | 双色实际版式预览与对比度判断 |
+| 要把中国色用进产品 | [Theme Forge](${themeForgeUrl}) | shadcn 浅色/深色语义主题、OKLCH 和 \`globals.css\` |
+| 想把工作环境也换成中国色 | [终端配色](${terminalUrl}) | 16 色 ANSI 与 Ghostty、Alacritty、kitty 等配置 |
+
+## 不只给你灵感，还帮你看到落地效果
+
+### 一个颜色，先放进真实场景再决定
+
+<p align="center">
+  <a href="${styleLabUrl}"><img src="docs/screenshots/style-lab.png" alt="中国传统色场景试色工作台"></a>
+</p>
+
+同一个主色会被放到背景、标题、正文、按钮和点缀位置。你看的不再是一块孤立色样，而是它在网页、PPT、封面、海报和品牌板中的真实表现。
+
+### 配色不靠猜，用关系缩小选择
+
+<p align="center">
+  <a href="${paletteUrl}"><img src="docs/screenshots/palettes.png" alt="8,904 组中国传统色配色关系"></a>
+</p>
+
+每个颜色都有同类、邻近、互补、三角、冷暖、明暗、灰调和中性等关系。不必在 742 个颜色里盲试，可以先按配色逻辑缩小范围。
+
+### 从色名走到开发能接的主题
+
+Theme Forge 会把一个锚点色拆成完整的 shadcn 语义色角色，同时处理浅色/深色模式、OKLCH、组件预览和前景对比度，最后直接导出 \`globals.css\`。
+
+[打开 Theme Forge 试试 →](${themeForgeUrl})
+
+## 这个项目真正整理了什么
+
+- **${project.count} 张高清 PNG 色卡**：编号与 [原始 742 色清单](${masterListPath}) 一一对应，每张包含色名、HEX、RGB、CMYK、配色提示和气质关键词。
+- **8,904 组可追溯的配色关系**：同时提供 [Markdown](${harmonyMarkdownPath}) 和 [CSV](${harmonyCsvPath})，方便阅读、程序处理和二次创作。
+- **从参考到交付的工具**：色卡搜索、配色生成、场景试色、渐变、用途卡、shadcn 主题和终端配色都在同一个静态站点中。
+- **收藏留在本机**：色卡、色板、用途卡和试色方案保存在浏览器本地，无需登录。
+- **10 个可独立安装的 Agent Skills**：让 AI 按设计简报、色板、版面、token、可读性、品牌、图表、旧稿、内容系列和印刷生产继续往下做。
+
+## 如果你用 Claude Code，可以把整套配色经验带走
+
+仓库中的 \`xxd-*\` Skills 都自带完整的 742 色清单和配色关系，复制一个目录就能独立使用，无需联网取数据。
+
+\`\`\`bash
+git clone https://github.com/nevertoday/zhongguo-traditional-colors.git
+cp -r zhongguo-traditional-colors/skills/xxd-palette-builder ~/.claude/skills/
+\`\`\`
+
+| 你卡在哪一步 | 用这个 Skill |
+| --- | --- |
+| “高级、东方、年轻”还只是模糊感觉 | [\`xxd-color-brief\`](skills/xxd-color-brief/SKILL.md) |
+| 需要从主色收敛成可执行色板 | [\`xxd-palette-builder\`](skills/xxd-palette-builder/SKILL.md) |
+| 有了色板，但不知道放在版面哪里 | [\`xxd-palette-applier\`](skills/xxd-palette-applier/SKILL.md) |
+| 要交给开发，需要 UI token | [\`xxd-ui-token\`](skills/xxd-ui-token/SKILL.md) |
+| 担心文字、按钮或图表看不清 | [\`xxd-accessible-color\`](skills/xxd-accessible-color/SKILL.md) |
+| 要做长期品牌、图表、内容系列或印刷 | [查看全部 10 个 Skills](${skillsUrl}) |
+
+## 先看看这些颜色
+
+README 只展示 ${previewImages.length} 张代表色卡。完整 ${project.count} 张可以在 [在线色卡库](${siteUrl}#gallery)、\`images/\` 目录或 [Release ZIP](${zipUrl}) 中查看。
+
+<!-- gallery:start -->
+${galleryRows(previewImages, "zh")}
+
+<!-- gallery:end -->
+
+## 下载、本地运行与数据复用
+
+原图共约 ${totalMb} MB，为了不让仓库变得臃肿，完整图包通过 [GitHub Release](${releaseUrl}) 分发。
+
+- [下载全部高清 PNG](${zipUrl})
+- [浏览原始 742 色清单](${masterListPath})
+- [下载配色关系 CSV](${harmonyCsvPath})
+
+本项目是静态站点，本地预览只需：
+
+\`\`\`bash
+npm run manifest
+npm run readme
+npm run start
+\`\`\`
+
+然后打开 \`http://localhost:5173\`。新增或替换色卡后，再运行 \`npm run manifest && npm run readme\` 即可同步图片清单与 README 图廊。
+
+## 使用边界
+
+传统色色值在不同资料、屏幕、印刷工艺和材质上可能存在差异。这个项目适合查找、对比、试配和原型设计；正式印刷或生产前，仍应结合实际媒介打样校色。
+
+## 贡献与许可
+
+欢迎提交 Issue 或 Pull Request；新增色卡、修正色值、补充来源、改进工具和文档都很有价值。请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+项目使用 [MIT License](LICENSE) 开源。如果它帮你少做了一轮找图、抄色值和反复试色，欢迎 Star 或分享给正在做设计的人。
+
+${starHistoryBlock()}
+`;
+}
+
+function renderEnReaderFirst(project, images) {
+  const totalMb = Math.round(project.totalBytes / 1024 / 1024);
+  const zipUrl = `${repoUrl}/releases/latest/download/${project.archiveName}`;
+  const previewImages = selectFeaturedImages(images).slice(0, 12);
+
+  return `# Chinese Traditional Colors
+
+${languageSwitch("en")}
+
+> Not another color-value list that looks beautiful but leaves you wondering what to do next.
+>
+> This is a practical workspace for moving from **finding a Chinese color to pairing, testing, and shipping it**: ${project.count} high-resolution cards, 8,904 harmony sets, real-scene previews, shadcn themes, and terminal palettes.
+
+[**Explore the colors →**](${siteUrl}) · [Build a palette from one color](${generatorUrl}) · [Download every high-resolution card](${zipUrl})
+
+<p align="center">
+  <a href="${siteUrl}"><img src="docs/screenshots/home-gallery.png" alt="Online gallery of 742 Chinese traditional color cards"></a>
+</p>
+
+## Finding a beautiful color is easy. Making it work is the hard part.
+
+A real project rarely needs just one HEX value. You also need to know whether the color belongs in a background, headline, button, or accent; what can sit beside it; whether the text remains readable; and how the choice becomes a theme your developer can actually use.
+
+This project connects those decisions in one place. It helps you **find a color, then judge whether it survives a real layout**.
+
+## Start with the job in front of you
+
+| What you are trying to do | Open | What you get |
+| --- | --- | --- |
+| Find a named Chinese color with the right character | [Color gallery](${siteUrl}#gallery) | Search by name, number, HEX, or hue; copy values or download the source card |
+| Turn one anchor color into a usable set | [Palette generator](${generatorUrl}) | Five-color schemes you can lock, replace, rotate, copy, and export |
+| See whether a color works beyond the swatch | [Scene testing](${styleLabUrl}) | Web, slide, cover, poster, and brand-board previews |
+| Explore adjacent, complementary, or tonal relationships | [Palette inspiration](${paletteUrl}) | 8,904 harmony sets to browse, shuffle, copy, and save |
+| Pair backgrounds, text, and buttons | [Usage cards](${usesUrl}) | Layout previews and contrast checks for two-color combinations |
+| Move a Chinese color into a product UI | [Theme Forge](${themeForgeUrl}) | A light/dark shadcn semantic theme, OKLCH values, and \`globals.css\` |
+| Give your terminal a coherent Chinese palette | [Terminal palette](${terminalUrl}) | 16 ANSI colors plus configs for Ghostty, Alacritty, kitty, and more |
+
+## See the color in context before committing to it
+
+<p align="center">
+  <a href="${styleLabUrl}"><img src="docs/screenshots/style-lab.png" alt="Chinese color scene-testing workspace"></a>
+</p>
+
+One anchor color is placed into background, headline, body, button, and accent roles across actual design scenes. You evaluate a layout, not an isolated square.
+
+<p align="center">
+  <a href="${paletteUrl}"><img src="docs/screenshots/palettes.png" alt="8,904 Chinese traditional color harmony sets"></a>
+</p>
+
+Harmony relationships narrow the search before trial and error takes over: same-family, analogous, complementary, triadic, warm/cool, light/dark, gray-tone, and neutral combinations are ready to inspect.
+
+### From a color name to a developer-ready theme
+
+Theme Forge turns one named anchor into a full set of shadcn semantic roles, handles light and dark modes, previews real components, checks foreground contrast, and exports \`globals.css\`.
+
+[Open Theme Forge →](${themeForgeUrl})
+
+## What is actually included
+
+- **${project.count} high-resolution PNG cards**, aligned one-to-one with the [original 742-color list](${masterListPath}), with names, HEX, RGB, CMYK, palette notes, and mood keywords.
+- **8,904 traceable harmony sets**, available as both [Markdown](${harmonyMarkdownPath}) and [CSV](${harmonyCsvPath}) for browsing or reuse.
+- **A complete static design workspace** for search, palettes, scene tests, gradients, usage cards, shadcn themes, and terminal themes.
+- **Local, account-free favorites** for cards, palettes, usage pairs, generated schemes, and scene tests.
+- **10 standalone Agent Skills** for briefs, palette building, layout placement, UI tokens, accessibility, brand systems, data visualization, legacy audits, content series, and print production.
+
+## Take the workflow into Claude Code
+
+Each \`xxd-*\` skill bundles the full color list and harmony data, so it can work independently without fetching reference data from the network.
+
+\`\`\`bash
+git clone https://github.com/nevertoday/zhongguo-traditional-colors.git
+cp -r zhongguo-traditional-colors/skills/xxd-palette-builder ~/.claude/skills/
+\`\`\`
+
+| Where the work is stuck | Skill to use |
+| --- | --- |
+| The direction is still vague: “premium, Eastern, young, restrained” | [\`xxd-color-brief\`](skills/xxd-color-brief/SKILL.md) |
+| One anchor color needs to become a role-based palette | [\`xxd-palette-builder\`](skills/xxd-palette-builder/SKILL.md) |
+| A palette exists, but its layout roles are unclear | [\`xxd-palette-applier\`](skills/xxd-palette-applier/SKILL.md) |
+| Development needs semantic UI tokens | [\`xxd-ui-token\`](skills/xxd-ui-token/SKILL.md) |
+| Text, buttons, or charts may not be readable | [\`xxd-accessible-color\`](skills/xxd-accessible-color/SKILL.md) |
+| The work extends to branding, charts, content systems, or print | [Browse all 10 skills](${skillsUrl}) |
+
+## A small preview of the archive
+
+The README shows ${previewImages.length} representative cards. Browse all ${project.count} in the [online gallery](${siteUrl}#gallery), the \`images/\` directory, or the [Release ZIP](${zipUrl}).
+
+<!-- gallery:start -->
+${galleryRows(previewImages, "en")}
+
+<!-- gallery:end -->
+
+## Download, run locally, or reuse the data
+
+The source image set is about ${totalMb} MB, so the complete archive is distributed through [GitHub Releases](${releaseUrl}) instead of bloating the repository.
+
+- [Download every high-resolution PNG](${zipUrl})
+- [Browse the original 742-color list](${masterListPath})
+- [Download harmony data as CSV](${harmonyCsvPath})
+
+This is a static site. To preview it locally:
+
+\`\`\`bash
+npm run manifest
+npm run readme
+npm run start
+\`\`\`
+
+Then open \`http://localhost:5173\`. After adding or replacing cards, run \`npm run manifest && npm run readme\` to update the manifest and README gallery.
+
+## A practical boundary
+
+Traditional color values vary across sources, screens, print processes, inks, and materials. Use this project to search, compare, prototype, and communicate; verify against the real medium before production printing.
+
+## Contributing and license
+
+Issues and pull requests are welcome. New cards, corrected values, better sourcing, tool improvements, and clearer documentation are all useful; please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
+
+Released under the [MIT License](LICENSE). If the project saves you a round of hunting for references and repeatedly testing colors, consider starring it or sharing it with another maker.
+
+${starHistoryBlock()}
+`;
+}
+
 const { project, images } = await loadManifest();
-await fs.writeFile(path.join(root, "README.md"), renderEn(project, images), "utf8");
-await fs.writeFile(path.join(root, "README.en.md"), renderEn(project, images), "utf8");
-await fs.writeFile(path.join(root, "README.zh-CN.md"), renderZh(project, images), "utf8");
+await fs.writeFile(path.join(root, "README.md"), renderEnReaderFirst(project, images), "utf8");
+await fs.writeFile(path.join(root, "README.en.md"), renderEnReaderFirst(project, images), "utf8");
+await fs.writeFile(path.join(root, "README.zh-CN.md"), renderZhReaderFirst(project, images), "utf8");
 await fs.writeFile(path.join(root, "README.ja.md"), renderJa(project, images), "utf8");
 console.log(`Wrote README files from ${project.count} images with ${selectFeaturedImages(images).length} featured cards`);
