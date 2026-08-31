@@ -31,8 +31,8 @@ const SITEMAP_FILE = path.join(ROOT, 'sitemap.xml');
 
 const SITE = 'https://colors.xiaoxiaodong.ai';
 const ASSET_VERSION = '20260625-1';
-const SHARED_STYLE_VERSION = '20260616-1';
-const SHARED_CHROME_VERSION = '20260616-1';
+const SHARED_STYLE_VERSION = '20260831-1';
+const SHARED_CHROME_VERSION = '20260628-1';
 
 // Sitemap <lastmod> date. Bumped by hand (like ASSET_VERSION) when color data or
 // pages change — kept as a constant, NOT new Date(), so the generated artifacts
@@ -352,7 +352,7 @@ function renderColorPage(image, harmony, context, siblings = {}) {
     },
     {
       q: `「${name}」的色卡可以免费下载吗？`,
-      a: `可以。本页提供「${name}」的 PNG 高清色卡与 SVG 分享卡免费下载，项目由小小东整理维护、MIT 开源。`,
+      a: `可以。本页提供「${name}」的 PNG 高清色卡与 SVG 分享卡免费下载，项目由小小东整理维护、GPL-3.0 开源。`,
     },
   ].filter(Boolean);
 
@@ -571,12 +571,14 @@ function renderColorPage(image, harmony, context, siblings = {}) {
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="../assets/css/styles.css?v=${SHARED_STYLE_VERSION}">
     <link rel="stylesheet" href="../assets/css/color-page.css?v=${ASSET_VERSION}">
+    <link rel="preload" href="../assets/js/shared-chrome.js?v=${SHARED_CHROME_VERSION}" as="script">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
-  <body data-current-page="dictionary" data-base="../">
+  <body data-current-page="colors" data-base="../">
     <a class="skip-link" href="#color-main">跳到颜色详情</a>
 
     <div data-shared-header></div>
@@ -709,8 +711,8 @@ function renderShareCard(image, harmony, partners = []) {
 function renderColorIndex(images, harmonies) {
   const canonical = `${SITE}/colors/`;
   const ogImage = `${SITE}/docs/screenshots/home-gallery.png`;
-  const description = `中国传统色大全：${images.length} 种中华传统色色卡一览，按红橙黄绿青蓝紫与中性色系分组，每色含 HEX/RGB 色值并链接到独立色彩详情页。由小小东整理维护，MIT 开源。`;
-  const intro = `这里收录 ${images.length} 种中国传统色（中华传统色），按色系分组排列，是一份可检索的传统色色卡大全。每个颜色都有独立页面，列出 HEX、RGB、HSL、CMYK 色值与同类、邻近、互补等配色关系。色值来自项目维护的 742 色清单，由小小东整理、MIT 开源。`;
+  const description = `中国传统色大全：${images.length} 种中华传统色色卡一览，按红橙黄绿青蓝紫与中性色系分组，每色含 HEX/RGB 色值并链接到独立色彩详情页。由小小东整理维护，GPL-3.0 开源。`;
+  const intro = `这里收录 ${images.length} 种中国传统色（中华传统色），按色系分组排列，是一份可检索的传统色色卡大全。每个颜色都有独立页面，列出 HEX、RGB、HSL、CMYK 色值与同类、邻近、互补等配色关系。色值来自项目维护的 742 色清单，由小小东整理、GPL-3.0 开源。`;
 
   // Bucket colors by hue family, preserving the manifest's id order within each.
   const groups = new Map(HUE_FAMILY_ORDER.map((family) => [family, []]));
@@ -812,12 +814,14 @@ function renderColorIndex(images, harmonies) {
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="../assets/css/styles.css?v=${SHARED_STYLE_VERSION}">
     <link rel="stylesheet" href="../assets/css/color-page.css?v=${ASSET_VERSION}">
+    <link rel="preload" href="../assets/js/shared-chrome.js?v=${SHARED_CHROME_VERSION}" as="script">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
-  <body data-current-page="dictionary" data-base="../">
+  <body data-current-page="colors" data-base="../">
     <a class="skip-link" href="#color-index-main">跳到色卡索引</a>
 
     <div data-shared-header></div>
@@ -956,12 +960,14 @@ function renderHueHub(family, list, totalCount) {
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="../assets/css/styles.css?v=${SHARED_STYLE_VERSION}">
     <link rel="stylesheet" href="../assets/css/color-page.css?v=${ASSET_VERSION}">
+    <link rel="preload" href="../assets/js/shared-chrome.js?v=${SHARED_CHROME_VERSION}" as="script">
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
   </head>
-  <body data-current-page="dictionary" data-base="../">
+  <body data-current-page="colors" data-base="../">
     <a class="skip-link" href="#hue-hub-main">跳到色卡列表</a>
 
     <div data-shared-header></div>
@@ -1012,7 +1018,7 @@ function renderHueHub(family, list, totalCount) {
 function renderLlmsTxt(images, harmonies) {
   const lead = `# 中国传统色（中华传统色）\n\n`
     + `> ${images.length} 种中国传统色色卡，每色含 HEX/RGB/HSL/CMYK 色值与同类、邻近、互补等配色关系。`
-    + `由小小东整理维护，MIT 开源，源代码见 ${REPO_URL}。\n`;
+    + `由小小东整理维护，GPL-3.0 开源，源代码见 ${REPO_URL}。\n`;
   const keyPages = [
     `- [首页](${SITE}/)：项目主页与色卡画廊`,
     `- [中国传统色大全](${SITE}/colors/)：全部 ${images.length} 色，按色系分组的可检索索引`,

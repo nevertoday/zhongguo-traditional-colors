@@ -2,15 +2,6 @@ const images = window.TRADITIONAL_COLOR_IMAGES || [];
 const harmonies = window.TRADITIONAL_COLOR_HARMONIES || {};
 const imagesById = new Map(images.map((image) => [image.id, image]));
 
-const themeToggle = document.querySelector('[data-theme-toggle]');
-const themeIcon = document.querySelector('[data-theme-icon]');
-const themeLabel = document.querySelector('[data-theme-label]');
-const themeColorMeta = document.querySelector('[data-theme-color]');
-const siteHeader = document.querySelector('.site-header');
-const siteNav = document.querySelector('#site-nav');
-const navToggle = document.querySelector('[data-nav-toggle]');
-const footerColorButtons = document.querySelectorAll('[data-footer-color]');
-const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
 const feedList = document.querySelector('[data-feed-list]');
 const relationList = document.querySelector('[data-relation-list]');
 const toneList = document.querySelector('[data-tone-list]');
@@ -167,8 +158,6 @@ let favorites = readFavorites();
 let randomRanks = new Map();
 let toastTimer;
 let demoToastTimer;
-let footerCopyTimer;
-let navResizeFrame;
 let paletteAutoObserver;
 let palettePool;
 
@@ -632,65 +621,6 @@ function saveFavorites() {
   } catch (error) {
     // Favorites still work for the current page session.
   }
-}
-
-function currentTheme() {
-  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-}
-
-function setTheme(theme) {
-  const nextTheme = theme === 'dark' ? 'dark' : 'light';
-  document.documentElement.dataset.theme = nextTheme;
-  try {
-    localStorage.setItem('theme', nextTheme);
-  } catch (error) {
-    // Theme still applies without storage.
-  }
-  themeToggle?.setAttribute('aria-pressed', String(nextTheme === 'dark'));
-  themeToggle?.setAttribute('aria-label', nextTheme === 'dark' ? '切换到亮色模式' : '切换到暗色模式');
-  if (themeLabel) themeLabel.textContent = nextTheme === 'dark' ? '亮色' : '暗色';
-  themeIcon?.setAttribute('icon', nextTheme === 'dark' ? 'lucide:sun' : 'lucide:moon');
-  themeColorMeta?.setAttribute('content', nextTheme === 'dark' ? '#11100e' : '#f7f7f4');
-}
-
-function setMobileNavOpen(open) {
-  if (!siteHeader || !navToggle) return;
-
-  siteHeader.dataset.navOpen = open ? 'true' : 'false';
-  navToggle.setAttribute('aria-expanded', String(open));
-  navToggle.setAttribute('aria-label', open ? '收起导航' : '展开导航');
-  navToggle.querySelector('iconify-icon')?.setAttribute('icon', open ? 'lucide:x' : 'lucide:menu');
-}
-
-function closeMobileNav() {
-  setMobileNavOpen(false);
-}
-
-function queueMobileNavState() {
-  if (navResizeFrame) return;
-  navResizeFrame = window.requestAnimationFrame(() => {
-    navResizeFrame = 0;
-    if (window.matchMedia('(min-width: 721px)').matches) closeMobileNav();
-  });
-}
-
-function buildFooterSpectrum() {
-  if (!footerColorButtons.length) return;
-
-  const colors = randomColorItems(footerColorButtons.length);
-  footerColorButtons.forEach((button, index) => {
-    const image = colors[index];
-    if (!image) return;
-
-    const name = colorName(image);
-    const hex = image.hex;
-    const copyText = `${name} ${hex}`;
-    button.style.setProperty('--spectrum-color', hex);
-    button.style.setProperty('--spectrum-index', String(randomInt(9) + 1));
-    button.dataset.footerCopyValue = copyText;
-    button.title = `复制 ${copyText}`;
-    button.setAttribute('aria-label', `复制 ${name} 色值 ${hex}`);
-  });
 }
 
 function optionButtonMarkup(item, type, selectedKey) {
@@ -1707,46 +1637,9 @@ function bindOptionClicks(container, selector, callback) {
 }
 
 readDemoUrlState();
-setTheme(currentTheme());
-buildFooterSpectrum();
 renderPalettes();
 setViewMode(currentViewMode, { syncUrl: false });
 bindTitleColorHover();
-
-themeToggle?.addEventListener('click', () => {
-  setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
-});
-navToggle?.addEventListener('click', () => {
-  const open = siteHeader?.dataset.navOpen === 'true';
-  setMobileNavOpen(!open);
-});
-siteNav?.addEventListener('click', (event) => {
-  if (event.target.closest('a, button')) closeMobileNav();
-});
-window.addEventListener('resize', queueMobileNavState);
-window.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') closeMobileNav();
-});
-footerColorButtons.forEach((button) => {
-  button.addEventListener('click', async () => {
-    const copyText = button.dataset.footerCopyValue;
-    if (!copyText) return;
-
-    await writeClipboard(copyText);
-    button.dataset.copied = 'true';
-    if (footerCopyStatus) {
-      window.clearTimeout(footerCopyTimer);
-      footerCopyStatus.textContent = `已复制：${copyText}`;
-      footerCopyStatus.dataset.visible = 'true';
-      footerCopyTimer = window.setTimeout(() => {
-        footerCopyStatus.dataset.visible = 'false';
-      }, 1600);
-    }
-    window.setTimeout(() => {
-      delete button.dataset.copied;
-    }, 1000);
-  });
-});
 
 bindOptionClicks(feedList, '[data-feed]', (button) => {
   currentFeed = button.dataset.feed;

@@ -666,7 +666,7 @@ npm run readme
 
 ## 许可
 
-本项目使用 [MIT License](LICENSE) 开源。
+本项目使用 [GNU GPL v3.0](LICENSE) 开源。
 
 请注意：传统色色值在不同资料、屏幕、印刷和材质中可能存在差异。本项目提供的是开放整理和学习资料，实际生产使用前应结合媒介校验。
 `;
@@ -820,7 +820,7 @@ This archive remains free and open source. If it saves you time, a Star, a share
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
+This project is released under the [GNU GPL v3.0](LICENSE).
 
 Note: Traditional color values may vary across sources, screens, print processes, and materials. Treat this archive as an open reference and verify colors for production use.
 `;
@@ -970,7 +970,7 @@ http://localhost:5173
 
 ## ライセンス
 
-このプロジェクトは [MIT License](LICENSE) のもとで公開されています。
+このプロジェクトは [GNU GPL v3.0](LICENSE) のもとで公開されています。
 
 注意：伝統色の色値は資料、画面、印刷、素材によって差が出る場合があります。このアーカイブはオープンな参考資料として利用し、実制作では媒体に合わせて確認してください。
 `;

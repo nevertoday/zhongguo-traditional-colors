@@ -15,8 +15,16 @@
   const colorDialogSearch = document.querySelector('[data-terminal-color-search]');
   const colorDialogGrid = document.querySelector('[data-terminal-color-grid]');
   const colorDialogCurrent = document.querySelector('[data-terminal-color-current]');
+  const debounce = window.ZH_UTILS?.debounce || ((fn, delay) => {
+    let timer;
+    return (...args) => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => fn(...args), delay);
+    };
+  });
   let state = { id: null, mode: 'dark', fmt: 'ghostty', depth: 'medium' };
   let current = null;
+  let colorDialogOpener = null;
 
   /* ── 一页连续的「真终端会话」：fastfetch → ls → git → bat → glow，一路下滚，无 tab。──
      锚色在每行提示符 ❯ 上发光、贯穿全程；fetch 色块 + ls + git 把整套 16 色摊开，不再一片绿。
@@ -41,7 +49,7 @@
         `<div class="frow"><span class="fk">Terminal</span>Ghostty 1.0</div>` +
         `<div class="frow"><span class="fk">Theme</span><span data-fetch-theme>—</span></div>` +
         `<div class="frow"><span class="fk">Palette</span><span data-fetch-prov>—</span></div>` +
-        `<div class="frow"><span class="fk">Font</span>Space Mono · 12pt</div>` +
+        `<div class="frow"><span class="fk">Font</span>M PLUS Rounded 1c · 12pt</div>` +
         `<div class="fblocks"><div class="fbrow">${blockRow(0)}</div><div class="fbrow">${blockRow(8)}</div></div>` +
       `</div>` +
     `</div>`;
@@ -124,7 +132,9 @@
         : `<span class="nm">${s.name || '—'}</span>`;
       const fl = T.floorFor(s.key, state.mode);
       const aa = fl ? `<span class="aa ${s.contrast >= fl ? 'ok' : 'no'}">${s.contrast.toFixed(1)}</span>` : '';
-      return `<div class="sp"><i style="background:${s.hex}"></i>`
+      const pickSeed = s.id || (s.name ? byName[s.name] : '') || '';
+      const pickLabel = `从 ${s.key}${s.idx !== undefined ? ' · ' + s.idx : ''} 的 ${s.name || s.hex} 打开颜色选择`;
+      return `<div class="sp"><button type="button" class="slot-swatch" style="background:${s.hex}" data-terminal-slot-pick="${escapeHtml(pickSeed)}" data-terminal-slot-query="${escapeHtml(s.name || s.hex)}" aria-label="${escapeHtml(pickLabel)}"></button>`
         + `<span class="role">${s.group === 'ui' ? s.key : s.key + ' · ' + s.idx}</span>`
         + `<span class="src">${src}</span>`
         + `<span class="right"><span class="ok">${s.hex.toUpperCase()}</span>${aa}</span></div>`;
@@ -224,16 +234,19 @@
     if (colorDialogCurrent) colorDialogCurrent.innerHTML = relatedAnchors().map(colorPickMarkup).join('');
     colorDialogGrid.innerHTML = list.length ? list.map(colorPickMarkup).join('') : '<p class="tm-color-empty">没有匹配的传统色</p>';
   }
-  function openColorDialog() {
+  function openColorDialog(query = '') {
     if (!colorDialog) return;
-    if (colorDialogSearch) colorDialogSearch.value = '';
+    colorDialogOpener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    window.ZH_COLOR_SEARCH?.hideAll?.();
+    document.querySelector('[data-search]')?.blur();
+    if (colorDialogSearch) colorDialogSearch.value = query;
     renderColorDialog();
     colorDialog.showModal();
     colorDialogSearch?.focus();
+    if (query) colorDialogSearch?.select();
   }
   function closeColorDialog() {
     colorDialog?.close();
-    $('[data-anchor-swatch]')?.focus();
   }
   function pickDialogColor(id) {
     if (!REC(id)) return;
@@ -249,13 +262,23 @@
       || (ALL.find(c => c.name.includes(v)) || {}).id;
     if (hit) { setAnchor(hit); syncQuick(hit); }
   });
-  $('[data-anchor-swatch]')?.addEventListener('click', openColorDialog);
-  colorDialogSearch?.addEventListener('input', renderColorDialog);
+  $('[data-anchor-swatch]')?.addEventListener('click', () => openColorDialog());
+  $('[data-specimen]')?.addEventListener('click', e => {
+    const button = e.target.closest('[data-terminal-slot-pick]');
+    if (!button) return;
+    openColorDialog(button.dataset.terminalSlotQuery || '');
+  });
+  colorDialogSearch?.addEventListener('input', debounce(renderColorDialog, 120));
   colorDialogClose?.addEventListener('click', closeColorDialog);
   colorDialog?.addEventListener('click', e => {
     if (e.target === colorDialog) closeColorDialog();
     const button = e.target.closest('[data-terminal-pick]');
     if (button) pickDialogColor(button.dataset.terminalPick);
+  });
+  colorDialog?.addEventListener('close', () => {
+    const target = colorDialogOpener?.isConnected ? colorDialogOpener : $('[data-anchor-swatch]');
+    colorDialogOpener = null;
+    target?.focus();
   });
   root.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => {
     state.mode = b.dataset.mode;

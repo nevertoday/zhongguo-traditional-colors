@@ -41,12 +41,14 @@
   align-items: center;
   justify-content: center;
   min-width: 0;
+  min-height: 44px;
   color: var(--ink);
   background: var(--panel);
   border: 0;
   cursor: pointer;
   font-size: 0.82rem;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .gradient-huebar button::before {
@@ -778,6 +780,14 @@
 
   .gradient-multi-track-compact {
     min-height: 50px;
+  }
+
+  .gradient-pair {
+    min-height: 44px;
+  }
+
+  .gradient-path-track {
+    height: 28px;
   }
 
   .gradient-multi-track small {

@@ -9,8 +9,12 @@ function fail(message) {
   process.exitCode = 1;
 }
 
-if (!html.includes('data-generator-search-suggestions')) {
-  fail('generator.html: missing search suggestion container');
+const topSearchInput = html.match(/<input\b[^>]*data-generator-search[^>]*>/)?.[0] || '';
+if (!/\bdata-color-suggest\b/.test(topSearchInput)) {
+  fail('generator.html: top generator search should use shared color suggestions');
+}
+if (/data-generator-search-suggestions/.test(html)) {
+  fail('generator.html: top generator search should not render a duplicate private suggestion panel');
 }
 if (!html.includes('class="generator-more"')) {
   fail('generator.html: missing compact more menu');
@@ -18,10 +22,11 @@ if (!html.includes('class="generator-more"')) {
 
 for (const token of [
   'rankedColorMatches',
-  'renderSearchSuggestions',
-  'data-generator-search-pick',
-  'searchEffectLabel',
-  'dictionary.html?q=',
+  'color-suggestion-pick',
+  'pickSearchSuggestion',
+  'async function copyText(text)',
+  'const copied = await copyText',
+  "'复制失败，请手动复制'",
 ]) {
   if (!js.includes(token)) fail(`assets/js/generator.js: missing ${token}`);
 }
@@ -36,10 +41,6 @@ if (!/background:\s*transparent\s*;/.test(boardRule)) {
 
 for (const token of [
   '.generator-search-wrap',
-  '.generator-search-suggestions',
-  '.generator-search-option',
-  '.generator-search-effect',
-  '.generator-search-detail',
   '.generator-more-menu',
 ]) {
   if (!css.includes(token)) fail(`assets/css/generator.css: missing ${token}`);

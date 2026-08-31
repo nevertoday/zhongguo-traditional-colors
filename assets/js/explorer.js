@@ -1,4 +1,12 @@
 (() => {
+  const debounce = window.ZH_UTILS?.debounce || ((fn, delay) => {
+    let timer;
+    return (...args) => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => fn(...args), delay);
+    };
+  });
+
   const images = (window.TRADITIONAL_COLOR_IMAGES || []).map((image) => {
     const name = image.file.replace(/^\d+-/, '').replace(/\.[^.]+$/, '');
     const cleanHex = image.hex.toUpperCase();
@@ -290,9 +298,10 @@
     button.addEventListener('click', () => copyValue(button.dataset.copyValue));
   });
 
+  const renderSearch = debounce(render, 120);
   els.search?.addEventListener('input', () => {
     state.query = normalize(els.search.value);
-    render();
+    renderSearch();
   });
 
   document.querySelectorAll('[data-explorer-hue]').forEach((button) => {

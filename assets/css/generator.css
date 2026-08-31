@@ -155,7 +155,7 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 10px;
   align-items: center;
-  min-height: 38px;
+  min-height: 44px;
   padding: 0 12px;
   background: var(--panel-soft);
   border: 1px solid transparent;
@@ -179,140 +179,11 @@
 .generator-dialog-search input {
   width: 100%;
   min-width: 0;
-  height: 36px;
+  height: 44px;
   color: var(--ink);
   background: transparent;
   border: 0;
   outline: none;
-}
-
-.generator-search-suggestions {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  left: 0;
-  z-index: 18;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 1px;
-  max-height: min(430px, calc(100vh - 190px));
-  overflow: auto;
-  background: var(--line);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-soft);
-}
-
-.generator-search-suggestions[hidden] {
-  display: none;
-}
-
-.generator-search-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  min-width: 0;
-  color: var(--ink);
-  background: var(--panel);
-}
-
-.generator-search-option {
-  display: grid;
-  grid-template-columns: 46px minmax(0, 1fr);
-  gap: 12px;
-  align-items: center;
-  min-width: 0;
-  min-height: 66px;
-  padding: 10px 12px;
-  color: inherit;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  text-align: left;
-  transition: color 160ms ease, background 160ms ease;
-}
-
-.generator-search-option:hover,
-.generator-search-option:focus-visible {
-  color: var(--hover-text);
-  background: var(--hover-bg);
-  outline: none;
-}
-
-.generator-search-effect {
-  width: 46px;
-  height: 46px;
-  background: var(--suggest-color);
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  transition: border-radius 180ms var(--ease-out-expo), transform 180ms var(--ease-out-expo);
-}
-
-.generator-search-option:hover .generator-search-effect,
-.generator-search-option:focus-visible .generator-search-effect {
-  border-radius: 50%;
-  transform: scale(0.94);
-}
-
-.generator-search-copy {
-  min-width: 0;
-}
-
-.generator-search-copy strong,
-.generator-search-copy small {
-  display: block;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.generator-search-copy strong {
-  margin-bottom: 5px;
-  font-size: 0.9rem;
-  font-weight: 850;
-}
-
-.generator-search-copy small {
-  color: var(--muted);
-  font-family: var(--font-rounded);
-  font-size: 0.74rem;
-  font-weight: 750;
-}
-
-.generator-search-option:hover small,
-.generator-search-option:focus-visible small {
-  color: color-mix(in srgb, var(--hover-text) 72%, transparent);
-}
-
-.generator-search-detail {
-  display: inline-flex;
-  align-items: center;
-  align-self: stretch;
-  padding: 0 12px;
-  color: var(--muted);
-  border-left: 1px solid var(--line);
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.generator-search-detail:hover,
-.generator-search-detail:focus-visible {
-  color: var(--hover-text);
-  background: var(--hover-bg);
-  outline: none;
-}
-
-.generator-search-empty {
-  grid-column: 1 / -1;
-  margin: 0;
-  padding: 16px;
-  color: var(--muted);
-  background: var(--panel);
-  font-size: 0.86rem;
-  font-weight: 750;
 }
 
 .generator-hint {
@@ -864,20 +735,21 @@
   .generator-method button,
   .generator-actions button,
   .generator-more summary {
+    flex: 0 0 auto;
     min-width: 0;
-    min-height: 38px;
+    min-height: 44px;
     padding-inline: 8px;
   }
 
-  .generator-actions .generator-favorite-action {
-    width: 38px;
-    min-width: 38px;
+  .generator-actions button,
+  .generator-more summary {
+    width: 44px;
+    min-width: 44px;
   }
 
-  .generator-search-suggestions {
-    position: static;
-    margin-top: 8px;
-    max-height: 260px;
+  .generator-actions .generator-favorite-action {
+    width: 44px;
+    min-width: 44px;
   }
 
   .generator-hint {
@@ -920,7 +792,24 @@
 
   .generator-actions > button,
   .generator-more {
-    flex: 1 1 0;
+    flex: 0 0 44px;
+  }
+
+  .generator-copy-value {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+
+  .generator-color-tools button,
+  .generator-suggestions button {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+  }
+
+  .generator-suggestions {
+    min-height: 44px;
   }
 
   .generator-export-grid {
@@ -932,16 +821,6 @@
     padding: 20px;
   }
 
-  .generator-search-option {
-    grid-template-columns: 38px minmax(0, 1fr);
-    min-height: 58px;
-    padding: 9px 10px;
-  }
-
-  .generator-search-effect {
-    width: 38px;
-    height: 38px;
-  }
 }
 
 .generator-color:hover .generator-color-tools,

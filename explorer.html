@@ -20,6 +20,7 @@
     <meta name="twitter:description" content="沉浸式浏览 742 个中国传统色，查看色名、色值、色系，并快速复制 HEX、RGB、HSL。">
     <meta name="twitter:image" content="https://colors.xiaoxiaodong.ai/docs/screenshots/home-gallery.png">
     <link rel="icon" href="favicon.svg?v=20260610-6" type="image/svg+xml">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"中国色浏览器","url":"https://colors.xiaoxiaodong.ai/explorer.html","inLanguage":"zh-CN","description":"沉浸式浏览 742 个中国传统色，查看色名、色值、色系，并快速复制 HEX、RGB、HSL。","isPartOf":{"@type":"WebSite","name":"中国传统配色","url":"https://colors.xiaoxiaodong.ai/"}}</script>
     <script>
       (() => {
         try {
@@ -34,10 +35,13 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260616-9">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260628-1">
     <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260616-3">
-    <link rel="stylesheet" href="assets/css/explorer.css?v=20260616-2">
+    <link rel="stylesheet" href="assets/css/explorer.css?v=20260619-2">
+    <link rel="preload" href="assets/js/shared-chrome.js?v=20260628-1" as="script">
+
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
   </head>
@@ -96,7 +100,7 @@
           </label>
 
           <div class="explorer-hues" role="group" aria-label="按色系筛选">
-            <button type="button" data-explorer-hue="all" aria-pressed="true">全部</button>
+            <button type="button" data-explorer-hue="all" aria-pressed="true" aria-label="全部色系" title="全部色系">全</button>
             <button type="button" data-explorer-hue="red" aria-pressed="false">红</button>
             <button type="button" data-explorer-hue="orange" aria-pressed="false">橙</button>
             <button type="button" data-explorer-hue="yellow" aria-pressed="false">黄</button>
@@ -143,7 +147,7 @@
 
     <div data-shared-footer></div>
 
-    <script src="assets/js/shared-chrome.js?v=20260616-1" defer></script>
+    <script src="assets/js/shared-chrome.js?v=20260628-1" defer></script>
     <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/js/color-search-suggestions.js?v=20260616-3" defer></script>
     <script src="assets/js/explorer.js?v=20260616-1" defer></script>

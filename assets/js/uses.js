@@ -2,15 +2,6 @@ const images = window.TRADITIONAL_COLOR_IMAGES || [];
 const harmonies = window.TRADITIONAL_COLOR_HARMONIES || {};
 const imagesById = new Map(images.map((image) => [image.id, image]));
 
-const themeToggle = document.querySelector('[data-theme-toggle]');
-const themeIcon = document.querySelector('[data-theme-icon]');
-const themeLabel = document.querySelector('[data-theme-label]');
-const themeColorMeta = document.querySelector('[data-theme-color]');
-const siteHeader = document.querySelector('.site-header');
-const siteNav = document.querySelector('#site-nav');
-const navToggle = document.querySelector('[data-nav-toggle]');
-const footerColorButtons = document.querySelectorAll('[data-footer-color]');
-const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
 const searchInput = document.querySelector('[data-use-search]');
 const modebar = document.querySelector('[data-use-modebar]');
 const huebar = document.querySelector('[data-use-huebar]');
@@ -103,8 +94,6 @@ let currentMode = 'type';
 let currentHue = 'all';
 let randomRanks = new Map();
 let toastTimer;
-let footerCopyTimer;
-let navResizeFrame;
 let autoObserver;
 let colorPoolCache;
 let cardCacheKey = '';
@@ -645,58 +634,7 @@ function setUseFavoriteState(button, active, card) {
   }, 1300);
 }
 
-function currentTheme() {
-  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-}
-
-function setTheme(theme) {
-  const nextTheme = theme === 'dark' ? 'dark' : 'light';
-  document.documentElement.dataset.theme = nextTheme;
-  try {
-    localStorage.setItem('theme', nextTheme);
-  } catch (error) {
-    document.documentElement.dataset.theme = nextTheme;
-  }
-  themeToggle?.setAttribute('aria-pressed', String(nextTheme === 'dark'));
-  themeToggle?.setAttribute('aria-label', nextTheme === 'dark' ? '切换到亮色模式' : '切换到暗色模式');
-  themeIcon?.setAttribute('icon', nextTheme === 'dark' ? 'lucide:sun' : 'lucide:moon');
-  if (themeLabel) themeLabel.textContent = nextTheme === 'dark' ? '亮色' : '暗色';
-  themeColorMeta?.setAttribute('content', nextTheme === 'dark' ? '#11100e' : '#f7f7f4');
-}
-
-function setMobileNavOpen(open) {
-  if (!siteHeader || !navToggle) return;
-  siteHeader.dataset.navOpen = String(open);
-  navToggle.setAttribute('aria-expanded', String(open));
-}
-
-function closeMobileNav() {
-  setMobileNavOpen(false);
-}
-
-function queueMobileNavState() {
-  window.cancelAnimationFrame(navResizeFrame);
-  navResizeFrame = window.requestAnimationFrame(() => {
-    if (window.matchMedia('(min-width: 721px)').matches) closeMobileNav();
-  });
-}
-
-function buildFooterSpectrum() {
-  if (!footerColorButtons.length) return;
-  const pool = [...images].filter((image) => image.hex);
-  footerColorButtons.forEach((button, index) => {
-    const image = pool[(Math.floor(Math.random() * pool.length) + index * 37) % pool.length];
-    const name = colorName(image);
-    const copyText = `${name} ${image.hex}`;
-    button.style.setProperty('--footer-color', image.hex);
-    button.dataset.footerCopyValue = copyText;
-    button.title = `复制 ${copyText}`;
-  });
-}
-
-setTheme(currentTheme());
 shuffleOrder();
-buildFooterSpectrum();
 
 // Honor a ?q= search param so deep-links (e.g. from a color detail page) land
 // on pairings anchored to that color name.
@@ -706,41 +644,6 @@ if (initialQuery && searchInput) {
 }
 
 rerender();
-
-themeToggle?.addEventListener('click', () => {
-  setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
-});
-navToggle?.addEventListener('click', () => {
-  const open = siteHeader?.dataset.navOpen === 'true';
-  setMobileNavOpen(!open);
-});
-siteNav?.addEventListener('click', (event) => {
-  if (event.target.closest('a, button')) closeMobileNav();
-});
-window.addEventListener('resize', queueMobileNavState);
-window.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') closeMobileNav();
-});
-
-footerColorButtons.forEach((button) => {
-  button.addEventListener('click', async () => {
-    const copyText = button.dataset.footerCopyValue;
-    if (!copyText) return;
-    await writeClipboard(copyText);
-    button.dataset.copied = 'true';
-    if (footerCopyStatus) {
-      window.clearTimeout(footerCopyTimer);
-      footerCopyStatus.textContent = `已复制：${copyText}`;
-      footerCopyStatus.dataset.visible = 'true';
-      footerCopyTimer = window.setTimeout(() => {
-        footerCopyStatus.dataset.visible = 'false';
-      }, 1600);
-    }
-    window.setTimeout(() => {
-      delete button.dataset.copied;
-    }, 1000);
-  });
-});
 
 searchInput?.addEventListener('input', debounce(() => {
   resetExploreCue();

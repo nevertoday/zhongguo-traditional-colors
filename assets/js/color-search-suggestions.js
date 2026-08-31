@@ -404,6 +404,7 @@
   window.ZH_COLOR_SEARCH = {
     colorName,
     fuzzySequenceScore,
+    hideAll,
     matchesImage,
     matchesText,
     rankedImages,

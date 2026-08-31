@@ -35,7 +35,10 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700;900&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" href="assets/js/shared-chrome.js?v=20260628-1" as="script">
+
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <link rel="stylesheet" href="assets/css/styles.css?v=20260617-1">
     <link rel="stylesheet" href="assets/css/daily.css?v=20260617-2">
@@ -138,7 +141,7 @@
 
     <div data-shared-footer></div>
 
-    <script src="assets/js/shared-chrome.js?v=20260615-1" defer></script>
+    <script src="assets/js/shared-chrome.js?v=20260628-1" defer></script>
     <script>
       const COLORS = [
         {id:"011",name:"藤黄",py:"téng huáng",hex:"#FFD111",h:48,s:100,l:53,family:"黄色系",temp:"暖",story:"取自海藤树脂的传统颜料，明黄带暖，是国画里最亮的一抹黄。",aux:[{name:"向日葵黄",hex:"#FECC11"},{name:"金瓜黄",hex:"#FCD217"}],accent:[{name:"苍碧",hex:"#2A52BE"},{name:"绀青",hex:"#4F84FF"}]},
@@ -358,16 +361,41 @@
         });
       }
 
+      async function writeClipboard(text) {
+        try {
+          if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (error) {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.append(textarea);
+          textarea.select();
+          let copied = false;
+          try {
+            copied = document.execCommand('copy');
+          } catch (fallbackError) {
+            copied = false;
+          }
+          textarea.remove();
+          return copied;
+        }
+      }
+
       const copyBtn = document.getElementById('copy');
-      copyBtn.addEventListener('click', () => {
+      let copyFeedbackTimer;
+      copyBtn.addEventListener('click', async () => {
         const text = `${post.textContent}\n\n${tags.textContent}`;
-        navigator.clipboard.writeText(text).then(() => {
-          const original = copyBtn.textContent;
-          copyBtn.textContent = '已复制 ✓';
-          copyBtn.disabled = true;
-          live.textContent = '文案已复制到剪贴板';
-          setTimeout(() => { copyBtn.textContent = original; copyBtn.disabled = false; }, 1400);
-        });
+        const copied = await writeClipboard(text);
+        window.clearTimeout(copyFeedbackTimer);
+        copyBtn.textContent = copied ? '已复制 ✓' : '复制失败，请手动选择';
+        live.textContent = copied ? '文案已复制到剪贴板' : '复制失败，请手动选择下方文案';
+        copyFeedbackTimer = window.setTimeout(() => {
+          copyBtn.textContent = '复制文案';
+        }, 1800);
       });
 
       const today = new Date();

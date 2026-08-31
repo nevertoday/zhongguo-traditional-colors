@@ -36,9 +36,12 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260616-10">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260628-1">
     <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260616-3">
+    <link rel="preload" href="assets/js/shared-chrome.js?v=20260628-1" as="script">
+
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <!-- Privacy-friendly, cookieless analytics. Requires a Plausible account (or self-host) for the domain to collect data. -->
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
@@ -72,7 +75,7 @@
           </div>
           <div class="hero-proof" aria-label="项目维护信息">
             <span>作者：小小东</span>
-            <span>MIT 开源</span>
+            <span>GPL-3.0 开源</span>
             <span>742 色完整覆盖</span>
             <span>Release ZIP 附件</span>
           </div>
@@ -108,15 +111,15 @@
           </div>
           <div class="support-qr-list">
             <figure class="support-qr">
-              <img src="docs/images/wechat-reward-qr.png" alt="微信打赏小小东的二维码" width="220" height="220">
+              <img src="docs/images/wechat-reward-qr.png" alt="微信打赏小小东的二维码" width="220" height="220" loading="lazy" decoding="async">
               <figcaption>微信</figcaption>
             </figure>
             <figure class="support-qr">
-              <img src="docs/images/alipay-reward-qr.png" alt="支付宝打赏小小东的二维码" width="220" height="220">
+              <img src="docs/images/alipay-reward-qr.png" alt="支付宝打赏小小东的二维码" width="220" height="220" loading="lazy" decoding="async">
               <figcaption>支付宝</figcaption>
             </figure>
             <figure class="support-qr">
-              <img src="docs/images/buy-me-a-coffee-qr.png" alt="通过 Buy Me a Coffee 请小小东喝咖啡的二维码" width="220" height="220">
+              <img src="docs/images/buy-me-a-coffee-qr.png" alt="通过 Buy Me a Coffee 请小小东喝咖啡的二维码" width="220" height="220" loading="lazy" decoding="async">
               <figcaption>请喝咖啡</figcaption>
             </figure>
           </div>
@@ -355,16 +358,16 @@
       </button>
     </nav>
 
-    <dialog class="hero-preview-dialog" data-hero-preview-dialog>
+    <dialog class="hero-preview-dialog" data-hero-preview-dialog aria-labelledby="hero-preview-dialog-title">
       <button class="dialog-close hero-preview-close" type="button" data-close-hero-preview aria-label="关闭色卡信息">
         <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
       </button>
       <div class="hero-preview-media">
-        <img alt="" data-hero-preview-image>
+        <img alt="" data-hero-preview-image width="1086" height="1448" decoding="async">
       </div>
       <div class="hero-preview-content">
         <span class="section-kicker">胶片色卡</span>
-        <h2 data-hero-preview-title></h2>
+        <h2 id="hero-preview-dialog-title" data-hero-preview-title></h2>
         <dl class="hero-preview-facts">
           <div>
             <dt>HEX</dt>
@@ -427,11 +430,11 @@
       </div>
     </dialog>
 
-    <dialog class="master-list-dialog" data-master-list-dialog>
+    <dialog class="master-list-dialog" data-master-list-dialog aria-labelledby="master-list-dialog-title">
       <div class="master-list-head">
         <div>
           <span class="section-kicker">原始清单</span>
-          <h2>742 色预览</h2>
+          <h2 id="master-list-dialog-title">742 色预览</h2>
           <p>检索、复制单色或整份清单。</p>
         </div>
         <button class="dialog-close master-close" type="button" data-close-master-list aria-label="关闭颜色清单">
@@ -453,7 +456,7 @@
       <div class="master-color-list" data-master-color-list></div>
     </dialog>
 
-    <script src="assets/js/shared-chrome.js?v=20260616-1" defer></script>
+    <script src="assets/js/shared-chrome.js?v=20260628-1" defer></script>
     <script src="assets/js/favorites-store.js?v=20260612-1" defer></script>
     <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>

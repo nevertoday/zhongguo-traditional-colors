@@ -73,7 +73,7 @@ if (!existsSync(colorsDir)) {
       '"@type":"BreadcrumbList"',
       '"@type":"CreativeWork"',
       'data-base="../"',
-      'data-current-page="dictionary"',
+      'data-current-page="colors"',
       '../assets/css/styles.css',
       '../assets/css/color-page.css',
       '../assets/js/shared-chrome.js',

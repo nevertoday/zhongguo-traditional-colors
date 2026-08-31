@@ -3,15 +3,6 @@ const grid = document.querySelector('[data-favorites-grid]');
 const count = document.querySelector('[data-favorites-count]');
 const clearButton = document.querySelector('[data-favorites-clear]');
 const toast = document.querySelector('[data-toast]');
-const themeToggle = document.querySelector('[data-theme-toggle]');
-const themeIcon = document.querySelector('[data-theme-icon]');
-const themeLabel = document.querySelector('[data-theme-label]');
-const themeColorMeta = document.querySelector('[data-theme-color]');
-const siteHeader = document.querySelector('.site-header');
-const siteNav = document.querySelector('#site-nav');
-const navToggle = document.querySelector('[data-nav-toggle]');
-const footerColorButtons = document.querySelectorAll('[data-footer-color]');
-const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
 
 const TYPES = [
   { key: 'all', label: '全部' },
@@ -24,8 +15,8 @@ const TYPES = [
 
 let currentType = 'all';
 let toastTimer = 0;
-let navResizeFrame = 0;
-let footerCopyTimer = 0;
+let clearConfirmTimer = 0;
+let clearArmed = false;
 
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (character) => ({
@@ -39,6 +30,30 @@ function escapeHtml(value) {
 
 function typeLabel(type) {
   return TYPES.find((item) => item.key === type)?.label || type;
+}
+
+function clearTargetLabel() {
+  return currentType === 'all' ? '全部收藏' : `${typeLabel(currentType)}收藏`;
+}
+
+function resetClearConfirmation() {
+  window.clearTimeout(clearConfirmTimer);
+  clearConfirmTimer = 0;
+  clearArmed = false;
+  if (!clearButton) return;
+  delete clearButton.dataset.confirming;
+  clearButton.setAttribute('aria-label', `清空${clearTargetLabel()}`);
+  clearButton.innerHTML = '<iconify-icon icon="lucide:trash-2" aria-hidden="true"></iconify-icon>清空当前类型';
+}
+
+function armClearConfirmation() {
+  if (!clearButton) return;
+  clearArmed = true;
+  clearButton.dataset.confirming = 'true';
+  clearButton.setAttribute('aria-label', `再次点击确认清空${clearTargetLabel()}`);
+  clearButton.innerHTML = `<iconify-icon icon="lucide:triangle-alert" aria-hidden="true"></iconify-icon>确认清空${clearTargetLabel()}`;
+  showToast(`再次点击确认清空${clearTargetLabel()}`);
+  clearConfirmTimer = window.setTimeout(resetClearConfirmation, 4000);
 }
 
 function items() {
@@ -126,57 +141,11 @@ function showToast(message) {
   }, 1500);
 }
 
-function currentTheme() {
-  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-}
-
-function setTheme(theme) {
-  const nextTheme = theme === 'dark' ? 'dark' : 'light';
-  document.documentElement.dataset.theme = nextTheme;
-  try {
-    localStorage.setItem('theme', nextTheme);
-  } catch (error) {
-    document.documentElement.dataset.theme = nextTheme;
-  }
-  themeToggle?.setAttribute('aria-pressed', String(nextTheme === 'dark'));
-  themeToggle?.setAttribute('aria-label', nextTheme === 'dark' ? '切换到亮色模式' : '切换到暗色模式');
-  themeIcon?.setAttribute('icon', nextTheme === 'dark' ? 'lucide:sun' : 'lucide:moon');
-  if (themeLabel) themeLabel.textContent = nextTheme === 'dark' ? '亮色' : '暗色';
-  themeColorMeta?.setAttribute('content', nextTheme === 'dark' ? '#11100e' : '#f7f7f4');
-}
-
-function setMobileNavOpen(open) {
-  if (!siteHeader || !navToggle) return;
-  siteHeader.dataset.navOpen = String(open);
-  navToggle.setAttribute('aria-expanded', String(open));
-}
-
-function closeMobileNav() {
-  setMobileNavOpen(false);
-}
-
-function queueMobileNavState() {
-  window.cancelAnimationFrame(navResizeFrame);
-  navResizeFrame = window.requestAnimationFrame(() => {
-    if (window.matchMedia('(min-width: 721px)').matches) closeMobileNav();
-  });
-}
-
-function buildFooterSpectrum() {
-  const colors = ['#F9F4DC', '#F8DF72', '#F07C82', '#ED5126', '#2BAE85', '#12AA9C', '#1781B5', '#1661AB', '#8B2671', '#5C2223', '#806332', '#F7F4ED'];
-  footerColorButtons.forEach((button, index) => {
-    const hex = colors[index % colors.length];
-    const copyText = `中国传统色 ${hex}`;
-    button.style.setProperty('--footer-color', hex);
-    button.dataset.footerCopyValue = copyText;
-    button.title = `复制 ${copyText}`;
-  });
-}
-
 tabs?.addEventListener('click', (event) => {
   const button = event.target.closest('[data-favorite-type]');
   if (!button) return;
   currentType = button.dataset.favoriteType || 'all';
+  resetClearConfirmation();
   render();
 });
 
@@ -200,44 +169,29 @@ grid?.addEventListener('click', async (event) => {
 });
 
 clearButton?.addEventListener('click', () => {
+  if (!clearArmed) {
+    armClearConfirmation();
+    return;
+  }
+
   const all = window.ZH_FAVORITES?.read() || [];
   const next = currentType === 'all' ? [] : all.filter((item) => item.type !== currentType);
+  const target = clearTargetLabel();
+  resetClearConfirmation();
   window.ZH_FAVORITES?.write(next);
-  showToast(currentType === 'all' ? '已清空收藏' : `已清空${typeLabel(currentType)}收藏`);
+  showToast(`已清空${target}`);
   render();
 });
 
-themeToggle?.addEventListener('click', () => {
-  setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+clearButton?.addEventListener('blur', () => {
+  if (clearArmed) resetClearConfirmation();
 });
-navToggle?.addEventListener('click', () => {
-  const open = siteHeader?.dataset.navOpen === 'true';
-  setMobileNavOpen(!open);
-});
-siteNav?.addEventListener('click', (event) => {
-  if (event.target.closest('a, button')) closeMobileNav();
-});
-window.addEventListener('resize', queueMobileNavState);
-window.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') closeMobileNav();
-});
-footerColorButtons.forEach((button) => {
-  button.addEventListener('click', async () => {
-    const copyText = button.dataset.footerCopyValue;
-    if (!copyText) return;
-    await writeClipboard(copyText);
-    if (footerCopyStatus) {
-      clearTimeout(footerCopyTimer);
-      footerCopyStatus.textContent = `已复制：${copyText}`;
-      footerCopyStatus.dataset.visible = 'true';
-      footerCopyTimer = window.setTimeout(() => {
-        footerCopyStatus.dataset.visible = 'false';
-      }, 1500);
-    }
-  });
+
+clearButton?.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape' || !clearArmed) return;
+  event.preventDefault();
+  resetClearConfirmation();
 });
 
 window.addEventListener('zh-favorites-change', render);
-setTheme(currentTheme());
-buildFooterSpectrum();
 render();

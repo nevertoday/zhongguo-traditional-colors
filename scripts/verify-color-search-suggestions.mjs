@@ -46,11 +46,7 @@ function searchInputs(html) {
 for (const page of pages) {
   const html = read(page);
   for (const input of searchInputs(html)) {
-    const hasGenericSuggestions = /\bdata-color-suggest\b/.test(input);
-    const hasGeneratorSuggestions = /\bdata-generator-search\b/.test(input)
-      && /\bdata-generator-search-suggestions\b/.test(html);
-
-    if (!hasGenericSuggestions && !hasGeneratorSuggestions) {
+    if (!/\bdata-color-suggest\b/.test(input)) {
       fail(`${page}: search input missing color suggestions: ${input}`);
     }
   }
@@ -58,10 +54,10 @@ for (const page of pages) {
 
 for (const page of genericAssetPages) {
   const html = read(page);
-  if (!html.includes('assets/css/color-suggestions.css?v=20260616-3')) {
+  if (!/assets\/css\/color-suggestions\.css\?v=\d{8}-\d+/.test(html)) {
     fail(`${page}: missing color suggestions stylesheet`);
   }
-  if (!html.includes('assets/js/color-search-suggestions.js?v=20260616-3')) {
+  if (!/assets\/js\/color-search-suggestions\.js\?v=\d{8}-\d+/.test(html)) {
     fail(`${page}: missing color suggestions script`);
   }
 

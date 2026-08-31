@@ -1,6 +1,7 @@
 (() => {
   const pages = [
     { key: 'home', label: '浏览色卡', href: 'index.html#gallery' },
+    { key: 'colors', label: '传统色大全', href: 'colors/index.html' },
     { key: 'explorer', label: '中国色浏览器', href: 'explorer.html' },
     { key: 'dictionary', label: '色彩字典', href: 'dictionary.html' },
     { key: 'style-lab', label: '场景试色', href: 'style-lab.html' },
@@ -56,19 +57,8 @@
 
   function pageKeyFromPath() {
     const path = window.location.pathname.split('/').pop() || 'index.html';
-    if (path === 'explorer.html') return 'explorer';
-    if (path === 'dictionary.html') return 'dictionary';
-    if (path === 'style-lab.html') return 'style-lab';
-    if (path === 'generator.html') return 'generator';
-    if (path === 'theme-forge.html') return 'theme-forge';
-    if (path === 'terminal.html') return 'terminal';
-    if (path === 'palettes.html') return 'palettes';
-    if (path === 'gradients.html') return 'gradients';
-    if (path === 'uses.html') return 'uses';
-    if (path === 'daily-color-playground.html') return 'daily';
-    if (path === 'favorites.html') return 'favorites';
-    if (path === 'skills.html') return 'skills';
-    return 'home';
+    if (window.location.pathname.includes('/colors/') && path === 'index.html') return 'colors';
+    return pages.find((page) => page.href.split('#')[0] === path)?.key || 'home';
   }
 
   function navHref(page) {
@@ -85,6 +75,31 @@
 
   function currentPageLabel() {
     return pages.find((page) => page.key === currentPage)?.label || '浏览色卡';
+  }
+
+  function currentTheme() {
+    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  }
+
+  function setTheme(theme) {
+    const nextTheme = theme === 'dark' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = nextTheme;
+    try {
+      localStorage.setItem('theme', nextTheme);
+    } catch {
+      // Theme still applies for this page when storage is unavailable.
+    }
+
+    const isDark = nextTheme === 'dark';
+    const toggle = document.querySelector('[data-theme-toggle]');
+    const icon = document.querySelector('[data-theme-icon]');
+    const label = document.querySelector('[data-theme-label]');
+    const themeColorMeta = document.querySelector('[data-theme-color]');
+    toggle?.setAttribute('aria-pressed', String(isDark));
+    toggle?.setAttribute('aria-label', isDark ? '切换到亮色模式' : '切换到暗色模式');
+    icon?.setAttribute('icon', isDark ? 'lucide:sun' : 'lucide:moon');
+    if (label) label.textContent = isDark ? '亮色' : '暗色';
+    themeColorMeta?.setAttribute('content', isDark ? '#11100e' : '#f7f7f4');
   }
 
   function footerColorButtonsMarkup() {
@@ -129,6 +144,12 @@
           <strong>中国传统配色</strong>
         </a>
         <p>开放色彩资料。生产前请校色。</p>
+        <nav class="footer-links" aria-label="底部导航">
+          <a href="${base}colors/index.html">传统色大全</a>
+          <a href="${base}dictionary.html">色彩字典</a>
+          <a href="${base}llms.txt">LLMs.txt</a>
+          <a href="${base}sitemap.xml">站点地图</a>
+        </nav>
       </div>
       <div class="footer-spectrum-panel">
         <div class="footer-spectrum" aria-label="随机传统色色值，点击色块复制">${footerColorButtonsMarkup()}</div>
@@ -145,6 +166,7 @@
   document.querySelector('[data-shared-header]')?.replaceWith(template(headerMarkup()));
   document.querySelector('[data-shared-footer]')?.replaceWith(template(footerMarkup()));
   bindBrandColorHover(document.querySelector('.brand-mark'));
+  bindSharedTheme();
   bindSharedNavigation();
   bindSharedFooter();
   if (document.readyState === 'loading') {
@@ -208,13 +230,7 @@
     let bestContrast = 0;
 
     for (let attempt = 0; attempt < 48; attempt += 1) {
-      const pool = [...brandHoverColors];
-      for (let index = pool.length - 1; index > 0; index -= 1) {
-        const swapIndex = Math.floor(Math.random() * (index + 1));
-        [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
-      }
-
-      const colors = pool.slice(0, 3);
+      const colors = randomItems(brandHoverColors, 3);
       const { contrast } = readableInkForColors(colors);
       if (contrast > bestContrast) {
         bestColors = colors;
@@ -249,12 +265,21 @@
     const toggle = document.querySelector('[data-nav-toggle]');
     if (!header || !nav || !toggle) return;
 
+    const compactNav = () => window.matchMedia('(max-width: 1180px)').matches;
     const setOpen = (open) => {
-      header.dataset.navOpen = open ? 'true' : 'false';
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? '收起导航' : '展开导航');
+      const nextOpen = compactNav() && open;
+      header.dataset.navOpen = nextOpen ? 'true' : 'false';
+      toggle.setAttribute('aria-expanded', String(nextOpen));
+      toggle.setAttribute('aria-label', nextOpen ? '收起导航' : '展开导航');
       const icon = toggle.querySelector('iconify-icon');
-      if (icon) icon.setAttribute('icon', open ? 'lucide:x' : 'lucide:menu');
+      if (icon) icon.setAttribute('icon', nextOpen ? 'lucide:x' : 'lucide:menu');
+      if (compactNav()) {
+        nav.toggleAttribute('inert', !nextOpen);
+        nav.setAttribute('aria-hidden', String(!nextOpen));
+      } else {
+        nav.removeAttribute('inert');
+        nav.removeAttribute('aria-hidden');
+      }
     };
 
     toggle.addEventListener('click', (event) => {
@@ -268,12 +293,32 @@
     }, { capture: true });
 
     window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape' && header.dataset.navOpen === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
     });
 
     window.addEventListener('resize', sharedUtils.debounce(() => {
-      if (window.matchMedia('(min-width: 1181px)').matches) setOpen(false);
+      setOpen(header.dataset.navOpen === 'true');
     }, 120));
+
+    setOpen(false);
+  }
+
+  function bindSharedTheme() {
+    const toggle = document.querySelector('[data-theme-toggle]');
+    if (!toggle) return;
+
+    setTheme(currentTheme());
+    toggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+    }, { capture: true });
+
+    sharedUtils.currentTheme = currentTheme;
+    sharedUtils.setTheme = setTheme;
   }
 
   function colorName(color) {
@@ -316,16 +361,26 @@
 
   async function writeClipboard(text) {
     try {
-      await navigator.clipboard.writeText(text);
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
     } catch (error) {
-      const textarea = document.createElement('textarea');
+      // Fall through to the selection-based copy path.
+    }
+
+    const textarea = document.createElement('textarea');
+    try {
       textarea.value = text;
       textarea.setAttribute('readonly', '');
       textarea.style.position = 'fixed';
       textarea.style.opacity = '0';
       document.body.append(textarea);
       textarea.select();
-      document.execCommand('copy');
+      return document.execCommand('copy');
+    } catch (error) {
+      return false;
+    } finally {
       textarea.remove();
     }
   }
@@ -344,20 +399,22 @@
       const copyText = button.dataset.footerCopyValue;
       if (!copyText) return;
 
-      await writeClipboard(copyText);
-      button.dataset.copied = 'true';
+      const copied = await writeClipboard(copyText);
+      if (copied) button.dataset.copied = 'true';
       const status = footer.querySelector('[data-footer-copy-status]');
       if (status) {
         window.clearTimeout(footerCopyTimer);
-        status.textContent = `已复制：${copyText}`;
+        status.textContent = copied ? `已复制：${copyText}` : '复制失败，请手动选择色值';
         status.dataset.visible = 'true';
         footerCopyTimer = window.setTimeout(() => {
           status.dataset.visible = 'false';
         }, 1600);
       }
-      window.setTimeout(() => {
-        delete button.dataset.copied;
-      }, 1000);
+      if (copied) {
+        window.setTimeout(() => {
+          delete button.dataset.copied;
+        }, 1000);
+      }
     }, { capture: true });
   }
 })();
