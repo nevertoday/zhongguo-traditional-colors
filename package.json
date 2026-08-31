@@ -15,12 +15,14 @@
     "colorpages": "node scripts/build-color-pages.mjs",
     "verify:colorpages": "node scripts/verify-color-pages.mjs",
     "verify:contrast": "node scripts/verify-contrast.mjs",
-    "verify:palette-context": "node scripts/verify-palette-context-structure.mjs && node scripts/verify-palette-context-role-model.mjs && node scripts/verify-palette-context-scenes.mjs && node scripts/verify-palette-context-copy-export.mjs && node scripts/verify-palette-context-responsive.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs",
+    "verify:ux": "node scripts/verify-shared-chrome.mjs && node scripts/verify-color-search-suggestions.mjs && node scripts/verify-generator-ux.mjs && node scripts/verify-explorer-layout.mjs && node scripts/verify-terminal-ux.mjs && node scripts/verify-theme-forge-ux.mjs && node scripts/verify-favorites-ux.mjs && node scripts/verify-dialog-accessibility.mjs && node scripts/verify-loading-performance.mjs && node scripts/verify-mobile-layout.mjs && node scripts/verify-lightweight-tools.mjs && npm run verify:palette-context",
+    "verify:palette-context": "node scripts/verify-palette-context-structure.mjs && node scripts/verify-palette-context-role-model.mjs && node scripts/verify-palette-context-scenes.mjs && node scripts/verify-palette-context-copy-export.mjs && node scripts/verify-palette-context-responsive.mjs",
+    "verify:seo": "node scripts/verify-seo.mjs",
     "preview:syntax": "node scripts/build-preview-syntax.mjs",
     "terminal:audit": "node scripts/verify-terminal-palette.mjs",
     "package:images": "node scripts/package-images.mjs",
-    "prepare:release": "npm run manifest && npm run verify:manifest && npm run harmonies && npm run harmony:uses && npm run harmony:audit && npm run preview:syntax && npm run colorpages && npm run verify:colorpages && npm run terminal:audit && npm run readme && npm run package:images"
+    "prepare:release": "npm run manifest && npm run verify:manifest && npm run harmonies && npm run harmony:uses && npm run harmony:audit && npm run preview:syntax && npm run colorpages && npm run verify:colorpages && npm run verify:contrast && npm run verify:ux && npm run verify:seo && npm run terminal:audit && npm run readme && npm run package:images"
   },
   "keywords": [
     "traditional-colors",
@@ -29,5 +31,5 @@
     "design",
     "中华传统色"
   ],
-  "license": "MIT"
+  "license": "GPL-3.0-or-later"
 }

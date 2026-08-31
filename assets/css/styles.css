@@ -25,6 +25,10 @@
   --feature-text: #111111;
   --footer-text: #575752;
   --dark-panel-text: #666660;
+  --brand-logo-bg: var(--ink);
+  --brand-logo-ink: var(--inverse);
+  --brand-logo-border: transparent;
+  --brand-logo-shadow: none;
   --warm-paper: #fbf6e8;
   --wash-yellow: #f8df72;
   --wash-green: #d7e8d0;
@@ -34,7 +38,7 @@
   --content: 1240px;
   --shadow-soft: 0 18px 50px rgba(17, 17, 17, 0.08);
   --font-title: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
-  --font-body: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-body: "M PLUS Rounded 1c", "PingFang SC", "Hiragino Sans GB", sans-serif;
   --font-rounded: "M PLUS Rounded 1c", "PingFang SC", "Hiragino Sans GB", sans-serif;
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
@@ -64,6 +68,13 @@
   --feature-text: #f2f0ea;
   --footer-text: #d3cfc6;
   --dark-panel-text: #d3cfc6;
+  --brand-logo-bg:
+    linear-gradient(145deg, #2f2620 0%, #1f2d2a 58%, #171511 100%);
+  --brand-logo-ink: #f4ead7;
+  --brand-logo-border: color-mix(in srgb, #f4ead7 16%, transparent);
+  --brand-logo-shadow:
+    inset 0 1px 0 color-mix(in srgb, #f4ead7 12%, transparent),
+    0 8px 22px rgba(0, 0, 0, 0.26);
   --warm-paper: #171511;
   --wash-yellow: #3a3010;
   --wash-green: #13231b;
@@ -211,7 +222,7 @@ code {
   padding: 2px 5px;
   background: var(--panel-soft);
   border: 1px solid var(--line);
-  font-family: "SFMono-Regular", Consolas, monospace;
+  font-family: var(--font-rounded);
   font-size: 0.92em;
 }
 
@@ -260,6 +271,7 @@ code {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  min-height: 40px;
   text-decoration: none;
   --brand-hover-a: #2bae85;
   --brand-hover-b: #1781b5;
@@ -269,13 +281,15 @@ code {
 
 .brand-mark span {
   display: grid;
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   place-items: center;
-  color: var(--inverse);
-  background: var(--ink);
+  color: var(--brand-logo-ink);
+  background: var(--brand-logo-bg);
+  border: 1px solid var(--brand-logo-border);
+  box-shadow: var(--brand-logo-shadow);
   font-weight: 600;
-  transition: background 260ms var(--ease-out-quart), color 180ms ease, transform 220ms var(--ease-out-quart);
+  transition: background 260ms var(--ease-out-quart), border-color 180ms ease, box-shadow 180ms ease, color 180ms ease, transform 220ms var(--ease-out-quart);
 }
 
 .brand-mark strong {
@@ -329,6 +343,7 @@ code {
 .nav-current-chip {
   display: none;
   min-width: 0;
+  min-height: 40px;
   color: var(--ink);
   font-size: 0.88rem;
   font-weight: 650;
@@ -428,8 +443,8 @@ code {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  min-height: 32px;
+  width: 40px;
+  min-height: 40px;
   padding: 0;
   color: var(--ink-soft);
   background: transparent;
@@ -722,8 +737,9 @@ select:focus-visible,
 
 .mosaic img {
   width: 100%;
+  height: auto;
   aspect-ratio: 3 / 4;
-  object-fit: cover;
+  object-fit: contain;
   background: var(--panel-soft);
   box-shadow: 0 10px 28px color-mix(in srgb, var(--ink) 6%, transparent);
   transition: filter 180ms ease, opacity 180ms ease, transform 220ms var(--ease-out-quart);
@@ -1199,16 +1215,16 @@ body[data-no-gradient-logic] .studio-direction:focus-visible {
 .card-media {
   position: relative;
   overflow: hidden;
+  aspect-ratio: 3 / 4;
   background: var(--panel-soft);
 }
 
 .card-media img {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
   background: var(--panel-soft);
-  transition: transform 320ms var(--ease-out-quart);
 }
 
 .card-image-link {
@@ -1225,11 +1241,6 @@ body[data-no-gradient-logic] .studio-direction:focus-visible {
 .card-image-link:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: -2px;
-}
-
-.color-card:hover img,
-.color-card:focus-within img {
-  transform: scale(1.018);
 }
 
 .color-card:hover .card-meta,
@@ -4535,6 +4546,31 @@ body[data-no-gradient-logic] .skills-list::before {
   line-height: 1.75;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  max-width: 520px;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.footer-links a {
+  color: var(--feature-text);
+  text-decoration: none;
+  opacity: 0.76;
+  transition: opacity 160ms ease, color 160ms ease;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--ink);
+  outline: none;
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .footer-spectrum-panel {
   display: grid;
   grid-template-rows: minmax(1.3em, auto) auto;
@@ -4691,12 +4727,14 @@ body[data-no-gradient-logic] .skills-list::before {
   align-items: center;
   justify-content: center;
   min-width: 0;
+  min-height: 44px;
   color: var(--ink);
   background: var(--panel);
   border: 0;
   cursor: pointer;
   font-size: 0.82rem;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .dictionary-huebar button::before {
@@ -5178,35 +5216,35 @@ body[data-no-gradient-logic] .skills-list::before {
 
 .color-detail-hero {
   display: grid;
-  grid-template-columns: 148px minmax(0, 1fr);
-  gap: clamp(20px, 3vw, 34px);
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: clamp(16px, 2.4vw, 28px);
   align-items: center;
-  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 42px);
+  padding: clamp(18px, 2.4vw, 28px) clamp(22px, 3.6vw, 38px);
   color: var(--detail-ink, var(--ink));
   background: var(--detail-color, var(--panel));
   border-bottom: 1px solid color-mix(in srgb, var(--detail-ink, var(--ink)) 22%, transparent);
 }
 
 .color-detail-swatch {
-  width: 132px;
-  height: 132px;
+  width: 92px;
+  height: 92px;
   background: var(--swatch, var(--detail-color));
   border: 1px solid color-mix(in srgb, var(--detail-ink, var(--ink)) 26%, transparent);
   border-radius: 50%;
-  box-shadow: inset 0 0 0 12px color-mix(in srgb, var(--detail-ink, var(--ink)) 10%, transparent);
+  box-shadow: inset 0 0 0 9px color-mix(in srgb, var(--detail-ink, var(--ink)) 10%, transparent);
 }
 
 .color-detail-hero h2 {
-  margin-bottom: 12px;
-  font-size: clamp(2.2rem, 7vw, 4.8rem);
-  line-height: 1.02;
+  margin-bottom: 8px;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.05;
 }
 
 .color-detail-hero p {
   max-width: 620px;
   margin: 0;
   color: color-mix(in srgb, var(--detail-ink, var(--ink)) 78%, transparent);
-  line-height: 1.75;
+  line-height: 1.6;
 }
 
 .color-detail-close {
@@ -6878,7 +6916,7 @@ body[data-no-gradient-logic] .skills-list::before {
     align-items: center;
     justify-self: start;
     max-width: 100%;
-    min-height: 34px;
+    min-height: 40px;
     padding: 7px 12px;
     overflow: hidden;
     background: color-mix(in srgb, var(--ink) 5%, transparent);
@@ -7276,12 +7314,23 @@ body[data-no-gradient-logic] .skills-list::before {
 
   .color-detail-hero {
     grid-template-columns: 1fr;
-    padding-right: 66px;
+    gap: 12px;
+    padding: 18px 60px 18px 18px;
   }
 
   .color-detail-swatch {
-    width: 104px;
-    height: 104px;
+    width: 72px;
+    height: 72px;
+    box-shadow: inset 0 0 0 7px color-mix(in srgb, var(--detail-ink, var(--ink)) 10%, transparent);
+  }
+
+  .color-detail-hero h2 {
+    margin-bottom: 6px;
+    font-size: clamp(1.9rem, 12vw, 3rem);
+  }
+
+  .color-detail-hero p {
+    line-height: 1.55;
   }
 
   .color-related-group {
@@ -7526,8 +7575,8 @@ body[data-no-gradient-logic] .skills-list::before {
   }
 
   .scroll-control {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     background: color-mix(in srgb, var(--solid) 64%, transparent);
     border-color: color-mix(in srgb, var(--line-strong) 78%, transparent);
     box-shadow: none;
@@ -8506,10 +8555,10 @@ body[data-no-gradient-logic] .skills-list::before {
   grid-template-columns: repeat(6, minmax(54px, 1fr));
 }
 
-.style-mode-button {
-  min-height: 40px;
-  padding: 6px 8px;
-}
+  .style-mode-button {
+    min-height: 44px;
+    padding: 6px 8px;
+  }
 
 .style-mode-button strong,
 .style-intent-button strong {
@@ -9117,7 +9166,7 @@ body[data-style-dock-collapsed="true"] .style-lab-control.style-lab-dock > *:not
 }
 
 .style-lab-dock .style-color-search {
-  min-height: 32px;
+  min-height: 40px;
   grid-template-columns: 16px minmax(0, 1fr);
   gap: 7px;
 }
@@ -9128,7 +9177,7 @@ body[data-style-dock-collapsed="true"] .style-lab-control.style-lab-dock > *:not
 }
 
 .style-lab-dock .style-color-search input {
-  height: 32px;
+  height: 40px;
   font-size: 0.78rem;
 }
 
@@ -9143,7 +9192,7 @@ body[data-style-dock-collapsed="true"] .style-lab-control.style-lab-dock > *:not
 }
 
 .style-lab-dock .style-mode-button {
-  min-height: 34px;
+  min-height: 44px;
   padding: 5px 7px;
   text-align: center;
 }
@@ -9161,7 +9210,7 @@ body[data-style-dock-collapsed="true"] .style-lab-control.style-lab-dock > *:not
 }
 
 .style-lab-dock .style-intent-button {
-  min-height: 30px;
+  min-height: 44px;
   padding: 5px 8px;
   text-align: center;
 }
@@ -9261,14 +9310,50 @@ body[data-style-dock-collapsed="true"] .style-lab-control.style-lab-dock > *:not
 
   .style-lab-control.style-lab-dock {
     --style-dock-toggle-size: 50px;
-    right: var(--style-dock-toggle-size);
+    right: 0;
     left: 0;
-    width: auto;
-    grid-template-columns: minmax(220px, 74vw) minmax(300px, 90vw) minmax(260px, 78vw) minmax(172px, 52vw);
-    max-height: 38dvh;
+    width: 100%;
+    grid-template-columns: 1fr;
+    max-height: 52dvh;
     padding: 9px 12px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .style-template-meta button,
+  .style-lab-actions .button,
+  .style-lab-dock .style-lab-actions .button {
+    min-height: 44px;
+  }
+
+  .style-template-meta button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .style-lab-control.style-lab-dock > * {
+    padding: 0;
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+    padding-bottom: 9px;
+  }
+
+  .style-lab-control.style-lab-dock > *:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .style-lab-dock .style-dock-toggle {
+    right: 0;
+    bottom: 100%;
+    left: auto;
+    width: auto;
+    min-width: 76px;
+    height: 44px;
+    flex-direction: row;
+    padding: 0 12px;
+    border: 1px solid var(--line-strong);
+    border-bottom: 0;
   }
 
   .style-lab-dock .style-mode-grid {
@@ -9284,7 +9369,7 @@ body[data-style-dock-collapsed="true"] .style-lab-control.style-lab-dock > *:not
   }
 
   body[data-style-dock-collapsed="true"] .style-lab-control.style-lab-dock {
-    transform: translateX(-100%);
+    transform: translateY(100%);
   }
 }
 

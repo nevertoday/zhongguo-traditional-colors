@@ -235,6 +235,6 @@ This archive remains free and open source. If it saves you time, a Star, a share
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
+This project is released under the [GNU GPL v3.0](LICENSE).
 
 Note: Traditional color values may vary across sources, screens, print processes, and materials. Treat this archive as an open reference and verify colors for production use.

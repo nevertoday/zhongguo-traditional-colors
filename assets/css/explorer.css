@@ -186,13 +186,13 @@
 
 .explorer-controls {
   display: grid;
-  grid-template-columns: 38px minmax(0, 1fr) 38px;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
   gap: 8px;
 }
 
 .explorer-controls button,
 .explorer-hues button {
-  min-height: 38px;
+  min-height: 44px;
   color: inherit;
   background: var(--surface-faint);
   border: 1px solid transparent;
@@ -224,7 +224,7 @@
   grid-template-columns: 20px minmax(0, 1fr);
   gap: 10px;
   align-items: center;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 12px;
   color: inherit;
   background: var(--surface-faint);
@@ -243,6 +243,7 @@
 .explorer-search input {
   width: 100%;
   min-width: 0;
+  height: 44px;
   color: inherit;
   background: transparent;
   border: 0;
@@ -256,7 +257,7 @@
 .explorer-hues {
   display: grid;
   grid-template-columns: repeat(9, minmax(0, 1fr));
-  gap: 1px;
+  gap: 3px;
 }
 
 .explorer-hues button {
@@ -265,19 +266,45 @@
   align-items: center;
   justify-content: center;
   min-width: 0;
+  padding: 0 4px;
   border-color: transparent;
-  font-size: 0.86rem;
+  font-size: 0.78rem;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .explorer-hues button::before {
+  flex: 0 0 auto;
   display: block;
-  width: 10px;
+  width: 8px;
   aspect-ratio: 1;
   background: var(--hue-color, currentColor);
+  border-radius: 999px;
   content: "";
 }
 
-.explorer-hues button[data-explorer-hue="all"] { --hue-color: var(--active-ink); }
+.explorer-hues button[data-explorer-hue="all"] {
+  --hue-color: conic-gradient(
+    #f23e23 0 14%,
+    #f28e16 14% 28%,
+    #f8c648 28% 42%,
+    #43b244 42% 56%,
+    #16a6a8 56% 70%,
+    #2f72d6 70% 84%,
+    #7b4bc4 84% 100%
+  );
+}
+
+.explorer-hues button[data-explorer-hue="all"]::before {
+  width: 14px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-color) 58%, transparent);
+}
+
+.explorer-hues button[data-explorer-hue="all"][aria-pressed="true"]::before {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-color) 70%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--active-color) 18%, transparent);
+}
 .explorer-hues button[data-explorer-hue="red"] { --hue-color: #f23e23; }
 .explorer-hues button[data-explorer-hue="orange"] { --hue-color: #f28e16; }
 .explorer-hues button[data-explorer-hue="yellow"] { --hue-color: #f8c648; }
@@ -336,7 +363,8 @@
 
 .explorer-spectrum {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(92px, 100%), 1fr));
+  align-content: start;
   gap: 4px;
   min-height: 0;
   overflow: auto;
@@ -347,8 +375,9 @@
   position: relative;
   display: grid;
   align-content: end;
-  min-height: 86px;
-  padding: 8px;
+  height: 64px;
+  min-height: 0;
+  padding: 7px;
   overflow: hidden;
   color: var(--swatch-ink);
   background: var(--swatch);
@@ -449,7 +478,7 @@
   }
 
   .explorer-spectrum {
-    grid-template-columns: repeat(auto-fill, minmax(116px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(96px, 100%), 1fr));
     max-height: 420px;
   }
 }
@@ -481,7 +510,7 @@
   }
 
   .explorer-hues {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
   }
 
   .explorer-reading dl {
@@ -489,7 +518,7 @@
   }
 
   .explorer-spectrum {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(108px, 100%), 1fr));
     max-height: 520px;
   }
 }
@@ -504,6 +533,6 @@
   }
 
   .explorer-spectrum button {
-    min-height: 92px;
+    height: 68px;
   }
 }

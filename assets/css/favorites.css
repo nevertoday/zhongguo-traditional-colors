@@ -91,6 +91,12 @@
   border: 1px solid var(--line);
 }
 
+.favorites-clear[data-confirming="true"] {
+  color: var(--ink);
+  background: var(--wash-red);
+  border-color: var(--line-strong);
+}
+
 .favorites-clear:disabled {
   cursor: not-allowed;
   opacity: 0.45;

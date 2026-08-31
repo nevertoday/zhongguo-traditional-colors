@@ -8,8 +8,8 @@
 .tf-root{
   --ink:#f5efe2; --ink2:#fffaf0; --bone:#15130f; --ash:#655f53; --ash2:#847b6c;
   --line:rgba(21,19,15,.12); --line2:rgba(21,19,15,.22); --frame-line:rgba(21,19,15,.12);
-  --serif:'Fraunces',serif; --sans:'Noto Sans SC',system-ui,sans-serif;
-  --cn:'Noto Serif SC',serif; --mono:'Space Mono','SFMono-Regular',monospace;
+  --serif:'M PLUS Rounded 1c','PingFang SC','Hiragino Sans GB',sans-serif; --sans:'M PLUS Rounded 1c','PingFang SC','Hiragino Sans GB',sans-serif;
+  --cn:'Noto Serif SC',serif; --mono:'M PLUS Rounded 1c','PingFang SC','Hiragino Sans GB',sans-serif;
   --warn:#9a5c18;
   position:relative; height:min(1500px,calc(100vh - 24px)); min-height:760px;
   display:grid; grid-template-rows:auto 1fr;
@@ -267,10 +267,35 @@
 
 /* 窄屏：标本面板移到下方 */
 @media (max-width:920px){
-  .tf-root{height:auto}
-  .tf-root .work{grid-template-columns:1fr}
+  .theme-forge-page{overflow-x:hidden}
+  .tf-root{width:100vw;max-width:100vw;height:auto}
+  .tf-root .bar{width:100%;max-width:100vw;height:auto;padding:12px 16px;gap:10px;overflow:hidden}
+  .tf-root .bar .sp{display:none}
+  .tf-root .quick{width:100%;max-width:100%;overflow-x:auto;padding:2px 0;scrollbar-width:none}
+  .tf-root .quick::-webkit-scrollbar{display:none}
+  .tf-root .quick button{width:40px;height:40px}
+  .tf-root .tf-search{width:100%;min-height:44px}
+  .tf-root .tf-search input{min-height:40px}
+  .tf-root .ghost{min-height:44px;padding:9px 14px}
+  .tf-root .work{width:100%;max-width:100vw;grid-template-columns:minmax(0,1fr)}
   .tf-root .spec{border-left:0;border-top:1px solid var(--line2)}
+  .tf-root .stage,
+  .tf-root .device,
+  .tf-root .dv-side,
+  .tf-root .dv-main,
+  .tf-root .dv-scroll,
+  .tf-root .view{width:100%;max-width:100%;min-width:0}
   .tf-root .device{grid-template-columns:1fr}
+  .tf-root .stage{overflow-x:hidden}
+  .tf-root .dv-nav button{min-height:44px}
+  .tf-root .dv-top{flex-wrap:wrap;gap:10px;padding:14px 16px}
+  .tf-root .dv-srch{order:3;margin-left:0;width:100%;min-height:44px}
+  .tf-root .dv-srch input{min-height:40px}
+  .tf-root .icon-btn{width:44px;height:44px}
+  .tf-root .kpis{grid-template-columns:1fr}
+  .tf-root .cols{grid-template-columns:1fr}
+  .tf-root .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tf-root .view{padding:16px;gap:14px}
   .tf-root .dv-side{flex-direction:row;align-items:center;overflow:auto}
   .tf-root .dv-user{display:none}
 }

@@ -21,6 +21,7 @@
     <meta name="twitter:image" content="https://colors.xiaoxiaodong.ai/docs/screenshots/home-gallery.png">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"中国传统色 742 色彩字典","url":"https://colors.xiaoxiaodong.ai/dictionary.html","inLanguage":"zh-CN","description":"按色名、编号、HEX 和色系检索 742 个中国传统色，进入每个颜色的色值与配色详情页。","isPartOf":{"@type":"WebSite","name":"中国传统配色","url":"https://colors.xiaoxiaodong.ai/"},"mainEntity":{"@type":"ItemList","name":"中国传统色 742 色索引","numberOfItems":742,"url":"https://colors.xiaoxiaodong.ai/colors/"},"about":{"@type":"DefinedTermSet","@id":"https://colors.xiaoxiaodong.ai/dictionary.html#termset","name":"中国传统色 742 色","url":"https://colors.xiaoxiaodong.ai/dictionary.html"}}</script>
     <link rel="icon" href="favicon.svg?v=20260610-6" type="image/svg+xml">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"色彩字典","url":"https://colors.xiaoxiaodong.ai/dictionary.html","inLanguage":"zh-CN","description":"中国传统色色彩字典，按色名、HEX 和色系浏览 742 个传统色。","isPartOf":{"@type":"WebSite","name":"中国传统配色","url":"https://colors.xiaoxiaodong.ai/"}}</script>
     <script>
       (() => {
         try {
@@ -35,9 +36,12 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260616-9">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260629-1">
     <link rel="stylesheet" href="assets/css/color-suggestions.css?v=20260616-3">
+    <link rel="preload" href="assets/js/shared-chrome.js?v=20260628-1" as="script">
+
     <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js" defer></script>
     <script defer data-domain="colors.xiaoxiaodong.ai" src="https://plausible.io/js/script.js"></script>
   </head>
@@ -95,7 +99,7 @@
       </section>
     </main>
 
-    <dialog class="color-detail-dialog" data-color-detail-dialog>
+    <dialog class="color-detail-dialog" data-color-detail-dialog aria-labelledby="color-detail-dialog-title">
       <button class="dialog-close color-detail-close" type="button" data-color-detail-close aria-label="关闭颜色信息">
         <iconify-icon icon="lucide:x" aria-hidden="true"></iconify-icon>
       </button>
@@ -103,7 +107,7 @@
         <span class="color-detail-swatch" data-color-detail-swatch aria-hidden="true"></span>
         <div>
           <span class="section-kicker" data-color-detail-kicker></span>
-          <h2 data-color-detail-title></h2>
+          <h2 id="color-detail-dialog-title" data-color-detail-title></h2>
           <p data-color-detail-note></p>
         </div>
       </div>
@@ -140,7 +144,7 @@
 
     <div data-shared-footer></div>
 
-    <script src="assets/js/shared-chrome.js?v=20260616-1" defer></script>
+    <script src="assets/js/shared-chrome.js?v=20260628-1" defer></script>
     <script src="assets/data/images.js?v=20260610-6" defer></script>
     <script src="assets/data/harmonies.js?v=20260610-6" defer></script>
     <script src="assets/js/color-search-suggestions.js?v=20260616-3" defer></script>

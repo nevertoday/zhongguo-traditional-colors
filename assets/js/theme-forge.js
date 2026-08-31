@@ -42,6 +42,32 @@
     syncThemeButton(nextTheme);
   }
 
+  async function copyText(text) {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch (error) {
+      // Fall through to the selection-based copy path.
+    }
+
+    const helper = document.createElement('textarea');
+    try {
+      helper.value = text;
+      helper.setAttribute('readonly', '');
+      helper.style.position = 'fixed';
+      helper.style.top = '-9999px';
+      document.body.append(helper);
+      helper.select();
+      return document.execCommand('copy');
+    } catch (error) {
+      return false;
+    } finally {
+      helper.remove();
+    }
+  }
+
   /* ── 渲染主题 ── */
   function render() {
     state.mode = currentTheme();
@@ -139,15 +165,27 @@
       || (ALL.find(c => c.name.includes(v)) || {}).id;
     if (hit) { setAnchor(hit); syncQuick(hit); }
   });
-  themeToggle?.addEventListener('click', () => setSiteTheme(currentTheme() === 'dark' ? 'light' : 'dark'));
   modeButtons.forEach((b) => b.addEventListener('click', () => setSiteTheme(b.dataset.mode)));
   new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   $('[data-random]').addEventListener('click', () => { const c = ALL[Math.floor(Math.random() * ALL.length)]; setAnchor(c.id); syncQuick(c.id); });
-  $('[data-copy]').addEventListener('click', function () {
-    navigator.clipboard.writeText($('[data-css]').textContent);
-    const label = this.querySelector('[data-copy-label]'); const prev = label.textContent;
-    label.textContent = '已复制到剪贴板 ✓'; this.classList.add('done');
-    setTimeout(() => { label.textContent = prev; this.classList.remove('done'); }, 1400);
+  const copyButton = $('[data-copy]');
+  const copyLabel = copyButton.querySelector('[data-copy-label]');
+  const copyDefaultLabel = copyLabel.textContent;
+  let copyTimer = 0;
+  copyButton.addEventListener('click', async () => {
+    if (copyButton.getAttribute('aria-busy') === 'true') return;
+    copyButton.setAttribute('aria-busy', 'true');
+    copyButton.disabled = true;
+    const copied = await copyText($('[data-css]').textContent);
+    copyButton.disabled = false;
+    copyButton.removeAttribute('aria-busy');
+    copyButton.classList.toggle('done', copied);
+    copyLabel.textContent = copied ? '已复制到剪贴板 ✓' : '复制失败 · 请手动选择';
+    window.clearTimeout(copyTimer);
+    copyTimer = window.setTimeout(() => {
+      copyLabel.textContent = copyDefaultLabel;
+      copyButton.classList.remove('done');
+    }, 1600);
   });
 
   const qWrap = $('[data-quick]');

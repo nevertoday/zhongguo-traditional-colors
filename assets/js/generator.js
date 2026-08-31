@@ -3,7 +3,6 @@
   const harmonies = window.TRADITIONAL_COLOR_HARMONIES || {};
   const board = document.querySelector('[data-generator-board]');
   const searchInput = document.querySelector('[data-generator-search]');
-  const searchSuggestions = document.querySelector('[data-generator-search-suggestions]');
   const hint = document.querySelector('[data-generator-hint]');
   const toast = document.querySelector('[data-generator-toast]');
   const colorDialog = document.querySelector('[data-color-dialog]');
@@ -67,6 +66,9 @@
     document.querySelector('[data-generator-unlock]')?.addEventListener('click', unlockAll);
     document.querySelector('[data-generator-view]')?.addEventListener('click', openView);
     document.querySelector('[data-generator-export]')?.addEventListener('click', () => exportDialog?.showModal());
+    document.querySelectorAll('[data-dialog-close]').forEach((button) => {
+      button.addEventListener('click', () => button.closest('dialog')?.close());
+    });
 
     methodButtons.forEach((button) => {
       button.addEventListener('click', () => {
@@ -84,13 +86,11 @@
       });
     });
 
-    searchInput?.addEventListener('input', renderSearchSuggestions);
-    searchInput?.addEventListener('focus', renderSearchSuggestions);
+    searchInput?.addEventListener('color-suggestion-pick', (event) => {
+      pickSearchSuggestion(event.detail?.id);
+    });
     searchInput?.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        hideSearchSuggestions();
-        return;
-      }
+      if (event.defaultPrevented || event.key === 'Escape') return;
       if (event.key !== 'Enter') return;
       event.preventDefault();
       const anchor = anchorFromSearch();
@@ -98,22 +98,16 @@
         showToast('没有找到这个中国色');
         return;
       }
-      hideSearchSuggestions();
       generate(anchor);
-    });
-    searchSuggestions?.addEventListener('click', (event) => {
-      const button = event.target.closest('[data-generator-search-pick]');
-      if (!button) return;
-      pickSearchSuggestion(button.dataset.generatorSearchPick);
-    });
-    document.addEventListener('click', (event) => {
-      if (event.target.closest('.generator-search-wrap')) return;
-      hideSearchSuggestions();
     });
 
     colorDialogSearch?.addEventListener('input', debounce(renderColorDialog, 200));
 
     exportDialog?.addEventListener('click', (event) => {
+      if (event.target === exportDialog) {
+        exportDialog.close();
+        return;
+      }
       const button = event.target.closest('[data-export-kind]');
       if (!button) return;
       copyExport(button.dataset.exportKind || 'text');
@@ -267,26 +261,25 @@
 
   function candidateIds(anchorId, nextMethod) {
     const harmony = harmonies[anchorId] || {};
-    if (nextMethod === 'analogous') {
-      return [...ids(harmony.same), ...ids(harmony.analogous), ...ids(harmony.lighter), ...ids(harmony.darker)];
+    switch (nextMethod) {
+      case 'analogous':
+        return [...ids(harmony.same), ...ids(harmony.analogous), ...ids(harmony.lighter), ...ids(harmony.darker)];
+      case 'complementary':
+        return [...ids(harmony.complementary), ...ids(harmony.splitComplementary), ...ids(harmony.neutral)];
+      case 'triadic':
+        return [...ids(harmony.triadic), ...ids(harmony.tetradic), ...ids(harmony.accent)];
+      case 'neutral':
+        return [...ids(harmony.neutral), ...ids(harmony.grayTone), ...ids(harmony.same)];
+      default:
+        return [
+          ...ids(harmony.same).slice(0, 1),
+          ...ids(harmony.analogous).slice(0, 1),
+          ...ids(harmony.neutral).slice(0, 1),
+          ...ids(harmony.accent),
+          ...ids(harmony.temperatureContrast).slice(0, 1),
+          ...ids(harmony.darker).slice(0, 1),
+        ];
     }
-    if (nextMethod === 'complementary') {
-      return [...ids(harmony.complementary), ...ids(harmony.splitComplementary), ...ids(harmony.neutral)];
-    }
-    if (nextMethod === 'triadic') {
-      return [...ids(harmony.triadic), ...ids(harmony.tetradic), ...ids(harmony.accent)];
-    }
-    if (nextMethod === 'neutral') {
-      return [...ids(harmony.neutral), ...ids(harmony.grayTone), ...ids(harmony.same)];
-    }
-    return [
-      ...ids(harmony.same).slice(0, 1),
-      ...ids(harmony.analogous).slice(0, 1),
-      ...ids(harmony.neutral).slice(0, 1),
-      ...ids(harmony.accent),
-      ...ids(harmony.temperatureContrast).slice(0, 1),
-      ...ids(harmony.darker).slice(0, 1),
-    ];
   }
 
   function inlineSuggestions(anchorId, index) {
@@ -364,44 +357,10 @@
     });
   }
 
-  function renderSearchSuggestions() {
-    if (!searchSuggestions || !searchInput) return;
-    const query = normalizeQuery(searchInput.value);
-    if (!query) {
-      hideSearchSuggestions();
-      return;
-    }
-
-    const matches = rankedColorMatches(query, 8);
-    searchSuggestions.hidden = false;
-    searchInput.setAttribute('aria-expanded', 'true');
-    searchSuggestions.innerHTML = matches.length
-      ? matches.map((color) => `
-        <div class="generator-search-row" style="--suggest-color:${color.cleanHex}; --suggest-ink:${readableText(color.cleanHex)}">
-          <button type="button" class="generator-search-option" data-generator-search-pick="${color.id}">
-            <span class="generator-search-effect" aria-hidden="true"></span>
-            <span class="generator-search-copy">
-              <strong>${escapeHtml(color.name)}</strong>
-              <small>${color.id} · ${color.cleanHex} · ${escapeHtml(searchEffectLabel(color))}</small>
-            </span>
-          </button>
-          <a class="generator-search-detail" href="dictionary.html?q=${encodeURIComponent(color.name)}" aria-label="打开 ${escapeHtml(color.name)} 详情页">详情</a>
-        </div>
-      `).join('')
-      : '<p class="generator-search-empty">没有匹配的传统色</p>';
-  }
-
-  function hideSearchSuggestions() {
-    if (!searchSuggestions || !searchInput) return;
-    searchSuggestions.hidden = true;
-    searchInput.setAttribute('aria-expanded', 'false');
-  }
-
   function pickSearchSuggestion(id) {
     const color = colorById.get(id);
     if (!color || !searchInput) return;
     searchInput.value = color.name;
-    hideSearchSuggestions();
     generate(color.id);
     showToast(`已以 ${color.name} 为起点`);
   }
@@ -424,18 +383,18 @@
     viewDialog?.showModal();
   }
 
-  function copyColor(index) {
+  async function copyColor(index) {
     const color = palette[index];
-    copyText(`${color.name} ${color.cleanHex}`);
-    showToast(`已复制 ${color.name}`);
+    const copied = await copyText(`${color.name} ${color.cleanHex}`);
+    showToast(copied ? `已复制 ${color.name}` : '复制失败，请手动复制');
   }
 
-  function copyColorValue(index, kind = 'hex') {
+  async function copyColorValue(index, kind = 'hex') {
     const color = palette[index];
     if (!color) return;
     const value = colorValue(color, kind);
-    copyText(value);
-    showToast(`已复制 ${color.name} ${kind.toUpperCase()}`);
+    const copied = await copyText(value);
+    showToast(copied ? `已复制 ${color.name} ${kind.toUpperCase()}` : '复制失败，请手动复制');
   }
 
   function colorValue(color, kind) {
@@ -502,10 +461,10 @@
     showToast(`已替换为 ${color.name}`);
   }
 
-  function copyExport(kind) {
+  async function copyExport(kind) {
     const payload = exportPayload(kind);
-    copyText(payload);
-    showToast(kind === 'url' ? '已复制链接' : '已复制方案');
+    const copied = await copyText(payload);
+    showToast(copied ? (kind === 'url' ? '已复制链接' : '已复制方案') : '复制失败，请手动复制');
   }
 
   function exportPayload(kind) {
@@ -701,27 +660,6 @@
     return `${color.id} ${color.name} ${color.cleanHex} ${color.cleanHex.replace('#', '')}`.toLowerCase();
   }
 
-  function searchEffectLabel(color) {
-    const harmony = harmonies[color.id] || {};
-    const rgb = hexToRgb(color.cleanHex);
-    const hsl = harmony.hsl || rgbToHsl(rgb.r, rgb.g, rgb.b);
-    const family = harmony.hueFamily || hueFamilyFromHsl(hsl);
-    const tone = hsl.l >= 82 ? '高明度' : hsl.l <= 28 ? '低明度' : hsl.s >= 72 ? '高饱和' : hsl.s <= 18 ? '灰调' : '中明度';
-    return [family, tone].filter(Boolean).join(' · ');
-  }
-
-  function hueFamilyFromHsl(hsl) {
-    if (!hsl || hsl.s < 12) return '中性色';
-    if (hsl.h < 15 || hsl.h >= 345) return '红色系';
-    if (hsl.h < 45) return '橙色系';
-    if (hsl.h < 75) return '黄色系';
-    if (hsl.h < 155) return '绿色系';
-    if (hsl.h < 195) return '青色系';
-    if (hsl.h < 255) return '蓝色系';
-    if (hsl.h < 315) return '紫色系';
-    return '红色系';
-  }
-
   function readableText(hex) {
     const { r, g, b } = hexToRgb(hex);
     const linear = [r, g, b].map((channel) => {
@@ -765,24 +703,33 @@
     };
   }
 
-  function copyText(text) {
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
-      return;
+  async function copyText(text) {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch (error) {
+      // Fall through to the selection-based copy path.
     }
-    fallbackCopy(text);
+    return fallbackCopy(text);
   }
 
   function fallbackCopy(text) {
     const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.setAttribute('readonly', '');
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.append(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    textarea.remove();
+    try {
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.append(textarea);
+      textarea.select();
+      return document.execCommand('copy');
+    } catch (error) {
+      return false;
+    } finally {
+      textarea.remove();
+    }
   }
 
   function showToast(message) {

@@ -59,15 +59,6 @@ const closeMasterListButton = document.querySelector('[data-close-master-list]')
 const copyMasterListButton = document.querySelector('[data-copy-master-list]');
 const masterListStatus = document.querySelector('[data-master-list-status]');
 const masterSearchInput = document.querySelector('[data-master-search]');
-const themeToggle = document.querySelector('[data-theme-toggle]');
-const themeToggleIcon = document.querySelector('[data-theme-icon]');
-const themeToggleLabel = document.querySelector('[data-theme-label]');
-const themeColorMeta = document.querySelector('[data-theme-color]');
-const siteHeader = document.querySelector('.site-header');
-const siteNav = document.querySelector('#site-nav');
-const navToggle = document.querySelector('[data-nav-toggle]');
-const footerColorButtons = document.querySelectorAll('[data-footer-color]');
-const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
 const scrollUpButton = document.querySelector('[data-scroll-up]');
 const scrollDownButton = document.querySelector('[data-scroll-down]');
 const skillToggleButtons = document.querySelectorAll('[data-skill-toggle]');
@@ -102,14 +93,14 @@ let currentItems = randomizeImageOrder(images);
 let shuffled = true;
 let currentHue = 'all';
 let selectedColorValueType = getSavedColorValueType();
-let footerCopyTimer;
 let scrollControlFrame;
 let heroPreviewResizeFrame;
 let currentHeroPreviewImage;
 let currentHarmonyKey = 'same';
-let navResizeFrame;
 let styleColorPickerHue = 'all';
 let galleryAutoObserver;
+let styleColorDialogOpener = null;
+let styleColorDialogReturnRole = '';
 
 const TITLE_TONE_MAP = [
   { match: ['hero', 'top'], hues: ['red', 'orange', 'yellow'] },
@@ -495,57 +486,6 @@ function hueFromHex(hex) {
   if (hue < 255) return 'blue';
   if (hue < 315) return 'purple';
   return 'red';
-}
-
-function currentTheme() {
-  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-}
-
-function setTheme(theme) {
-  const nextTheme = theme === 'dark' ? 'dark' : 'light';
-  document.documentElement.dataset.theme = nextTheme;
-  try {
-    localStorage.setItem('theme', nextTheme);
-  } catch (error) {
-    // Theme still applies for the current page if storage is unavailable.
-  }
-
-  if (themeToggle) {
-    themeToggle.setAttribute('aria-pressed', String(nextTheme === 'dark'));
-    themeToggle.setAttribute('aria-label', nextTheme === 'dark' ? '切换到亮色版本' : '切换到暗色版本');
-  }
-  if (themeToggleLabel) {
-    themeToggleLabel.textContent = nextTheme === 'dark' ? '亮色' : '暗色';
-  }
-  if (themeToggleIcon) {
-    themeToggleIcon.setAttribute('icon', nextTheme === 'dark' ? 'lucide:sun' : 'lucide:moon');
-  }
-
-  if (themeColorMeta) {
-    themeColorMeta.setAttribute('content', nextTheme === 'dark' ? '#11100e' : '#f7f7f4');
-  }
-}
-
-function setMobileNavOpen(open) {
-  if (!siteHeader || !navToggle) return;
-
-  siteHeader.dataset.navOpen = open ? 'true' : 'false';
-  navToggle.setAttribute('aria-expanded', String(open));
-  navToggle.setAttribute('aria-label', open ? '收起导航' : '展开导航');
-  const icon = navToggle.querySelector('iconify-icon');
-  if (icon) icon.setAttribute('icon', open ? 'lucide:x' : 'lucide:menu');
-}
-
-function closeMobileNav() {
-  setMobileNavOpen(false);
-}
-
-function queueMobileNavState() {
-  if (navResizeFrame) return;
-  navResizeFrame = window.requestAnimationFrame(() => {
-    navResizeFrame = 0;
-    if (window.matchMedia('(min-width: 721px)').matches) closeMobileNav();
-  });
 }
 
 function updateStats() {
@@ -1690,6 +1630,8 @@ function renderStyleColorPicker() {
 function openStyleColorPicker() {
   if (!styleColorDialog) return;
 
+  styleColorDialogOpener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  styleColorDialogReturnRole = '';
   styleRoleReplacementKey = '';
   renderStyleColorPicker();
   if (typeof styleColorDialog.showModal === 'function') {
@@ -1701,6 +1643,8 @@ function openStyleColorPicker() {
 function openStyleRoleColorPicker(roleKey) {
   if (!styleColorDialog || !styleLabRoleByKey(roleKey)) return;
 
+  styleColorDialogOpener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  styleColorDialogReturnRole = roleKey;
   styleRoleReplacementKey = roleKey;
   styleColorPickerSearch.value = '';
   styleColorPickerHue = 'all';
@@ -2328,25 +2272,6 @@ function bindTitleColorHover() {
   });
 }
 
-function buildFooterSpectrum() {
-  if (!footerColorButtons.length) return;
-
-  const colors = randomColorItems(footerColorButtons.length);
-  footerColorButtons.forEach((button, index) => {
-    const image = colors[index];
-    if (!image) return;
-
-    const name = colorName(image);
-    const hex = image.hex;
-    const copyText = `${name} ${hex}`;
-    button.style.setProperty('--spectrum-color', hex);
-    button.style.setProperty('--spectrum-index', String(randomInt(9) + 1));
-    button.dataset.footerCopyValue = copyText;
-    button.title = `复制 ${copyText}`;
-    button.setAttribute('aria-label', `复制 ${name} 色值 ${hex}`);
-  });
-}
-
 function headerOffset() {
   return (document.querySelector('.site-header')?.getBoundingClientRect().height || 0) + 12;
 }
@@ -2455,17 +2380,17 @@ function buildHero() {
     columns[index % columns.length].push(image);
   });
 
-  const imageMarkup = (image) => (
-    `<button class="hero-film-card" type="button" data-hero-preview="${image.id}" aria-label="查看 ${colorTitle(image)} 色卡信息">
-      <img src="${encodedPath(thumbnailPath(image))}" alt="中国传统色色卡 ${colorTitle(image)}" width="270" height="360" loading="eager" decoding="async">
+  const imageMarkup = (image, rowIndex, duplicate = false) => (
+    `<button class="hero-film-card" type="button" data-hero-preview="${image.id}"${duplicate ? ' tabindex="-1" aria-hidden="true"' : ` aria-label="查看 ${colorTitle(image)} 色卡信息"`}>
+      <img src="${encodedPath(thumbnailPath(image))}" alt="${duplicate ? '' : `中国传统色色卡 ${colorTitle(image)}`}" width="270" height="360" loading="${!duplicate && rowIndex < 2 ? 'eager' : 'lazy'}"${duplicate ? ' fetchpriority="low"' : rowIndex === 0 ? ' fetchpriority="high"' : ''} decoding="async">
     </button>`
   );
 
   heroMosaic.innerHTML = columns.map((column, columnIndex) => (
     `<div class="film-strip" style="--strip-index: ${columnIndex}">
       <div class="film-track">
-        ${column.map(imageMarkup).join('')}
-        ${column.map(imageMarkup).join('')}
+        ${column.map((image, rowIndex) => imageMarkup(image, rowIndex)).join('')}
+        ${column.map((image, rowIndex) => imageMarkup(image, rowIndex, true)).join('')}
       </div>
     </div>`
   )).join('');
@@ -2962,9 +2887,7 @@ async function downloadZip() {
 }
 
 updateStats();
-setTheme(currentTheme());
 buildHero();
-buildFooterSpectrum();
 renderStyleColorOptions();
 setStyleDockCollapsed(false);
 renderStyleLab();
@@ -2976,16 +2899,6 @@ skillToggleButtons.forEach((button) => {
 });
 bindTitleColorHover();
 
-themeToggle?.addEventListener('click', () => {
-  setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
-});
-navToggle?.addEventListener('click', () => {
-  const open = siteHeader?.dataset.navOpen === 'true';
-  setMobileNavOpen(!open);
-});
-siteNav?.addEventListener('click', (event) => {
-  if (event.target.closest('a, button')) closeMobileNav();
-});
 searchInput?.addEventListener('input', debounce(applySearch, 200));
 hueFilter?.addEventListener('change', applyFilters);
 shuffleButton?.addEventListener('click', shuffleItems);
@@ -3031,6 +2944,15 @@ styleColorRecommendations?.addEventListener('click', (event) => {
 closeStyleColorButton?.addEventListener('click', () => styleColorDialog?.close());
 styleColorDialog?.addEventListener('click', (event) => {
   if (event.target === styleColorDialog) styleColorDialog.close();
+});
+styleColorDialog?.addEventListener('close', () => {
+  const replacement = styleColorDialogReturnRole
+    ? document.querySelector(`[data-style-role="${CSS.escape(styleColorDialogReturnRole)}"]`)
+    : styleAnchorButton;
+  const target = styleColorDialogOpener?.isConnected ? styleColorDialogOpener : replacement;
+  styleColorDialogOpener = null;
+  styleColorDialogReturnRole = '';
+  target?.focus();
 });
 styleColorRandomButton?.addEventListener('click', () => {
   const recommended = styleRoleReplacementKey
@@ -3216,26 +3138,6 @@ copyMasterListButton?.addEventListener('click', async () => {
     setTemporaryLabel(masterListStatus, '已复制完整清单', 1600);
   }
 });
-footerColorButtons.forEach((button) => {
-  button.addEventListener('click', async () => {
-    const copyText = button.dataset.footerCopyValue;
-    if (!copyText) return;
-
-    await writeClipboard(copyText);
-    button.dataset.copied = 'true';
-    if (footerCopyStatus) {
-      window.clearTimeout(footerCopyTimer);
-      footerCopyStatus.textContent = `已复制：${copyText}`;
-      footerCopyStatus.dataset.visible = 'true';
-      footerCopyTimer = window.setTimeout(() => {
-        footerCopyStatus.dataset.visible = 'false';
-      }, 1600);
-    }
-    window.setTimeout(() => {
-      delete button.dataset.copied;
-    }, 1000);
-  });
-});
 skillToggleButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const item = button.closest('.skill-item');
@@ -3254,11 +3156,7 @@ scrollDownButton?.addEventListener('click', () => scrollBySection('down'));
 window.addEventListener('scroll', queueScrollControlsUpdate, { passive: true });
 window.addEventListener('resize', () => {
   queueScrollControlsUpdate();
-  queueMobileNavState();
   queueHeroPreviewDialogHeightSync();
-});
-window.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') closeMobileNav();
 });
 window.addEventListener('hashchange', openSkillFromHash);
 openSkillFromHash();

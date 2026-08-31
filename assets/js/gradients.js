@@ -20,15 +20,6 @@
   const randomButton = document.querySelector('[data-gradient-random]');
   const loadMoreButton = document.querySelector('[data-gradient-load-more]');
   const toast = document.querySelector('[data-gradient-toast]');
-  const themeToggle = document.querySelector('[data-theme-toggle]');
-  const themeIcon = document.querySelector('[data-theme-icon]');
-  const themeLabel = document.querySelector('[data-theme-label]');
-  const themeColorMeta = document.querySelector('[data-theme-color]');
-  const siteHeader = document.querySelector('.site-header');
-  const siteNav = document.querySelector('#site-nav');
-  const navToggle = document.querySelector('[data-nav-toggle]');
-  const footerColorButtons = document.querySelectorAll('[data-footer-color]');
-  const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
 
   const INITIAL_VISIBLE = 18;
   const BATCH_SIZE = 18;
@@ -105,8 +96,6 @@
   let visibleCount = INITIAL_VISIBLE;
   let renderedItems = [];
   let toastTimer;
-  let footerCopyTimer;
-  let navResizeFrame;
 
   function escapeHtml(value) {
     return String(value ?? '').replace(/[&<>"']/g, (character) => ({
@@ -603,47 +592,6 @@
     render();
   }
 
-  function currentTheme() {
-    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-  }
-
-  function setTheme(theme) {
-    const nextTheme = theme === 'dark' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = nextTheme;
-    try {
-      localStorage.setItem('theme', nextTheme);
-    } catch (error) {
-      // Theme still applies for the current page if storage is unavailable.
-    }
-
-    themeToggle?.setAttribute('aria-pressed', String(nextTheme === 'dark'));
-    themeToggle?.setAttribute('aria-label', nextTheme === 'dark' ? '切换到亮色模式' : '切换到暗色模式');
-    if (themeLabel) themeLabel.textContent = nextTheme === 'dark' ? '亮色' : '暗色';
-    themeIcon?.setAttribute('icon', nextTheme === 'dark' ? 'lucide:sun' : 'lucide:moon');
-    themeColorMeta?.setAttribute('content', nextTheme === 'dark' ? '#11100e' : '#f7f7f4');
-  }
-
-  function setMobileNavOpen(open) {
-    if (!siteHeader || !navToggle) return;
-
-    siteHeader.dataset.navOpen = open ? 'true' : 'false';
-    navToggle.setAttribute('aria-expanded', String(open));
-    navToggle.setAttribute('aria-label', open ? '收起导航' : '展开导航');
-    navToggle.querySelector('iconify-icon')?.setAttribute('icon', open ? 'lucide:x' : 'lucide:menu');
-  }
-
-  function closeMobileNav() {
-    setMobileNavOpen(false);
-  }
-
-  function queueMobileNavState() {
-    if (navResizeFrame) return;
-    navResizeFrame = window.requestAnimationFrame(() => {
-      navResizeFrame = 0;
-      if (window.matchMedia('(min-width: 721px)').matches) closeMobileNav();
-    });
-  }
-
   function randomColorItems(count) {
     const pool = [...images];
     for (let index = pool.length - 1; index > 0; index -= 1) {
@@ -651,25 +599,6 @@
       [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
     }
     return pool.slice(0, count);
-  }
-
-  function buildFooterSpectrum() {
-    if (!footerColorButtons.length) return;
-
-    const colors = randomColorItems(footerColorButtons.length);
-    footerColorButtons.forEach((button, index) => {
-      const image = colors[index];
-      if (!image) return;
-
-      const name = colorName(image);
-      const hex = cleanHex(image.hex);
-      const copyText = `${name} ${hex}`;
-      button.style.setProperty('--spectrum-color', hex);
-      button.style.setProperty('--spectrum-index', String(Math.floor(Math.random() * 9) + 1));
-      button.dataset.footerCopyValue = copyText;
-      button.title = `复制 ${copyText}`;
-      button.setAttribute('aria-label', `复制 ${name} 色值 ${hex}`);
-    });
   }
 
   grid?.addEventListener('click', (event) => {
@@ -722,43 +651,6 @@
   });
   randomButton?.addEventListener('click', randomColor);
   loadMoreButton?.addEventListener('click', loadMore);
-  themeToggle?.addEventListener('click', () => {
-    setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
-  });
-  navToggle?.addEventListener('click', () => {
-    const open = siteHeader?.dataset.navOpen === 'true';
-    setMobileNavOpen(!open);
-  });
-  siteNav?.addEventListener('click', (event) => {
-    if (event.target.closest('a, button')) closeMobileNav();
-  });
-  window.addEventListener('resize', queueMobileNavState);
-  window.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeMobileNav();
-  });
-  footerColorButtons.forEach((button) => {
-    button.addEventListener('click', async () => {
-      const copyText = button.dataset.footerCopyValue;
-      if (!copyText) return;
-
-      await writeClipboard(copyText);
-      button.dataset.copied = 'true';
-      if (footerCopyStatus) {
-        window.clearTimeout(footerCopyTimer);
-        footerCopyStatus.textContent = `已复制：${copyText}`;
-        footerCopyStatus.dataset.visible = 'true';
-        footerCopyTimer = window.setTimeout(() => {
-          footerCopyStatus.dataset.visible = 'false';
-        }, 1600);
-      }
-      window.setTimeout(() => {
-        delete button.dataset.copied;
-      }, 1000);
-    });
-  });
-
-  setTheme(currentTheme());
-  buildFooterSpectrum();
   renderHueButtons();
   renderDetailFromUrl();
   render({ reset: true });

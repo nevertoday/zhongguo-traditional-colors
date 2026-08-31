@@ -30,18 +30,7 @@
   const detailDownload = document.querySelector('[data-color-detail-download]');
   const detailPage = document.querySelector('[data-color-detail-page]');
   const detailStyle = document.querySelector('[data-color-detail-style]');
-  const themeToggle = document.querySelector('[data-theme-toggle]');
-  const themeIcon = document.querySelector('[data-theme-icon]');
-  const themeLabel = document.querySelector('[data-theme-label]');
-  const themeColorMeta = document.querySelector('[data-theme-color]');
-  const siteHeader = document.querySelector('.site-header');
-  const siteNav = document.querySelector('#site-nav');
-  const navToggle = document.querySelector('[data-nav-toggle]');
-  const footerColorButtons = document.querySelectorAll('[data-footer-color]');
-  const footerCopyStatus = document.querySelector('[data-footer-copy-status]');
-
-  let footerCopyTimer;
-  let navResizeFrame;
+  let detailDialogOpener = null;
 
   const HUE_LABELS = {
     all: '全部色系',
@@ -137,47 +126,6 @@
     }
   }
 
-  function currentTheme() {
-    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-  }
-
-  function setTheme(theme) {
-    const nextTheme = theme === 'dark' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = nextTheme;
-    try {
-      localStorage.setItem('theme', nextTheme);
-    } catch (error) {
-      // Theme still applies for the current page if storage is unavailable.
-    }
-
-    themeToggle?.setAttribute('aria-pressed', String(nextTheme === 'dark'));
-    themeToggle?.setAttribute('aria-label', nextTheme === 'dark' ? '切换到亮色模式' : '切换到暗色模式');
-    if (themeLabel) themeLabel.textContent = nextTheme === 'dark' ? '亮色' : '暗色';
-    themeIcon?.setAttribute('icon', nextTheme === 'dark' ? 'lucide:sun' : 'lucide:moon');
-    themeColorMeta?.setAttribute('content', nextTheme === 'dark' ? '#11100e' : '#f7f7f4');
-  }
-
-  function setMobileNavOpen(open) {
-    if (!siteHeader || !navToggle) return;
-
-    siteHeader.dataset.navOpen = open ? 'true' : 'false';
-    navToggle.setAttribute('aria-expanded', String(open));
-    navToggle.setAttribute('aria-label', open ? '收起导航' : '展开导航');
-    navToggle.querySelector('iconify-icon')?.setAttribute('icon', open ? 'lucide:x' : 'lucide:menu');
-  }
-
-  function closeMobileNav() {
-    setMobileNavOpen(false);
-  }
-
-  function queueMobileNavState() {
-    if (navResizeFrame) return;
-    navResizeFrame = window.requestAnimationFrame(() => {
-      navResizeFrame = 0;
-      if (window.matchMedia('(min-width: 721px)').matches) closeMobileNav();
-    });
-  }
-
   function randomColorItems(count) {
     const pool = images.filter((image) => image.hex);
     for (let index = pool.length - 1; index > 0; index -= 1) {
@@ -185,25 +133,6 @@
       [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
     }
     return pool.slice(0, count);
-  }
-
-  function buildFooterSpectrum() {
-    if (!footerColorButtons.length) return;
-
-    const colors = randomColorItems(footerColorButtons.length);
-    footerColorButtons.forEach((button, index) => {
-      const image = colors[index];
-      if (!image) return;
-
-      const name = colorName(image);
-      const hex = image.hex;
-      const copyText = `${name} ${hex}`;
-      button.style.setProperty('--spectrum-color', hex);
-      button.style.setProperty('--spectrum-index', String(randomInt(9) + 1));
-      button.dataset.footerCopyValue = copyText;
-      button.title = `复制 ${copyText}`;
-      button.setAttribute('aria-label', `复制 ${name} 色值 ${hex}`);
-    });
   }
 
   function rgbFromHex(hex) {
@@ -616,6 +545,9 @@
   function openColorDetail(id) {
     const image = imagesById.get(id);
     if (!image || !detailDialog) return;
+    if (!detailDialog.open) {
+      detailDialogOpener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    }
 
     const name = colorName(image);
     const hex = image.hex || '';
@@ -719,39 +651,10 @@
   });
 
   detailClose?.addEventListener('click', () => detailDialog?.close());
-  themeToggle?.addEventListener('click', () => {
-    setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
-  });
-  navToggle?.addEventListener('click', () => {
-    const open = siteHeader?.dataset.navOpen === 'true';
-    setMobileNavOpen(!open);
-  });
-  siteNav?.addEventListener('click', (event) => {
-    if (event.target.closest('a, button')) closeMobileNav();
-  });
-  window.addEventListener('resize', queueMobileNavState);
-  window.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeMobileNav();
-  });
-  footerColorButtons.forEach((button) => {
-    button.addEventListener('click', async () => {
-      const copyText = button.dataset.footerCopyValue;
-      if (!copyText) return;
-
-      await writeClipboard(copyText);
-      button.dataset.copied = 'true';
-      if (footerCopyStatus) {
-        window.clearTimeout(footerCopyTimer);
-        footerCopyStatus.textContent = `已复制：${copyText}`;
-        footerCopyStatus.dataset.visible = 'true';
-        footerCopyTimer = window.setTimeout(() => {
-          footerCopyStatus.dataset.visible = 'false';
-        }, 1600);
-      }
-      window.setTimeout(() => {
-        delete button.dataset.copied;
-      }, 1000);
-    });
+  detailDialog?.addEventListener('close', () => {
+    const target = detailDialogOpener?.isConnected ? detailDialogOpener : dictionarySearch;
+    detailDialogOpener = null;
+    target?.focus();
   });
   dictionarySearch?.addEventListener('input', debounce(renderDictionary, 200));
   dictionaryHue?.addEventListener('change', renderDictionary);
@@ -763,9 +666,6 @@
     renderDictionary();
   });
   dictionaryRandom?.addEventListener('click', openRandomColor);
-
-  setTheme(currentTheme());
-  buildFooterSpectrum();
 
   // Honor a ?q= search param so the homepage SearchAction (sitelinks searchbox)
   // and shared links land on a pre-filtered dictionary view.

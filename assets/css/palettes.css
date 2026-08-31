@@ -21,7 +21,7 @@
   --shadow-soft: 0 18px 50px rgba(17, 17, 17, 0.08);
   --content: 1240px;
   --font-title: "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, serif;
-  --font-body: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-body: "M PLUS Rounded 1c", "PingFang SC", "Hiragino Sans GB", sans-serif;
   --font-rounded: "M PLUS Rounded 1c", "PingFang SC", "Hiragino Sans GB", sans-serif;
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -1864,7 +1864,7 @@ h3::before {
 }
 
 .use-searchbar .palette-search {
-  flex: 1 1 280px;
+  flex: 0 1 clamp(220px, 20vw, 320px);
 }
 
 .use-modebar button {
@@ -1893,7 +1893,7 @@ h3::before {
 
 .use-huebar {
   display: inline-flex;
-  flex: 0 1 330px;
+  flex: 1 1 330px;
   flex-wrap: wrap;
   align-items: center;
   min-height: 48px;
@@ -1939,7 +1939,7 @@ h3::before {
   grid-template-columns: auto minmax(0, 1fr);
   gap: 10px;
   align-items: center;
-  flex: 0 1 210px;
+  flex: 0 1 180px;
   min-height: 48px;
   padding: 0 12px;
   color: var(--ink-soft);
@@ -1951,6 +1951,7 @@ h3::before {
 
 .use-bias input {
   width: 100%;
+  min-height: 44px;
   accent-color: var(--ink);
 }
 
@@ -2497,12 +2498,25 @@ h3::before {
     grid-template-columns: 1fr;
   }
 
-  .palette-demo-item,
-  .demo-hue-row,
-  .palette-demo-newsletter button {
+  .use-modebar button,
+  .use-huebar button {
+    min-width: 44px;
     min-height: 44px;
   }
 
+  .rail-button,
+  .palette-demo-item,
+  .demo-hue-row,
+  .palette-demo-newsletter button,
+  .use-pair-actions button,
+  .use-favorite-button {
+    min-height: 44px;
+  }
+
+  .use-favorite-button {
+    width: 44px;
+    height: 44px;
+  }
   .use-pair-card {
     min-height: 520px;
     padding: 28px;
